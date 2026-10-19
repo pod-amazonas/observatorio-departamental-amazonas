@@ -359,6 +359,7 @@
 @media(max-width:900px){#view-avances-pod .obs10-apuestas{grid-template-columns:1fr}}
 @media(max-width:560px){#view-avances-pod .obs10-evidence-fields{grid-template-columns:1fr}#view-avances-pod .obs10-evidence-fields .wide{grid-column:span 1}#view-avances-pod .obs10-doc-open{display:none}}
 
+.pod-logo-details{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:24px}.pod-logo-details .pod-logo-legend{position:static;left:auto;bottom:auto;display:flex;align-items:center;max-width:100%;width:max-content;padding:12px 17px;border:1px solid #e4ede2;background:#fff;box-shadow:0 8px 22px rgba(39,86,59,.1);border-radius:12px;transform:none}.pod-logo-caption{font-size:10px;line-height:1.45;text-align:center;color:#708474;max-width:100%}@media(max-width:500px){.pod-logo-details{margin-top:18px}.pod-logo-details .pod-logo-legend{padding:11px 12px}.pod-logo-caption{padding-inline:7px}}
 </style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
   <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
@@ -690,7 +691,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
             <div class="hero-actions"><a class="btn btn-primary" href="#geovisor" data-route="geovisor">Explorar el Geovisor <svg><use href="#i-arrow"/></svg></a><a class="btn btn-plain" href="#documentos-pod" data-route="documentos-pod">Conocer el POD <svg><use href="#i-arrow"/></svg></a></div>
             <div class="hero-foot"><span><svg><use href="#i-map"/></svg> Información cartográfica</span><span><svg><use href="#i-library"/></svg> Consulta documental</span><span><svg><use href="#i-chart"/></svg> Seguimiento</span></div>
           </div>
-          <div class="hero-visual"><div class="map-frame pod-logo-frame"><div class="pod-logo-wrap"><img class="pod-logo-img" src="pod_logo_portada.jpg" alt="Logo del Programa de Ordenamiento Departamental del Amazonas"></div><div class="map-floating"><svg><use href="#i-leaf"/></svg><div><b>Programa de Ordenamiento Departamental</b><small>Identidad visual del POD Amazonas</small></div></div><div class="map-caption">Imagen institucional del POD integrada a la portada del Observatorio</div></div><div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div></div>
+          <div class="hero-visual"><div class="map-frame pod-logo-frame"><div class="pod-logo-wrap"><img class="pod-logo-img" src="pod_logo_portada.jpg" alt="Logo del Programa de Ordenamiento Departamental del Amazonas"></div></div><div class="pod-logo-details"><div class="map-floating pod-logo-legend"><svg aria-hidden="true"><use href="#i-leaf"/></svg><div><b>Programa de Ordenamiento Departamental</b><small>Identidad visual del POD Amazonas</small></div></div><div class="pod-logo-caption">Identidad visual institucional del Programa de Ordenamiento Departamental</div></div><div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div></div>
         </div>
       </div>
       <div class="container modules-section">
