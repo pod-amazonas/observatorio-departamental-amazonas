@@ -1,0 +1,737 @@
+{
+  "titulo": "Observatorio Departamental del Amazonas — Determinantes ambientales",
+  "estado": "publicacion_autorizada_por_equipo_POD_preparacion_parcial",
+  "formato": "GeoJSON",
+  "srcCoordenadas": "EPSG:4326 (longitud, latitud)",
+  "nota": "Las 33 determinantes cuentan con aprobación de publicación comunicada por el equipo POD. 18 están disponibles en GeoJSON; las otras 15 requieren preparación técnica. Trámites y estadísticas calculadas en navegador no equivalen a certificaciones oficiales.",
+  "cantidadTotalEsperada": 33,
+  "cantidadGeoJSONPiloto": 18,
+  "pendientes": 15,
+  "organizacion": [
+    "Componente biofísico",
+    "Determinantes ambientales"
+  ],
+  "grupos": [
+    {
+      "id": "01_AREAS_PROTEGIDAS",
+      "titulo": "Áreas protegidas",
+      "capas": [
+        {
+          "objectid": 1,
+          "nombre": "Rio Pure",
+          "etiqueta": "Rio Pure",
+          "categoria": "Áreas protegidas",
+          "archivo": "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_01.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 158460,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -70.7285421,
+            -2.4738043,
+            -69.4594446,
+            -1.5069572
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Áreas Protegidas",
+          "norma": "Resolución 0764",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 2,
+          "nombre": "Cahuinari",
+          "etiqueta": "Cahuinari",
+          "categoria": "Áreas protegidas",
+          "archivo": "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_02.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 481647,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -71.6002969,
+            -1.7768161,
+            -70.3149332,
+            -1.0336091
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Áreas Protegidas",
+          "norma": "Resolución 190",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 3,
+          "nombre": "Yaigoje Apaporis",
+          "etiqueta": "Yaigoje Apaporis",
+          "categoria": "Áreas protegidas",
+          "archivo": "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_03.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 377998,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -71.1454088,
+            -1.2296385,
+            -69.4337864,
+            -0.0018945
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Áreas Protegidas",
+          "norma": "Resolución 2079",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 4,
+          "nombre": "Amacayacu",
+          "etiqueta": "Amacayacu",
+          "categoria": "Áreas protegidas",
+          "archivo": "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_04.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 644167,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -70.4354721,
+            -3.821968,
+            -69.890319,
+            -3.031007
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Áreas Protegidas",
+          "norma": "Resolución 283",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        }
+      ]
+    },
+    {
+      "id": "02_RESERVAS_FORESTALES_TIPO_B",
+      "titulo": "Reservas forestales — Tipo B",
+      "capas": [
+        {
+          "objectid": 5,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 05",
+          "categoria": "Reservas forestales — Tipo B",
+          "archivo": "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_05.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 2242,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -70.0140924,
+            -4.0427687,
+            -69.8748886,
+            -3.8751014
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo B",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 6,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 06",
+          "categoria": "Reservas forestales — Tipo B",
+          "archivo": "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_06.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 37634,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -69.7805273,
+            -2.9164902,
+            -69.668431,
+            -2.7463677
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo B",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 7,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 07",
+          "categoria": "Reservas forestales — Tipo B",
+          "archivo": "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_07.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 50380,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -70.7612257,
+            -2.7011549,
+            -70.0350732,
+            -2.2425815
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo B",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 8,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 08",
+          "categoria": "Reservas forestales — Tipo B",
+          "archivo": "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_08.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 30197,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -69.5845131,
+            -1.5177384,
+            -69.4349183,
+            -1.2439848
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo B",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        }
+      ]
+    },
+    {
+      "id": "03_RESERVAS_FORESTALES_TIPO_A",
+      "titulo": "Reservas forestales — Tipo A",
+      "capas": [
+        {
+          "objectid": 9,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 09",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_09.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 124072,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -70.1719499,
+            -3.9569681,
+            -69.8010903,
+            -3.4833329
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo A",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 10,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 10",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_10.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 9121,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -70.3733352,
+            -3.497234,
+            -70.3274385,
+            -3.4538981
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo A",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 11,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 11",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_11.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 34438,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -69.9844917,
+            -3.3315398,
+            -69.8582765,
+            -3.1548536
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo A",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 12,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 12",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_12.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 72511,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -70.755552,
+            -2.783898,
+            -69.6105724,
+            -2.0626248
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo A",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 13,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 13",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_13.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 7597,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -69.9525594,
+            -1.151278,
+            -69.8843426,
+            -1.0815212
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo A",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 14,
+          "etiqueta": "Determinante 14 — pendiente de preparar",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 15,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 15",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_15.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 16548,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -71.884146,
+            -0.4088927,
+            -71.6847267,
+            -0.2319437
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo A",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 16,
+          "nombre": "Reservas Forestales de Ley 2da de 1959",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 16",
+          "categoria": "Reservas forestales — Tipo A",
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_16.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 13252,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -71.3486095,
+            -0.0849004,
+            -71.0348622,
+            0.096759
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Tipo A",
+          "norma": "Ley 2da de 1959",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        }
+      ]
+    },
+    {
+      "id": "04_HUMEDALES",
+      "titulo": "Humedales",
+      "capas": [
+        {
+          "objectid": 17,
+          "etiqueta": "Determinante 17 — pendiente de preparar",
+          "categoria": "Humedales",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        }
+      ]
+    },
+    {
+      "id": "05_MICROCUENCA_YAHUARCACA",
+      "titulo": "Microcuenca Yahuarcaca",
+      "capas": [
+        {
+          "objectid": 18,
+          "nombre": "Microcuenca Yahuarcaca",
+          "etiqueta": "Microcuenca Yahuarcaca",
+          "categoria": "Microcuenca Yahuarcaca",
+          "archivo": "datos/determinantes_ambientales/05_MICROCUENCA_YAHUARCACA/determinante_18.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 2539,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -69.9783746,
+            -4.2061588,
+            -69.9248367,
+            -4.1007487
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "Microcuenca Yahuarcaca",
+          "norma": " Resolución 0648 del 2009",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        }
+      ]
+    },
+    {
+      "id": "06_RONDAS_HIDRICAS",
+      "titulo": "Rondas hídricas",
+      "capas": [
+        {
+          "objectid": 19,
+          "etiqueta": "Determinante 19 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 20,
+          "etiqueta": "Determinante 20 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 21,
+          "etiqueta": "Determinante 21 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 22,
+          "etiqueta": "Determinante 22 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 23,
+          "etiqueta": "Determinante 23 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 24,
+          "etiqueta": "Determinante 24 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 25,
+          "etiqueta": "Determinante 25 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 26,
+          "etiqueta": "Determinante 26 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 27,
+          "etiqueta": "Determinante 27 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 28,
+          "etiqueta": "Determinante 28 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 29,
+          "etiqueta": "Determinante 29 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 30,
+          "etiqueta": "Determinante 30 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        },
+        {
+          "objectid": 31,
+          "etiqueta": "Determinante 31 — pendiente de preparar",
+          "categoria": "Rondas hídricas",
+          "archivo": null,
+          "estado": "aprobada_pendiente_preparacion_web",
+          "visiblePorDefecto": false
+        }
+      ]
+    },
+    {
+      "id": "07_CLASES_AGROLOGICAS_VII_VIII",
+      "titulo": "Clases agrológicas VII y VIII",
+      "capas": [
+        {
+          "objectid": 32,
+          "nombre": "Clase Agrologicas 7",
+          "etiqueta": "Clase Agrologicas 7",
+          "categoria": "Clases agrológicas VII y VIII",
+          "archivo": "datos/determinantes_ambientales/07_CLASES_AGROLOGICAS_VII_VIII/determinante_32.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 3687196,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -74.3475663,
+            -4.0461819,
+            -69.4516855,
+            0.0588677
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "VII",
+          "norma": "No Aplica",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        },
+        {
+          "objectid": 33,
+          "nombre": "Clase Agrologicas 8",
+          "etiqueta": "Clase Agrologicas 8",
+          "categoria": "Clases agrológicas VII y VIII",
+          "archivo": "datos/determinantes_ambientales/07_CLASES_AGROLOGICAS_VII_VIII/determinante_33.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "bytes": 1814414,
+          "features": 1,
+          "tipoGeometria": "MultiPolygon",
+          "bboxEPSG4326": [
+            -74.1043441,
+            -1.7930951,
+            -69.5692422,
+            0.0569692
+          ],
+          "atributosConsulta": [
+            "OBJECTID",
+            "Tipo_Determinante",
+            "Nombre",
+            "LEYENDA",
+            "Norma_Asociada",
+            "CAR_AA"
+          ],
+          "leyenda": "VIII",
+          "norma": "No Aplica",
+          "fuenteDeclarada": "Corpoamazonia",
+          "visiblePorDefecto": false,
+          "opacidadSugerida": 0.35,
+          "carga": "bajo_demanda"
+        }
+      ]
+    }
+  ],
+  "cantidadGeoJSONDisponibles": 18
+}
