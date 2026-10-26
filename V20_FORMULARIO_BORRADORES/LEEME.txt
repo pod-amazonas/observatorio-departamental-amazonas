@@ -1,0 +1,11 @@
+PRUEBA LOCAL V20 - NO PUBLICAR
+
+1. Configura SOLO sb_publishable_... en config_supabase.js.
+2. Supabase > Authentication > URL Configuration > Redirect URLs: agrega la URL exacta que Live Server muestre para recuperar_contrasena_v20.html; por ejemplo http://127.0.0.1:5500/V20_FORMULARIO_BORRADORES/recuperar_contrasena_v20.html (la ruta y el puerto varían según dónde abras la carpeta).
+3. Ejecuta admin_borradores_v20.html con Live Server e inicia sesión, o haz clic en ¿Olvidaste tu contraseña? para solicitar recuperación.
+4. Para probar la recuperación debes tener acceso real al correo del administrador. El correo de Supabase por defecto puede tener límites y no es apto para uso institucional; antes de producción configura SMTP propio.
+5. El enlace de recuperación debe devolver al archivo HTML mientras Live Server esté activo. No cambies credenciales secretas, ni publiques en GitHub esta versión.
+6. Se corrigió el guardado de la evidencia en pod_evidencias tras crear/actualizar el borrador. Verifica también la recuperación de evidencia al volver a abrir el reporte.
+7. Si guardas el reporte pero falla la evidencia, el reporte puede permanecer guardado: revisa la información antes de intentar otra vez.
+
+CORRECCIÓN: botón Guardar borrador ahora persiste evidencia y la vuelve a consultar. Si falla la evidencia, el mensaje indica explícitamente que el reporte sí quedó guardado. Mantener en prueba local.
