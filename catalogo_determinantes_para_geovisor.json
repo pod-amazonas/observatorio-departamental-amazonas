@@ -1,12 +1,12 @@
 {
   "titulo": "Observatorio Departamental del Amazonas — Determinantes ambientales",
-  "estado": "publicacion_autorizada_por_equipo_POD_preparacion_parcial",
+  "estado": "publicacion_autorizada_por_equipo_POD_20_geojson_preparados",
   "formato": "GeoJSON",
   "srcCoordenadas": "EPSG:4326 (longitud, latitud)",
-  "nota": "Las 33 determinantes cuentan con aprobación de publicación comunicada por el equipo POD. 18 están disponibles en GeoJSON; las otras 15 requieren preparación técnica. Trámites y estadísticas calculadas en navegador no equivalen a certificaciones oficiales.",
+  "nota": "Las 33 determinantes tienen aprobación de publicación comunicada por el equipo POD. Las determinantes 01–18, 32 y 33 están preparadas en GeoJSON; las rondas hídricas 19–31 se integrarán como teselas vectoriales en una etapa separada. Estadísticas calculadas en navegador no equivalen a certificaciones oficiales.",
   "cantidadTotalEsperada": 33,
-  "cantidadGeoJSONPiloto": 18,
-  "pendientes": 15,
+  "cantidadGeoJSONPiloto": 20,
+  "pendientes": 13,
   "organizacion": [
     "Componente biofísico",
     "Determinantes ambientales"
@@ -433,11 +433,12 @@
         },
         {
           "objectid": 14,
-          "etiqueta": "Determinante 14 — pendiente de preparar",
+          "etiqueta": "Reservas Forestales de Ley 2da de 1959 — entidad 14",
           "categoria": "Reservas forestales — Tipo A",
-          "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "archivo": "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_14.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "visiblePorDefecto": false,
+          "carga": "bajo_demanda"
         },
         {
           "objectid": 15,
@@ -509,11 +510,13 @@
       "capas": [
         {
           "objectid": 17,
-          "etiqueta": "Determinante 17 — pendiente de preparar",
+          "etiqueta": "Humedales",
           "categoria": "Humedales",
-          "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "archivo": "datos/determinantes_ambientales/04_HUMEDALES/determinante_17.geojson",
+          "estado": "aprobada_disponible_geojson",
+          "visiblePorDefecto": false,
+          "nombre": "Humedales",
+          "carga": "bajo_demanda"
         }
       ]
     },
