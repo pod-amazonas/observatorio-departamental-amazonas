@@ -13,7 +13,7 @@ function renderTree(){const tree=$('obs19-thematic-tree');if(!tree)return;clear(
  CATEGORIES.forEach((cat,i)=>{const outer=element('details');outer.open=i===1;const summary=element('summary','',cat);outer.append(summary);
   if(i===1){const mid=element('details');mid.open=true;mid.append(element('summary','','Determinantes ambientales · 33 capas previstas'));
    const sub=element('div');(catalog?.grupos||[]).forEach(g=>{const details=element('details');const summary=element('summary','',g.titulo+' · '+g.capas.filter(c=>!!c.archivo).length+' disponibles de '+g.capas.length);details.append(summary);g.capas.forEach(c=>{const b=element('button','obs19-topic-button',c.etiqueta||c.nombre||('Determinante '+c.objectid));b.type='button';b.disabled=!c.archivo;b.title=c.archivo?'Activar o desactivar esta capa':'Capa aprobada, pendiente de preparar para web';b.addEventListener('click',()=>togglePilot(c.objectid));details.append(b)});sub.append(details)});
-   const p=element('p','obs19-footnote','15 determinantes autorizadas están pendientes de preparación técnica para web.');sub.append(p);mid.append(sub);outer.append(mid)
+   const faltantes=(catalog?.grupos||[]).reduce((n,g)=>n+g.capas.filter(c=>!c.archivo).length,0);const p=element('p','obs19-footnote',faltantes+' determinantes pendientes de integración técnica. Las rondas hídricas (19–31) requieren una versión web optimizada.');sub.append(p);mid.append(sub);outer.append(mid)
   }else{outer.append(element('p','obs19-footnote','Categoría estructurada. Capas de esta temática pendientes de incorporación técnica.'))}
  tree.append(outer)})}
 function renderPilot(){
