@@ -8,7 +8,6 @@ test.beforeEach(async({page})=>{
   await page.route('**/*',async route=>{
     const u=new URL(route.request().url());
     if(u.hostname==='127.0.0.1'){
-      if(u.pathname==='/api/public/dashboard')return route.fulfill({json:{}});
       if(u.pathname.endsWith('/config_supabase.js'))return route.fulfill({contentType:'application/javascript',body:'window.POD_CONFIG={url:"https://test.invalid",publishableKey:"sb_publishable_test"}'});
       return route.continue();
     }
@@ -71,7 +70,7 @@ for(const view of ['documentos-pod','avances-pod'])test(`regresión pública POD
  await page.goto('/#'+view);
  await expect(page.locator('#view-'+view)).toBeVisible();
  await expect(page.locator('#pod-total')).toHaveText('33');
- await expect(page.locator('#pod-review')).toHaveText('0');
+ await expect(page.locator('#pod-review, #pod-show-review')).toHaveCount(0);
  const documents=await page.evaluate(()=>window.POD_CATALOGO.documents);
  expect(documents).toHaveLength(33);
  expect(documents.filter(d=>d.needsPrivacyReview===true)).toEqual([]);
@@ -137,3 +136,33 @@ for(const prefix of ['/','/observatorio-departamental-amazonas/']){
   expect(requested.filter(u=>/^https?:\/\/(unpkg\.com|cdn\.jsdelivr\.net)\//i.test(u))).toEqual([]);
  });
 }
+
+for(const size of [{width:1280,height:720},{width:390,height:844}])test(`transparencia y zoom de capa 1 con clic a ${size.width}x${size.height}`,async({page})=>{
+ await page.setViewportSize(size);
+ await page.goto('/#geovisor');
+ const card=page.locator('.obs20-pilot-card').filter({has:page.getByRole('checkbox',{name:'Mostrar u ocultar Rio Pure',exact:true})});
+ const slider=card.getByRole('slider');
+ await expect(slider).toBeDisabled();
+ await card.getByRole('button',{name:'Zoom a capa'}).click();
+ await expect(slider).toBeEnabled();
+ await expect.poll(()=>page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1&&window.obs19Api.getMap().hasLayer(l.layer)).length)).toBe(1);
+ const before=Number(await slider.inputValue());
+ await slider.click({position:{x:8,y:8}});
+ const value=Number(await slider.inputValue());
+ expect(value).not.toBe(before);
+ await expect(card.locator('output')).toHaveText(value+'%');
+ expect(await page.evaluate(()=>{const e=window.obs19Api.getLayers().find(l=>l.idPilot===1);return e.layer.getLayers()[0].options.fillOpacity})).toBeCloseTo((100-value)/100*.52);
+ await page.evaluate(()=>window.obs19Api.getMap().setView([0,0],3,{animate:false}));
+ await card.getByRole('button',{name:'Zoom a capa'}).click();
+ await expect.poll(()=>page.evaluate(()=>{const map=window.obs19Api.getMap(),e=window.obs19Api.getLayers().find(l=>l.idPilot===1);return map.getBounds().contains(e.layer.getBounds())&&map.getCenter().distanceTo(e.layer.getBounds().getCenter())<10000})).toBe(true);
+ expect(await page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1).length)).toBe(1);
+});
+test('estado uniforme del prototipo y sin consulta al servidor retirado',async({page})=>{
+ const requests=[];page.on('request',r=>{if(new URL(r.url()).pathname==='/api/public/dashboard')requests.push(r.url())});
+ await page.goto('/');
+ await expect(page).toHaveTitle('Observatorio Departamental del Amazonas · Prototipo en desarrollo');
+ await expect(page.locator('.prototype-ribbon')).toHaveText('Prototipo en desarrollo');
+ await expect(page.locator('.footer-bottom span').last()).toHaveText('Prototipo en desarrollo');
+ await expect(page.locator('#pod-live-status')).toHaveText('No hay reportes publicados para consulta ciudadana.');
+ expect(requests).toEqual([]);
+});
