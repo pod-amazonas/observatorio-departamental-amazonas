@@ -51,13 +51,19 @@ for(const layer of layers.filter(l=>l.archivo))test(`GeoJSON ${layer.objectid}: 
  expect(hint(data).filter(e=>e.level!=='message')).toEqual([]);
 });
 
-test('fallo conocido: lista de capas comprimida a altura cero',async({page})=>{
+for(const size of [{width:1280,height:720},{width:390,height:844}])test(`lista de capas visible y usable con clic a ${size.width}x${size.height}`,async({page})=>{
+ await page.setViewportSize(size);
  await page.goto('/#geovisor');
  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
+ const list=page.locator('#obs19-pilot-list');
+ await expect(list.locator('.obs20-pilot-card')).toHaveCount(33);
+ expect((await list.boundingBox()).height).toBeGreaterThan(0);
  const cb=page.getByRole('checkbox',{name:'Mostrar u ocultar Rio Pure',exact:true});
- await expect(cb).toBeEnabled();
- test.fail(true,'A 1280x720 #obs19-pilot-list se comprime a altura 0 dentro de .geo-sidebar; por eso la barra lateral recibe el clic. Sin force ni cambios del CSS del sitio.');
- await cb.check({timeout:5000});
+ await cb.check();
+ await expect.poll(()=>page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1).length)).toBe(1);
+ await expect(cb).toBeChecked();
+ await cb.uncheck();
+ await expect.poll(()=>page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1).length)).toBe(0);
 });
 
 for(const view of ['documentos-pod','avances-pod'])test(`regresión pública POD: ${view}`,async({page})=>{

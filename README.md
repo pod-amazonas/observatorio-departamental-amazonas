@@ -17,6 +17,4 @@ El navegador usa Leaflet 1.9.4 instalado localmente. Todas las solicitudes exter
 
 GitHub Actions ejecuta la misma suite en cada PR; las acciones están fijadas por SHA y el token tiene solo lectura. Los fallos conocidos se marcan individualmente con `test.fail` y una explicación: si dejan de fallar, Playwright exige retirar la marca. Nunca se ignoran globalmente errores de consola o de geometría.
 
-Fallo conocido: a 1280×720, `#obs19-pilot-list` se comprime a altura 0 dentro de `.geo-sidebar`; por eso la barra lateral recibe el clic destinado a la casilla de capa 1. Se mantiene una prueba independiente con `test.fail`, sin `force` ni cambios del CSS del sitio. Otra prueba verifica la activación y desactivación por teclado. También se simula `/api/public/dashboard` con una respuesta vacía.
-
-Las regresiones de Documentos POD y Avances POD comprueban 33 documentos, 0 pendientes, ausencia de entradas con `needsPrivacyReview: true` y ausencia de enlaces públicos a `admin_borradores_v20.html`. Los resultados de ejecución se registran en el PR. CI usa Ubuntu 24.04, compatible con Playwright 1.56.1.
+La lista de capas se prueba con clic a 1280×720 y 390×844. Las regresiones de Documentos POD y Avances POD comprueban 33 documentos, 0 pendientes, ausencia de entradas con `needsPrivacyReview: true` y ausencia de enlaces públicos a `admin_borradores_v20.html`. Los resultados de ejecución se registran en el PR. CI usa Ubuntu 24.04, compatible con Playwright 1.56.1.
