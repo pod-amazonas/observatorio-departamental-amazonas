@@ -1306,7 +1306,7 @@ function viewRoute(){
   document.getElementById('top-nav').classList.remove('is-open');
   document.getElementById('nav-toggle').setAttribute('aria-expanded','false');
   window.scrollTo({top:0,behavior:'instant'});
-  document.title=(route==='inicio'?'Observatorio Departamental del Amazonas':(document.querySelector(`#view-${route} h1`)?.textContent || route)+' · Observatorio Departamental del Amazonas')+' · Prototipo';
+  document.title=(route==='inicio'?'Observatorio Departamental del Amazonas':(document.querySelector(`#view-${route} h1`)?.textContent || route)+' · Observatorio Departamental del Amazonas')+' · Prototipo en desarrollo';
   if(route==='geovisor')setTimeout(initMap,90);
 }
 function initMap(){
