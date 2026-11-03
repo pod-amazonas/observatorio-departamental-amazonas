@@ -9,12 +9,13 @@ test.beforeEach(async({page})=>{
     const u=new URL(route.request().url());
     if(u.hostname==='127.0.0.1'){
       if(u.pathname==='/api/public/dashboard')return route.fulfill({json:{}});
-      if(u.pathname.endsWith('/config_supabase.js'))return route.fulfill({contentType:'application/javascript',body:'window.POD_CONFIG={url:"https://test.invalid",publishableKey:"test"}'});
+      if(u.pathname.endsWith('/config_supabase.js'))return route.fulfill({contentType:'application/javascript',body:'window.POD_CONFIG={url:"https://test.invalid",publishableKey:"sb_publishable_test"}'});
       return route.continue();
     }
-    if(u.pathname.endsWith('/leaflet.js'))return route.fulfill({path:require.resolve('leaflet/dist/leaflet.js'),contentType:'application/javascript'});
-    if(u.pathname.endsWith('/leaflet.css'))return route.fulfill({path:require.resolve('leaflet/dist/leaflet.css'),contentType:'text/css'});
-    if(u.pathname.includes('supabase-js'))return route.fulfill({contentType:'application/javascript',body:`window.supabase={createClient:()=>({from:()=>{const q={select:()=>q,eq:()=>q,order:()=>q,in:()=>q,then:r=>Promise.resolve({data:[],error:null}).then(r)};return q}})}`});
+    if(u.hostname==='test.invalid'){
+      if(u.pathname==='/auth/v1/token')return route.fulfill({status:400,json:{code:'invalid_credentials',message:'Credenciales de prueba rechazadas'}});
+      return route.fulfill({json:u.pathname.startsWith('/rest/v1/')?[]:{}});
+    }
     return route.fulfill({status:200,body:'',contentType:'text/plain'});
   });
 });
@@ -76,3 +77,63 @@ for(const view of ['documentos-pod','avances-pod'])test(`regresión pública POD
  expect(documents.filter(d=>d.needsPrivacyReview===true)).toEqual([]);
  await expect(page.locator('a[href*="admin_borradores_v20.html"]')).toHaveCount(0);
 });
+
+const crypto=require('node:crypto');
+const targets=['index.html','pod_reportes_publicos.js','V20_FORMULARIO_BORRADORES/admin_borradores_v20.html','V20_FORMULARIO_BORRADORES/recuperar_contrasena_v20.html'];
+for(const file of targets)test(`dependencias sin CDN: ${file}`,()=>{
+ const source=fs.readFileSync(path.join(__dirname,'..',file),'utf8');
+ expect(source).not.toMatch(/(?:https?:)?\/\/(?:unpkg\.com|cdn\.jsdelivr\.net)\b/i);
+});
+test('todos los archivos vendor coinciden con los SHA-256 documentados',()=>{
+ const root=path.join(__dirname,'../vendor');
+ const readme=fs.readFileSync(path.join(root,'README.md'),'utf8');
+ const entries=[...readme.matchAll(/^\| `([^`]+)` \|[^\n]+\| `([a-f0-9]{64})` \|$/gm)];
+ const files=fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()&&f!=='README.md').sort();
+ expect(entries.map(m=>m[1]).sort()).toEqual(files);
+ for(const [,file,hash] of entries)expect(crypto.createHash('sha256').update(fs.readFileSync(path.join(root,file))).digest('hex'),file).toBe(hash);
+});
+for(const prefix of ['/','/observatorio-departamental-amazonas/']){
+ test(`Leaflet y Supabase locales bajo ${prefix}`,async({page})=>{
+  // Simula la subruta de un sitio de proyecto en GitHub Pages.
+  if(prefix!=='/')await page.route('http://127.0.0.1:8765'+prefix+'**',async route=>{
+   const url=new URL(route.request().url());
+   const relative=decodeURIComponent(url.pathname.slice(prefix.length))||'index.html';
+   if(relative.endsWith('config_supabase.js'))return route.fulfill({contentType:'application/javascript',body:'window.POD_CONFIG={url:"https://test.invalid",publishableKey:"sb_publishable_test"}'});
+   return route.fulfill({path:path.join(__dirname,'..',relative)});
+  });
+  const requested=[];page.on('request',r=>requested.push(r.url()));
+  await page.goto(prefix+'#geovisor');
+  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
+  await expect(page.locator('#pod-live-status')).toHaveText('No hay reportes publicados para consulta ciudadana.');
+  expect(await page.evaluate(()=>L.version)).toBe('1.9.4');
+  expect(requested).toContain('http://127.0.0.1:8765'+prefix+'vendor/leaflet-1.9.4/leaflet.js');
+  expect(requested).toContain('http://127.0.0.1:8765'+prefix+'vendor/leaflet-1.9.4/leaflet.css');
+  expect(requested).toContain('http://127.0.0.1:8765'+prefix+'vendor/supabase-2.118.0/supabase.js');
+  // Comprueba también que las imágenes resuelven junto al CSS local.
+  await page.evaluate(()=>L.marker([0,0]).addTo(window.obs19Api.getMap()));
+  const icon=page.locator('.leaflet-marker-icon').first();
+  await expect(icon).toHaveAttribute('src',/vendor\/leaflet-1\.9\.4\/images\/marker-icon\.png$/);
+  await expect.poll(()=>icon.evaluate(img=>img.complete&&img.naturalWidth>0)).toBe(true);
+  for(const file of ['admin_borradores_v20.html','recuperar_contrasena_v20.html']){
+   const errors=[];page.on('pageerror',e=>errors.push(e.message));
+   const response=page.waitForResponse(r=>r.url()==='http://127.0.0.1:8765'+prefix+'vendor/supabase-2.118.0/supabase.js');
+   await page.goto(prefix+'V20_FORMULARIO_BORRADORES/'+file);
+   expect((await response).status()).toBe(200);
+   expect(await page.evaluate(()=>typeof window.supabase.createClient)).toBe('function');
+   expect(errors).toEqual([]);
+   if(file.startsWith('admin')){
+    await page.locator('#email').fill('admin@example.invalid');
+    await page.locator('#password').fill('clave-ficticia-de-prueba');
+    await page.locator('#login').click();
+    await expect(page.locator('#authStatus')).toContainText('Credenciales de prueba rechazadas');
+   }
+   if(file.startsWith('recuperar')){
+    await expect(page.locator('#request')).toBeEnabled();
+    await page.locator('#email').fill('admin@example.invalid');
+    await page.locator('#request').click();
+    await expect(page.locator('#requestStatus')).toContainText('Si el correo corresponde');
+   }
+  }
+  expect(requested.filter(u=>/^https?:\/\/(unpkg\.com|cdn\.jsdelivr\.net)\//i.test(u))).toEqual([]);
+ });
+}
