@@ -1,11 +1,9 @@
-PRUEBA LOCAL V20 - NO PUBLICAR
+PANEL DE BORRADORES V20
 
-1. Configura SOLO sb_publishable_... en config_supabase.js.
-2. Supabase > Authentication > URL Configuration > Redirect URLs: agrega la URL exacta que Live Server muestre para recuperar_contrasena_v20.html; por ejemplo http://127.0.0.1:5500/V20_FORMULARIO_BORRADORES/recuperar_contrasena_v20.html (la ruta y el puerto varían según dónde abras la carpeta).
-3. Ejecuta admin_borradores_v20.html con Live Server e inicia sesión, o haz clic en ¿Olvidaste tu contraseña? para solicitar recuperación.
-4. Para probar la recuperación debes tener acceso real al correo del administrador. El correo de Supabase por defecto puede tener límites y no es apto para uso institucional; antes de producción configura SMTP propio.
-5. El enlace de recuperación debe devolver al archivo HTML mientras Live Server esté activo. No cambies credenciales secretas, ni publiques en GitHub esta versión.
-6. Se corrigió el guardado de la evidencia en pod_evidencias tras crear/actualizar el borrador. Verifica también la recuperación de evidencia al volver a abrir el reporte.
-7. Si guardas el reporte pero falla la evidencia, el reporte puede permanecer guardado: revisa la información antes de intentar otra vez.
+El panel está publicado temporalmente en GitHub Pages hasta la Fase 3. El acceso administrativo se realiza por su URL directa, no desde la página pública.
 
-CORRECCIÓN: botón Guardar borrador ahora persiste evidencia y la vuelve a consultar. Si falla la evidencia, el mensaje indica explícitamente que el reporte sí quedó guardado. Mantener en prueba local.
+1. La configuración del navegador utiliza únicamente la clave publicable; nunca agregues claves secretas.
+2. Inicia sesión en admin_borradores_v20.html. La recuperación se solicita mediante ¿Olvidaste tu contraseña? y requiere acceso al correo del administrador.
+3. Las URL de retorno de recuperación deben corresponder al entorno autorizado. Antes de producción, configura SMTP institucional y verifica el flujo completo.
+4. Guardar borrador persiste la evidencia y vuelve a consultarla. Si falla la evidencia, el mensaje indica que el reporte sí quedó guardado: revisa la información antes de intentar otra vez.
+5. El panel incluye revisión y publicación con confirmación explícita. Usa solo registros autorizados en el entorno de pruebas; no cambies permisos ni credenciales como parte de esta limpieza.
