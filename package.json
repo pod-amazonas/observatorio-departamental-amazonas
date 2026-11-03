@@ -1,0 +1,1 @@
+{"private":true,"scripts":{"test":"playwright test","test:local":"npm ci && playwright install --no-shell chromium && playwright test"},"devDependencies":{"@mapbox/geojsonhint":"3.3.0","@playwright/test":"1.56.1","leaflet":"1.9.4"},"overrides":{"underscore":"1.13.8"}}
