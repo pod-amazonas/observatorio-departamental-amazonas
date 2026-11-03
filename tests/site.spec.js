@@ -51,11 +51,22 @@ for(const layer of layers.filter(l=>l.archivo))test(`GeoJSON ${layer.objectid}: 
  expect(hint(data).filter(e=>e.level!=='message')).toEqual([]);
 });
 
-test('fallo conocido: clic en casilla de capa 1 interceptado por sidebar',async({page})=>{
+test('fallo conocido: lista de capas comprimida a altura cero',async({page})=>{
  await page.goto('/#geovisor');
  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
  const cb=page.getByRole('checkbox',{name:'Mostrar u ocultar Rio Pure',exact:true});
  await expect(cb).toBeEnabled();
- test.fail(true,'A 1280x720 geo-sidebar intercepta el puntero de la casilla de capa 1. No se modifica CSS en este PR.');
+ test.fail(true,'A 1280x720 #obs19-pilot-list se comprime a altura 0 dentro de .geo-sidebar; por eso la barra lateral recibe el clic. Sin force ni cambios del CSS del sitio.');
  await cb.check({timeout:5000});
+});
+
+for(const view of ['documentos-pod','avances-pod'])test(`regresión pública POD: ${view}`,async({page})=>{
+ await page.goto('/#'+view);
+ await expect(page.locator('#view-'+view)).toBeVisible();
+ await expect(page.locator('#pod-total')).toHaveText('33');
+ await expect(page.locator('#pod-review')).toHaveText('0');
+ const documents=await page.evaluate(()=>window.POD_CATALOGO.documents);
+ expect(documents).toHaveLength(33);
+ expect(documents.filter(d=>d.needsPrivacyReview===true)).toEqual([]);
+ await expect(page.locator('a[href*="admin_borradores_v20.html"]')).toHaveCount(0);
 });
