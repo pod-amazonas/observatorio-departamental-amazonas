@@ -166,3 +166,74 @@ test('estado uniforme del prototipo y sin consulta al servidor retirado',async({
  await expect(page.locator('#pod-live-status')).toHaveText('No hay reportes publicados para consulta ciudadana.');
  expect(requests).toEqual([]);
 });
+
+test('portada: nombre, frase, logo y capas interactivas',async({page})=>{
+ await page.goto('/');
+ const portada=page.locator('.portada');
+ await expect(portada.locator('h1')).toHaveText('Observatorio Departamental del Amazonas');
+ await expect(portada.locator('.portada-frase')).toHaveText('Descubre el Amazonas, capa por capa.');
+ const logo=portada.locator('.portada-logo img');
+ await expect.poll(()=>logo.evaluate(img=>img.complete&&img.naturalWidth>0)).toBe(true);
+ await portada.getByRole('button',{name:'Movilidad fluvial'}).click();
+ await expect(portada).toHaveAttribute('data-capa','movilidad');
+ await expect(portada.getByRole('button',{name:'Movilidad fluvial'})).toHaveAttribute('aria-pressed','true');
+ await expect(portada.locator('.portada-capa-texto')).toContainText('puertos');
+ await page.waitForTimeout(5200);
+ await expect(portada).toHaveAttribute('data-capa','movilidad');
+});
+for(const [size,columnas] of [[{width:1280,height:720},3],[{width:390,height:844},1]])test(`portada: 6 módulos en ${columnas} columna(s) a ${size.width}px`,async({page})=>{
+ await page.setViewportSize(size);
+ await page.goto('/');
+ const tarjetas=page.locator('.portada-modulo');
+ await expect(tarjetas).toHaveCount(6);
+ const xs=await tarjetas.evaluateAll(a=>a.map(e=>Math.round(e.getBoundingClientRect().left)));
+ expect(new Set(xs).size).toBe(columnas);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+});
+test('portada: conserva la franja con los logos de las 16 entidades',async({page})=>{
+ await page.goto('/');
+ const originales=page.locator('.obs19-partner:not([aria-hidden="true"])');
+ await expect(originales).toHaveCount(16);
+ await expect(originales.locator('img')).toHaveCount(16);
+});
+test('portada: respeta la preferencia de reducir movimiento',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ await expect(page.locator('.portada-frase')).toHaveCSS('opacity','1');
+ expect(await page.locator('.portada-navega').evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
+ await page.waitForTimeout(5200);
+ await expect(page.locator('.portada')).toHaveAttribute('data-capa','rios');
+});
+const capasPortada=[['rios','Ríos'],['bosques','Bosques'],['territorio','Territorio'],['movilidad','Movilidad fluvial']];
+test('portada: cada capa se resalta sola y se activa con teclado',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ const portada=page.locator('.portada');
+ for(const [i,[capa,nombre]] of capasPortada.entries()){
+  const boton=portada.getByRole('button',{name:nombre,exact:true});
+  await boton.focus();await boton.press(i%2?'Space':'Enter');
+  await expect(portada).toHaveAttribute('data-capa',capa);
+  await expect(portada.locator('.portada-capa-texto')).toHaveText(await boton.getAttribute('data-texto'));
+  for(const [otra,otroNombre] of capasPortada){
+   const activa=otra===capa;
+   await expect(portada.getByRole('button',{name:otroNombre,exact:true}),`botón ${otroNombre} con ${capa} activa`).toHaveAttribute('aria-pressed',String(activa));
+   await expect(portada.locator(`svg.portada-fondo .portada-capa-${otra}`),`capa ${otra} con ${capa} activa`).toHaveCSS('opacity',activa?'1':'0.22');
+  }
+ }
+});
+const modulosPortada=[['Geovisor','geovisor'],['Geoportal','geoportal'],['Avances del POD','avances-pod'],['Biblioteca Digital','biblioteca'],['Documentos del POD','documentos-pod'],['Certificados ambientales','certificados']];
+test('portada: las seis tarjetas son exactamente las esperadas',async({page})=>{
+ await page.goto('/');
+ await expect(page.locator('.portada-modulo strong')).toHaveText(modulosPortada.map(([t])=>t));
+});
+for(const [titulo,ruta] of modulosPortada)test(`portada: tarjeta ${titulo} abre la vista ${ruta}`,async({page})=>{
+ await page.goto('/');
+ const tarjeta=page.locator('.portada-modulo').filter({has:page.getByText(titulo,{exact:true})});
+ await expect(tarjeta).toHaveCount(1);
+ await expect(tarjeta).toHaveAttribute('href','#'+ruta);
+ await expect(tarjeta).toHaveAttribute('data-route',ruta);
+ await tarjeta.click();
+ await expect(page).toHaveURL(new RegExp('#'+ruta+'$'));
+ await expect(page.locator('#view-'+ruta)).toBeVisible();
+ await expect(page.locator('#view-inicio')).toBeHidden();
+});
