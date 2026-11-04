@@ -34,7 +34,8 @@
 .portada-navega{stroke-dasharray:16 18;animation:portada-estela 1.4s linear infinite}
 .portada:not([data-capa="rios"]) .portada-capa-rios *,.portada:not([data-capa="bosques"]) .portada-capa-bosques *,.portada:not([data-capa="territorio"]) .portada-capa-territorio *,.portada:not([data-capa="movilidad"]) .portada-capa-movilidad *{animation-play-state:paused}
 .portada-onda{transform-box:fill-box;transform-origin:center;animation:portada-onda 4.2s ease-out infinite}
-.portada-delfin{animation:portada-delfin 9s ease-in-out infinite}
+.portada-delfin{transform-box:view-box;transform-origin:800px 650px;animation:portada-delfin 9s linear infinite}
+.portada-salpica{opacity:0;transform-box:fill-box;transform-origin:center;animation:portada-salpica 9s ease-out infinite}
 .portada-mece{animation:portada-mece 6s ease-in-out infinite}
 .portada-mece-lento{animation:portada-mece 9s ease-in-out infinite reverse}
 .portada-neblina{animation:portada-neblina 22s ease-in-out infinite}
@@ -63,7 +64,8 @@
 @keyframes portada-flujo{to{stroke-dashoffset:-384}}
 @keyframes portada-estela{to{stroke-dashoffset:34}}
 @keyframes portada-onda{0%{opacity:.85;transform:scale(.45)}100%{opacity:0;transform:scale(1.5)}}
-@keyframes portada-delfin{0%,62%{opacity:0;transform:translate(-90px,70px) rotate(-26deg)}68%{opacity:1}78%{opacity:1;transform:translate(0,-36px) rotate(0)}88%{opacity:1}94%,100%{opacity:0;transform:translate(90px,70px) rotate(26deg)}}
+@keyframes portada-delfin{0%,10%{transform:rotate(95deg)}40%{transform:rotate(-95deg)}40.01%,52%{transform:translateX(-190px) rotate(95deg)}82%{transform:translateX(-190px) rotate(-95deg)}82.01%,100%{transform:rotate(95deg)}}
+@keyframes portada-salpica{0%{opacity:0;transform:scale(.4)}3%{opacity:.9}14%,100%{opacity:0;transform:scale(1.4)}}
 @keyframes portada-mece{0%,100%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
 @keyframes portada-neblina{0%,100%{transform:translateX(-70px)}50%{transform:translateX(70px)}}
 @keyframes portada-hoja{0%{opacity:0;transform:translate(0,0) rotate(0)}12%{opacity:.95}85%{opacity:.95}100%{opacity:0;transform:translate(70px,270px) rotate(360deg)}}
