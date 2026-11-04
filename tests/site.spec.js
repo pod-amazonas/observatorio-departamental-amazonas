@@ -166,3 +166,41 @@ test('estado uniforme del prototipo y sin consulta al servidor retirado',async({
  await expect(page.locator('#pod-live-status')).toHaveText('No hay reportes publicados para consulta ciudadana.');
  expect(requests).toEqual([]);
 });
+
+test('portada: nombre, frase, logo y capas interactivas',async({page})=>{
+ await page.goto('/');
+ const portada=page.locator('.portada');
+ await expect(portada.locator('h1')).toHaveText('Observatorio Departamental del Amazonas');
+ await expect(portada.locator('.portada-frase')).toHaveText('Descubre el Amazonas, capa por capa.');
+ const logo=portada.locator('.portada-logo img');
+ await expect.poll(()=>logo.evaluate(img=>img.complete&&img.naturalWidth>0)).toBe(true);
+ await portada.getByRole('button',{name:'Movilidad fluvial'}).click();
+ await expect(portada).toHaveAttribute('data-capa','movilidad');
+ await expect(portada.getByRole('button',{name:'Movilidad fluvial'})).toHaveAttribute('aria-pressed','true');
+ await expect(portada.locator('.portada-capa-texto')).toContainText('puertos');
+ await page.waitForTimeout(5200);
+ await expect(portada).toHaveAttribute('data-capa','movilidad');
+});
+for(const [size,columnas] of [[{width:1280,height:720},3],[{width:390,height:844},1]])test(`portada: 6 módulos en ${columnas} columna(s) a ${size.width}px`,async({page})=>{
+ await page.setViewportSize(size);
+ await page.goto('/');
+ const tarjetas=page.locator('.portada-modulo');
+ await expect(tarjetas).toHaveCount(6);
+ const xs=await tarjetas.evaluateAll(a=>a.map(e=>Math.round(e.getBoundingClientRect().left)));
+ expect(new Set(xs).size).toBe(columnas);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+});
+test('portada: conserva la franja con los logos de las 16 entidades',async({page})=>{
+ await page.goto('/');
+ const originales=page.locator('.obs19-partner:not([aria-hidden="true"])');
+ await expect(originales).toHaveCount(16);
+ await expect(originales.locator('img')).toHaveCount(16);
+});
+test('portada: respeta la preferencia de reducir movimiento',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ await expect(page.locator('.portada-frase')).toHaveCSS('opacity','1');
+ expect(await page.locator('.portada-navega').evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
+ await page.waitForTimeout(5200);
+ await expect(page.locator('.portada')).toHaveAttribute('data-capa','rios');
+});

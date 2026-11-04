@@ -3,7 +3,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const views={
- inicio:'Un territorio que se conoce, se planea mejor.',
+ inicio:'Observatorio Departamental del Amazonas',
  geovisor:'Geovisor del Amazonas',
  geoportal:'Información territorial por temática',
  'avances-pod':'Seguimiento al cumplimiento del POD',
