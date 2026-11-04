@@ -1,0 +1,78 @@
+
+/* V15 — Certificados de Compatibilidad (prototipo público). Restringido al módulo */
+#view-certificados .cert13-wrap{padding-bottom:66px}
+#view-certificados .cert13-hero{background:linear-gradient(108deg,#0e5334,#217348);color:#fff;padding:30px 34px;border-radius:16px;display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:30px;align-items:center}
+#view-certificados .cert13-hero h2{color:#fff;font-size:clamp(22px,2.2vw,31px);line-height:1.17;max-width:650px;margin:12px 0}
+#view-certificados .cert13-hero p{color:#e0eee5;font-size:13px;line-height:1.75;max-width:700px}
+#view-certificados .cert13-overline{font-size:11px;letter-spacing:.1em;color:#c5e2cf;font-weight:800}
+#view-certificados .cert13-hero-tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}
+#view-certificados .cert13-hero-tags span{border:1px solid #a0c7ac80;border-radius:30px;color:#eef9ef;padding:6px 10px;font-size:10px;font-weight:650}
+#view-certificados .cert13-hero-icon{border:1px solid #ffffff44;border-radius:24px;background:#ffffff16;height:112px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
+#view-certificados .cert13-hero-icon svg{width:39px;height:39px;stroke:#e0f3e3;fill:none}
+#view-certificados .cert13-hero-icon span{font-size:13px;color:#e8f5e8;font-weight:800}
+#view-certificados .cert13-alert{display:flex;gap:12px;align-items:start;border-radius:12px;background:#f3f7ed;border:1px solid #dce8d2;color:#36593e;font-size:12px;line-height:1.7;padding:15px 17px;margin:18px 0}
+#view-certificados .cert13-alert svg{color:#2d7952;width:20px;height:20px}
+#view-certificados .cert13-step-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin:21px 0}
+#view-certificados .cert13-step{text-align:left;border-radius:12px;border:1px solid #dbe5db;background:#fff;color:#3c5c45;padding:16px 12px;min-height:91px;display:flex;flex-direction:column;gap:4px;align-items:flex-start;transition:.15s}
+#view-certificados .cert13-step small{color:#729274;font-size:10px;font-weight:850;letter-spacing:.06em}
+#view-certificados .cert13-step strong{font-size:13px;font-weight:800}
+#view-certificados .cert13-step span{font-size:10px;color:#69806d}
+#view-certificados .cert13-step.current{background:#e9f4e6;border:2px solid #2b854f;padding:15px 11px}
+#view-certificados .cert13-step:hover{border-color:#9fc4a8}
+#view-certificados .cert13-main{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:18px;align-items:start}
+#view-certificados .cert13-body{background:#fff;border:1px solid #dce6dc;border-radius:15px;padding:27px;min-width:0}
+#view-certificados .cert13-panel-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px}
+#view-certificados .cert13-panel-head h2{font-size:24px;line-height:1.25;margin:5px 0 8px;color:#1e4f34}
+#view-certificados .cert13-panel-head p{font-size:12px;line-height:1.75;max-width:620px;margin:0;color:#667c6a}
+#view-certificados .cert13-count{flex:0 0 44px;height:44px;border-radius:11px;background:#eaf4e6;color:#207049;font-weight:850;display:flex;align-items:center;justify-content:center;font-size:18px}
+#view-certificados .cert13-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#view-certificados .cert13-field{display:flex;flex-direction:column;gap:7px;min-width:0;font-size:12px;font-weight:750;color:#3a5b43}
+#view-certificados .cert13-field em{color:#b75b43;font-style:normal}
+#view-certificados .cert13-field input,#view-certificados .cert13-field select,#view-certificados .cert13-field textarea{background:#fcfdfb;border:1px solid #d6e2d8;color:#294d34;border-radius:9px;padding:12px 13px;font-size:13px;font-weight:450;width:100%;min-height:44px}
+#view-certificados .cert13-field textarea{resize:vertical;min-height:95px}
+#view-certificados .cert13-field :is(input,select,textarea):focus{outline:2px solid #62a977;outline-offset:1px}
+#view-certificados .cert13-wide{grid-column:1/-1}
+#view-certificados .cert13-hint{font-size:11px;color:#6c816d;line-height:1.7;margin:16px 0 0}
+#view-certificados .cert13-doc-list{display:grid;gap:11px}
+#view-certificados .cert13-doc{display:flex;gap:12px;align-items:flex-start;border:1px solid #dbe6db;border-radius:10px;padding:14px;cursor:pointer}
+#view-certificados .cert13-doc input{accent-color:#186741;margin-top:5px;flex-shrink:0}
+#view-certificados .cert13-doc span{display:flex;flex-direction:column;gap:4px}
+#view-certificados .cert13-doc strong{font-size:12px;color:#274b32}
+#view-certificados .cert13-doc small{font-size:11px;line-height:1.6;color:#6b806d}
+#view-certificados .cert13-attach{margin-top:17px;background:#f6faf5;padding:15px;border:1px dashed #a7c8ac;border-radius:10px}
+#view-certificados .cert13-attach input{background:white;padding:9px;font-size:11px}
+#view-certificados .cert13-attach small{font-size:11px;font-weight:500;color:#667965}
+#view-certificados .cert13-mininote{font-size:11px;color:#50745b;line-height:1.7;padding:12px;background:#eff5ed;border-radius:9px;margin-top:15px}
+#view-certificados .cert13-map{height:300px;background:#eef2ee;border:1px solid #dce5d9;border-radius:11px;margin-top:12px;z-index:0}
+#view-certificados .cert13-map-actions{display:flex;align-items:center;flex-wrap:wrap;gap:11px;margin-top:16px}
+#view-certificados .cert13-map-actions span{font-size:11px;color:#647b68;flex:1}
+#view-certificados .cert13-checks{display:grid;gap:10px}
+#view-certificados .cert13-checks>div{border:1px solid #e0e8dd;border-radius:10px;padding:14px;display:flex;align-items:center;gap:11px}
+#view-certificados .cert13-check-icon{background:#eaf3e8;color:#317648;font-weight:800;font-size:10px;min-width:33px;height:31px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+#view-certificados .cert13-checks strong{color:#284d35;font-size:12px;flex:1}
+#view-certificados .cert13-wait{border-radius:40px;background:#f3f3ed;color:#777863;font-size:10px;padding:5px 9px;white-space:nowrap;font-weight:700}
+#view-certificados .cert13-callout{display:flex;gap:12px;align-items:flex-start;padding:16px;border-radius:11px;border:1px solid #e6e7cc;background:#fafaf1;font-size:12px;line-height:1.65;color:#5e674a;margin-top:19px}
+#view-certificados .cert13-callout svg{color:#717b49}
+#view-certificados .cert13-callout p{margin:5px 0 0}
+#view-certificados .cert13-preview-banner{display:flex;gap:10px;align-items:center;background:#fff6ed;color:#935d2c;border:1px solid #eed9c2;border-radius:10px;padding:12px;font-size:11px;font-weight:850;letter-spacing:.025em}
+#view-certificados .cert13-summary{display:grid;grid-template-columns:155px minmax(0,1fr);margin:16px 0 20px;border:1px solid #e2e9e0;border-radius:9px;overflow:hidden}
+#view-certificados .cert13-summary dt,#view-certificados .cert13-summary dd{padding:11px 13px;margin:0;border-bottom:1px solid #e7eee4;font-size:12px;overflow-wrap:anywhere}
+#view-certificados .cert13-summary dt{background:#f5f8f4;color:#536b59;font-weight:800}
+#view-certificados .cert13-summary dd{color:#31533e}
+#view-certificados .cert13-summary :nth-last-child(-n+2){border-bottom:0}
+#view-certificados .cert13-review-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:17px}
+#view-certificados .cert13-review-cols>div{border:1px solid #e1e8dd;background:#f9fbf8;border-radius:10px;padding:14px}
+#view-certificados .cert13-review-cols strong{color:#25503a;font-size:12px}
+#view-certificados .cert13-review-cols p{color:#68806c;font-size:11px;line-height:1.65;margin:6px 0 0}
+#view-certificados .cert13-wizard-bar{display:flex;gap:13px;align-items:center;justify-content:space-between;border-top:1px solid #e2e9e0;margin-top:28px;padding-top:19px}
+#view-certificados .cert13-wizard-bar .btn,#view-certificados .cert13-map-actions .btn{font-size:12px;padding:11px 16px}
+#view-certificados .cert13-wizard-status{font-size:11px;font-weight:750;color:#5e7d65}
+#view-certificados .cert13-validation{padding:11px 13px;background:#fff4ef;border:1px solid #efd2c6;border-radius:9px;color:#a1422a;font-size:12px;margin:12px 0 0}
+#view-certificados .cert13-info-card{background:#f7faf5;border:1px solid #dce7dc;border-radius:14px;padding:21px;margin-bottom:14px}
+#view-certificados .cert13-info-card h3{margin:10px 0 15px;color:#21543a;font-size:16px;line-height:1.4}
+#view-certificados .cert13-info-card ol{margin:0;padding-left:18px;color:#526b57;font-size:12px;line-height:1.9}
+#view-certificados .cert13-info-card li{padding-left:4px;margin:5px 0}
+#view-certificados .cert13-info-card p{font-size:12px;color:#5c755f;line-height:1.8;margin:7px 0 0}
+#view-certificados .cert13-status strong{font-size:13px;color:#246844}
+@media(max-width:1040px){#view-certificados .cert13-main{grid-template-columns:1fr}#view-certificados .cert13-sidebar{display:grid;grid-template-columns:1fr 1fr;gap:12px}#view-certificados .cert13-step{padding:13px 10px}#view-certificados .cert13-step.current{padding:12px 9px}}
+@media(max-width:650px){#view-certificados .cert13-hero{grid-template-columns:1fr;padding:24px}#view-certificados .cert13-hero-icon{display:none}#view-certificados .cert13-step-nav{grid-template-columns:repeat(2,minmax(0,1fr))}#view-certificados .cert13-step{min-height:82px}#view-certificados .cert13-body{padding:17px}#view-certificados .cert13-panel-head{gap:10px}#view-certificados .cert13-panel-head h2{font-size:20px}#view-certificados .cert13-count{flex-basis:36px;height:36px;font-size:15px}#view-certificados .cert13-fields,#view-certificados .cert13-review-cols,#view-certificados .cert13-sidebar{grid-template-columns:1fr}#view-certificados .cert13-summary{grid-template-columns:105px minmax(0,1fr)}#view-certificados .cert13-wizard-bar{flex-wrap:wrap;gap:8px}#view-certificados .cert13-wizard-status{order:3;flex:1 0 100%;text-align:center}#view-certificados .cert13-map{height:260px}}

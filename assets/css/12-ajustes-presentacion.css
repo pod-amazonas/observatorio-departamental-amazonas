@@ -1,0 +1,44 @@
+
+/* Ajustes de revisión V19-A01 (22 oct. 2026). */
+.hero-visual > .map-floating{
+  position:relative;left:auto;bottom:auto;z-index:3;transform:none;
+  margin:17px auto 0;max-width:min(98%,445px);width:fit-content;
+  background:#fff;box-shadow:0 7px 25px rgba(12,61,40,.12);
+  border:1px solid #dce9df;text-align:left;
+}
+.hero-visual > .map-floating b{font-size:12px}
+.hero-visual > .map-floating small{font-size:10px}
+.obs19-partner{min-width:0;overflow:hidden}
+.obs19-partner-icon{
+  flex:0 0 76px!important;width:76px!important;max-width:76px;
+  min-width:0;min-height:0;overflow:hidden;box-sizing:border-box;
+  display:flex;align-items:center;justify-content:center;padding:7px;
+}
+.obs19-partner-icon img{
+  display:block!important;max-height:100%!important;max-width:100%!important;
+  width:100%!important;height:100%!important;min-width:0;min-height:0;
+  object-fit:contain!important;object-position:center!important;
+}
+.obs19-partner-icon img[style*="display: none"]{display:none!important}
+.obs19-partner strong{min-width:0;overflow-wrap:anywhere}
+.obs19-partner-track.obs20-marquee{scroll-snap-type:none;scrollbar-width:none;overflow-x:auto}
+.obs19-partner-track.obs20-marquee::-webkit-scrollbar{display:none}
+.obs19-partner-track.obs20-marquee .obs19-partner{scroll-snap-align:none}
+.obs20-pilot-card{
+ border:1px solid #dce8e0;border-radius:11px;background:#fff;
+ padding:8px 9px;margin:7px 0;min-width:0
+}
+.obs20-pilot-card .obs19-pilot-row{border:none;padding:1px;background:transparent;margin:0}
+.obs20-pilot-tools{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:8px 0 2px 24px}
+.obs20-pilot-tools button{border:1px solid #bbd7c7;color:#155e40;background:#f0f8f2;border-radius:8px;
+ font-size:11px;font-weight:750;padding:7px 9px;cursor:pointer;white-space:normal}
+.obs20-pilot-tools button:hover{background:#e0efe5}
+.obs20-pilot-tools .obs20-range-label{display:flex;align-items:center;gap:7px;flex:1 1 135px;
+ font-size:10px;font-weight:700;color:#416854;min-width:0}
+.obs20-range-label input{accent-color:#157345;min-width:65px;max-width:100%;flex:1;cursor:pointer}
+.obs20-range-label input:disabled{opacity:.45;cursor:not-allowed}
+.obs20-range-label output{min-width:35px;text-align:right;white-space:nowrap}
+.obs19-pilot-list{flex:0 0 auto;max-height:390px}
+.v7-imported-layer .obs19-opacity-line{flex-wrap:wrap;white-space:normal}
+.v7-imported-layer .obs19-opacity-line input{min-width:90px;flex:1}
+@media(max-width:640px){.hero-visual > .map-floating{max-width:100%;margin-top:12px}}

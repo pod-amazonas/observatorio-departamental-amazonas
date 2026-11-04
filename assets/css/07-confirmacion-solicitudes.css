@@ -1,0 +1,7 @@
+
+.obs16-complete-card{border:1px solid #b8d7bd;border-radius:14px;background:#eef6ed;padding:22px;margin:18px 0;color:#245c38;display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.obs16-complete-card strong{font-size:1.14rem;line-height:1.4}
+.obs16-complete-card p{margin:0;line-height:1.55}
+.obs16-complete-card .btn{white-space:normal;text-align:center}
+.obs16-complete-card [hidden]{display:none!important}
+.obs16-complete-card .obs16-check{margin:3px 0;display:flex;align-items:center;gap:8px}

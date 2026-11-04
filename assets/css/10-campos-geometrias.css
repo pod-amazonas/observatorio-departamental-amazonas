@@ -1,0 +1,15 @@
+
+/* V18 — campos individuales por geometría. Mantiene la identidad aprobada. */
+#view-certificados .cert18-coordinate-list{display:grid;gap:12px;max-height:430px;overflow-y:auto;padding:3px 2px 6px}
+#view-certificados .cert18-row{background:#fff;border:1px solid #dce8de;border-radius:12px;padding:13px 14px;display:grid;grid-template-columns:1fr 1fr;column-gap:14px;row-gap:8px}
+#view-certificados .cert18-row-header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:8px}
+#view-certificados .cert18-row-header strong{font-size:12px;color:#24533b}
+#view-certificados .cert18-pair{min-width:0;display:block}
+#view-certificados .cert18-pair span{font-size:11px;display:block;color:#3c604c;font-weight:700;margin-bottom:5px}
+#view-certificados .cert18-pair input{display:block;width:100%;min-width:0;border:1px solid #cfdfd1;border-radius:9px;background:#fff;color:#183929;font-size:13px;padding:11px 12px;outline-color:#278452}
+#view-certificados .cert18-pair input:focus{border-color:#26794d;box-shadow:0 0 0 3px #def1e3}
+#view-certificados .cert18-pair input[aria-invalid="true"]{border-color:#bd614e;background:#fff8f5}
+#view-certificados .cert18-remove{background:#fff9f7;color:#ae4a35;border:1px solid #f0d7cb;border-radius:8px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer}
+#view-certificados .cert18-required{display:block;margin-top:5px;font-size:10px;color:#7b897e}
+#view-certificados .cert18-editor .cert14-editor-actions button[hidden]{display:none!important}
+@media(max-width:640px){#view-certificados .cert18-row{grid-template-columns:1fr}#view-certificados .cert18-pair{grid-column:1/-1}}
