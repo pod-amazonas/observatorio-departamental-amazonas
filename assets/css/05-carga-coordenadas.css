@@ -1,0 +1,19 @@
+
+/* V15 · Carga de coordenadas XLSX en polígonos */
+#view-certificados .cert15-upload{margin-top:16px;border:1px solid #cfe1cf;background:#f3f9f1;border-radius:14px;padding:18px;}
+#view-certificados .cert15-upload[hidden]{display:none!important}
+#view-certificados .cert15-upload-head{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+#view-certificados .cert15-icon{flex:none;width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:#e1f0dc;font-size:25px;color:#1d7342}
+#view-certificados .cert15-upload-head strong{color:#1b5736;font-size:14px}
+#view-certificados .cert15-upload-head p{font-size:11px;margin:2px 0 0;color:#617a67}
+#view-certificados .cert15-upload-row{display:flex;flex-wrap:wrap;align-items:center;gap:9px}
+#view-certificados .cert15-upload-btn{cursor:pointer;background:#16613c;color:#fff;border-color:#16613c;font-size:12px;padding:10px 12px}
+#view-certificados .cert15-upload-btn:hover{background:#0e492b;color:white}
+#view-certificados .cert15-template-btn{font-size:12px;padding:10px 12px}
+#view-certificados #cert15-xlsx-file{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip-path:inset(50%)}
+#view-certificados .cert15-upload-btn:focus-within{outline:2px solid #155632;outline-offset:3px}
+#view-certificados .cert15-note{font-size:11px;line-height:1.6;color:#4b725a;margin:12px 0 10px}
+#view-certificados .cert15-xlsx-status{font-size:11px;padding:10px 12px;border:1px solid #d3e7cd;border-radius:9px;background:#fff;color:#376044;line-height:1.55;overflow-wrap:anywhere}
+#view-certificados .cert15-xlsx-status.error{border-color:#efc7bc;background:#fff6f3;color:#962e23}
+#view-certificados .cert15-xlsx-status.success{border-color:#86c8a0;background:#e7f4e7;color:#135b37}
+@media(max-width:600px){#view-certificados .cert15-upload{padding:12px}#view-certificados .cert15-upload-btn,#view-certificados .cert15-template-btn{width:100%;text-align:center;justify-content:center}}
