@@ -204,3 +204,36 @@ test('portada: respeta la preferencia de reducir movimiento',async({page})=>{
  await page.waitForTimeout(5200);
  await expect(page.locator('.portada')).toHaveAttribute('data-capa','rios');
 });
+const capasPortada=[['rios','Ríos'],['bosques','Bosques'],['territorio','Territorio'],['movilidad','Movilidad fluvial']];
+test('portada: cada capa se resalta sola y se activa con teclado',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ const portada=page.locator('.portada');
+ for(const [i,[capa,nombre]] of capasPortada.entries()){
+  const boton=portada.getByRole('button',{name:nombre,exact:true});
+  await boton.focus();await boton.press(i%2?'Space':'Enter');
+  await expect(portada).toHaveAttribute('data-capa',capa);
+  await expect(portada.locator('.portada-capa-texto')).toHaveText(await boton.getAttribute('data-texto'));
+  for(const [otra,otroNombre] of capasPortada){
+   const activa=otra===capa;
+   await expect(portada.getByRole('button',{name:otroNombre,exact:true}),`botón ${otroNombre} con ${capa} activa`).toHaveAttribute('aria-pressed',String(activa));
+   await expect(portada.locator(`svg.portada-fondo .portada-capa-${otra}`),`capa ${otra} con ${capa} activa`).toHaveCSS('opacity',activa?'1':'0.22');
+  }
+ }
+});
+const modulosPortada=[['Geovisor','geovisor'],['Geoportal','geoportal'],['Avances del POD','avances-pod'],['Biblioteca Digital','biblioteca'],['Documentos del POD','documentos-pod'],['Certificados ambientales','certificados']];
+test('portada: las seis tarjetas son exactamente las esperadas',async({page})=>{
+ await page.goto('/');
+ await expect(page.locator('.portada-modulo strong')).toHaveText(modulosPortada.map(([t])=>t));
+});
+for(const [titulo,ruta] of modulosPortada)test(`portada: tarjeta ${titulo} abre la vista ${ruta}`,async({page})=>{
+ await page.goto('/');
+ const tarjeta=page.locator('.portada-modulo').filter({has:page.getByText(titulo,{exact:true})});
+ await expect(tarjeta).toHaveCount(1);
+ await expect(tarjeta).toHaveAttribute('href','#'+ruta);
+ await expect(tarjeta).toHaveAttribute('data-route',ruta);
+ await tarjeta.click();
+ await expect(page).toHaveURL(new RegExp('#'+ruta+'$'));
+ await expect(page.locator('#view-'+ruta)).toBeVisible();
+ await expect(page.locator('#view-inicio')).toBeHidden();
+});
