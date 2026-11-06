@@ -21,6 +21,7 @@ Es un prototipo: no lo presentes como portal oficial sin aprobación de la Gober
 - No edites a mano los GeoJSON ni el catálogo cuando exista el script de datos.
 - No cambies geometrías, áreas, normas ni fuentes sin soporte de la entidad responsable.
 - Las cifras calculadas en el navegador no son cifras oficiales.
+- Nunca publiques, proceses para la web ni derives ubicaciones de pueblos indígenas en aislamiento voluntario, incluida la capa `Pueblos_Indigenas_Aislamiento_Voluntario`. Esto también cubre atributos, mapas y centroides de otras capas que permitan localizarlos.
 
 ## Interfaz
 - Interfaz en español. Accesibilidad objetivo: WCAG 2.1 AA.
