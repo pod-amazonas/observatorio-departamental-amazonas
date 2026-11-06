@@ -1,9 +1,9 @@
 .portada{position:relative;overflow:hidden;min-height:660px;background:linear-gradient(113deg,#f8faf5 0%,#f0f7ee 52%,#e4f0df 100%)}
 .portada svg.portada-fondo,.portada svg.portada-orbitas{stroke:none}
-.portada svg.portada-fondo{position:absolute;inset:0;width:100%;height:100%;max-width:none}
-.portada-capa{opacity:.22;transition:opacity .9s ease}
+.portada svg.portada-fondo{position:absolute;left:50%;bottom:0;width:max(100%,900px);height:auto;max-width:none;transform:translateX(-50%)}
+.portada-capa{opacity:0;transition:opacity .9s ease}
 .portada[data-capa="rios"] .portada-capa-rios,.portada[data-capa="bosques"] .portada-capa-bosques,.portada[data-capa="territorio"] .portada-capa-territorio,.portada[data-capa="movilidad"] .portada-capa-movilidad{opacity:1}
-.portada-contenido{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:28px 48px;padding-top:56px;padding-bottom:64px}
+.portada-contenido{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:28px 48px;padding-top:44px;padding-bottom:clamp(130px,10vw,220px)}
 .portada-texto{flex:1 1 560px;min-width:0}
 .portada h1{margin:0;font-family:Manrope,var(--font);font-size:22px;line-height:1.3;font-weight:800;letter-spacing:0;color:var(--green)}
 .portada-frase{margin:14px 0 0;font-family:Manrope,var(--font);font-size:clamp(38px,4.5vw,60px);line-height:1.03;letter-spacing:-.035em;font-weight:800;color:var(--ink)}
@@ -31,8 +31,25 @@
 .portada-orbita-inversa{transform-origin:50% 50%;animation:portada-gira 64s linear infinite reverse}
 .portada-flujo{stroke-dasharray:1 95;animation:portada-flujo 11s linear infinite}
 .portada-flujo-lento{stroke-dasharray:1 127;animation:portada-flujo 17s linear infinite}
-.portada-navega{stroke-dasharray:1 127;animation:portada-flujo 19s linear infinite}
-.portada-pulso{transform-box:fill-box;transform-origin:center;animation:portada-pulso 3.4s ease-in-out infinite}
+.portada-navega{stroke-dasharray:16 18;animation:portada-estela 1.4s linear infinite}
+.portada:not([data-capa="rios"]) .portada-capa-rios *,.portada:not([data-capa="bosques"]) .portada-capa-bosques *,.portada:not([data-capa="territorio"]) .portada-capa-territorio *,.portada:not([data-capa="movilidad"]) .portada-capa-movilidad *{animation-play-state:paused}
+.portada-onda{transform-box:fill-box;transform-origin:center;animation:portada-onda 4.2s ease-out infinite}
+.portada-delfin{transform-box:view-box;transform-origin:800px 650px;animation:portada-delfin 9s linear infinite}
+.portada-salpica{opacity:0;transform-box:fill-box;transform-origin:center;animation:portada-salpica 9s ease-out infinite}
+.portada-mece{animation:portada-mece 6s ease-in-out infinite}
+.portada-mece-lento{animation:portada-mece 9s ease-in-out infinite reverse}
+.portada-neblina{animation:portada-neblina 22s ease-in-out infinite}
+.portada-hoja-cae{opacity:0;animation:portada-hoja 9s linear infinite}
+.portada-ave{animation:portada-ave 21s linear infinite}
+.portada-ala{transform-box:fill-box;transform-origin:50% 100%;animation:portada-ala .7s ease-in-out infinite}
+.portada-limite{animation:portada-limite 2.4s linear infinite}
+.portada-limite-fondo{opacity:.12;animation:portada-limite-fondo 6s ease-in-out infinite}
+.portada-chagra{transform-box:fill-box;transform-origin:center;animation:portada-chagra 5s ease-in-out infinite}
+.portada-humo{opacity:0;transform-box:fill-box;transform-origin:center;animation:portada-humo 6s ease-out infinite}
+.portada-agua{stroke-dasharray:46 74;animation:portada-agua 5.5s linear infinite}
+.portada-barco{animation:portada-barco 26s linear infinite}
+.portada-barco-lejos{animation:portada-barco-lejos 48s linear infinite}
+.portada-vaiven{animation:portada-vaiven 2.6s ease-in-out infinite}
 .portada-entra{opacity:0;animation:portada-entra .85s cubic-bezier(.2,.7,.2,1) forwards}
 .portada-d1{animation-delay:.08s}.portada-d2{animation-delay:.22s}.portada-d3{animation-delay:.38s}.portada-d4{animation-delay:.54s}.portada-d5{animation-delay:.72s}
 .portada-modulos{padding-top:56px;padding-bottom:72px}
@@ -45,11 +62,27 @@
 .portada-modulo-accion{margin-top:auto;font-size:14px;font-weight:700;color:var(--green);transition:transform .25s ease}
 .portada-modulo:hover .portada-modulo-accion{transform:translateX(5px)}
 @keyframes portada-flujo{to{stroke-dashoffset:-384}}
+@keyframes portada-estela{to{stroke-dashoffset:34}}
+@keyframes portada-onda{0%{opacity:.85;transform:scale(.45)}100%{opacity:0;transform:scale(1.5)}}
+@keyframes portada-delfin{0%,10%{transform:rotate(95deg)}40%{transform:rotate(-95deg)}40.01%,52%{transform:translateX(-190px) rotate(95deg)}82%{transform:translateX(-190px) rotate(-95deg)}82.01%,100%{transform:rotate(95deg)}}
+@keyframes portada-salpica{0%{opacity:0;transform:scale(.4)}3%{opacity:.9}14%,100%{opacity:0;transform:scale(1.4)}}
+@keyframes portada-mece{0%,100%{transform:translateX(-5px)}50%{transform:translateX(5px)}}
+@keyframes portada-neblina{0%,100%{transform:translateX(-70px)}50%{transform:translateX(70px)}}
+@keyframes portada-hoja{0%{opacity:0;transform:translate(0,0) rotate(0)}12%{opacity:.95}85%{opacity:.95}100%{opacity:0;transform:translate(70px,270px) rotate(360deg)}}
+@keyframes portada-ave{from{transform:translateX(-120px)}to{transform:translateX(1490px)}}
+@keyframes portada-ala{0%,100%{transform:scaleY(1)}50%{transform:scaleY(-.55)}}
+@keyframes portada-limite{to{stroke-dashoffset:-48}}
+@keyframes portada-limite-fondo{0%,100%{opacity:.08}50%{opacity:.2}}
+@keyframes portada-chagra{0%,100%{transform:scale(.97)}50%{transform:scale(1.04)}}
+@keyframes portada-humo{0%{opacity:0;transform:translate(0,0) scale(.6)}18%{opacity:.75}100%{opacity:0;transform:translate(18px,-82px) scale(2.1)}}
+@keyframes portada-agua{to{stroke-dashoffset:-240}}
+@keyframes portada-barco{from{transform:translateX(-1000px)}to{transform:translateX(860px)}}
+@keyframes portada-barco-lejos{from{transform:translateX(640px)}to{transform:translateX(-1040px)}}
+@keyframes portada-vaiven{0%,100%{transform:translateY(0) rotate(-.8deg)}50%{transform:translateY(-5px) rotate(.8deg)}}
 @keyframes portada-flota{0%,100%{transform:translateY(0) rotate(-.5deg)}50%{transform:translateY(-12px) rotate(.5deg)}}
 @keyframes portada-gira{to{transform:rotate(360deg)}}
-@keyframes portada-pulso{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:.4}}
 @keyframes portada-entra{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 @keyframes portada-logo{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
 @media(max-width:900px){.portada{min-height:0}}
 @media(max-width:760px){.portada-modulos-grid{grid-template-columns:minmax(0,1fr)}}
-@media(prefers-reduced-motion:reduce){.portada-flujo,.portada-flujo-lento,.portada-navega,.portada-pulso,.portada-orbita,.portada-orbita-inversa,.portada-logo img{animation:none}.portada-entra,.portada-logo{opacity:1;animation:none}.portada-capa,.portada-chip,.portada-cta,.portada-enlace,.portada-modulo,.portada-modulo-accion{transition:none}}
+@media(prefers-reduced-motion:reduce){.portada-fondo *,.portada-orbita,.portada-orbita-inversa,.portada-logo img{animation:none}.portada-hoja-cae,.portada-humo{opacity:.8}.portada-entra,.portada-logo{opacity:1;animation:none}.portada-capa,.portada-chip,.portada-cta,.portada-enlace,.portada-modulo,.portada-modulo-accion{transition:none}}

@@ -200,11 +200,12 @@ test('portada: respeta la preferencia de reducir movimiento',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/');
  await expect(page.locator('.portada-frase')).toHaveCSS('opacity','1');
- expect(await page.locator('.portada-navega').evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
+ expect(await page.locator('.portada-navega').first().evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
+ for(const sel of ['.portada-barco','.portada-delfin','.portada-ave','.portada-humo'])expect(await page.locator(sel).first().evaluate(e=>getComputedStyle(e).animationName),sel).toBe('none');
  await page.waitForTimeout(5200);
  await expect(page.locator('.portada')).toHaveAttribute('data-capa','rios');
 });
-const capasPortada=[['rios','Ríos'],['bosques','Bosques'],['territorio','Territorio'],['movilidad','Movilidad fluvial']];
+const capasPortada=[['rios','Ríos'],['bosques','Selva'],['territorio','Territorio'],['movilidad','Movilidad fluvial']];
 test('portada: cada capa se resalta sola y se activa con teclado',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/');
@@ -217,11 +218,25 @@ test('portada: cada capa se resalta sola y se activa con teclado',async({page})=
   for(const [otra,otroNombre] of capasPortada){
    const activa=otra===capa;
    await expect(portada.getByRole('button',{name:otroNombre,exact:true}),`botón ${otroNombre} con ${capa} activa`).toHaveAttribute('aria-pressed',String(activa));
-   await expect(portada.locator(`svg.portada-fondo .portada-capa-${otra}`),`capa ${otra} con ${capa} activa`).toHaveCSS('opacity',activa?'1':'0.22');
+   await expect(portada.locator(`svg.portada-fondo .portada-capa-${otra}`),`capa ${otra} con ${capa} activa`).toHaveCSS('opacity',activa?'1':'0');
   }
  }
 });
 const modulosPortada=[['Geovisor','geovisor'],['Geoportal','geoportal'],['Avances del POD','avances-pod'],['Biblioteca Digital','biblioteca'],['Documentos del POD','documentos-pod'],['Certificados ambientales','certificados']];
+test('portada: cada capa muestra su escena y pausa las demás',async({page})=>{
+ await page.goto('/');
+ const portada=page.locator('.portada');
+ const estado=sel=>page.locator(sel).first().evaluate(e=>getComputedStyle(e).animationPlayState);
+ const escenas=[['Ríos','.portada-delfin'],['Selva','.portada-ave'],['Territorio','.portada-humo'],['Movilidad fluvial','.portada-barco']];
+ for(const [nombre,propia] of escenas){
+  await portada.getByRole('button',{name:nombre,exact:true}).click();
+  for(const [,sel] of escenas)expect(await estado(sel),`${sel} con ${nombre} activa`).toBe(sel===propia?'running':'paused');
+ }
+ await expect(page.locator('svg.portada-fondo use[href="#portada-peque"]')).toHaveCount(2);
+ await expect(page.locator('svg.portada-fondo use[href="#portada-maloca"]')).toHaveCount(3);
+ const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
+ expect(overflow).toBeLessThanOrEqual(0);
+});
 test('portada: las seis tarjetas son exactamente las esperadas',async({page})=>{
  await page.goto('/');
  await expect(page.locator('.portada-modulo strong')).toHaveText(modulosPortada.map(([t])=>t));
