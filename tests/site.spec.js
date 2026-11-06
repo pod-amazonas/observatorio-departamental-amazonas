@@ -265,17 +265,57 @@ for(const [titulo,ruta] of modulosPortada)test(`portada: tarjeta ${titulo} abre 
  await expect(page.locator('#view-'+ruta)).toBeVisible();
  await expect(page.locator('#view-inicio')).toBeHidden();
 });
-const luminancia=rgb=>{const c=rgb.match(/\d+/g).slice(0,3).map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+const luminancia=([r,g,b])=>{const c=[r,g,b].map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
 const contraste=(a,b)=>{const [x,y]=[luminancia(a),luminancia(b)].sort((m,n)=>n-m);return (x+.05)/(y+.05)};
-test('portada: el foco de teclado contrasta al menos 3:1 con los fondos (#17)',async({page})=>{
+const controlesPortada='.portada-chip,.portada-cta,.portada-enlace,.portada-modulo';
+// Mide píxeles reales: el anillo de foco debe verse y contrastar ≥3:1 con lo que tiene a ambos lados (WCAG 2.1, 1.4.11).
+async function medirFoco(page){
+ const datos=await page.evaluate(()=>{
+  const e=document.activeElement,s=getComputedStyle(e),r=e.getBoundingClientRect();
+  return {focusVisible:e.matches(':focus-visible'),visible:!!e.checkVisibility?.({opacityProperty:true,visibilityProperty:true}),tipo:s.outlineStyle,
+   ancho:parseFloat(s.outlineWidth),separacion:parseFloat(s.outlineOffset),color:s.outlineColor.match(/\d+/g).slice(0,3).map(Number),
+   caja:{x:r.x,y:r.y,w:r.width,h:r.height},nombre:(e.getAttribute('aria-label')||e.textContent).trim().slice(0,40)};
+ });
+ const png=(await page.screenshot({animations:'disabled'})).toString('base64');
+ const {x,y,w,h}=datos.caja,o=datos.separacion,a=datos.ancho;
+ // Puntos medios de cada lado: en el anillo y en el píxel pegado a cada lado de él (fuera y en la separación con el control).
+ const lados=[[x+w/2,y,0,-1],[x+w/2,y+h,0,1],[x,y+h/2,-1,0],[x+w,y+h/2,1,0]];
+ const puntos=lados.flatMap(([px,py,dx,dy])=>[o+a/2,o+a+1,o-1].map(d=>[Math.round(px+dx*d),Math.round(py+dy*d)]));
+ datos.muestras=await page.evaluate(async({png,puntos})=>{
+  const img=await createImageBitmap(await (await fetch('data:image/png;base64,'+png)).blob());
+  const c=new OffscreenCanvas(img.width,img.height),ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+  return puntos.map(([px,py])=>px<0||py<0||px>=img.width||py>=img.height?null:[...ctx.getImageData(px,py,1,1).data.slice(0,3)]);
+ },{png,puntos});
+ return datos;
+}
+for(const size of [{width:1280,height:720},{width:390,height:844}])test(`portada: foco de teclado visible y ≥3:1 con sus fondos reales a ${size.width}px (#17)`,async({page})=>{
+ await page.setViewportSize(size);
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/');
- for(const sel of ['.portada-chip','.portada-cta','.portada-enlace','.portada-modulo']){
-  const el=page.locator(sel).first();
-  await el.focus();
-  const estilo=await el.evaluate(e=>{const s=getComputedStyle(e);return {color:s.outlineColor,ancho:s.outlineWidth,tipo:s.outlineStyle}});
-  expect(estilo.tipo,sel).toBe('solid');
-  expect(parseFloat(estilo.ancho),sel).toBeGreaterThanOrEqual(2);
-  for(const fondo of ['rgb(255, 255, 255)','rgb(248, 250, 245)','rgb(228, 240, 223)'])expect(contraste(estilo.color,fondo),`${sel} sobre ${fondo}`).toBeGreaterThanOrEqual(3);
+ const total=await page.locator(controlesPortada).count();
+ expect(total).toBe(12);
+ for(const [capa,nombre] of capasPortada){
+  await page.locator('.portada').getByRole('button',{name:nombre,exact:true}).evaluate(b=>b.click());
+  await expect(page.locator('.portada')).toHaveAttribute('data-capa',capa);
+  await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo(0,0)});
+  const vistos=new Set();
+  for(let i=0;i<80&&vistos.size<total;i++){
+   await page.keyboard.press('Tab');
+   if(!await page.evaluate(sel=>document.activeElement?.matches(sel),controlesPortada))continue;
+   const f=await medirFoco(page),id=`${capa} · ${f.nombre}`;
+   vistos.add(f.nombre+f.caja.x+f.caja.y);
+   expect(f.focusVisible,id).toBe(true);
+   expect(f.visible,id).toBe(true);
+   expect(f.tipo,id).toBe('solid');
+   expect(f.ancho,id).toBeGreaterThanOrEqual(2);
+   expect(f.separacion,`${id}: el anillo debe quedar fuera del relleno del control`).toBeGreaterThanOrEqual(2);
+   for(let lado=0;lado<4;lado++){
+    const [anillo,fuera,dentro]=f.muestras.slice(lado*3,lado*3+3);
+    if(!anillo)continue;// lado fuera de la ventana
+    expect(Math.max(...anillo.map((v,k)=>Math.abs(v-f.color[k]))),`${id} lado ${lado}: el anillo se ve en pantalla`).toBeLessThanOrEqual(24);
+    for(const vecino of [fuera,dentro].filter(Boolean))expect(contraste(f.color,vecino),`${id} lado ${lado}: contra rgb(${vecino})`).toBeGreaterThanOrEqual(3);
+   }
+  }
+  expect(vistos.size,`controles alcanzados con Tab en ${capa}`).toBe(total);
  }
 });
