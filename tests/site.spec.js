@@ -237,6 +237,19 @@ test('portada: cada capa muestra su escena y pausa las demás',async({page})=>{
  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
  expect(overflow).toBeLessThanOrEqual(0);
 });
+test('portada: el delfín sale del agua cada vez que se muestra Ríos',async({page})=>{
+ await page.goto('/');
+ const medida=await page.locator('.portada-delfin').evaluate(el=>{
+  const animacion=el.getAnimations()[0];
+  const fondo=document.querySelector('svg.portada-fondo').getBoundingClientRect();
+  const linea=fondo.top+585*fondo.height/660;
+  const parte=t=>{animacion.pause();animacion.currentTime=t;return el.querySelector('use').getBoundingClientRect().top};
+  return {duracion:getComputedStyle(el).animationDuration,linea,inicio:parte(0),medio:parte(2300)};
+ });
+ expect(medida.duracion).toBe('4.6s');
+ expect(medida.inicio).toBeGreaterThan(medida.linea-20);
+ expect(medida.medio).toBeLessThan(medida.linea-30);
+});
 test('portada: las seis tarjetas son exactamente las esperadas',async({page})=>{
  await page.goto('/');
  await expect(page.locator('.portada-modulo strong')).toHaveText(modulosPortada.map(([t])=>t));
