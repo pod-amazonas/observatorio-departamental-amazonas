@@ -43,7 +43,7 @@ for(const prefix of ['/','/observatorio-departamental-amazonas/']){
   test('CSS, imágenes y favicon locales cargan y se decodifican',async({page})=>{
    const failures=[];
    page.on('response',r=>{if(new URL(r.url()).hostname==='127.0.0.1'&&r.status()>=400)failures.push(`${r.status()} ${r.url()}`)});
-   page.on('requestfailed',r=>{if(new URL(r.url()).hostname==='127.0.0.1')failures.push(r.url())});
+   page.on('requestfailed',r=>{if(new URL(r.url()).hostname==='127.0.0.1')failures.push(`${r.failure()?.errorText} ${r.resourceType()} ${r.url()}`)});
    await page.goto(prefix);
    const styles=await page.locator('link[rel="stylesheet"]').evaluateAll(links=>links.map(l=>({href:l.getAttribute('href'),loaded:!!l.sheet})));
    expect(styles.filter(s=>s.href.startsWith('assets/css/')).length).toBeGreaterThan(0);
