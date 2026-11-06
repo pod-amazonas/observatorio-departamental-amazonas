@@ -1,0 +1,14 @@
+title = "Observatorio: búsqueda de secretos"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "generic-api-key"
+
+  [[rules.allowlists]]
+  description = "Supabase: clave publicable del cliente web; no concede privilegios de servidor"
+  condition = "AND"
+  paths = ['''^V20_FORMULARIO_BORRADORES/config_supabase\.js$''']
+  regexTarget = "secret"
+  regexes = ['''^sb_publishable_[A-Za-z0-9_-]+$''']
