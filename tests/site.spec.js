@@ -265,3 +265,17 @@ for(const [titulo,ruta] of modulosPortada)test(`portada: tarjeta ${titulo} abre 
  await expect(page.locator('#view-'+ruta)).toBeVisible();
  await expect(page.locator('#view-inicio')).toBeHidden();
 });
+const luminancia=rgb=>{const c=rgb.match(/\d+/g).slice(0,3).map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+const contraste=(a,b)=>{const [x,y]=[luminancia(a),luminancia(b)].sort((m,n)=>n-m);return (x+.05)/(y+.05)};
+test('portada: el foco de teclado contrasta al menos 3:1 con los fondos (#17)',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ for(const sel of ['.portada-chip','.portada-cta','.portada-enlace','.portada-modulo']){
+  const el=page.locator(sel).first();
+  await el.focus();
+  const estilo=await el.evaluate(e=>{const s=getComputedStyle(e);return {color:s.outlineColor,ancho:s.outlineWidth,tipo:s.outlineStyle}});
+  expect(estilo.tipo,sel).toBe('solid');
+  expect(parseFloat(estilo.ancho),sel).toBeGreaterThanOrEqual(2);
+  for(const fondo of ['rgb(255, 255, 255)','rgb(248, 250, 245)','rgb(228, 240, 223)'])expect(contraste(estilo.color,fondo),`${sel} sobre ${fondo}`).toBeGreaterThanOrEqual(3);
+ }
+});
