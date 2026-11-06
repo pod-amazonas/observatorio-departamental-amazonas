@@ -206,6 +206,72 @@ test('portada: respeta la preferencia de reducir movimiento',async({page})=>{
  await expect(page.locator('.portada')).toHaveAttribute('data-capa','rios');
 });
 const capasPortada=[['rios','Ríos'],['bosques','Selva'],['territorio','Territorio'],['movilidad','Movilidad fluvial']];
+for(const width of [1280,390])test(`portada: pausa real y reanudación con teclado a ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:844});
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.clock.install();
+ await page.goto('/');
+ const portada=page.locator('.portada');
+ const pausa=portada.locator('.portada-pausa');
+ await expect(pausa).toBeVisible();
+ await expect(pausa).toHaveAccessibleName('Pausar animación');
+ await pausa.focus();await pausa.press('Enter');
+ await expect(pausa).toHaveAccessibleName('Reanudar animación');
+ const animaciones=()=>portada.evaluate(e=>e.getAnimations({subtree:true})
+  .filter(a=>a.effect.getTiming().iterations===Infinity)
+  .map(a=>({estado:a.playState,tiempo:a.currentTime})));
+ for(const [capa,nombre] of capasPortada){
+  await portada.getByRole('button',{name:nombre,exact:true}).click();
+  await expect(portada).toHaveAttribute('data-animacion-pausada','true');
+  await expect(portada).toHaveAttribute('data-capa',capa);
+  const antes=await animaciones();
+  expect(antes.length).toBeGreaterThan(0);
+  expect(antes.every(a=>a.estado==='paused')).toBe(true);
+  await page.waitForTimeout(150);
+  expect(await animaciones()).toEqual(antes);
+  await page.clock.fastForward(5000);
+  await expect(portada).toHaveAttribute('data-capa',capa);
+ }
+ await pausa.focus();await pausa.press('Space');
+ await expect(pausa).toHaveAccessibleName('Pausar animación');
+ await expect(portada).toHaveAttribute('data-animacion-pausada','false');
+ const activas=portada.locator('.portada-capa-movilidad .portada-barco,.portada-logo img,.portada-orbita,.portada-orbita-inversa');
+ expect(await activas.evaluateAll(es=>es.every(e=>e.getAnimations().some(a=>a.playState==='running')))).toBe(true);
+ const antes=await activas.first().evaluate(e=>e.getAnimations()[0].currentTime);
+ await page.waitForTimeout(150);
+ expect(await activas.first().evaluate(e=>e.getAnimations()[0].currentTime)).toBeGreaterThan(antes);
+ await page.clock.fastForward(5000);
+ await expect(portada).toHaveAttribute('data-capa','rios');
+});
+test('portada: movimiento reducido inicial y cambios de preferencia respetan la pausa manual',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.clock.install();
+ await page.goto('/');
+ const portada=page.locator('.portada');
+ const pausa=portada.locator('.portada-pausa');
+ const infinitas=()=>portada.evaluate(e=>e.getAnimations({subtree:true}).filter(a=>a.effect.getTiming().iterations===Infinity).length);
+ await expect(pausa).toHaveAccessibleName('Reanudar animación');
+ await expect(pausa).toBeDisabled();
+ await expect(page.locator('#portada-movimiento-reducido')).toBeVisible();
+ expect(await infinitas()).toBe(0);
+ await page.clock.fastForward(5000);
+ await expect(portada).toHaveAttribute('data-capa','rios');
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await expect(pausa).toBeEnabled();
+ await expect(pausa).toHaveAccessibleName('Pausar animación');
+ await page.clock.fastForward(5000);
+ await expect(portada).toHaveAttribute('data-capa','bosques');
+ await pausa.click();
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await expect(pausa).toBeDisabled();
+ expect(await infinitas()).toBe(0);
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await expect(pausa).toBeEnabled();
+ await expect(pausa).toHaveAccessibleName('Reanudar animación');
+ await page.clock.fastForward(5000);
+ await expect(portada).toHaveAttribute('data-capa','bosques');
+ expect(await portada.evaluate(e=>e.getAnimations({subtree:true}).filter(a=>a.effect.getTiming().iterations===Infinity).every(a=>a.playState==='paused'))).toBe(true);
+});
 test('portada: cada capa se resalta sola y se activa con teclado',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/');
