@@ -205,7 +205,7 @@ test('portada: respeta la preferencia de reducir movimiento',async({page})=>{
  await page.waitForTimeout(5200);
  await expect(page.locator('.portada')).toHaveAttribute('data-capa','rios');
 });
-const capasPortada=[['rios','Ríos'],['bosques','Bosques'],['territorio','Territorio'],['movilidad','Movilidad fluvial']];
+const capasPortada=[['rios','Ríos'],['bosques','Selva'],['territorio','Territorio'],['movilidad','Movilidad fluvial']];
 test('portada: cada capa se resalta sola y se activa con teclado',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/');
@@ -227,7 +227,7 @@ test('portada: cada capa muestra su escena y pausa las demás',async({page})=>{
  await page.goto('/');
  const portada=page.locator('.portada');
  const estado=sel=>page.locator(sel).first().evaluate(e=>getComputedStyle(e).animationPlayState);
- const escenas=[['Ríos','.portada-delfin'],['Bosques','.portada-ave'],['Territorio','.portada-humo'],['Movilidad fluvial','.portada-barco']];
+ const escenas=[['Ríos','.portada-delfin'],['Selva','.portada-ave'],['Territorio','.portada-humo'],['Movilidad fluvial','.portada-barco']];
  for(const [nombre,propia] of escenas){
   await portada.getByRole('button',{name:nombre,exact:true}).click();
   for(const [,sel] of escenas)expect(await estado(sel),`${sel} con ${nombre} activa`).toBe(sel===propia?'running':'paused');
