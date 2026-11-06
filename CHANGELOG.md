@@ -9,7 +9,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 - `CHANGELOG.md`: este registro.
 
 ### Seguridad
-- `.gitignore` excluye `.env` y sus variantes para que nunca se suban claves.
+- `.gitignore` excluye los archivos `.env` y `.env.*` no versionados. `.env.example` sí se versiona y debe contener solo nombres de variables, sin valores secretos. Esto no impide subir claves escritas en otros archivos; gitleaks lo revisa en cada PR.
 
 ## Historial previo (sin etiqueta)
 - V21: publicación de 20 determinantes ambientales GeoJSON (#2).
