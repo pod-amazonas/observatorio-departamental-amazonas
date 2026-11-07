@@ -20,3 +20,14 @@ El navegador usa Leaflet 1.9.4 instalado localmente. Todas las solicitudes exter
 GitHub Actions ejecuta la misma suite en cada PR; las acciones están fijadas por SHA y el token tiene solo lectura. Los fallos conocidos se marcan individualmente con `test.fail` y una explicación: si dejan de fallar, Playwright exige retirar la marca. Nunca se ignoran globalmente errores de consola o de geometría.
 
 La lista de capas se prueba con clic a 1280×720 y 390×844. Las regresiones de Documentos POD y Avances POD comprueban 33 documentos, 0 pendientes, ausencia de entradas con `needsPrivacyReview: true` y ausencia de enlaces públicos a `admin_borradores_v20.html`. Los resultados de ejecución se registran en el PR. CI usa Ubuntu 24.04, compatible con Playwright 1.56.1.
+
+## Datos cartográficos para la web
+
+Los GeoJSON de `datos/determinantes_ambientales/` se publican con 6 decimales (unos 8 cm de corrimiento máximo) para que carguen en conexiones lentas. Tras agregar o reemplazar un archivo:
+
+```sh
+python3 scripts/reducir_precision_geojson.py             # redondea y compacta
+python3 scripts/reducir_precision_geojson.py --comprobar # lo que verifica la prueba automática
+```
+
+El script no simplifica geometrías, no toca atributos y conserva sin redondear los anillos que colapsarían. Rechaza cualquier archivo de pueblos en aislamiento voluntario.

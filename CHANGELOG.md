@@ -4,7 +4,12 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 
 ## [Sin publicar]
 
+### Cambiado
+- Las 20 capas GeoJSON se publican con 6 decimales y JSON compacto: la descarga comprimida baja de 11,9 MB a 4,2 MB (Humedales: de 7,3 MB a 2,2 MB). Atributos, CRS, polígonos y anillos sin cambios; corrimiento máximo 8 cm.
+- El indicador de foco de la portada pasa a `#a34a06` y alcanza al menos 5:1 sobre sus fondos (#17).
+
 ### Agregado
+- `scripts/reducir_precision_geojson.py` y una prueba que exige datos procesados.
 - `PRODUCT.md`: contexto del producto (público, propósito, restricciones y principios) para guiar el diseño.
 - `CHANGELOG.md`: este registro.
 

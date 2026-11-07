@@ -340,3 +340,7 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`portada
   expect([...vistos].sort(),`controles alcanzados con Tab en ${capa}`).toEqual([...esperados].sort());
  }
 });
+test('GeoJSON publicados con 6 decimales según scripts/reducir_precision_geojson.py',()=>{
+ const {execFileSync}=require('node:child_process');
+ execFileSync('python3',[path.join(__dirname,'..','scripts','reducir_precision_geojson.py'),'--comprobar'],{stdio:'pipe'});
+});
