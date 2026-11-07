@@ -250,7 +250,7 @@ test('portada: movimiento reducido inicial y cambios de preferencia respetan la 
  const portada=page.locator('.portada');
  const pausa=portada.locator('.portada-pausa');
  const infinitas=()=>portada.evaluate(e=>e.getAnimations({subtree:true}).filter(a=>a.effect.getTiming().iterations===Infinity).length);
- await expect(pausa).toHaveAccessibleName('Reanudar animación');
+ await expect(pausa).toHaveAccessibleName('Animación desactivada');
  await expect(pausa).toBeDisabled();
  await expect(page.locator('#portada-movimiento-reducido')).toBeVisible();
  expect(await infinitas()).toBe(0);
@@ -264,6 +264,7 @@ test('portada: movimiento reducido inicial y cambios de preferencia respetan la 
  await pausa.click();
  await page.emulateMedia({reducedMotion:'reduce'});
  await expect(pausa).toBeDisabled();
+ await expect(pausa).toHaveAccessibleName('Animación desactivada');
  expect(await infinitas()).toBe(0);
  await page.emulateMedia({reducedMotion:'no-preference'});
  await expect(pausa).toBeEnabled();

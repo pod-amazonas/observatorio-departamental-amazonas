@@ -36,7 +36,7 @@
     detener();
     var pausada = pausaManual || preferencia.matches;
     portada.dataset.animacionPausada = String(pausada);
-    pausa.textContent = pausada ? 'Reanudar animación' : 'Pausar animación';
+    pausa.textContent = preferencia.matches ? 'Animación desactivada' : (pausada ? 'Reanudar animación' : 'Pausar animación');
     pausa.disabled = preferencia.matches;
     aviso.hidden = !preferencia.matches;
     if (preferencia.matches) pausa.setAttribute('aria-describedby', aviso.id);
