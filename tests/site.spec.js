@@ -340,7 +340,24 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`portada
   expect([...vistos].sort(),`controles alcanzados con Tab en ${capa}`).toEqual([...esperados].sort());
  }
 });
-test('GeoJSON publicados con 6 decimales según scripts/reducir_precision_geojson.py',()=>{
- const {execFileSync}=require('node:child_process');
- execFileSync('python3',[path.join(__dirname,'..','scripts','reducir_precision_geojson.py'),'--comprobar'],{stdio:'pipe'});
+const {execFileSync}=require('node:child_process');
+const python=(script,args,opciones={})=>execFileSync('python3',[path.join(__dirname,'..','scripts',script),...args],{encoding:'utf8',stdio:'pipe',...opciones});
+const capasGeoJSON=layers.filter(l=>l.archivo).map(l=>path.join(__dirname,'..',l.archivo));
+test('topología: los 20 GeoJSON son válidos (anillos simples, sin cruces ni solapes, huecos dentro)',()=>{
+ test.setTimeout(180_000);
+ try{python('topologia_geojson.py',capasGeoJSON)}catch(e){throw new Error(`Problemas topológicos:\n${e.stdout}${e.stderr}`)}
+});
+test('topología: el validador detecta un polígono en forma de lazo y un hueco fuera de su exterior',()=>{
+ const dir=fs.mkdtempSync(path.join(require('node:os').tmpdir(),'topo-'));
+ const casos={'lazo.geojson':[[[0,0],[1,1],[1,0],[0,1],[0,0]]],'hueco.geojson':[[[0,0],[1,0],[1,1],[0,1],[0,0]],[[2,2],[3,2],[3,3],[2,2]]]};
+ for(const [nombre,anillos] of Object.entries(casos)){
+  const archivo=path.join(dir,nombre);
+  fs.writeFileSync(archivo,JSON.stringify({type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'Polygon',coordinates:anillos}}]}));
+  let salida='';try{python('topologia_geojson.py',[archivo]);}catch(e){salida=e.stdout}
+  expect(salida,nombre).toMatch(/1 problema|[2-9] problema/);
+ }
+});
+test('GeoJSON publicados procesados por scripts/reducir_precision_geojson.py',()=>{
+ test.setTimeout(180_000);
+ try{python('reducir_precision_geojson.py',['--comprobar'])}catch(e){throw new Error(`${e.stdout}${e.stderr}`)}
 });

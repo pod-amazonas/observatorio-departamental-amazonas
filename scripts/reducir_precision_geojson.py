@@ -2,147 +2,216 @@
 """Reduce la precisión de las coordenadas de los GeoJSON publicados para la web.
 
 Qué hace:
-  - Redondea cada coordenada a N decimales (por defecto 6, unos 0,11 m en el Amazonas).
-  - Quita vértices consecutivos que quedan repetidos tras redondear (no cambia la forma).
-  - Escribe JSON compacto, sin espacios. No toca propiedades, nombres ni CRS.
+  - Redondea X e Y a N decimales (por defecto 6: como máximo 0,08 m de corrimiento).
+    Z y demás ordenadas se conservan tal cual.
+  - Quita vértices consecutivos que quedan en la misma posición tras redondear.
+  - Escribe JSON compacto. No toca propiedades, `name` ni `crs`.
 
-Qué NO hace:
-  - No simplifica geometrías ni elimina vértices distintos. Simplificar cambia la
-    geometría y requiere el visto bueno de la entidad responsable (ver AGENTS.md).
+Garantía topológica (ver scripts/topologia_geojson.py):
+  - Un polígono redondeado se acepta solo si sigue siendo válido (anillos simples, área no
+    nula, sin cruces ni solapes, huecos dentro de su exterior, partes sin solaparse), si no
+    aparece ningún contacto nuevo entre anillos y si ningún anillo invierte su orientación.
+  - Si no, ese polígono completo (exterior y todos sus huecos) conserva sus coordenadas
+    originales. Nunca se repara, se elimina ni se simplifica una parte.
+  - Si el original ya tuviera problemas, el archivo no se modifica.
 
-Seguridad de datos:
-  - Rechaza cualquier archivo relacionado con pueblos en aislamiento voluntario.
-  - Si al redondear un anillo quedara con menos de 4 posiciones (o una línea con menos de 2),
-    se conserva ese anillo con sus coordenadas originales: no se elimina ninguna figura.
-    En los datos actuales son triángulos degenerados de menos de 1,4 m² heredados del SIG.
+Qué archivos procesa:
+  - Solo las capas del catálogo `catalogo_determinantes_para_geovisor.json` con estado
+    `aprobada_disponible_geojson`. Cualquier otro archivo se rechaza.
+  - Como defensa adicional, rechaza archivos cuyo nombre, ruta, `name` o atributos mencionen
+    «aislamiento». Esto no sustituye la revisión institucional de cada capa (AGENTS.md).
 
 Uso:
-  python3 scripts/reducir_precision_geojson.py            # procesa datos/determinantes_ambientales
-  python3 scripts/reducir_precision_geojson.py --comprobar  # solo informa; falla si algo cambiaría
-  python3 scripts/reducir_precision_geojson.py archivo.geojson ...
+  python3 scripts/reducir_precision_geojson.py              # procesa todas las capas autorizadas
+  python3 scripts/reducir_precision_geojson.py --comprobar  # no escribe; falla si algo cambiaría
+  python3 scripts/reducir_precision_geojson.py datos/.../determinante_01.geojson
 """
 import argparse
-import glob
 import gzip
 import json
-import math
 import os
+import sys
+import unicodedata
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from topologia_geojson import analizar, partes_de  # noqa: E402
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PATRON = os.path.join(RAIZ, 'datos', 'determinantes_ambientales', '*', '*.geojson')
+CATALOGO = os.path.join(RAIZ, 'catalogo_determinantes_para_geovisor.json')
+ESTADO_AUTORIZADO = 'aprobada_disponible_geojson'
 PROHIBIDO = ('aislamiento',)
-M_POR_GRADO = 111_320  # metros por grado de latitud (aprox.)
+M_POR_GRADO = 111_320
 
 
-class ErrorGeometria(Exception):
+class ErrorEntrada(Exception):
     pass
 
 
-conservados = [0]  # anillos o líneas que se dejan con sus coordenadas originales
+# ---------- autorización ----------
+
+def capas_autorizadas():
+    cat = json.load(open(CATALOGO, encoding='utf-8'))
+    rutas = []
+    for g in cat.get('grupos', []):
+        for c in g.get('capas', []):
+            if c.get('estado') == ESTADO_AUTORIZADO and c.get('archivo'):
+                rutas.append(os.path.realpath(os.path.join(RAIZ, c['archivo'])))
+    return rutas
 
 
-def redondear_posicion(p, n):
-    return [round(v, n) for v in p]
+def normalizar(texto):
+    return ''.join(ch for ch in unicodedata.normalize('NFD', str(texto).lower()) if unicodedata.category(ch) != 'Mn')
 
 
-def limpiar_linea(linea, n, minimo):
+def menciona_prohibido(valor):
+    if isinstance(valor, dict):
+        return any(menciona_prohibido(k) or menciona_prohibido(v) for k, v in valor.items())
+    if isinstance(valor, list):
+        return any(menciona_prohibido(v) for v in valor)
+    return isinstance(valor, str) and any(p in normalizar(valor) for p in PROHIBIDO)
+
+
+# ---------- redondeo ----------
+
+def redondear(p, n):
+    if not isinstance(p, list) or len(p) < 2 or not all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in p):
+        raise ErrorEntrada(f'posición no válida: {p!r}')
+    return [round(p[0], n), round(p[1], n)] + p[2:]
+
+
+def redondear_linea(linea, n):
+    """Devuelve la línea redondeada sin repetidos consecutivos (en X e Y)."""
     salida = []
     for p in linea:
-        q = redondear_posicion(p, n)
-        if not salida or q != salida[-1]:
+        q = redondear(p, n)
+        if not salida or q[:2] != salida[-1][:2]:
             salida.append(q)
-    if len(salida) < minimo:
-        conservados[0] += 1
-        return linea
     return salida
 
 
-def procesar_geometria(g, n):
+def redondear_poligono(anillos, n):
+    """Anillos redondeados, o None si alguno quedaría con menos de 4 posiciones."""
+    if not anillos:
+        raise ErrorEntrada('polígono sin anillos')
+    nuevos = []
+    for r in anillos:
+        if not isinstance(r, list) or len(r) < 4:
+            raise ErrorEntrada('anillo vacío o con menos de 4 posiciones en el original')
+        q = redondear_linea(r, n)
+        if len(q) < 4:
+            return None
+        nuevos.append(q)
+    return nuevos
+
+
+def procesar_poligonal(partes, n):
+    """Redondea partes de un (Multi)Polygon con garantía topológica.
+
+    Devuelve (partes_nuevas, conservadas) o (None, motivo) si el original ya tiene problemas.
+    """
+    for anillos in partes:
+        if not anillos:
+            raise ErrorEntrada('polígono sin anillos')
+        for r in anillos:
+            if not isinstance(r, list) or len(r) < 4:
+                raise ErrorEntrada('anillo vacío o con menos de 4 posiciones en el original')
+            for p in r:
+                redondear(p, n)  # valida cada posición
+    malos0, contactos0, orient0 = analizar(partes)
+    if malos0:
+        i, motivos = next(iter(sorted(malos0.items())))
+        return None, f'el original ya tiene problemas (polígono {i + 1}: {motivos[0]})'
+    candidatas = [redondear_poligono(p, n) for p in partes]
+    redondeada = [c is not None for c in candidatas]
+    for _ in range(len(partes) + 1):
+        actuales = [candidatas[i] if redondeada[i] else partes[i] for i in range(len(partes))]
+        malos, contactos, orient = analizar(actuales)
+        restaurar = set(malos)
+        for clave, puntos in contactos.items():
+            if len(puntos) > len(contactos0.get(clave, ())):
+                restaurar |= {clave[0][0], clave[1][0]}
+        for clave, signo in orient.items():
+            if signo != orient0.get(clave):
+                restaurar.add(clave[0])
+        restaurar = {i for i in restaurar if redondeada[i]}
+        if not restaurar:
+            if malos:  # solo quedan problemas entre partes originales: se conserva todo
+                return list(partes), len(partes)
+            return actuales, redondeada.count(False)
+        for i in restaurar:
+            redondeada[i] = False
+    return list(partes), len(partes)
+
+
+def procesar_geometria(g, n, info):
+    if g is None:
+        return None
     t = g.get('type')
     c = g.get('coordinates')
+    if t in ('Polygon', 'MultiPolygon'):
+        if not c:
+            raise ErrorEntrada(f'{t} sin coordenadas')
+        partes = partes_de(g)
+        nuevas, extra = procesar_poligonal(partes, n)
+        if nuevas is None:
+            info['original_con_problemas'] = extra
+            return g
+        info['partes'] += len(partes)
+        info['conservadas'] += extra
+        return {**g, 'coordinates': nuevas[0] if t == 'Polygon' else nuevas}
     if t == 'Point':
-        return {**g, 'coordinates': redondear_posicion(c, n)}
+        return {**g, 'coordinates': redondear(c, n)}
     if t == 'MultiPoint':
-        return {**g, 'coordinates': [redondear_posicion(p, n) for p in c]}
-    if t == 'LineString':
-        return {**g, 'coordinates': limpiar_linea(c, n, 2)}
-    if t == 'MultiLineString':
-        return {**g, 'coordinates': [limpiar_linea(l, n, 2) for l in c]}
-    if t == 'Polygon':
-        return {**g, 'coordinates': [limpiar_linea(r, n, 4) for r in c]}
-    if t == 'MultiPolygon':
-        return {**g, 'coordinates': [[limpiar_linea(r, n, 4) for r in pol] for pol in c]}
+        return {**g, 'coordinates': [redondear(p, n) for p in c]}
+    if t in ('LineString', 'MultiLineString'):
+        if not c:
+            raise ErrorEntrada(f'{t} sin coordenadas')
+        lineas = [c] if t == 'LineString' else c
+        nuevas = []
+        for l in lineas:
+            q = redondear_linea(l, n)
+            nuevas.append(q if len(q) >= 2 else l)
+        return {**g, 'coordinates': nuevas[0] if t == 'LineString' else nuevas}
     if t == 'GeometryCollection':
-        return {**g, 'geometries': [procesar_geometria(x, n) for x in g['geometries']]}
-    raise ErrorGeometria(f'tipo de geometría no admitido: {t}')
+        return {**g, 'geometries': [procesar_geometria(x, n, info) for x in g.get('geometries', [])]}
+    raise ErrorEntrada(f'tipo de geometría no admitido: {t!r}')
 
 
-def anillos(g):
-    t, c = g.get('type'), g.get('coordinates')
-    if t == 'Polygon':
-        yield from c
-    elif t == 'MultiPolygon':
-        for pol in c:
-            yield from pol
-    elif t == 'GeometryCollection':
-        for x in g['geometries']:
-            yield from anillos(x)
-
-
-def area_plana(g):
-    """Suma de |área| de anillos (grados², solo para comparar antes y después)."""
-    total = 0.0
-    for r in anillos(g):
-        s = 0.0
-        for (x1, y1), (x2, y2) in zip(r, r[1:]):
-            s += x1 * y2 - x2 * y1
-        total += abs(s) / 2
-    return total
-
-
-def contar_vertices(g):
+def vertices(g):
     if g is None:
         return 0
     if g.get('type') == 'GeometryCollection':
-        return sum(contar_vertices(x) for x in g['geometries'])
+        return sum(vertices(x) for x in g.get('geometries', []))
 
     def contar(c):
+        if not c:
+            return 0
         return 1 if isinstance(c[0], (int, float)) else sum(contar(x) for x in c)
-    return contar(g['coordinates'])
+    return contar(g.get('coordinates'))
 
 
 def procesar_archivo(ruta, n):
-    nombre = os.path.basename(ruta).lower()
-    if any(p in ruta.lower() or p in nombre for p in PROHIBIDO):
-        raise SystemExit(f'Rechazado: {ruta} parece relacionado con pueblos en aislamiento voluntario.')
     original = open(ruta, 'rb').read()
     datos = json.loads(original)
-    if any(p in json.dumps(datos.get('name', '')).lower() for p in PROHIBIDO):
-        raise SystemExit(f'Rechazado: {ruta} parece relacionado con pueblos en aislamiento voluntario.')
-    conservados[0] = 0
-    v_antes = v_despues = 0
-    a_antes = a_despues = 0.0
+    if menciona_prohibido(os.path.relpath(ruta, RAIZ)) or menciona_prohibido(datos.get('name', '')) or any(
+            menciona_prohibido(f.get('properties')) for f in datos.get('features', [])):
+        raise ErrorEntrada(f'{ruta}: menciona pueblos en aislamiento voluntario; no se procesa (AGENTS.md).')
+    info = {'partes': 0, 'conservadas': 0, 'original_con_problemas': None}
     nuevas = []
-    for f in datos['features']:
-        g = f.get('geometry')
-        ng = procesar_geometria(g, n) if g else g
-        if g:
-            v_antes += contar_vertices(g)
-            v_despues += contar_vertices(ng)
-            a_antes += area_plana(g)
-            a_despues += area_plana(ng)
-        nuevas.append({**f, 'geometry': ng})
-    salida = json.dumps({**datos, 'features': nuevas}, ensure_ascii=False, separators=(',', ':')).encode('utf-8') + b'\n'
-    return {
-        'ruta': os.path.relpath(ruta, RAIZ),
-        'original': original,
-        'salida': salida,
-        'vertices': (v_antes, v_despues),
-        'cambio_area': abs(a_despues - a_antes) / a_antes if a_antes else 0.0,
-        'conservados': conservados[0],
-        'desplazamiento_max_m': 0.5 * 10 ** -n * M_POR_GRADO * math.sqrt(2),
-    }
+    for k, f in enumerate(datos.get('features', []), 1):
+        try:
+            g = procesar_geometria(f.get('geometry'), n, info)
+        except ErrorEntrada as e:
+            raise ErrorEntrada(f'{ruta}: entidad {k}: {e}')
+        nuevas.append({**f, 'geometry': g})
+    if info['original_con_problemas']:
+        salida = original
+    else:
+        salida = json.dumps({**datos, 'features': nuevas}, ensure_ascii=False, separators=(',', ':')).encode('utf-8') + b'\n'
+    return {'ruta': os.path.relpath(ruta, RAIZ), 'original': original, 'salida': salida, **info}
 
+
+# ---------- interfaz ----------
 
 def kb(b):
     return f'{len(b) / 1024:,.0f} KB'.replace(',', '.')
@@ -156,31 +225,47 @@ def main():
     args = ap.parse_args()
     if args.decimales < 6:
         raise SystemExit('Menos de 6 decimales mueve vértices más de 0,5 m; requiere aprobación de la entidad responsable.')
-    rutas = args.archivos or sorted(glob.glob(PATRON))
-    resultados = []
+
+    autorizadas = capas_autorizadas()
+    if not autorizadas:
+        raise SystemExit(f'El catálogo no declara capas con estado {ESTADO_AUTORIZADO}.')
+    if args.archivos:
+        rutas = [os.path.realpath(a) for a in args.archivos]
+        ajenas = [a for a, r in zip(args.archivos, rutas) if r not in autorizadas]
+        if ajenas:
+            raise SystemExit('No autorizadas en el catálogo (no se procesa nada): ' + ', '.join(ajenas))
+    else:
+        rutas = autorizadas
+    faltan = [os.path.relpath(r, RAIZ) for r in rutas if not os.path.isfile(r)]
+    if faltan:
+        raise SystemExit('Faltan capas autorizadas en el catálogo: ' + ', '.join(faltan))
+
     try:
-        for r in rutas:
-            resultados.append(procesar_archivo(r, args.decimales))
-    except ErrorGeometria as e:
+        resultados = [procesar_archivo(r, args.decimales) for r in rutas]
+    except ErrorEntrada as e:
         raise SystemExit(f'Abortado sin escribir nada: {e}')
+
     cambiarian = 0
-    t_antes = t_despues = g_antes = g_despues = 0
-    print(f'{"archivo":58} {"antes":>10} {"después":>10} {"gzip antes":>11} {"gzip desp.":>11} {"vért. quitados":>15} {"Δ área":>9} {"conservados":>12}')
+    t = [0, 0, 0, 0]
+    print(f'{"archivo":44} {"antes":>9} {"después":>9} {"gzip antes":>10} {"gzip desp.":>10} {"polígonos":>9} {"sin redondear":>13}')
     for x in resultados:
         ga, gd = gzip.compress(x['original'], 6), gzip.compress(x['salida'], 6)
-        t_antes += len(x['original']); t_despues += len(x['salida']); g_antes += len(ga); g_despues += len(gd)
-        va, vd = x['vertices']
-        print(f'{x["ruta"]:58} {kb(x["original"]):>10} {kb(x["salida"]):>10} {kb(ga):>11} {kb(gd):>11} {va - vd:>15,} {x["cambio_area"]:>9.2e} {x["conservados"]:>12}')
+        for i, v in enumerate((len(x['original']), len(x['salida']), len(ga), len(gd))):
+            t[i] += v
+        nota = f'  ORIGINAL CON PROBLEMAS, sin cambios: {x["original_con_problemas"]}' if x['original_con_problemas'] else ''
+        print(f'{x["ruta"].replace("datos/determinantes_ambientales/", ""):44} {kb(x["original"]):>9} {kb(x["salida"]):>9} '
+              f'{kb(ga):>10} {kb(gd):>10} {x["partes"]:>9} {x["conservadas"]:>13}{nota}')
         if x['original'] != x['salida']:
             cambiarian += 1
             if not args.comprobar:
                 with open(os.path.join(RAIZ, x['ruta']), 'wb') as fh:
                     fh.write(x['salida'])
-    print(f'{"TOTAL":58} {t_antes / 1048576:>8.1f} MB {t_despues / 1048576:>8.1f} MB {g_antes / 1048576:>9.1f} MB {g_despues / 1048576:>9.1f} MB')
-    print(f'Desplazamiento máximo por redondeo: {resultados[0]["desplazamiento_max_m"]:.2f} m' if resultados else 'Sin archivos.')
+    mb = [v / 1048576 for v in t]
+    print(f'{"TOTAL":44} {mb[0]:>6.1f} MB {mb[1]:>6.1f} MB {mb[2]:>7.1f} MB {mb[3]:>7.1f} MB')
+    print(f'Corrimiento máximo por redondeo: {0.5 * 10 ** -args.decimales * M_POR_GRADO * 2 ** .5:.2f} m.')
     if args.comprobar and cambiarian:
-        raise SystemExit(f'{cambiarian} archivo(s) tienen más de {args.decimales} decimales. Ejecuta el script sin --comprobar.')
-    print(f'{cambiarian} archivo(s) {"cambiarían" if args.comprobar else "actualizados"}.')
+        raise SystemExit(f'{cambiarian} archivo(s) no están procesados. Ejecuta: python3 scripts/reducir_precision_geojson.py')
+    print(f'{len(resultados)} archivo(s) revisados; {cambiarian} {"cambiarían" if args.comprobar else "actualizados"}.')
 
 
 if __name__ == '__main__':

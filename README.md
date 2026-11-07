@@ -23,11 +23,15 @@ La lista de capas se prueba con clic a 1280×720 y 390×844. Las regresiones de 
 
 ## Datos cartográficos para la web
 
-Los GeoJSON de `datos/determinantes_ambientales/` se publican con 6 decimales (unos 8 cm de corrimiento máximo) para que carguen en conexiones lentas. Tras agregar o reemplazar un archivo:
+Los GeoJSON de `datos/determinantes_ambientales/` se publican con 6 decimales (como máximo 8 cm de corrimiento) para que carguen en conexiones lentas. Tras agregar o reemplazar una capa autorizada en el catálogo:
 
 ```sh
-python3 scripts/reducir_precision_geojson.py             # redondea y compacta
-python3 scripts/reducir_precision_geojson.py --comprobar # lo que verifica la prueba automática
+python3 scripts/reducir_precision_geojson.py              # redondea y compacta
+python3 scripts/reducir_precision_geojson.py --comprobar  # lo que verifica la prueba automática
+python3 scripts/topologia_geojson.py datos/determinantes_ambientales/*/*.geojson  # validación topológica
 ```
 
-El script no simplifica geometrías, no toca atributos y conserva sin redondear los anillos que colapsarían. Rechaza cualquier archivo de pueblos en aislamiento voluntario.
+- Solo procesa capas del catálogo con estado `aprobada_disponible_geojson`; rechaza cualquier otro archivo.
+- No simplifica, no repara y no elimina partes. Si al redondear un polígono cambiaría su topología (cruces, solapes, área cero, contactos nuevos u orientación invertida), ese polígono completo conserva sus coordenadas originales.
+- No toca atributos, `name` ni `crs`. Conserva la Z si existe.
+- Rechaza archivos cuyo nombre o atributos mencionen «aislamiento». Es una defensa adicional: no sustituye la revisión institucional de cada capa exigida en `AGENTS.md`.
