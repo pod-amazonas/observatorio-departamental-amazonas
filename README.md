@@ -26,12 +26,14 @@ La lista de capas se prueba con clic a 1280×720 y 390×844. Las regresiones de 
 Los GeoJSON de `datos/determinantes_ambientales/` se publican con 6 decimales (como máximo 8 cm de corrimiento) para que carguen en conexiones lentas. Tras agregar o reemplazar una capa autorizada en el catálogo:
 
 ```sh
-python3 scripts/reducir_precision_geojson.py              # redondea y compacta
-python3 scripts/reducir_precision_geojson.py --comprobar  # lo que verifica la prueba automática
+python3 scripts/reducir_precision_geojson.py                         # redondea, compacta y escribe procesado.json
+python3 scripts/reducir_precision_geojson.py --comprobar             # verificación rápida (la de CI)
+python3 scripts/reducir_precision_geojson.py --comprobar --completo  # vuelve a procesar todo en memoria
 python3 scripts/topologia_geojson.py datos/determinantes_ambientales/*/*.geojson  # validación topológica
 ```
 
 - Solo procesa capas del catálogo con estado `aprobada_disponible_geojson`; rechaza cualquier otro archivo.
-- No simplifica, no repara y no elimina partes. Si al redondear un polígono cambiaría su topología (cruces, solapes, área cero, contactos nuevos u orientación invertida), ese polígono completo conserva sus coordenadas originales.
-- No toca atributos, `name` ni `crs`. Conserva la Z si existe.
+- No simplifica, no repara y no elimina partes. Un polígono redondeado se acepta solo si sigue siendo válido (incluido el interior conexo), si los mismos anillos siguen coincidiendo en cada punto de contacto y si ningún anillo invierte su orientación. Si no, ese polígono completo conserva sus coordenadas originales; `procesado.json` lista cuáles.
+- No toca atributos, `name` ni `crs`. Conserva la Z si existe. Rechaza NaN e Infinity.
 - Rechaza archivos cuyo nombre o atributos mencionen «aislamiento». Es una defensa adicional: no sustituye la revisión institucional de cada capa exigida en `AGENTS.md`.
+- El validador sigue las reglas de validez de OGC/GEOS para polígonos y se contrasta con casos sintéticos en `tests/regresiones_topologia.py`. No es GEOS: ante una duda de validez, la referencia es GEOS.

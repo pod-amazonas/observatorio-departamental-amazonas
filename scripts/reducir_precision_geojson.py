@@ -9,8 +9,9 @@ Qué hace:
 
 Garantía topológica (ver scripts/topologia_geojson.py):
   - Un polígono redondeado se acepta solo si sigue siendo válido (anillos simples, área no
-    nula, sin cruces ni solapes, huecos dentro de su exterior, partes sin solaparse), si no
-    aparece ningún contacto nuevo entre anillos y si ningún anillo invierte su orientación.
+    nula, sin cruces ni solapes, interior conexo, huecos dentro de su exterior, partes sin
+    solaparse), si la estructura de contactos no cambia (los mismos anillos coinciden en
+    cada punto de contacto) y si ningún anillo invierte su orientación.
   - Si no, ese polígono completo (exterior y todos sus huecos) conserva sus coordenadas
     originales. Nunca se repara, se elimina ni se simplifica una parte.
   - Si el original ya tuviera problemas, el archivo no se modifica.
@@ -21,24 +22,36 @@ Qué archivos procesa:
   - Como defensa adicional, rechaza archivos cuyo nombre, ruta, `name` o atributos mencionen
     «aislamiento». Esto no sustituye la revisión institucional de cada capa (AGENTS.md).
 
+Manifiesto `datos/determinantes_ambientales/procesado.json`:
+  - Lo escribe el script: huella SHA-256 de cada capa procesada, huella de los dos scripts y
+    los polígonos que se conservaron sin redondear (para auditoría).
+  - `--comprobar` (rápido, el de CI) exige que las capas autorizadas y los scripts coincidan con
+    el manifiesto. Un archivo nuevo, editado a mano o un script modificado hacen fallar.
+  - `--comprobar --completo` vuelve a procesar todo en memoria (lento) y exige que no cambie nada.
+
 Uso:
-  python3 scripts/reducir_precision_geojson.py              # procesa todas las capas autorizadas
-  python3 scripts/reducir_precision_geojson.py --comprobar  # no escribe; falla si algo cambiaría
+  python3 scripts/reducir_precision_geojson.py                         # procesa y escribe el manifiesto
+  python3 scripts/reducir_precision_geojson.py --comprobar             # verificación rápida
+  python3 scripts/reducir_precision_geojson.py --comprobar --completo  # verificación completa
   python3 scripts/reducir_precision_geojson.py datos/.../determinante_01.geojson
 """
 import argparse
 import gzip
+import hashlib
 import json
+import math
 import os
 import sys
 import unicodedata
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from topologia_geojson import analizar, partes_de  # noqa: E402
+from topologia_geojson import Problema, analizar, cargar_json, partes_de  # noqa: E402
 
-RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+RAIZ = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 CATALOGO = os.path.join(RAIZ, 'catalogo_determinantes_para_geovisor.json')
 ESTADO_AUTORIZADO = 'aprobada_disponible_geojson'
+MANIFIESTO = os.path.join(RAIZ, 'datos', 'determinantes_ambientales', 'procesado.json')
+SCRIPTS = [os.path.join(RAIZ, 'scripts', n) for n in ('reducir_precision_geojson.py', 'topologia_geojson.py')]
 PROHIBIDO = ('aislamiento',)
 M_POR_GRADO = 111_320
 
@@ -74,8 +87,9 @@ def menciona_prohibido(valor):
 # ---------- redondeo ----------
 
 def redondear(p, n):
-    if not isinstance(p, list) or len(p) < 2 or not all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in p):
-        raise ErrorEntrada(f'posición no válida: {p!r}')
+    if not isinstance(p, list) or len(p) < 2 or not all(
+            isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in p):
+        raise ErrorEntrada(f'posición no válida o no finita: {p!r}')
     return [round(p[0], n), round(p[1], n)] + p[2:]
 
 
@@ -117,7 +131,7 @@ def procesar_poligonal(partes, n):
                 raise ErrorEntrada('anillo vacío o con menos de 4 posiciones en el original')
             for p in r:
                 redondear(p, n)  # valida cada posición
-    malos0, contactos0, orient0 = analizar(partes)
+    malos0, estructura0, orient0 = analizar(partes)
     if malos0:
         i, motivos = next(iter(sorted(malos0.items())))
         return None, f'el original ya tiene problemas (polígono {i + 1}: {motivos[0]})'
@@ -125,22 +139,22 @@ def procesar_poligonal(partes, n):
     redondeada = [c is not None for c in candidatas]
     for _ in range(len(partes) + 1):
         actuales = [candidatas[i] if redondeada[i] else partes[i] for i in range(len(partes))]
-        malos, contactos, orient = analizar(actuales)
+        malos, estructura, orient = analizar(actuales)
         restaurar = set(malos)
-        for clave, puntos in contactos.items():
-            if len(puntos) > len(contactos0.get(clave, ())):
-                restaurar |= {clave[0][0], clave[1][0]}
+        # la estructura de contactos debe ser idéntica: mismos grupos de anillos en cada punto
+        for grupo in (estructura - estructura0) + (estructura0 - estructura):
+            restaurar |= {parte for parte, _ in grupo}
         for clave, signo in orient.items():
             if signo != orient0.get(clave):
                 restaurar.add(clave[0])
         restaurar = {i for i in restaurar if redondeada[i]}
         if not restaurar:
             if malos:  # solo quedan problemas entre partes originales: se conserva todo
-                return list(partes), len(partes)
-            return actuales, redondeada.count(False)
+                return list(partes), list(range(len(partes)))
+            return actuales, [i for i, r in enumerate(redondeada) if not r]
         for i in restaurar:
             redondeada[i] = False
-    return list(partes), len(partes)
+    return list(partes), list(range(len(partes)))
 
 
 def procesar_geometria(g, n, info):
@@ -156,8 +170,9 @@ def procesar_geometria(g, n, info):
         if nuevas is None:
             info['original_con_problemas'] = extra
             return g
+        info['conservadas'] += len(extra)
+        info.setdefault('indices', []).extend(info['partes'] + i + 1 for i in extra)
         info['partes'] += len(partes)
-        info['conservadas'] += extra
         return {**g, 'coordinates': nuevas[0] if t == 'Polygon' else nuevas}
     if t == 'Point':
         return {**g, 'coordinates': redondear(c, n)}
@@ -192,11 +207,14 @@ def vertices(g):
 
 def procesar_archivo(ruta, n):
     original = open(ruta, 'rb').read()
-    datos = json.loads(original)
+    try:
+        datos = cargar_json(original)
+    except Problema as e:
+        raise ErrorEntrada(f'{ruta}: {e}')
     if menciona_prohibido(os.path.relpath(ruta, RAIZ)) or menciona_prohibido(datos.get('name', '')) or any(
             menciona_prohibido(f.get('properties')) for f in datos.get('features', [])):
         raise ErrorEntrada(f'{ruta}: menciona pueblos en aislamiento voluntario; no se procesa (AGENTS.md).')
-    info = {'partes': 0, 'conservadas': 0, 'original_con_problemas': None}
+    info = {'partes': 0, 'conservadas': 0, 'indices': [], 'original_con_problemas': None}
     nuevas = []
     for k, f in enumerate(datos.get('features', []), 1):
         try:
@@ -207,8 +225,56 @@ def procesar_archivo(ruta, n):
     if info['original_con_problemas']:
         salida = original
     else:
-        salida = json.dumps({**datos, 'features': nuevas}, ensure_ascii=False, separators=(',', ':')).encode('utf-8') + b'\n'
-    return {'ruta': os.path.relpath(ruta, RAIZ), 'original': original, 'salida': salida, **info}
+        try:
+            salida = json.dumps({**datos, 'features': nuevas}, ensure_ascii=False, separators=(',', ':'),
+                                allow_nan=False).encode('utf-8') + b'\n'
+        except ValueError as e:
+            raise ErrorEntrada(f'{ruta}: {e}')
+    return {'ruta': os.path.relpath(ruta, RAIZ), 'abs': ruta, 'original': original, 'salida': salida, **info}
+
+
+# ---------- manifiesto ----------
+
+def sha256(datos):
+    return hashlib.sha256(datos).hexdigest()
+
+
+def firma_scripts():
+    return sha256(b''.join(open(p, 'rb').read() for p in SCRIPTS))
+
+
+def escribir_manifiesto(resultados, n):
+    m = {'decimales': n, 'scripts': firma_scripts(), 'capas': {
+        x['ruta']: {'sha256': sha256(x['salida']), 'poligonos': x['partes'],
+                    'conservados_sin_redondear': x['indices']} for x in resultados}}
+    with open(MANIFIESTO, 'w', encoding='utf-8') as fh:
+        json.dump(m, fh, ensure_ascii=False, indent=1, sort_keys=True)
+        fh.write('\n')
+    print(f'Manifiesto actualizado: {os.path.relpath(MANIFIESTO, RAIZ)}')
+
+
+def comprobar_manifiesto(autorizadas, n):
+    if not os.path.isfile(MANIFIESTO):
+        raise SystemExit('Falta el manifiesto. Ejecuta: python3 scripts/reducir_precision_geojson.py')
+    m = json.load(open(MANIFIESTO, encoding='utf-8'))
+    errores = []
+    if m.get('decimales') != n:
+        errores.append(f'el manifiesto usa {m.get("decimales")} decimales, no {n}')
+    if m.get('scripts') != firma_scripts():
+        errores.append('los scripts cambiaron desde que se generó el manifiesto')
+    capas = m.get('capas', {})
+    esperadas = {os.path.relpath(r, RAIZ) for r in autorizadas}
+    for ruta in sorted(esperadas - set(capas)):
+        errores.append(f'{ruta}: no está en el manifiesto')
+    for ruta in sorted(set(capas) - esperadas):
+        errores.append(f'{ruta}: está en el manifiesto pero no autorizada en el catálogo')
+    for ruta in sorted(esperadas & set(capas)):
+        if sha256(open(os.path.join(RAIZ, ruta), 'rb').read()) != capas[ruta].get('sha256'):
+            errores.append(f'{ruta}: no coincide con el manifiesto (¿editado o sin procesar?)')
+    if errores:
+        raise SystemExit('\n'.join(errores) + '\nEjecuta: python3 scripts/reducir_precision_geojson.py')
+    total = sum(len(c.get('conservados_sin_redondear', [])) for c in capas.values())
+    print(f'{len(esperadas)} capa(s) coinciden con el manifiesto; {total} polígono(s) conservados sin redondear.')
 
 
 # ---------- interfaz ----------
@@ -221,7 +287,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('archivos', nargs='*')
     ap.add_argument('--decimales', type=int, default=6)
-    ap.add_argument('--comprobar', action='store_true', help='no escribe; termina con error si algún archivo cambiaría')
+    ap.add_argument('--comprobar', action='store_true', help='no escribe; verifica capas y scripts contra el manifiesto')
+    ap.add_argument('--completo', action='store_true', help='con --comprobar: vuelve a procesar todo en memoria')
     args = ap.parse_args()
     if args.decimales < 6:
         raise SystemExit('Menos de 6 decimales mueve vértices más de 0,5 m; requiere aprobación de la entidad responsable.')
@@ -239,6 +306,9 @@ def main():
     faltan = [os.path.relpath(r, RAIZ) for r in rutas if not os.path.isfile(r)]
     if faltan:
         raise SystemExit('Faltan capas autorizadas en el catálogo: ' + ', '.join(faltan))
+
+    if args.comprobar and not args.completo:
+        return comprobar_manifiesto(autorizadas, args.decimales)
 
     try:
         resultados = [procesar_archivo(r, args.decimales) for r in rutas]
@@ -258,13 +328,18 @@ def main():
         if x['original'] != x['salida']:
             cambiarian += 1
             if not args.comprobar:
-                with open(os.path.join(RAIZ, x['ruta']), 'wb') as fh:
+                with open(x['abs'], 'wb') as fh:
                     fh.write(x['salida'])
     mb = [v / 1048576 for v in t]
     print(f'{"TOTAL":44} {mb[0]:>6.1f} MB {mb[1]:>6.1f} MB {mb[2]:>7.1f} MB {mb[3]:>7.1f} MB')
     print(f'Corrimiento máximo por redondeo: {0.5 * 10 ** -args.decimales * M_POR_GRADO * 2 ** .5:.2f} m.')
     if args.comprobar and cambiarian:
         raise SystemExit(f'{cambiarian} archivo(s) no están procesados. Ejecuta: python3 scripts/reducir_precision_geojson.py')
+    if not args.comprobar:
+        if args.archivos:
+            print('Manifiesto sin actualizar: ejecuta el script sin argumentos para regenerarlo.')
+        else:
+            escribir_manifiesto(resultados, args.decimales)
     print(f'{len(resultados)} archivo(s) revisados; {cambiarian} {"cambiarían" if args.comprobar else "actualizados"}.')
 
 
