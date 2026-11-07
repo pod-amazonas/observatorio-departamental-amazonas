@@ -1,0 +1,174 @@
+{
+ "capas": {
+  "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_01.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "be85b2f128c584bb7a67e90ab4d554baaa4fe144b1bb082f6c8cd86c61a99565"
+  },
+  "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_02.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "0d249878a75376989896b89b7cd03db460463db48cc4950fc2f7a5aa0b62ccbe"
+  },
+  "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_03.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 3,
+   "sha256": "dbfc8cb68c74ad7628f34128a04922eb8bb070bd622df7a44256fbf24cc4ea59"
+  },
+  "datos/determinantes_ambientales/01_AREAS_PROTEGIDAS/determinante_04.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "772f839eb1ccafaaf9d0715b5cfcfb43f532d5e80758e74944f253a28bf7d894"
+  },
+  "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_05.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "665a180716a5a2217a64e4ee78e5b1826109d243a0d1e1c398377a13dfb97b86"
+  },
+  "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_06.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "7ad5c49ee68839ee3f67a8eaadd3579b0ec660a0a9e1dcf2f0053e475616f9b2"
+  },
+  "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_07.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "736002434b2e226c9a8604f7d82196f568cbda1176429cabc1ef5a098032ada8"
+  },
+  "datos/determinantes_ambientales/02_RESERVAS_FORESTALES_TIPO_B/determinante_08.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "e0f8958d7b97e15da294118f9d7d183a8f4af008b53ef74f17637513de29c571"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_09.geojson": {
+   "conservados_sin_redondear": [
+    1
+   ],
+   "poligonos": 1,
+   "sha256": "545ba6304be3df955db70211a356f8d504995ae0d32ea2a004652c4f51e01e10"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_10.geojson": {
+   "conservados_sin_redondear": [
+    1
+   ],
+   "poligonos": 1,
+   "sha256": "c02882dd30860340696f94d1ef31783f21ecdf69d88519b26114ac92165ff86e"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_11.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "063086c34adfe650f49bc6870b65d310077bcda011a03cf87dd3605e441b3f29"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_12.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "ca10fb37a2bf04d44e9558d6332d6327b48c2810e7d39c55dc3b0872820001d3"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_13.geojson": {
+   "conservados_sin_redondear": [
+    2
+   ],
+   "poligonos": 21,
+   "sha256": "e0f39fd0fe8f3e783227bb43c4102a5f4e6e047aecddbe96e8d75e732edefabc"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_14.geojson": {
+   "conservados_sin_redondear": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    72,
+    77
+   ],
+   "poligonos": 77,
+   "sha256": "0636a11cbbe29492120552c7ba8aed6ad2f89b1d1abb929266dbef87882cfa84"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_15.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 2,
+   "sha256": "f091c12d82002c58ecd53d41fffc395e0ea3ca5ac54ea86212bfd8611f5ad53d"
+  },
+  "datos/determinantes_ambientales/03_RESERVAS_FORESTALES_TIPO_A/determinante_16.geojson": {
+   "conservados_sin_redondear": [
+    1
+   ],
+   "poligonos": 2,
+   "sha256": "7eec1b799ac26ee1c16b79a3278f51aa5974046896f63b709ef33ed428ca96b3"
+  },
+  "datos/determinantes_ambientales/04_HUMEDALES/determinante_17.geojson": {
+   "conservados_sin_redondear": [
+    307,
+    831,
+    858,
+    1203,
+    1520,
+    1522,
+    1530,
+    1534,
+    1538,
+    1656,
+    1657,
+    1659,
+    1661,
+    1664,
+    1677,
+    1942,
+    2060,
+    2066,
+    2069,
+    2193,
+    2202,
+    2212,
+    2213,
+    2241,
+    2264,
+    2400,
+    2567,
+    2892,
+    2893,
+    2895,
+    2896,
+    3059,
+    3060,
+    3072
+   ],
+   "poligonos": 3079,
+   "sha256": "5d240124efb00ce670ffcfa33dbb19dd40aeb34d151d1e7e3086ec265405e7de"
+  },
+  "datos/determinantes_ambientales/05_MICROCUENCA_YAHUARCACA/determinante_18.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 1,
+   "sha256": "0cd0571ce89ad63a7122f905d8474d4e01211f2a738310d8f0416ceb6a140396"
+  },
+  "datos/determinantes_ambientales/07_CLASES_AGROLOGICAS_VII_VIII/determinante_32.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 95,
+   "sha256": "379f5560c274bf06c91f5e049eb31509d601971c06f6cae79b67e6849a99d883"
+  },
+  "datos/determinantes_ambientales/07_CLASES_AGROLOGICAS_VII_VIII/determinante_33.geojson": {
+   "conservados_sin_redondear": [],
+   "poligonos": 73,
+   "sha256": "3dd5bd300388acdee718a9fa14fe2a3629f8261a2c610f73c4507e623c268011"
+  }
+ },
+ "decimales": 6,
+ "scripts": "2f55a6866840d24b15cc5e3480a6c98c795f09b1e0127b976bed6800b8a2cfa8"
+}

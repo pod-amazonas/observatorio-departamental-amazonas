@@ -340,3 +340,17 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`portada
   expect([...vistos].sort(),`controles alcanzados con Tab en ${capa}`).toEqual([...esperados].sort());
  }
 });
+const {execFileSync}=require('node:child_process');
+const python=(script,args,opciones={})=>execFileSync('python3',[path.join(__dirname,'..','scripts',script),...args],{encoding:'utf8',stdio:'pipe',...opciones});
+const capasGeoJSON=layers.filter(l=>l.archivo).map(l=>path.join(__dirname,'..',l.archivo));
+test('topología: los 20 GeoJSON son válidos (anillos simples, interior conexo, sin cruces ni solapes)',()=>{
+ test.setTimeout(240_000);
+ try{python('topologia_geojson.py',capasGeoJSON)}catch(e){throw new Error(`Problemas topológicos:\n${e.stdout}${e.stderr}`)}
+});
+test('topología: regresiones sintéticas alineadas con GEOS (interior conexo, contactos, no finitos)',()=>{
+ try{execFileSync('python3',[path.join(__dirname,'regresiones_topologia.py')],{encoding:'utf8',stdio:'pipe'})}
+ catch(e){throw new Error(`${e.stdout}${e.stderr}`)}
+});
+test('GeoJSON publicados coinciden con el manifiesto de scripts/reducir_precision_geojson.py',()=>{
+ try{python('reducir_precision_geojson.py',['--comprobar'])}catch(e){throw new Error(`${e.stdout}${e.stderr}`)}
+});
