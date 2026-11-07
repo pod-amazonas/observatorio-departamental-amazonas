@@ -52,6 +52,7 @@
     pausaManual = !pausaManual;
     actualizarMovimiento();
   });
-  preferencia.addEventListener('change', actualizarMovimiento);
+  if (preferencia.addEventListener) preferencia.addEventListener('change', actualizarMovimiento);
+  else if (preferencia.addListener) preferencia.addListener(actualizarMovimiento);
   actualizarMovimiento();
 })();

@@ -243,7 +243,15 @@ for(const width of [1280,390])test(`portada: pausa real y reanudación con tecla
  await page.clock.fastForward(5000);
  await expect(portada).toHaveAttribute('data-capa','rios');
 });
-test('portada: movimiento reducido inicial y cambios de preferencia respetan la pausa manual',async({page})=>{
+for(const legacy of [false,true])test(`portada: movimiento reducido inicial y cambios de preferencia respetan la pausa manual${legacy?' con addListener':''}`,async({page})=>{
+ if(legacy)await page.addInitScript(()=>{
+  const original=window.matchMedia.bind(window);
+  window.matchMedia=query=>{
+   const preferencia=original(query);
+   if(query==='(prefers-reduced-motion: reduce)')Object.defineProperty(preferencia,'addEventListener',{value:undefined});
+   return preferencia;
+  };
+ });
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.clock.install();
  await page.goto('/');
