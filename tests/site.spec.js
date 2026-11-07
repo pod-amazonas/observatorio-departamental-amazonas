@@ -331,3 +331,81 @@ for(const [titulo,ruta] of modulosPortada)test(`portada: tarjeta ${titulo} abre 
  await expect(page.locator('#view-'+ruta)).toBeVisible();
  await expect(page.locator('#view-inicio')).toBeHidden();
 });
+const luminancia=([r,g,b])=>{const c=[r,g,b].map(n=>{n/=255;return n<=.03928?n/12.92:((n+.055)/1.055)**2.4});return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+const contraste=(a,b)=>{const [x,y]=[luminancia(a),luminancia(b)].sort((m,n)=>n-m);return (x+.05)/(y+.05)};
+const controlesPortada='.portada-chip,.portada-cta,.portada-enlace,.portada-modulo';
+// Mide píxeles reales: el anillo de foco debe verse y contrastar ≥3:1 con lo que tiene a ambos lados (WCAG 2.1, 1.4.11).
+// Toma dos capturas gemelas: con anillo (para ver el anillo) y con el anillo transparente (para leer el fondo sin
+// ninguna contaminación del suavizado del contorno). Confirma la escena antes y después de capturar.
+// Fuera de alcance (#17): que el foco no quede tapado por el encabezado u otras capas (WCAG 2.2, 2.4.11).
+async function medirFoco(page,capa){
+ const leerPixeles=(png,puntos)=>page.evaluate(async({png,puntos})=>{
+  const img=await createImageBitmap(await (await fetch('data:image/png;base64,'+png)).blob());
+  const c=new OffscreenCanvas(img.width,img.height),ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+  return puntos.map(([px,py])=>px<0||py<0||px>=img.width||py>=img.height?null:[...ctx.getImageData(px,py,1,1).data.slice(0,3)]);
+ },{png,puntos});
+ const escena=()=>page.locator('.portada').getAttribute('data-capa');
+ const datos=await page.evaluate(()=>{
+  const e=document.activeElement;
+  e.scrollIntoView({block:'center',inline:'center'});
+  const s=getComputedStyle(e),r=e.getBoundingClientRect();
+  return {indice:e.dataset.pruebaFoco,focusVisible:e.matches(':focus-visible'),visible:!!e.checkVisibility?.({opacityProperty:true,visibilityProperty:true}),tipo:s.outlineStyle,
+   ancho:parseFloat(s.outlineWidth),separacion:parseFloat(s.outlineOffset),color:s.outlineColor.match(/\d+/g).slice(0,3).map(Number),
+   caja:{x:r.x,y:r.y,w:r.width,h:r.height},escala:devicePixelRatio,nombre:(e.getAttribute('aria-label')||e.textContent).trim().slice(0,40)};
+ });
+ const {x,y,w,h}=datos.caja,o=datos.separacion,a=datos.ancho,k=datos.escala,vista=page.viewportSize();
+ // Recorte alrededor del control (más rápido con alta densidad), limitado a la ventana.
+ const m=Math.max(0,o+a)+4,x0=Math.max(0,Math.floor(x-m)),y0=Math.max(0,Math.floor(y-m));
+ const clip={x:x0,y:y0,width:Math.min(vista.width,Math.ceil(x+w+m))-x0,height:Math.min(vista.height,Math.ceil(y+h+m))-y0};
+ const capturar=async()=>clip.width>0&&clip.height>0?(await page.screenshot({animations:'disabled',clip})).toString('base64'):null;
+ const escenaAntes=await escena();
+ const conAnillo=await capturar();
+ await page.evaluate(()=>document.activeElement.style.setProperty('outline-color','transparent','important'));
+ const sinAnillo=await capturar();
+ await page.evaluate(()=>document.activeElement.style.removeProperty('outline-color'));
+ datos.escenas=[escenaAntes,await escena()];
+ const lados=[[x+w/2,y,0,-1],[x+w/2,y+h,0,1],[x,y+h/2,-1,0],[x+w,y+h/2,1,0]];
+ const punto=(px,py,dx,dy,d)=>[Math.floor((px+dx*d-x0)*k),Math.floor((py+dy*d-y0)*k)];
+ // Anillo: centro del contorno, en la captura con anillo.
+ // Fondo: el píxel pegado a cada borde del anillo (fuera y en la separación), en la captura sin anillo; es el
+ // «color adyacente» de WCAG y queda lejos del suavizado de controles vecinos.
+ const anillo=conAnillo?await leerPixeles(conAnillo,lados.map(([px,py,dx,dy])=>punto(px,py,dx,dy,o+a/2))):[];
+ const fondo=sinAnillo?await leerPixeles(sinAnillo,lados.flatMap(([px,py,dx,dy])=>[punto(px,py,dx,dy,o+a+.25),punto(px,py,dx,dy,o-.25)])):[];
+ datos.muestras=lados.map((_,i)=>({anillo:anillo[i]??null,fuera:fondo[i*2]??null,dentro:fondo[i*2+1]??null}));
+ return datos;
+}
+for(const size of [{width:1280,height:720},{width:390,height:844}])test(`portada: foco de teclado visible y ≥3:1 con sus fondos reales a ${size.width}px (#17)`,async({page})=>{
+ await page.setViewportSize(size);
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/');
+ // Hay 13 controles; la pausa está deshabilitada con movimiento reducido y no recibe Tab.
+ await expect(page.locator(controlesPortada)).toHaveCount(13);
+ await expect(page.locator('.portada-pausa')).toBeDisabled();
+ // Identificador estable solo para los 12 controles habilitados que debe alcanzar el recorrido.
+ const esperados=await page.locator(controlesPortada).evaluateAll(els=>els.filter(e=>!e.matches(':disabled')).map((e,i)=>(e.dataset.pruebaFoco=String(i))));
+ expect(esperados).toHaveLength(12);
+ for(const [capa,nombre] of capasPortada){
+  await page.locator('.portada').getByRole('button',{name:nombre,exact:true}).evaluate(b=>b.click());
+  await expect(page.locator('.portada')).toHaveAttribute('data-capa',capa);
+  await page.evaluate(()=>{document.activeElement?.blur();window.scrollTo(0,0)});
+  const vistos=new Set();
+  for(let i=0;i<80&&vistos.size<esperados.length;i++){
+   await page.keyboard.press('Tab');
+   if(!await page.evaluate(sel=>document.activeElement?.matches(sel),controlesPortada))continue;
+   const f=await medirFoco(page,capa),id=`${capa} · ${f.nombre}`;
+   vistos.add(f.indice);
+   expect(f.focusVisible,id).toBe(true);
+   expect(f.visible,id).toBe(true);
+   expect(f.tipo,id).toBe('solid');
+   expect(f.ancho,id).toBeGreaterThanOrEqual(2);
+   expect(f.separacion,`${id}: el anillo debe quedar fuera del relleno del control`).toBeGreaterThanOrEqual(2);
+   expect(f.escenas,`${id}: la escena no cambia durante la medición`).toEqual([capa,capa]);
+   expect(f.muestras.every(m=>m.anillo&&m.fuera&&m.dentro),`${id}: los 4 lados del anillo deben estar dentro de la ventana`).toBe(true);
+   for(const [lado,{anillo,fuera,dentro}] of f.muestras.entries()){
+    expect(Math.max(...anillo.map((v,j)=>Math.abs(v-f.color[j]))),`${id} lado ${lado}: el anillo se ve en pantalla`).toBeLessThanOrEqual(24);
+    for(const vecino of [fuera,dentro])expect(contraste(f.color,vecino),`${id} lado ${lado}: contra rgb(${vecino})`).toBeGreaterThanOrEqual(3);
+   }
+  }
+  expect([...vistos].sort(),`controles alcanzados con Tab en ${capa}`).toEqual([...esperados].sort());
+ }
+});
