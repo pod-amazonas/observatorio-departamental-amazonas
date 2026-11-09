@@ -13,3 +13,24 @@
 .pie-paisaje{background:#174d3c;padding:7px 9px;border-radius:3px;text-shadow:none;line-height:1.5}
 @media(max-width:800px){.sello{position:static;display:grid;width:75px;margin-top:18px;padding:8px}.pie-paisaje{font-size:9px;max-width:calc(100% - 40px)}}
 @media(prefers-reduced-motion:reduce){.paisaje *{animation:none!important;transition:none!important}.hero *{scroll-behavior:auto}}
+/* Cuatro composiciones independientes; las escenas ocultas no se animan. */
+[data-paisaje][hidden]{display:none}
+.salto-delfin{--salto-x:810px;animation:salto-delfin 8s ease-in-out infinite;animation-delay:-2s;transform-origin:0 0}
+.delfin-compania{--salto-x:995px;animation-delay:-5s}
+.salpicadura{animation:salpicadura 8s ease-out infinite;animation-delay:-2s;transform-box:fill-box;transform-origin:center}
+.vuelo-guacamayas{animation:vuelo-guacamayas 17s ease-in-out infinite alternate}
+.ala-guacamaya{animation:batir 1.2s ease-in-out infinite alternate;transform-box:fill-box;transform-origin:90% 90%}
+.ala-derecha{animation-delay:-.4s;transform-origin:10% 90%}
+.bote-travesia{animation:travesia 22s ease-in-out infinite alternate}
+.bote-regreso{animation:regreso 32s ease-in-out infinite alternate}
+@keyframes salto-delfin{0%,12%,78%,100%{transform:translate(var(--salto-x),760px) rotate(-25deg)}32%{transform:translate(calc(var(--salto-x) - 18px),625px) rotate(-25deg)}48%{transform:translate(calc(var(--salto-x) + 15px),610px) rotate(5deg)}66%{transform:translate(calc(var(--salto-x) + 65px),690px) rotate(32deg)}}
+@keyframes salpicadura{0%,20%,65%,100%{opacity:0;transform:scale(.6)}26%,72%{opacity:.8;transform:scale(1)}40%,85%{opacity:0;transform:scale(1.5)}}
+@keyframes vuelo-guacamayas{from{transform:translate(100px,10px)}to{transform:translate(-120px,-35px)}}
+@keyframes batir{from{transform:scaleY(1)}to{transform:scaleY(.22)}}
+@keyframes travesia{from{transform:translate(-150px,10px)}to{transform:translate(155px,-10px)}}
+@keyframes regreso{from{transform:translate(170px,-8px)}to{transform:translate(-240px,12px)}}
+@media(prefers-reduced-motion:reduce){.salto-delfin{transform:translate(var(--salto-x),660px)}.salpicadura{opacity:.7}}
+
+[data-paisaje][hidden] *, .paisaje defs *{animation:none!important}
+
+@media(min-width:801px){.pie-paisaje{top:175px;bottom:auto}}

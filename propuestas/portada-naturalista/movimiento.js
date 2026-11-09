@@ -10,6 +10,9 @@
   document.querySelectorAll('[data-elegir]').forEach(boton => {
     boton.addEventListener('click', () => {
       hero.dataset.escena = boton.dataset.elegir;
+      document.querySelectorAll('[data-paisaje]').forEach(escena => {
+        escena.toggleAttribute('hidden', escena.dataset.paisaje !== boton.dataset.elegir);
+      });
       document.querySelectorAll('[data-elegir]').forEach(otro => otro.setAttribute('aria-pressed', String(otro === boton)));
       descripcion.textContent = boton.dataset.descripcion;
     });

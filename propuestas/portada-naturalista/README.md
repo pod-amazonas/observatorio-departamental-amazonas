@@ -4,7 +4,7 @@ Vista previa independiente para el issue #27. Abrir `/propuestas/portada-natural
 
 ## Dirección visual
 
-Paisaje amazónico ilustrativo, paleta verde con luz cálida, río sinuoso y vegetación en planos. Ilustración SVG original incluida en el HTML, sin descargas de imágenes, fuentes ni librerías externas. Movimiento lento en bruma, reflejos, hojas, aves y embarcación. La elección de escena es manual, sin alternancia automática mientras se lee. El bosque y el territorio comparten paisaje; cambian el énfasis de vegetación y luz. Movilidad añade una embarcación ilustrativa.
+Paisaje amazónico ilustrativo, paleta verde con luz cálida, río sinuoso y vegetación en planos. Ilustración SVG original incluida en el HTML, sin descargas de imágenes, fuentes ni librerías externas. Movimiento lento en bruma, reflejos, hojas, aves y embarcación. La elección de escena es manual, sin alternancia automática mientras se lee. Ríos muestra delfines rosados que saltan y se sumergen; Selva, dosel y vuelo de guacamayas y otras aves; Territorio, una panorámica distinta de bosque, claros y agua; Movilidad, un río abierto con dos botes en sentidos contrarios. Solo la escena visible se anima.
 
 La ilustración no es un mapa ni representa límites, ubicaciones comunitarias o lugares reales. No consulta Supabase, datos cartográficos ni servicios externos. Los enlaces llevan al prototipo existente. Se conservan los logos del POD y del Amazonas, también en móvil.
 
@@ -22,4 +22,4 @@ Alejandro revisa la dirección visual antes de integrarla en la portada pública
 
 ## Resultado local de esta entrega
 
-`npm test`: **72 pruebas aprobadas (1,1 min)**, incluidas cuatro de esta propuesta y la suite existente de la portada publicada. Capturas revisadas a 1280 y 390 px: logos cargados, sin desbordamiento horizontal. El HTML/SVG, CSS y JavaScript de la propuesta suman aproximadamente 35 KB sin comprimir, más los dos logos locales existentes. No se midió rendimiento en un dispositivo de gama baja real.
+`npm test`: **73 pruebas aprobadas**, incluidas cinco de esta propuesta y la suite existente de la portada publicada. Capturas revisadas a 1280 y 390 px: logos cargados, sin desbordamiento horizontal. El HTML/SVG, CSS y JavaScript de la propuesta suman aproximadamente 47 KB sin comprimir, más los dos logos locales existentes. No se midió rendimiento en un dispositivo de gama baja real.

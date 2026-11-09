@@ -54,3 +54,42 @@ for(const width of [1280,390]){
   await expect(hero).toHaveAttribute('data-pausa','true');
  });
 }
+
+test('propuesta naturalista: escenas independientes, salto sumergido, alas y navegación',async({page})=>{
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.goto('/propuestas/portada-naturalista/');
+ await page.getByRole('button',{name:'Pausar paisaje',exact:true}).click();
+ const imagenes=[];
+ for(const [id,nombre] of [['rios','Ríos'],['bosques','Selva'],['territorio','Territorio'],['movilidad','Movilidad fluvial']]){
+  await page.getByRole('button',{name:nombre,exact:true}).click();
+  await expect(page.locator('[data-paisaje]:not([hidden])')).toHaveAttribute('data-paisaje',id);
+  const ocultas=page.locator('[data-paisaje][hidden]');await expect(ocultas).toHaveCount(3);
+  expect(await ocultas.evaluateAll(es=>es.every(e=>e.getAnimations({subtree:true}).length===0))).toBe(true);
+  imagenes.push((await page.locator('.paisaje').screenshot()).toString('base64'));
+ }
+ expect(new Set(imagenes).size).toBe(4);
+ await page.getByRole('button',{name:'Ríos',exact:true}).click();
+ const salto=await page.locator('.salto-delfin').first().evaluate(e=>{
+  const a=e.getAnimations()[0];a.pause();const desfase=a.effect.getTiming().delay;
+  const agua=new DOMPoint(0,697).matrixTransform(e.ownerSVGElement.getScreenCTM()).y;
+  a.currentTime=desfase;const inicio=e.getBoundingClientRect().top;
+  a.currentTime=desfase+3840;const cima=e.getBoundingClientRect().bottom;
+  a.currentTime=desfase+7900;const final=e.getBoundingClientRect().top;
+  return {agua,inicio,cima,final};
+ });
+ expect(salto.inicio).toBeGreaterThan(salto.agua);
+ expect(salto.cima).toBeLessThan(salto.agua);
+ expect(salto.final).toBeGreaterThan(salto.agua);
+ await page.getByRole('button',{name:'Selva',exact:true}).click();
+ const alas=await page.locator('[data-paisaje=bosques] .ala-guacamaya').first().evaluate(e=>{
+  const a=e.getAnimations()[0];a.pause();a.currentTime=0;const extendida=e.getBoundingClientRect().height;
+  a.currentTime=1200;return {extendida,recogida:e.getBoundingClientRect().height};
+ });
+ expect(alas.extendida-alas.recogida).toBeGreaterThan(10);
+ await page.getByRole('button',{name:'Movilidad fluvial',exact:true}).click();
+ const viaje=await page.locator('.bote-travesia').evaluate(e=>{
+  const a=e.getAnimations()[0];a.pause();a.currentTime=0;const inicio=e.getBoundingClientRect().x;
+  a.currentTime=22000;return e.getBoundingClientRect().x-inicio;
+ });
+ expect(viaje).toBeGreaterThan(200);
+});
