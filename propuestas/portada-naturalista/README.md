@@ -9,3 +9,5 @@ Rotación automática cada 8 segundos, selección manual que reinicia el interva
 La vista previa conserva los recursos externos ya presentes en el sitio original (fuente y logos). No introduce nuevos recursos externos. No incluye los scripts del portal, Supabase ni datos cartográficos; sus enlaces llevan al sitio existente. La franja institucional conserva los enlaces originales. Esta vista previa no es la publicación definitiva.
 
 Servir con `python3 tests/serve.py` y abrir `/propuestas/portada-naturalista/`. Las pruebas comprueban animación, temporizador, movimiento reducido, teclado, seis módulos, entidades y tipografía original. El PR registra el resultado de `npm test` y Actions. Pendiente revisión visual e integración tras coordinar #22; no se fusiona.
+
+Ajuste solicitado por Alejandro: logo POD en esquina superior derecha, de 144 px en escritorio y 88 px en móvil, sin órbitas; se conserva la tipografía y el resto de la estética original. `npm test`: 76 aprobadas (1,2 min). Capturas de cuatro escenas revisadas a 1280 y 390 px.

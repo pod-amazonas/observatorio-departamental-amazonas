@@ -40,3 +40,10 @@
 @media(prefers-reduced-motion:reduce){.portada-fondo *{animation:none!important;transition:none!important}.salto-delfin{transform:translate(var(--salto-x),660px)}}
 
 @media(prefers-reduced-motion:reduce){.portada *{animation:none!important;transition:none!important}}
+/* Logo solicitado en esquina; sin órbitas que cubran el paisaje. */
+.portada .portada-marca{position:absolute;right:24px;top:18px;display:block;width:144px}
+.portada .portada-logo{width:144px;opacity:1;animation:none}
+.portada .portada-logo img{width:100%;animation:none}
+.portada .portada-orbitas{display:none}
+.portada .portada-texto{max-width:660px}
+@media(max-width:760px){.portada .portada-marca{right:20px;top:14px;width:88px}.portada .portada-logo{width:88px}.portada .portada-texto{padding-top:76px}}
