@@ -2,31 +2,40 @@
 (() => {
   const hero = document.querySelector('.hero');
   const preferencia = matchMedia('(prefers-reduced-motion: reduce)');
-  const pausa = document.querySelector('.pausa');
   const aviso = document.querySelector('#aviso-reducido');
   const descripcion = document.querySelector('.descripcion');
-  let pausaManual = false;
-  // Selección manual: sin temporizador que cambie el paisaje mientras se lee.
-  document.querySelectorAll('[data-elegir]').forEach(boton => {
-    boton.addEventListener('click', () => {
-      hero.dataset.escena = boton.dataset.elegir;
-      document.querySelectorAll('[data-paisaje]').forEach(escena => {
-        escena.toggleAttribute('hidden', escena.dataset.paisaje !== boton.dataset.elegir);
-      });
-      document.querySelectorAll('[data-elegir]').forEach(otro => otro.setAttribute('aria-pressed', String(otro === boton)));
-      descripcion.textContent = boton.dataset.descripcion;
+  const botones = Array.from(document.querySelectorAll('[data-elegir]'));
+  let temporizador = null;
+
+  function mostrar(boton, manual) {
+    hero.dataset.escena = boton.dataset.elegir;
+    document.querySelectorAll('[data-paisaje]').forEach(escena => {
+      escena.toggleAttribute('hidden', escena.dataset.paisaje !== boton.dataset.elegir);
     });
-  });
-  function actualizar() {
-    const pausada = pausaManual || preferencia.matches;
-    hero.dataset.pausa = String(pausada);
-    pausa.querySelector('.texto-pausa').textContent = preferencia.matches ? 'Movimiento reducido' : pausada ? 'Reanudar paisaje' : 'Pausar paisaje';
-    pausa.disabled = preferencia.matches;
-    aviso.hidden = !preferencia.matches;
-    if (preferencia.matches) pausa.setAttribute('aria-describedby', aviso.id);
-    else pausa.removeAttribute('aria-describedby');
+    botones.forEach(otro => otro.setAttribute('aria-pressed', String(otro === boton)));
+    // Las actualizaciones automáticas no interrumpen la lectura con anuncios.
+    descripcion.setAttribute('aria-live', manual ? 'polite' : 'off');
+    descripcion.textContent = boton.dataset.descripcion;
   }
-  pausa.addEventListener('click', () => { pausaManual = !pausaManual; actualizar(); });
+  function detener() {
+    if (temporizador !== null) clearInterval(temporizador);
+    temporizador = null;
+  }
+  function actualizar() {
+    detener();
+    hero.dataset.pausa = String(preferencia.matches);
+    aviso.hidden = !preferencia.matches;
+    if (preferencia.matches || document.hidden) return;
+    temporizador = setInterval(() => {
+      const actual = botones.findIndex(boton => boton.dataset.elegir === hero.dataset.escena);
+      mostrar(botones[(actual + 1) % botones.length], false);
+    }, 8000);
+  }
+  botones.forEach(boton => boton.addEventListener('click', () => {
+    mostrar(boton, true);
+    actualizar(); // Una elección manual tiene sus propios ocho segundos completos.
+  }));
+  document.addEventListener('visibilitychange', actualizar);
   if (preferencia.addEventListener) preferencia.addEventListener('change', actualizar);
   else preferencia.addListener(actualizar);
   actualizar();

@@ -34,3 +34,17 @@
 [data-paisaje][hidden] *, .paisaje defs *{animation:none!important}
 
 @media(min-width:801px){.pie-paisaje{top:175px;bottom:auto}}
+/* Recorridos largos, independientes del ciclo de salto o del batir de alas. */
+.ruta-delfin{animation:recorrer-rio 12s linear infinite alternate}
+.ruta-compania{animation-delay:-4s}
+.salto-delfin{animation-duration:4.6s;animation-delay:-.9s}
+.delfin-compania{animation-delay:-2.5s}
+.salpicadura{animation-duration:4.6s;animation-delay:-.9s}
+.vuelo-guacamayas{animation:recorrer-selva 14s linear infinite}
+[data-paisaje=bosques] .aves{animation-duration:12s}
+@keyframes recorrer-rio{from{transform:translateX(-260px)}to{transform:translateX(200px)}}
+@keyframes recorrer-selva{0%{transform:translate(-380px,40px)}40%{transform:translate(12px,-50px)}75%{transform:translate(355px,-5px)}100%{transform:translate(600px,-60px)}}
+.modulos{padding-top:36px}.modulos>h2{font:normal 29px/1.25 Georgia,serif;letter-spacing:-.02em;margin:0;max-width:620px}.modulos .recorridos{width:100%;padding-top:25px}.recorrido h3{font-family:Georgia,serif;font-weight:normal;font-size:22px;margin:0 0 8px;letter-spacing:-.025em}
+.reducido{max-width:260px;border:1px solid #d3ded3;border-radius:4px}
+@media(max-width:800px){.reducido{max-width:none}.modulos>h2{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.ruta-delfin{transform:translateX(-70px)}.vuelo-guacamayas{transform:translate(-110px,-15px)}}
