@@ -11,3 +11,5 @@ La vista previa conserva los recursos externos ya presentes en el sitio original
 Servir con `python3 tests/serve.py` y abrir `/propuestas/portada-naturalista/`. Las pruebas comprueban animación, temporizador, movimiento reducido, teclado, seis módulos, entidades y tipografía original. El PR registra el resultado de `npm test` y Actions. Pendiente revisión visual e integración tras coordinar #22; no se fusiona.
 
 Ajuste solicitado por Alejandro: logo POD en esquina superior derecha, de 144 px en escritorio y 88 px en móvil, sin órbitas; se conserva la tipografía y el resto de la estética original. `npm test`: 76 aprobadas (1,2 min). Capturas de cuatro escenas revisadas a 1280 y 390 px.
+
+Ajuste posterior: guacamayas con silueta curva, plumas primarias diferenciadas, volumen, cola larga y detalle de rostro/pico. Mantiene las trayectorias y aleteo existentes. Validación local: 76 pruebas aprobadas y capturas revisadas en escritorio y móvil.
