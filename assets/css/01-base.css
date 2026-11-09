@@ -377,3 +377,5 @@ body :where(a[href],button,input,select,textarea,summary,[tabindex]):not(:where(
 #view-admin .obs17-tabs{padding:7px 7px 10px;flex-wrap:wrap;overflow:visible}
 /* El panel se desplaza: no comprimir a cero las cajas que reciben foco. */
 #view-geovisor .geo-sidebar>*{flex-shrink:0}
+/* Evitar que el enlace normativo y su anillo se fragmenten entre líneas. */
+.obs19-legal-note a{display:inline-block;margin:7px}
