@@ -9,6 +9,7 @@
 
   function mostrar(boton, manual) {
     hero.dataset.escena = boton.dataset.elegir;
+    hero.dataset.capa = boton.dataset.elegir;
     document.querySelectorAll('[data-paisaje]').forEach(escena => {
       escena.toggleAttribute('hidden', escena.dataset.paisaje !== boton.dataset.elegir);
     });
