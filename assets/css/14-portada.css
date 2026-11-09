@@ -50,8 +50,8 @@
 /* Poses estáticas que también se usan con movimiento reducido. */
 .portada-fondo .salto-delfin{--salto-x:810px;transform:translate(var(--salto-x),660px);transform-origin:0 0}
 .portada-fondo .delfin-compania{--salto-x:995px}
-.portada-fondo .ruta-delfin{transform:translateX(-70px)}
-.portada-fondo .vuelo-guacamayas{transform:translate(-110px,-15px)}
+.portada-fondo .ruta-delfin{--rio-inicio:160px;--rio-fin:280px;transform:translateX(var(--rio-inicio))}
+.portada-fondo .vuelo-guacamayas{--vuelo-inicio:-380px;--vuelo-medio:-20px;--vuelo-paso:75px;--vuelo-fin:100px;--vuelo-altura:100px;transform:translate(var(--vuelo-fin),var(--vuelo-altura))}
 .portada-fondo .reflejos{transform-origin:center;transform-box:fill-box}
 .portada-fondo .rama{transform-box:fill-box;transform-origin:bottom center}
 .portada-fondo .salpicadura{transform-box:fill-box;transform-origin:center}
@@ -79,8 +79,8 @@
 @keyframes escena-salto{0%,12%,78%,100%{transform:translate(var(--salto-x),760px) rotate(-25deg)}32%{transform:translate(calc(var(--salto-x) - 18px),625px) rotate(-25deg)}48%{transform:translate(calc(var(--salto-x) + 15px),610px) rotate(5deg)}66%{transform:translate(calc(var(--salto-x) + 65px),690px) rotate(32deg)}}
 @keyframes escena-salpica{0%,20%,65%,100%{opacity:0;transform:scale(.6)}26%,72%{opacity:.8;transform:scale(1)}40%,85%{opacity:0;transform:scale(1.5)}}
 @keyframes escena-ala{from{transform:scaleY(1)}to{transform:scaleY(.22)}}
-@keyframes escena-rio{from{transform:translateX(-260px)}to{transform:translateX(200px)}}
-@keyframes escena-selva{0%{transform:translate(-380px,40px)}40%{transform:translate(12px,-50px)}75%{transform:translate(355px,-5px)}100%{transform:translate(600px,-60px)}}
+@keyframes escena-rio{from{transform:translateX(var(--rio-inicio))}to{transform:translateX(var(--rio-fin))}}
+@keyframes escena-selva{0%{transform:translate(var(--vuelo-inicio),40px)}40%{transform:translate(var(--vuelo-medio),-20px)}75%{transform:translate(var(--vuelo-paso),calc(var(--vuelo-altura)*.6))}100%{transform:translate(var(--vuelo-fin),var(--vuelo-altura))}}
 @keyframes escena-travesia{from{transform:translate(-150px,10px)}to{transform:translate(155px,-10px)}}
 @keyframes escena-regreso{from{transform:translate(170px,-8px)}to{transform:translate(-240px,12px)}}
 @media(max-width:760px){.portada .portada-marca{right:20px;top:14px;width:88px}.portada .portada-logo{width:88px}.portada .portada-texto{padding-top:76px}}
@@ -88,3 +88,12 @@
 @media(prefers-reduced-motion:reduce){.portada *{animation:none!important;transition:none!important}.portada-entra,.portada-logo{opacity:1}}
 /* Fondo claro real junto a los controles: el paisaje no reduce el contraste del foco. */
 .portada-capas,.portada-acciones{background:#f8faf5;box-shadow:0 0 0 10px #f8faf5;border-radius:4px}
+
+/* Franja ilustrada bajo el texto cuando no hay espacio lateral suficiente. */
+@media(max-width:1000px){
+ .portada-contenido{padding-bottom:300px}
+ .portada svg.portada-fondo{mask-image:linear-gradient(to bottom,transparent,#000 25%)}
+ .portada-fondo .ruta-delfin{--rio-inicio:-35px;--rio-fin:75px}
+ .portada-fondo .delfin-compania{--salto-x:710px}
+ .portada-fondo .vuelo-guacamayas{--vuelo-inicio:-480px;--vuelo-medio:-340px;--vuelo-paso:-240px;--vuelo-fin:-200px;--vuelo-altura:160px}
+}

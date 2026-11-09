@@ -87,3 +87,54 @@ test('portada integrada: carga móvil con red lenta simulada',async({page})=>{
  console.log('RED_LENTA_390',JSON.stringify(await page.evaluate(()=>{const n=performance.getEntriesByType('navigation')[0];return {domContentLoadedMs:Math.round(n.domContentLoadedEventEnd),bytes:n.encodedBodySize,ancho:innerWidth}})));
  expect(errores).toEqual([]);await cdp.detach();
 });
+
+for(const width of [1280,1440,390]){
+ test(`portada: delfín visible fuera del texto durante al menos 2 s a ${width}px`,async({page})=>{
+  await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.clock.install({time:new Date('2026-11-09T12:00:00Z')});await page.clock.pauseAt(new Date('2026-11-09T12:00:01Z'));await page.goto('/');
+  await page.locator('.portada-chip[data-capa=rios]').click();
+  await page.locator('.portada').evaluate(e=>window.scrollTo({top:e.getBoundingClientRect().bottom+scrollY-innerHeight,behavior:"instant"}));
+  const resultado=await page.locator('.portada').evaluate(e=>{
+   const rect=r=>({left:r.left,right:r.right,top:r.top,bottom:r.bottom});
+   const panel=rect(e.querySelector('.portada-texto').getBoundingClientRect());
+   // Incluye los 10 px de halo de los paneles conservados.
+   const paneles=[panel,...Array.from(e.querySelectorAll('.portada-acciones,.portada-capas'),n=>{const r=n.getBoundingClientRect();return {left:r.left-10,right:r.right+10,top:r.top-10,bottom:r.bottom+10}})];
+   const svg=e.querySelector('.portada-fondo'),hero=rect(e.getBoundingClientRect());
+   const linea=new DOMPoint(0,Number(svg.querySelector('#salto-agua rect').getAttribute('height'))).matrixTransform(svg.getScreenCTM()).y;
+   const a=e.getAnimations({subtree:true});a.forEach(x=>x.pause());
+   const d=e.querySelector('.salto-delfin');let muestras=0,racha=0,maxRacha=0;
+   for(let t=0;t<5000;t+=100){
+    a.forEach(x=>{x.currentTime=Math.min(t,x.effect.getComputedTiming().endTime)});
+    const r=d.getBoundingClientRect();const visible={left:r.left,right:r.right,top:r.top,bottom:Math.min(r.bottom,linea)};
+    const suficiente=visible.bottom-visible.top>=12;
+    const dentro=visible.left>=Math.max(0,hero.left)&&visible.right<=Math.min(innerWidth,hero.right)&&visible.top>=Math.max(0,hero.top)&&visible.bottom<=Math.min(innerHeight,hero.bottom);
+    const libre=paneles.every(p=>visible.right<=p.left||visible.left>=p.right||visible.bottom<=p.top||visible.top>=p.bottom);
+    if(suficiente&&dentro&&libre){muestras++;racha++;maxRacha=Math.max(maxRacha,racha)}else racha=0;
+   }
+   return {visibleMs:muestras*100,consecutivosMs:Math.max(0,maxRacha-1)*100,panel};
+  });
+  console.log("DELFIN_VISIBLE",width,JSON.stringify(resultado));
+  expect(resultado.visibleMs,JSON.stringify(resultado)).toBeGreaterThanOrEqual(2000);
+  expect(resultado.consecutivosMs,JSON.stringify(resultado)).toBeGreaterThanOrEqual(2000);
+ });
+ test(`portada: cuadro final de Selva completo y lejos del logo a ${width}px`,async({page})=>{
+  await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'no-preference'});
+  await page.clock.install({time:new Date('2026-11-09T12:00:00Z')});await page.clock.pauseAt(new Date('2026-11-09T12:00:01Z'));await page.goto('/');
+  await page.locator('.portada-chip[data-capa=bosques]').click();await page.mouse.move(0,0);
+  await page.locator('.portada').evaluate(e=>window.scrollTo({top:e.getBoundingClientRect().bottom+scrollY-innerHeight,behavior:"instant"}));
+  await page.clock.fastForward(5000);
+  const aves=await page.locator('.portada').evaluate(e=>{
+   const h=e.getBoundingClientRect(),logo=e.querySelector('.portada-logo').getBoundingClientRect(),p=e.querySelector('.portada-texto').getBoundingClientRect();
+   return Array.from(e.querySelectorAll('.vuelo-guacamayas > g'),ave=>{
+    const r=ave.getBoundingClientRect();return {
+     completa:r.left>=Math.max(0,h.left)&&r.right<=Math.min(innerWidth,h.right)&&r.top>=Math.max(0,h.top)&&r.bottom<=Math.min(innerHeight,h.bottom),
+     lejos:r.right+16<=logo.left||r.left-16>=logo.right||r.bottom+16<=logo.top||r.top-16>=logo.bottom,
+     libre:r.right+10<=p.left||r.left-10>=p.right||r.bottom+10<=p.top||r.top-10>=p.bottom,
+     caja:{x:r.x,y:r.y,w:r.width,h:r.height}
+    };
+   });
+  });
+  expect(aves).toHaveLength(2);for(const ave of aves){expect(ave.completa,JSON.stringify(ave)).toBe(true);expect(ave.lejos,JSON.stringify(ave)).toBe(true);expect(ave.libre,JSON.stringify(ave)).toBe(true)}
+  expect((await estados(page)).every(a=>a.estado!=='running'&&!a.pendiente)).toBe(true);
+ });
+}
