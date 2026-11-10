@@ -371,8 +371,11 @@ body :where(a[href],button,input,select,textarea,summary,[tabindex]):not(:where(
 #view-geovisor .map-stage>.visor-map{margin:7px}
 /* Los créditos quedan al borde del mapa: cada enlace necesita su propia caja. */
 .leaflet-control-attribution a{display:inline-block;margin:6px}
-/* El selector de archivos también debe mostrar su foco al tabular. */
-#geojson-upload{position:static!important;left:auto!important;width:100%;height:auto;opacity:1;margin:8px 0;padding:7px;border:1px solid #d7e7dd;border-radius:8px;background:#fff;font:inherit;font-size:11px}
+/* El input oculto conserva una posición local para que Tab desplace el panel
+   hasta su etiqueta, sin llevar el foco a una coordenada fuera de pantalla. */
+#geojson-upload{position:static!important;left:auto!important;clip-path:inset(50%)}
+/* El input nativo permanece oculto: su etiqueta muestra el foco de teclado. */
+.local-import-control:has(+ #geojson-upload:focus-visible){outline:3px solid #a34a06;outline-offset:2px;box-shadow:0 0 0 7px #fff}
 /* Las pestañas pasan a otra línea para no enfocar controles parcialmente ocultos. */
 #view-admin .obs17-tabs{padding:7px 7px 10px;flex-wrap:wrap;overflow:visible}
 /* El panel se desplaza: no comprimir a cero las cajas que reciben foco. */

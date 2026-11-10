@@ -19,12 +19,16 @@ async function comprobarFoco(page){
  // Esperar el pintado y las transiciones reducidas de .01ms, sin mover el foco.
  await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
  const f=await page.evaluate(()=>{
-  const e=document.activeElement,r=e.getBoundingClientRect(),s=getComputedStyle(e);
+  const e=document.activeElement;
+  // La etiqueta representa visualmente el input de archivo oculto y conserva
+  // la misma acción. El foco de teclado debe seguir perteneciendo al input.
+  const indicador=e.id==='geojson-upload'?e.labels[0]:e;
+  const r=indicador.getBoundingClientRect(),s=getComputedStyle(indicador);
   // Sin scrollIntoView: se comprueba el desplazamiento que produjo Tab.
   const puntos=[[.5,.5],[.15,.15],[.85,.15],[.15,.85],[.85,.85]];
   return {id:e.dataset.foco25,nombre:e.id||e.getAttribute('aria-label')||e.textContent.trim().slice(0,60),
-   visible:e.checkVisibility({opacityProperty:true,visibilityProperty:true}),teclado:e.matches(':focus-visible'),
-   libre:puntos.every(([u,v])=>{const x=r.x+r.width*u,y=r.y+r.height*v,encima=document.elementFromPoint(x,y);return encima===e||e.contains(encima)}),
+   visible:indicador.checkVisibility({opacityProperty:true,visibilityProperty:true}),teclado:e.matches(':focus-visible'),
+   libre:puntos.every(([u,v])=>{const x=r.x+r.width*u,y=r.y+r.height*v,encima=document.elementFromPoint(x,y);return encima===indicador||indicador.contains(encima)}),
    x:r.x,y:r.y,w:r.width,h:r.height,o:parseFloat(s.outlineOffset),a:parseFloat(s.outlineWidth),tipo:s.outlineStyle,
    color:s.outlineColor.match(/\d+/g).slice(0,3).map(Number),k:devicePixelRatio};
  });
@@ -59,7 +63,7 @@ async function recorrerConTab(page,vista){
   const cerrados=[...document.querySelectorAll('details:not([open])')];
   return els.filter(e=>e.tabIndex>=0&&!e.disabled&&
    !(e.type==='radio'&&e.name&&!e.checked)&&
-   e.checkVisibility({opacityProperty:true,visibilityProperty:true})&&
+   (e.id==='geojson-upload'?e.labels[0]:e).checkVisibility({opacityProperty:true,visibilityProperty:true})&&
    cerrados.every(d=>!d.contains(e)||d.querySelector(':scope>summary')?.contains(e))
   ).map((e,i)=>e.dataset.foco25=String(i));
  });
@@ -140,4 +144,30 @@ test('la comprobación rechaza foco invisible, poco contraste y superposición (
   await expect(comprobarFoco(page)).rejects.toThrow();
   await estilo.evaluate(e=>e.remove());
  }
+});
+
+for(const size of [{width:1280,height:720},{width:390,height:844}])test(`GeoJSON: selector oculto, etiqueta única y operativa a ${size.width}px (#25 P2)`,async({page})=>{
+ await page.setViewportSize(size);
+ await page.emulateMedia({reducedMotion:'reduce'});
+ await page.goto('/#geovisor');
+ await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
+ await expect(page.locator('#obs19-pilot-list .obs20-pilot-card')).toHaveCount(33);
+ const input=page.locator('#geojson-upload'),etiqueta=page.locator('label[for="geojson-upload"]');
+ await expect(etiqueta).toHaveCount(1);
+ await expect(etiqueta).toBeVisible();
+ expect(await input.evaluate(e=>!e.checkVisibility({opacityProperty:true})&&getComputedStyle(e).clipPath==='inset(50%)'&&e.getBoundingClientRect().width<=1)).toBe(true);
+ // Alcanzar el input oculto con Tab; el anillo medido pertenece a su etiqueta.
+ for(let i=0;i<100&&!await input.evaluate(e=>e===document.activeElement);i++)await page.keyboard.press('Tab');
+ await expect(input).toBeFocused();
+ await comprobarFoco(page);
+ const sinAnillo=await page.addStyleTag({content:'.local-import-control:has(+ #geojson-upload:focus-visible){outline:none!important}'});
+ await expect(comprobarFoco(page)).rejects.toThrow();
+ await sinAnillo.evaluate(e=>e.remove());
+ await comprobarFoco(page);
+ const selector=page.waitForEvent('filechooser');
+ await etiqueta.click();
+ const chooser=await selector;
+ expect(chooser.isMultiple()).toBe(true);
+ await chooser.setFiles({name:'punto-ficticio.geojson',mimeType:'application/geo+json',buffer:Buffer.from(JSON.stringify({type:'FeatureCollection',features:[{type:'Feature',properties:{nombre:'Prueba ficticia'},geometry:{type:'Point',coordinates:[-70,-4]}}]}))});
+ await expect(page.locator('#local-layer-list')).toContainText('punto-ficticio');
 });
