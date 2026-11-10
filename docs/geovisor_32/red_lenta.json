@@ -1,0 +1,212 @@
+[
+  {
+    "capa": "det-1",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "be85b2f128c584bb7a67e90ab4d554baaa4fe144b1bb082f6c8cd86c61a99565",
+    "errores_js": [],
+    "entidades": 1,
+    "visible": true,
+    "descarga_ms": 355.19999999925494,
+    "hasta_dibujo_ms": 453.5,
+    "bytes_gzip": 39907,
+    "bytes_brutos": 139045
+  },
+  {
+    "capa": "det-17",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "5d240124efb00ce670ffcfa33dbb19dd40aeb34d151d1e7e3086ec265405e7de",
+    "errores_js": [],
+    "entidades": 1,
+    "visible": true,
+    "descarga_ms": 21393.70000000298,
+    "hasta_dibujo_ms": 21907.300000000745,
+    "bytes_gzip": 4247622,
+    "bytes_brutos": 14680374
+  },
+  {
+    "capa": "cit-division_politico_administrativa",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "2c872bcc31316bc5ca485c3ca13ad8bf5133c67a918e00e56c940bcaddbe35d6",
+    "errores_js": [],
+    "entidades": 11,
+    "visible": true,
+    "descarga_ms": 3935.599999997765,
+    "hasta_dibujo_ms": 4093.300000000745,
+    "bytes_gzip": 756497,
+    "bytes_brutos": 1920848
+  },
+  {
+    "capa": "cit-cuencas_hidrograficas",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "f33f09faea40b13e6737bcefb2ad0df162d1d562069f8f503cf461c90d9fbb07",
+    "errores_js": [],
+    "entidades": 19,
+    "visible": true,
+    "descarga_ms": 6106.89999999851,
+    "hasta_dibujo_ms": 6257.5,
+    "bytes_gzip": 1189858,
+    "bytes_brutos": 3212244
+  },
+  {
+    "capa": "cit-sistema_nacional_de_areas_protegidas",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "74d37815e0d7b692e8b88baadf7f6c5ac98bab0f752d5748d8ef429c9711ffb6",
+    "errores_js": [],
+    "entidades": 5,
+    "visible": true,
+    "descarga_ms": 6984.900000002235,
+    "hasta_dibujo_ms": 7166.199999999255,
+    "bytes_gzip": 1364902,
+    "bytes_brutos": 3552715
+  },
+  {
+    "capa": "det-1",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "be85b2f128c584bb7a67e90ab4d554baaa4fe144b1bb082f6c8cd86c61a99565",
+    "errores_js": [],
+    "entidades": 1,
+    "visible": true,
+    "descarga_ms": 360.79999999701977,
+    "hasta_dibujo_ms": 439.70000000298023,
+    "bytes_gzip": 39907,
+    "bytes_brutos": 139045
+  },
+  {
+    "capa": "det-17",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "5d240124efb00ce670ffcfa33dbb19dd40aeb34d151d1e7e3086ec265405e7de",
+    "errores_js": [],
+    "entidades": 1,
+    "visible": true,
+    "descarga_ms": 21392.5,
+    "hasta_dibujo_ms": 21842.800000000745,
+    "bytes_gzip": 4247622,
+    "bytes_brutos": 14680374
+  },
+  {
+    "capa": "cit-division_politico_administrativa",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "2c872bcc31316bc5ca485c3ca13ad8bf5133c67a918e00e56c940bcaddbe35d6",
+    "errores_js": [],
+    "entidades": 11,
+    "visible": true,
+    "descarga_ms": 3939.199999999255,
+    "hasta_dibujo_ms": 4092,
+    "bytes_gzip": 756497,
+    "bytes_brutos": 1920848
+  },
+  {
+    "capa": "cit-cuencas_hidrograficas",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "f33f09faea40b13e6737bcefb2ad0df162d1d562069f8f503cf461c90d9fbb07",
+    "errores_js": [],
+    "entidades": 19,
+    "visible": true,
+    "descarga_ms": 6110.300000000745,
+    "hasta_dibujo_ms": 6346.800000000745,
+    "bytes_gzip": 1189858,
+    "bytes_brutos": 3212244
+  },
+  {
+    "capa": "cit-sistema_nacional_de_areas_protegidas",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor del menú; servidor HTTP local con gzip; OSM externo; Supabase y otros servicios simulados",
+    "sha256": "74d37815e0d7b692e8b88baadf7f6c5ac98bab0f752d5748d8ef429c9711ffb6",
+    "errores_js": [],
+    "entidades": 5,
+    "visible": true,
+    "descarga_ms": 6990.699999999255,
+    "hasta_dibujo_ms": 7174.39999999851,
+    "bytes_gzip": 1364902,
+    "bytes_brutos": 3552715
+  }
+]

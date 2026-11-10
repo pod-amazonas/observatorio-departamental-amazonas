@@ -1,4 +1,5 @@
 const {test,expect}=require('@playwright/test');
+const {abrirCapa}=require('./helpers/geovisor.cjs');
 
 // Sin Supabase de producción ni recursos externos durante estas comprobaciones.
 test.beforeEach(async({page})=>{
@@ -58,7 +59,9 @@ async function comprobarFoco(page){
 
 async function recorrerConTab(page,vista){
  // El catálogo se monta de forma asíncrona; identificar nodos después del montaje.
- await expect(page.locator('#obs19-pilot-list .obs20-pilot-card')).toHaveCount(33);
+ await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
+ await expect(page.locator('[data-citizen-layer]')).toHaveCount(3);
+ if(vista==='geovisor')await page.locator('#obs19-thematic-tree details').evaluateAll(nodes=>nodes.forEach(n=>n.open=true));
  const esperados=await page.locator(controles).evaluateAll(els=>{
   const cerrados=[...document.querySelectorAll('details:not([open])')];
   return els.filter(e=>e.tabIndex>=0&&!e.disabled&&
@@ -151,7 +154,7 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`GeoJSON
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/#geovisor');
  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
- await expect(page.locator('#obs19-pilot-list .obs20-pilot-card')).toHaveCount(33);
+ await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
  const input=page.locator('#geojson-upload'),etiqueta=page.locator('label[for="geojson-upload"]');
  await expect(etiqueta).toHaveCount(1);
  await expect(etiqueta).toBeVisible();
@@ -170,4 +173,13 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`GeoJSON
  expect(chooser.isMultiple()).toBe(true);
  await chooser.setFiles({name:'punto-ficticio.geojson',mimeType:'application/geo+json',buffer:Buffer.from(JSON.stringify({type:'FeatureCollection',features:[{type:'Feature',properties:{nombre:'Prueba ficticia'},geometry:{type:'Point',coordinates:[-70,-4]}}]}))});
  await expect(page.locator('#local-layer-list')).toContainText('punto-ficticio');
+});
+
+for(const width of [1280,390])test(`foco real de interruptores encendidos y apagados a ${width}px (#32)`,async({page})=>{
+ await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/#geovisor');
+ for(const selector of ['[data-determinant-layer="1"]','[data-citizen-layer="division_politico_administrativa"]']){
+  const card=page.locator(selector);await abrirCapa(card);const sw=card.getByRole('switch');await sw.focus();await sw.press('Space');
+  await expect(sw).toHaveAttribute('aria-checked','true');await sw.press('Tab');await page.keyboard.press('Shift+Tab');await expect(sw).toBeFocused();await comprobarFoco(page);
+  await sw.press('Enter');await expect(sw).toHaveAttribute('aria-checked','false');await comprobarFoco(page);
+ }
 });
