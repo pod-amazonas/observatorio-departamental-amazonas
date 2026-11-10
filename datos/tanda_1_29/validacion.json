@@ -1,0 +1,60 @@
+{
+  "departamento_amazonas": {
+    "total_origen": 32,
+    "seleccion": 1,
+    "geometrias": {
+      "MultiPolygon": 1
+    },
+    "posiciones": 25049,
+    "residuo_inverso_m": 1.877140660839749e-09,
+    "huellas_nativas": [
+      [
+        29,
+        "4055eb646e5321d79be4f48f68eb357fa50cd7603a874aa62cc790b6f1287669"
+      ]
+    ],
+    "validez_geos_origen_y_salida": true,
+    "recorte": false,
+    "simplificacion": false
+  },
+  "autoridad_ambiental_car": {
+    "total_origen": 1,
+    "seleccion": 1,
+    "geometrias": {
+      "MultiPolygon": 1
+    },
+    "posiciones": 55775,
+    "residuo_inverso_m": 1.877140660839749e-09,
+    "huellas_nativas": [
+      [
+        2,
+        "684b7c2e3484401d7a4f23115ecdfdfbafd20522bb42e594601d928c4000e9ba"
+      ]
+    ],
+    "validez_geos_origen_y_salida": true,
+    "recorte": false,
+    "simplificacion": false
+  },
+  "rutas_fluviales": {
+    "total_origen": 2,
+    "seleccion": 2,
+    "geometrias": {
+      "MultiLineString": 2
+    },
+    "posiciones": 20612,
+    "residuo_inverso_m": 1.877140660839749e-09,
+    "huellas_nativas": [
+      [
+        1,
+        "0eaec4f23f3e32520527d08c7c107628947ec453317902cc08205e10b9c40b91"
+      ],
+      [
+        2,
+        "e5b25dae0dcfd57b8cc94ca0798f9deb1cba1b1a1161d1401f76e480076132ba"
+      ]
+    ],
+    "validez_geos_origen_y_salida": true,
+    "recorte": false,
+    "simplificacion": false
+  }
+}

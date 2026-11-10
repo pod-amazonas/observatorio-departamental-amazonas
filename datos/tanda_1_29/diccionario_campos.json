@@ -1,0 +1,74 @@
+{
+  "departamento_amazonas": [
+    {
+      "origen": "DeCodigo",
+      "tipo": "String",
+      "publico": true,
+      "descripcion": "Código departamental como texto."
+    },
+    {
+      "origen": "DeNombre",
+      "tipo": "String",
+      "publico": true,
+      "descripcion": "Nombre del departamento."
+    },
+    {
+      "origen": "DeArea",
+      "tipo": "Real",
+      "publico": false,
+      "descripcion": "Campo excluido de la entrega pública."
+    },
+    {
+      "origen": "DeNorma",
+      "tipo": "String",
+      "publico": true,
+      "descripcion": "Referencia normativa registrada en la fuente."
+    },
+    {
+      "origen": "SHAPE_Length",
+      "tipo": "Real",
+      "publico": false,
+      "descripcion": "Campo excluido de la entrega pública."
+    },
+    {
+      "origen": "SHAPE_Area",
+      "tipo": "Real",
+      "publico": false,
+      "descripcion": "Campo excluido de la entrega pública."
+    }
+  ],
+  "autoridad_ambiental_car": [
+    {
+      "origen": "Nom_CAR",
+      "tipo": "String",
+      "publico": true,
+      "descripcion": "Código literal registrado en el campo Nom_CAR."
+    },
+    {
+      "origen": "SHAPE_Length",
+      "tipo": "Real",
+      "publico": false,
+      "descripcion": "Campo excluido de la entrega pública."
+    },
+    {
+      "origen": "SHAPE_Area",
+      "tipo": "Real",
+      "publico": false,
+      "descripcion": "Campo excluido de la entrega pública."
+    }
+  ],
+  "rutas_fluviales": [
+    {
+      "origen": "NOMBRE_GEO",
+      "tipo": "String",
+      "publico": true,
+      "descripcion": "Nombre geográfico registrado para la ruta."
+    },
+    {
+      "origen": "Shape_Length",
+      "tipo": "Real",
+      "publico": false,
+      "descripcion": "Campo excluido de la entrega pública."
+    }
+  ]
+}
