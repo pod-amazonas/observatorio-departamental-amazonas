@@ -81,7 +81,7 @@ for(const prefix of ['/','/observatorio-departamental-amazonas/']){
     const section=page.locator('#view-'+view);
     await expect(section).toBeVisible();
     await expect(section.getByRole('heading',{name:heading,exact:true})).toBeVisible();
-    await expect(page.locator('#obs19-pilot-list .obs20-pilot-card')).toHaveCount(33);
+    await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
     await expect(page.locator('#pod-total')).toHaveText('33');
    }
    expect(errors).toEqual([]);

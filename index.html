@@ -179,7 +179,7 @@ https://github.com/nodeca/pako/blob/main/LICENSE
 <div class="geo-title-line"><h3>Temáticas del POD</h3><span class="mini-counter">7 categorías</span></div>
 <p class="geo-side-muted">Organiza la exploración por temática y abre cada determinante de manera independiente.</p>
 <div aria-label="Catálogo temático desplegable" class="obs19-thematic-tree" id="obs19-thematic-tree"></div>
-<div class="divider"></div><h3>Determinantes ambientales · Capas individuales</h3><p class="geo-side-muted">18 capas aprobadas disponibles para consulta; 15 capas aprobadas están pendientes de preparación técnica para web. Actívalas individualmente.</p><div class="obs19-pilot-list" id="obs19-pilot-list"></div><div class="geo-layer-list" hidden="" id="geo-layer-list"></div>
+<div class="geo-layer-list" hidden="" id="geo-layer-list"></div>
 <div class="divider"></div>
 <h3>Capas locales de prueba</h3>
 <label class="local-import-control" for="geojson-upload"><svg><use href="#i-upload"></use></svg> Seleccionar uno o varios GeoJSON</label>
@@ -744,15 +744,17 @@ function v7GeomType(data){
 function v7RenderLayers(){
   const searched=normalizeLibrary(document.getElementById('layer-filter').value.trim());
   const mount=document.getElementById('local-layer-list');
-  let filtered=importedLayers.filter(e=>normalizeLibrary(e.name).includes(searched));
+  // Las capas temáticas tienen sus controles únicos en el menú del POD.
+  const localLayers=importedLayers.filter(e=>e.idPilot==null&&e.idCitizen==null);
+  let filtered=localLayers.filter(e=>normalizeLibrary(e.name).includes(searched));
   mount.innerHTML=filtered.length?filtered.map(e=>`<div class="v7-imported-layer" data-local-layer="${e.id}">
     <div class="v7-layer-main"><input aria-label="Mostrar ${libEscape(e.name)}" type="checkbox" data-toggle-layer="${e.id}" ${e.visible?'checked':''}/>
     <span class="v7-swatch" style="color:${e.color};background:${e.color}38"></span>
     <div style="min-width:0;flex:1"><div class="v7-layer-name">${libEscape(e.name)}</div><div class="v7-layer-meta">${e.count} entidades · ${libEscape(e.geomType)} · ${libEscape(e.origin)}</div></div></div>
     <label class="obs19-opacity-line">Transparencia del polígono <input type="range" min="0" max="100" value="${100-e.opacity}" data-opacity-layer="${e.id}" aria-label="Transparencia de ${libEscape(e.name)} (0% sólido; 100% invisible)"><small>${100-e.opacity}%</small></label>
     <div class="v7-layer-tools"><button type="button" data-zoom-layer="${e.id}">Zoom a capa</button><button type="button" class="danger" data-remove-layer="${e.id}">Quitar</button></div>
-  </div>`).join(''):'<div class="local-layer-summary">'+(importedLayers.length?'Ninguna capa coincide con tu búsqueda.':'Todavía no has cargado capas.')+'</div>';
-  document.getElementById('local-layer-summary').textContent=`${importedLayers.length} capa${importedLayers.length===1?'':'s'} cargada${importedLayers.length===1?'':'s'} · ${importedLayers.filter(e=>e.visible).length} visible${importedLayers.filter(e=>e.visible).length===1?'':'s'} · Solo pruebas locales`;
+  </div>`).join(''):'<div class="local-layer-summary">'+(localLayers.length?'Ninguna capa coincide con tu búsqueda.':'Todavía no has cargado capas locales.')+'</div>';
+  document.getElementById('local-layer-summary').textContent=`${localLayers.length} capa${localLayers.length===1?'':'s'} local${localLayers.length===1?'':'es'} cargada${localLayers.length===1?'':'s'} · ${localLayers.filter(e=>e.visible).length} visible${localLayers.filter(e=>e.visible).length===1?'':'s'} · Solo pruebas locales`;
   document.getElementById('geojson-reset').disabled=!importedLayers.length;
   const legend=document.getElementById('v7-dynamic-legend');
   legend.innerHTML=importedLayers.filter(e=>e.visible).map(e=>`<div class="v7-legend-tag" title="${libEscape(e.name)}"><i class="v7-swatch" style="color:${e.color};background:${e.color}33"></i><span>${libEscape(e.name)}</span></div>`).join('');

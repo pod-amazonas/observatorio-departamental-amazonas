@@ -72,3 +72,18 @@
 #v7-dynamic-legend .pilot29-legend { max-width: 100%; }
 #v7-dynamic-legend .pilot29-legend span { white-space: normal; overflow-wrap: anywhere; }
 [data-citizen-layer] .obs20-range-label { min-width: 0; flex-basis: 100%; }
+
+/* Un único conjunto de controles por capa, dentro de su temática. */
+.obs19-thematic-tree .obs32-layer-card { margin: 8px; padding: 10px; min-width: 0; }
+.obs32-layer-title { margin: 0 0 4px; color: #183e35; font-size: .77rem; line-height: 1.45; overflow-wrap: anywhere; }
+.obs32-layer-description { margin: 0 0 10px; color: #425d51; font-size: .7rem; line-height: 1.5; }
+.obs32-layer-switch { display: inline-flex; align-items: center; gap: 9px; min-height: 44px; padding: 8px 12px; border: 2px solid #496356; border-radius: 9px; background: #fff; color: #244c3b; font: inherit; font-size: .76rem; font-weight: 750; cursor: pointer; }
+.obs32-layer-switch[aria-checked="true"] { border-color: #176d42; background: #176d42; color: #fff; }
+.obs32-layer-switch:disabled { cursor: not-allowed; opacity: 1; border-style: dashed; }
+.obs32-switch-track { display: inline-block; position: relative; width: 30px; height: 18px; border: 2px solid currentColor; border-radius: 12px; flex: none; }
+.obs32-switch-track::after { content: ""; position: absolute; width: 10px; height: 10px; top: 2px; left: 2px; border-radius: 50%; background: currentColor; }
+.obs32-layer-switch[aria-checked="true"] .obs32-switch-track::after { left: 14px; }
+.obs32-layer-card .obs20-pilot-tools { padding-left: 0; }
+.obs32-layer-card .obs20-range-label { min-width: 0; flex-basis: 100%; flex-wrap: wrap; }
+/* El mismo foco de #25, separado del relleno verde por el fondo blanco. */
+.obs32-layer-switch:focus-visible { outline: 3px solid #a34a06; outline-offset: 3px; }

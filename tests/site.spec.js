@@ -2,6 +2,7 @@ const {test,expect}=require('@playwright/test');
 const fs=require('node:fs');
 const path=require('node:path');
 const {hint}=require('@mapbox/geojsonhint');
+const {abrirCapa}=require('./helpers/geovisor.cjs');
 const catalog=require('../catalogo_determinantes_para_geovisor.json');
 const layers=catalog.grupos.flatMap(g=>g.capas);
 test.beforeEach(async({page})=>{
@@ -22,7 +23,7 @@ for(const view of ['inicio','geovisor','geoportal','avances-pod','certificados',
  test(`vista ${view} sin errores JavaScript`,async({page})=>{
   const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
   await page.goto('/#'+view);await expect(page.locator('#view-'+view)).toBeVisible();
-  await expect(page.locator('#obs19-pilot-list .obs20-pilot-card')).toHaveCount(33);
+  await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
   await expect(page.locator('#pod-live-status')).toHaveText('No hay reportes publicados para consulta ciudadana.');
   expect(errors).toEqual([]);
  });
@@ -30,13 +31,14 @@ for(const view of ['inicio','geovisor','geoportal','avances-pod','certificados',
 test('mapa, catálogo y activación/desactivación de capa 1',async({page})=>{
  await page.goto('/#geovisor');
  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
- await expect(page.locator('#obs19-pilot-list .obs20-pilot-card')).toHaveCount(33);
- const cb=page.getByRole('checkbox',{name:'Mostrar u ocultar Rio Pure',exact:true});
+ await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
+ const cb=page.getByRole('switch',{name:'Mostrar u ocultar Rio Pure',exact:true});
+ await abrirCapa(page.locator('[data-determinant-layer="1"]'));
  await cb.focus();await cb.press('Space');
  await expect.poll(()=>page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1&&window.obs19Api.getMap().hasLayer(l.layer)).length)).toBe(1);
- await expect(cb).toBeChecked();await cb.focus();await cb.press('Space');
+ await expect(cb).toHaveAttribute('aria-checked','true');await cb.focus();await cb.press('Space');
  await expect.poll(()=>page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1).length)).toBe(0);
- await expect(cb).not.toBeChecked();
+ await expect(cb).toHaveAttribute('aria-checked','false');
 });
 test('catálogo contiene 33 entradas únicas y 20 archivos preparados',()=>{
  expect(layers).toHaveLength(33);expect(new Set(layers.map(l=>l.objectid)).size).toBe(33);
@@ -55,14 +57,15 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`lista d
  await page.setViewportSize(size);
  await page.goto('/#geovisor');
  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
- const list=page.locator('#obs19-pilot-list');
- await expect(list.locator('.obs20-pilot-card')).toHaveCount(33);
+ const list=page.locator('#obs19-thematic-tree');
+ await expect(list.locator('[data-determinant-layer]')).toHaveCount(33);
  expect((await list.boundingBox()).height).toBeGreaterThan(0);
- const cb=page.getByRole('checkbox',{name:'Mostrar u ocultar Rio Pure',exact:true});
- await cb.check();
+ const cb=page.getByRole('switch',{name:'Mostrar u ocultar Rio Pure',exact:true});
+ await abrirCapa(page.locator('[data-determinant-layer="1"]'));
+ await cb.click();
  await expect.poll(()=>page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1).length)).toBe(1);
- await expect(cb).toBeChecked();
- await cb.uncheck();
+ await expect(cb).toHaveAttribute('aria-checked','true');
+ await cb.click();
  await expect.poll(()=>page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1).length)).toBe(0);
 });
 
@@ -140,7 +143,8 @@ for(const prefix of ['/','/observatorio-departamental-amazonas/']){
 for(const size of [{width:1280,height:720},{width:390,height:844}])test(`transparencia y zoom de capa 1 con clic a ${size.width}x${size.height}`,async({page})=>{
  await page.setViewportSize(size);
  await page.goto('/#geovisor');
- const card=page.locator('.obs20-pilot-card').filter({has:page.getByRole('checkbox',{name:'Mostrar u ocultar Rio Pure',exact:true})});
+ const card=page.locator('[data-determinant-layer="1"]');
+ await abrirCapa(card);
  const slider=card.getByRole('slider');
  await expect(slider).toBeDisabled();
  await card.getByRole('button',{name:'Zoom a capa'}).click();

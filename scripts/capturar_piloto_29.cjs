@@ -17,14 +17,14 @@ for(const width of [1280,390])for(const row of catalog){
   return route.fulfill({json:u.hostname==='test.invalid'&&u.pathname.startsWith('/rest/v1/')?[]:{}});
  });
  await page.goto('http://127.0.0.1:8877/#geovisor');
- await page.waitForFunction(()=>window.obs19Api?.getMap?.()&&document.querySelector('#obs19-pilot-list .obs20-pilot-card'));
+ await page.waitForFunction(()=>window.obs19Api?.getMap?.()&&document.querySelector('#obs19-thematic-tree [data-determinant-layer]'));
  const cdp=await ctx.newCDPSession(page);await cdp.send('Network.enable');await cdp.send('Network.setCacheDisabled',{cacheDisabled:true});
  await cdp.send('Network.emulateNetworkConditions',{offline:false,latency:150,downloadThroughput:200000,uploadThroughput:100000,connectionType:'cellular3g'});
  const card=page.locator('[data-citizen-layer="'+row.id_capa+'"]');await card.waitFor({state:'attached'});
  await card.evaluate(el=>el.closest('details').open=true);
  const url='/datos/piloto_29/'+row.ruta_relativa;
  const start=await page.evaluate(()=>performance.now());const responsePromise=page.waitForResponse(r=>new URL(r.url()).pathname===url);
- await card.locator('input[type="checkbox"]').check();const response=await responsePromise;
+ await card.getByRole('switch').click();const response=await responsePromise;
  if(!response.ok())throw Error('No se pudo cargar capa');const buffer=await response.body();
  const sha=require('crypto').createHash('sha256').update(buffer).digest('hex');if(sha!==row.sha256)throw Error('Descarga no coincide con manifiesto');
  await page.waitForFunction(id=>window.obs19Api.getLayers().some(e=>e.idCitizen===id),row.id_capa);

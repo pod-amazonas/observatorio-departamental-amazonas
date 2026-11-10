@@ -63,7 +63,7 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])for(const row
   const card=page.locator('[data-citizen-layer="'+row.id_capa+'"]');
   await card.evaluate(el=>el.closest('details').open=true);
   await expect(card).toContainText(row.fuente_declarada_encargo+' · '+row.anio_declarado_encargo);
-  const cb=card.locator('input[type="checkbox"]');await cb.focus();await cb.press('Space');
+  const cb=card.getByRole('switch');await cb.focus();await cb.press('Space');
   await expect.poll(()=>page.evaluate(id=>window.obs19Api.getLayers().filter(e=>e.idCitizen===id).length,row.id_capa)).toBe(1);
   const result=await page.evaluate(id=>{const entry=window.obs19Api.getLayers().find(e=>e.idCitizen===id);return {count:entry.count,features:entry.layer.getLayers().length,visible:window.obs19Api.getMap().hasLayer(entry.layer),bounds:entry.layer.getBounds().isValid()}},row.id_capa);
   expect(result).toEqual({count:row.entidades,features:row.entidades,visible:true,bounds:true});
@@ -72,9 +72,9 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])for(const row
   await expect(page.locator('#obs19-stat-detail')).toContainText(row.fuente_declarada_encargo+' · '+row.anio_declarado_encargo);
   const slider=card.locator('input[type="range"]');await slider.fill('80');await slider.dispatchEvent('input');
   expect(await page.evaluate(id=>window.obs19Api.getLayers().find(e=>e.idCitizen===id).layer.getLayers()[0].options.fillOpacity,row.id_capa)).toBeCloseTo(.2*.52);
-  await cb.uncheck();await expect(page.locator('#v7-dynamic-legend')).not.toContainText(row.nombre_publico);
-  await cb.check();await expect(page.locator('#v7-dynamic-legend')).toContainText(row.nombre_publico);
-  await card.locator('button').click();
+  await cb.click();await expect(page.locator('#v7-dynamic-legend')).not.toContainText(row.nombre_publico);
+  await cb.click();await expect(page.locator('#v7-dynamic-legend')).toContainText(row.nombre_publico);
+  await card.locator('[data-layer-zoom]').click();
   expect(await page.evaluate(id=>window.obs19Api.getLayers().filter(e=>e.idCitizen===id).length,row.id_capa)).toBe(1);
 
  });
@@ -91,7 +91,7 @@ test('piloto #29: llegada tardía del catálogo conserva el foco y las categorí
  let release;const held=new Promise(resolve=>release=resolve);
  await page.route('**/datos/piloto_29/catalogo_entrega.json',async route=>{await held;await route.continue()});
  try{
-  await page.goto('/#geovisor');const button=page.locator('#obs19-thematic-tree .obs19-topic-button:not([disabled])').first();
+  await page.goto('/#geovisor');const button=page.locator('#obs19-thematic-tree [data-determinant-layer] [role="switch"]:not([disabled])').first();
   await button.waitFor({state:'attached'});await page.locator('#obs19-thematic-tree details').evaluateAll(nodes=>nodes.forEach(n=>n.open=true));await button.focus();
   release();await expect(page.locator('[data-citizen-layer]')).toHaveCount(3);await expect(button).toBeFocused();
   expect(await page.locator('#obs19-thematic-tree > details').evaluateAll(nodes=>nodes.every(n=>n.open))).toBe(true);
@@ -102,8 +102,8 @@ test('piloto #29: fallo de red permite reintentar sin duplicar capas',async({pag
  const row=catalog[0];let hits=0;
  await page.route('**/datos/piloto_29/capas/**',route=>++hits===1?route.fulfill({status:503,body:'No disponible'}):route.continue());
  await page.goto('/#geovisor');const card=page.locator('[data-citizen-layer="'+row.id_capa+'"]');await card.waitFor({state:'attached'});await card.evaluate(el=>el.closest('details').open=true);
- const cb=card.locator('input[type="checkbox"]');await cb.focus();await cb.press('Space');await expect(card.locator('[data-citizen-status]')).toContainText('No se pudo cargar');await expect(cb).not.toBeChecked();
- await cb.check();await expect(card.locator('[data-citizen-status]')).toContainText('Capa visible');expect(hits).toBe(2);
+ const cb=card.getByRole('switch');await cb.focus();await cb.press('Space');await expect(card.locator('[data-citizen-status]')).toContainText('No se pudo cargar');await expect(cb).toHaveAttribute('aria-checked','false');
+ await cb.click();await expect.poll(()=>hits).toBe(2);await expect(card.locator('[data-citizen-status]')).toContainText('Capa visible');
  expect(await page.evaluate(()=>window.obs19Api.getLayers().filter(e=>e.idCitizen).length)).toBe(1);
 });
 
@@ -111,8 +111,8 @@ test('piloto #29: cancelar descarga impide activación tardía y conserva foco d
  let release;const held=new Promise(resolve=>release=resolve);let started;const requested=new Promise(resolve=>started=resolve);
  await page.route('**/datos/piloto_29/capas/**',async route=>{started();await held;try{await route.continue()}catch{}});
  await page.goto('/#geovisor');const card=page.locator('[data-citizen-layer]').first();await card.waitFor({state:'attached'});await card.evaluate(el=>el.closest('details').open=true);
- const cb=card.locator('input[type="checkbox"]');await cb.focus();await cb.press('Space');await requested;await expect(card.locator('[data-citizen-status]')).toContainText('Cargando');
- await cb.press('Space');release();await expect(cb).not.toBeChecked();await expect(cb).toBeFocused();
+ const cb=card.getByRole('switch');await cb.focus();await cb.press('Space');await requested;await expect(card.locator('[data-citizen-status]')).toContainText('Cargando');
+ await cb.press('Space');release();await expect(cb).toHaveAttribute('aria-checked','false');await expect(cb).toBeFocused();
  await expect(card.locator('[data-citizen-status]')).toContainText('solo al activarla');
  expect(await page.evaluate(()=>window.obs19Api.getLayers().filter(e=>e.idCitizen).length)).toBe(0);
 });
