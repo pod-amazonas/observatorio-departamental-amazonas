@@ -17,7 +17,7 @@ const output='docs/geovisor_32';fs.mkdirSync(output+'/vistas',{recursive:true});
    if(u.hostname.endsWith('tile.openstreetmap.org'))return route.continue();
    return route.fulfill({json:u.pathname.startsWith('/rest/v1/')?[]:{}});
   });
-  await page.goto('http://127.0.0.1:8878/#geovisor');await page.waitForFunction(()=>window.obs19Api?.getMap?.()&&document.querySelectorAll('#obs19-thematic-tree [role="switch"]').length===36);
+  await page.goto('http://127.0.0.1:8878/#geovisor');await page.waitForFunction(()=>window.obs19Api?.getMap?.()&&document.querySelectorAll('#obs19-thematic-tree [data-determinant-layer], #obs19-thematic-tree [data-citizen-layer]').length===36);
   const card=page.locator('[data-layer-key="'+def.key+'"]');await card.evaluate(el=>{for(let p=el.parentElement;p;p=p.parentElement)if(p.tagName==='DETAILS')p.open=true});
   if(early.length)throw Error('Descarga anticipada de geometrías');
   const cdp=await context.newCDPSession(page);await cdp.send('Network.enable');await cdp.send('Network.setCacheDisabled',{cacheDisabled:true});

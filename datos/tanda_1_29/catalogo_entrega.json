@@ -1,0 +1,64 @@
+[
+  {
+    "id_capa": "departamento_amazonas",
+    "nombre_origen": "Departamento",
+    "nombre_publico": "Límite departamental de Amazonas",
+    "categoria": "Base cartográfica",
+    "fuente_declarada_encargo": "IGAC",
+    "anio_declarado_encargo": 2022,
+    "color": "#a34a06",
+    "restricciones": "Registro completo de Amazonas (código 91), seleccionado de una capa nacional de 32 departamentos.",
+    "ruta_relativa": "capas/departamento_amazonas.geojson",
+    "entidades": 1,
+    "bytes": 1018015,
+    "bytes_gzip_6": 399706,
+    "sha256": "873b32b6f6014e6a031a0e6d656336db0aabb0abb4be557467d95ff2c238e60f",
+    "src_origen": "metadatos/src_3a6d4538f4c1.wkt",
+    "src_salida": "OGC:CRS84",
+    "campos_publicos": [
+      "DeCodigo",
+      "DeNombre",
+      "DeNorma"
+    ]
+  },
+  {
+    "id_capa": "autoridad_ambiental_car",
+    "nombre_origen": "Autoridad_ambiental_CAR",
+    "nombre_publico": "Jurisdicción de la autoridad ambiental",
+    "categoria": "Estructura institucional",
+    "fuente_declarada_encargo": "ANLA",
+    "anio_declarado_encargo": 2022,
+    "color": "#63458f",
+    "restricciones": "Ámbito regional completo que incluye Amazonas y se extiende fuera del departamento. Nom_CAR contiene un código en la fuente.",
+    "ruta_relativa": "capas/autoridad_ambiental_car.geojson",
+    "entidades": 1,
+    "bytes": 2237372,
+    "bytes_gzip_6": 886390,
+    "sha256": "f0c4c7ea4815b8ed306b8a0c2030dda200e1c903c2dd9a72e163cfb7093be51d",
+    "src_origen": "metadatos/src_3a6d4538f4c1.wkt",
+    "src_salida": "OGC:CRS84",
+    "campos_publicos": [
+      "Nom_CAR"
+    ]
+  },
+  {
+    "id_capa": "rutas_fluviales",
+    "nombre_origen": "Rutas_Fluviales",
+    "nombre_publico": "Rutas fluviales de referencia",
+    "categoria": "Estructura funcional y de servicios",
+    "fuente_declarada_encargo": "POD",
+    "anio_declarado_encargo": 2022,
+    "color": "#156f99",
+    "restricciones": "Corredores de referencia de los ríos Amazonas y Putumayo. Consulta las condiciones locales antes de navegar.",
+    "ruta_relativa": "capas/rutas_fluviales.geojson",
+    "entidades": 2,
+    "bytes": 833166,
+    "bytes_gzip_6": 328725,
+    "sha256": "a5bdb87d5bb8a160643e4e747bdccd414329cef1a6b137e85d5cef1e5b69bc2d",
+    "src_origen": "metadatos/src_3a6d4538f4c1.wkt",
+    "src_salida": "OGC:CRS84",
+    "campos_publicos": [
+      "NOMBRE_GEO"
+    ]
+  }
+]
