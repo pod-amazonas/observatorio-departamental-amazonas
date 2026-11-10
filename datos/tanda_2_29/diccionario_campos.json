@@ -1,0 +1,46 @@
+{
+  "puerto": [
+    {
+      "origen": "NOMBRE_GEOGRAFICO",
+      "tipo": "String",
+      "publico": true,
+      "descripcion": "Nombre o rótulo geográfico tal como figura en IGAC."
+    },
+    {
+      "origen": "PROYECTO",
+      "tipo": "String",
+      "publico": false,
+      "descripcion": "Campo excluido del paquete público."
+    },
+    {
+      "origen": "SYMBOL",
+      "tipo": "String",
+      "publico": false,
+      "descripcion": "Campo excluido del paquete público."
+    },
+    {
+      "origen": "FECHA",
+      "tipo": "DateTime",
+      "publico": false,
+      "descripcion": "Campo excluido del paquete público."
+    },
+    {
+      "origen": "RULEID",
+      "tipo": "Integer",
+      "publico": false,
+      "descripcion": "Campo excluido del paquete público."
+    },
+    {
+      "origen": "OVERRIDE",
+      "tipo": "Binary",
+      "publico": false,
+      "descripcion": "Campo excluido del paquete público."
+    },
+    {
+      "origen": "PK_CUE",
+      "tipo": "Real",
+      "publico": false,
+      "descripcion": "Campo excluido del paquete público."
+    }
+  ]
+}
