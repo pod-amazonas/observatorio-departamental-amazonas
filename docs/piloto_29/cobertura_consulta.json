@@ -1,0 +1,25 @@
+{
+  "adoptado": false,
+  "escenarios": [
+    {
+      "escenario": "interseccion_con_division_departamental",
+      "entidades": 19,
+      "bytes": 3212244,
+      "bytes_gzip_6": 1189858,
+      "geometrias_recortadas": false,
+      "simplificacion": false,
+      "adoptado": false,
+      "nota": "Solo estimación en memoria de una consulta; la entrega sigue conservando las 202 entidades. No se produjo otro archivo de capa."
+    },
+    {
+      "escenario": "atributo_NOM_AH_Amazonas",
+      "entidades": 57,
+      "bytes": 7545638,
+      "bytes_gzip_6": 2824207,
+      "geometrias_recortadas": false,
+      "simplificacion": false,
+      "adoptado": false,
+      "nota": "Solo estimación en memoria de una consulta; la entrega sigue conservando las 202 entidades. No se produjo otro archivo de capa."
+    }
+  ]
+}

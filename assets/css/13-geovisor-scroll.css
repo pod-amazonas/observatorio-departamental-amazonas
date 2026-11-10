@@ -69,3 +69,6 @@
   #view-geovisor .geo-sidebar { order: 2; height: auto; max-height: 420px; }
   #view-geovisor .obs19-stat-panel { order: 3; grid-column: 1; max-height: 430px; }
 }
+#v7-dynamic-legend .pilot29-legend { max-width: 100%; }
+#v7-dynamic-legend .pilot29-legend span { white-space: normal; overflow-wrap: anywhere; }
+[data-citizen-layer] .obs20-range-label { min-width: 0; flex-basis: 100%; }

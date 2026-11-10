@@ -1,0 +1,59 @@
+[
+  {
+    "capa": "division_politico_administrativa",
+    "cobertura_nativa": {
+      "valida": true,
+      "entidades_con_bordes_no_coincidentes": 0,
+      "ids": []
+    },
+    "cobertura_geojson_fiel": {
+      "valida": true,
+      "entidades_con_bordes_no_coincidentes": 0,
+      "ids": []
+    },
+    "nuevos_ids_afectados": [],
+    "sha256_geojson": "30f92e6d130ecd16b62c345cb3a5d3ff6b29f2d58d4d2a22b806be347ed64bf8"
+  },
+  {
+    "capa": "cuencas_hidrograficas",
+    "cobertura_nativa": {
+      "valida": false,
+      "entidades_con_bordes_no_coincidentes": 2,
+      "ids": [
+        315,
+        316
+      ]
+    },
+    "cobertura_geojson_fiel": {
+      "valida": false,
+      "entidades_con_bordes_no_coincidentes": 2,
+      "ids": [
+        315,
+        316
+      ]
+    },
+    "nuevos_ids_afectados": [],
+    "sha256_geojson": "57086cddf92c06cf7786ef4e1eb3460ce629c652574c1d5227960870e0629130"
+  },
+  {
+    "capa": "sistema_nacional_de_areas_protegidas",
+    "cobertura_nativa": {
+      "valida": false,
+      "entidades_con_bordes_no_coincidentes": 2,
+      "ids": [
+        14,
+        1459
+      ]
+    },
+    "cobertura_geojson_fiel": {
+      "valida": false,
+      "entidades_con_bordes_no_coincidentes": 2,
+      "ids": [
+        14,
+        1459
+      ]
+    },
+    "nuevos_ids_afectados": [],
+    "sha256_geojson": "74d37815e0d7b692e8b88baadf7f6c5ac98bab0f752d5748d8ef429c9711ffb6"
+  }
+]

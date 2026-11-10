@@ -1,0 +1,421 @@
+{
+  "division_politico_administrativa": {
+    "id": {
+      "origen": "FID/OBJECTID de origen",
+      "tipo_json": "integer",
+      "descripcion": "Conservado para esta entrega; persistencia entre ediciones de la fuente no acreditada."
+    },
+    "campos": [
+      {
+        "origen": "MpCodigo",
+        "salida": "MpCodigo",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Código territorial conservado como texto, incluidos ceros iniciales."
+      },
+      {
+        "origen": "MpNombre",
+        "salida": "MpNombre",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Nombre de la unidad territorial en la fuente."
+      },
+      {
+        "origen": "MpArea",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "MpNorma",
+        "salida": "MpNorma",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Referencia normativa literal; no acredita vigencia actual."
+      },
+      {
+        "origen": "MpCategor",
+        "salida": "MpCategor",
+        "tipo_origen": "Integer",
+        "tipo_json": "number o null",
+        "publico": true,
+        "descripcion": "Código de categoría; el catálogo de códigos no fue suministrado."
+      },
+      {
+        "origen": "MpAltitud",
+        "salida": null,
+        "tipo_origen": "Integer",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "Restriccion",
+        "salida": "Restriccion",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Advertencia de uso de la cartografía, conservada literalmente."
+      },
+      {
+        "origen": "Depto",
+        "salida": "Depto",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Departamento indicado en la fuente."
+      },
+      {
+        "origen": "AREA_TOT",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "POBLACION",
+        "salida": null,
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "AREA_KM2",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "DENSIDAD_POBLACIONAL",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "SHAPE_Length",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "SHAPE_Area",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "DEFICIT_CUALITATIVO_VIVIENDA",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "DEFICIT_CUANTITATIVO_VIVIENDA",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "DENSIDAD_P_D",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "EJES",
+        "salida": null,
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "N_SITIOS_TURISTICOS",
+        "salida": null,
+        "tipo_origen": "Integer",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      }
+    ]
+  },
+  "cuencas_hidrograficas": {
+    "id": {
+      "origen": "FID/OBJECTID de origen",
+      "tipo_json": "integer",
+      "descripcion": "Conservado para esta entrega; persistencia entre ediciones de la fuente no acreditada."
+    },
+    "campos": [
+      {
+        "origen": "COD_AH",
+        "salida": "COD_AH",
+        "tipo_origen": "Integer",
+        "tipo_json": "number o null",
+        "publico": true,
+        "descripcion": "Código AH de la fuente."
+      },
+      {
+        "origen": "COD_ZH",
+        "salida": "COD_ZH",
+        "tipo_origen": "Integer",
+        "tipo_json": "number o null",
+        "publico": true,
+        "descripcion": "Código ZH de la fuente."
+      },
+      {
+        "origen": "COD_SZH",
+        "salida": "COD_SZH",
+        "tipo_origen": "Integer",
+        "tipo_json": "number o null",
+        "publico": true,
+        "descripcion": "Código SZH de la fuente."
+      },
+      {
+        "origen": "NOM_AH",
+        "salida": "NOM_AH",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Nombre AH de la fuente."
+      },
+      {
+        "origen": "NOM_ZH",
+        "salida": "NOM_ZH",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Nombre ZH de la fuente."
+      },
+      {
+        "origen": "NOM_SZH",
+        "salida": "NOM_SZH",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Nombre SZH de la fuente."
+      },
+      {
+        "origen": "RULEID",
+        "salida": null,
+        "tipo_origen": "Integer",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "Shape_Length",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "Shape_Area",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      }
+    ]
+  },
+  "sistema_nacional_de_areas_protegidas": {
+    "id": {
+      "origen": "FID/OBJECTID de origen",
+      "tipo_json": "integer",
+      "descripcion": "Conservado para esta entrega; persistencia entre ediciones de la fuente no acreditada."
+    },
+    "campos": [
+      {
+        "origen": "nombre",
+        "salida": "nombre",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Nombre literal del registro; puede representar un fragmento de un parque."
+      },
+      {
+        "origen": "id_pnn",
+        "salida": "id_pnn",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Identificador del parque en la fuente; no se supone único por fragmento."
+      },
+      {
+        "origen": "categoria",
+        "salida": "categoria",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Categoría declarada por la fuente."
+      },
+      {
+        "origen": "territoria",
+        "salida": "territoria",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Valor del campo territorial de la fuente, sin normalizar."
+      },
+      {
+        "origen": "resolucion",
+        "salida": "resolucion",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Referencia literal de resolución."
+      },
+      {
+        "origen": "hectareas_",
+        "salida": "hectareas_",
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": true,
+        "descripcion": "Valor original del atributo denominado hectareas_; no recalculado ni certificado."
+      },
+      {
+        "origen": "escala",
+        "salida": null,
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "organizaci",
+        "salida": "organizaci",
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Organización indicada en la fuente."
+      },
+      {
+        "origen": "url",
+        "salida": null,
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "wkid",
+        "salida": null,
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "app_id",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "record_id",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "centroid_x",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "centroid_y",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "fecha_regi",
+        "salida": "fecha_regi",
+        "tipo_origen": "DateTime",
+        "tipo_json": "string o null",
+        "publico": true,
+        "descripcion": "Fecha de registro de la entidad, como texto original; no equivale a fecha de publicación o vigencia."
+      },
+      {
+        "origen": "validado",
+        "salida": null,
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "hectareas0",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "perimetro_",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "globalid",
+        "salida": null,
+        "tipo_origen": "String",
+        "tipo_json": "string o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "Shape_Length",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      },
+      {
+        "origen": "Shape_Area",
+        "salida": null,
+        "tipo_origen": "Real",
+        "tipo_json": "number o null",
+        "publico": false,
+        "descripcion": "Excluido de la consulta del piloto; preservado en copia interna, sin valores en esta entrega."
+      }
+    ]
+  }
+}
