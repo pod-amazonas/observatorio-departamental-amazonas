@@ -1,0 +1,146 @@
+[
+  {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache_capa": "fria"
+    },
+    "base": "OpenStreetMap externa; Supabase y otros servicios externos simulados",
+    "metodo": "API de carga de GeoJSON que usa el catálogo actual; no se añadió menú público",
+    "capa": "division_politico_administrativa",
+    "entidades": 11,
+    "paths": 11,
+    "sha256": "30f92e6d130ecd16b62c345cb3a5d3ff6b29f2d58d4d2a22b806be347ed64bf8",
+    "bytes_gzip": 2537067,
+    "bytes_decodificados": 6670944,
+    "descarga_ms": 12877.199999999255,
+    "hasta_dibujo_ms": 13027.699999999255,
+    "content_encoding": "gzip",
+    "visible": true,
+    "errores_js": []
+  },
+  {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache_capa": "fria"
+    },
+    "base": "OpenStreetMap externa; Supabase y otros servicios externos simulados",
+    "metodo": "API de carga de GeoJSON que usa el catálogo actual; no se añadió menú público",
+    "capa": "cuencas_hidrograficas",
+    "entidades": 202,
+    "paths": 202,
+    "sha256": "57086cddf92c06cf7786ef4e1eb3460ce629c652574c1d5227960870e0629130",
+    "bytes_gzip": 6936343,
+    "bytes_decodificados": 18483520,
+    "descarga_ms": 34927.79999999888,
+    "hasta_dibujo_ms": 35172.199999999255,
+    "content_encoding": "gzip",
+    "visible": true,
+    "errores_js": []
+  },
+  {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache_capa": "fria"
+    },
+    "base": "OpenStreetMap externa; Supabase y otros servicios externos simulados",
+    "metodo": "API de carga de GeoJSON que usa el catálogo actual; no se añadió menú público",
+    "capa": "sistema_nacional_de_areas_protegidas",
+    "entidades": 5,
+    "paths": 5,
+    "sha256": "74d37815e0d7b692e8b88baadf7f6c5ac98bab0f752d5748d8ef429c9711ffb6",
+    "bytes_gzip": 1364902,
+    "bytes_decodificados": 3552715,
+    "descarga_ms": 6995.5999999996275,
+    "hasta_dibujo_ms": 7086.0999999996275,
+    "content_encoding": "gzip",
+    "visible": true,
+    "errores_js": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache_capa": "fria"
+    },
+    "base": "OpenStreetMap externa; Supabase y otros servicios externos simulados",
+    "metodo": "API de carga de GeoJSON que usa el catálogo actual; no se añadió menú público",
+    "capa": "division_politico_administrativa",
+    "entidades": 11,
+    "paths": 11,
+    "sha256": "30f92e6d130ecd16b62c345cb3a5d3ff6b29f2d58d4d2a22b806be347ed64bf8",
+    "bytes_gzip": 2537067,
+    "bytes_decodificados": 6670944,
+    "descarga_ms": 12874.10000000149,
+    "hasta_dibujo_ms": 13012.400000000373,
+    "content_encoding": "gzip",
+    "visible": true,
+    "errores_js": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache_capa": "fria"
+    },
+    "base": "OpenStreetMap externa; Supabase y otros servicios externos simulados",
+    "metodo": "API de carga de GeoJSON que usa el catálogo actual; no se añadió menú público",
+    "capa": "cuencas_hidrograficas",
+    "entidades": 202,
+    "paths": 202,
+    "sha256": "57086cddf92c06cf7786ef4e1eb3460ce629c652574c1d5227960870e0629130",
+    "bytes_gzip": 6936343,
+    "bytes_decodificados": 18483520,
+    "descarga_ms": 34929.199999999255,
+    "hasta_dibujo_ms": 35167.40000000037,
+    "content_encoding": "gzip",
+    "visible": true,
+    "errores_js": []
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache_capa": "fria"
+    },
+    "base": "OpenStreetMap externa; Supabase y otros servicios externos simulados",
+    "metodo": "API de carga de GeoJSON que usa el catálogo actual; no se añadió menú público",
+    "capa": "sistema_nacional_de_areas_protegidas",
+    "entidades": 5,
+    "paths": 5,
+    "sha256": "74d37815e0d7b692e8b88baadf7f6c5ac98bab0f752d5748d8ef429c9711ffb6",
+    "bytes_gzip": 1364902,
+    "bytes_decodificados": 3552715,
+    "descarga_ms": 6997.0999999996275,
+    "hasta_dibujo_ms": 7081.5999999996275,
+    "content_encoding": "gzip",
+    "visible": true,
+    "errores_js": []
+  }
+]

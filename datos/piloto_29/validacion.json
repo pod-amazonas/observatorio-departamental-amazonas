@@ -1,0 +1,41 @@
+{
+  "division_politico_administrativa": {
+    "entidades": 11,
+    "poligonos": 11,
+    "anillos": 11,
+    "posiciones": 163742,
+    "geometrias_validas_origen_y_salida": true,
+    "atributos_publicos_conservados": true,
+    "dimensiones_origen": "XY",
+    "poligonos_anillos_posiciones_conservados": true,
+    "anillos_reorientados_rfc7946": 11,
+    "residuo_max_transformacion_inversa_unidades_nativas": 1.9199706733309015e-09,
+    "nota": "Residuo numérico de ida/vuelta, no exactitud geográfica en terreno."
+  },
+  "cuencas_hidrograficas": {
+    "entidades": 202,
+    "poligonos": 208,
+    "anillos": 209,
+    "posiciones": 465853,
+    "geometrias_validas_origen_y_salida": true,
+    "atributos_publicos_conservados": true,
+    "dimensiones_origen": "XY",
+    "poligonos_anillos_posiciones_conservados": true,
+    "anillos_reorientados_rfc7946": 209,
+    "residuo_max_transformacion_inversa_unidades_nativas": 2.7939677238464355e-09,
+    "nota": "Residuo numérico de ida/vuelta, no exactitud geográfica en terreno."
+  },
+  "sistema_nacional_de_areas_protegidas": {
+    "entidades": 5,
+    "poligonos": 20,
+    "anillos": 21,
+    "posiciones": 87295,
+    "geometrias_validas_origen_y_salida": true,
+    "atributos_publicos_conservados": true,
+    "dimensiones_origen": "XY",
+    "poligonos_anillos_posiciones_conservados": true,
+    "anillos_reorientados_rfc7946": 21,
+    "residuo_max_transformacion_inversa_unidades_nativas": 1.9199706733309015e-09,
+    "nota": "Residuo numérico de ida/vuelta, no exactitud geográfica en terreno."
+  }
+}
