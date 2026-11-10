@@ -27,6 +27,7 @@ Los originales se abrieron solo en lectura. Se crearon copias técnicas separada
 - Las tres fuentes son XY, con WKT nativo MAGNA CTM12. Se registran WKT, versiones de GDAL/GEOS/PROJ, huellas de geometrías nativas y procedimiento. PROJ_NETWORK=OFF: no se descargaron rejillas. No se asignó un EPSG por apariencia ni se acreditó una época geodésica.
 - No se simplifica ni impone seis decimales. Se exportan los doubles con precisión de ida/vuelta y se compacta JSON. Únicamente se invierten anillos para exterior antihorario/interior horario de RFC 7946.
 - Comparación inversa por posición, admitiendo la inversión de anillos: residuo máximo menor de 0,00001 unidades nativas (en estos datos, metros). Es un control numérico, **no exactitud real en terreno**.
+- [Cobertura de la copia fiel](cobertura_fiel.json): no aparecen nuevos IDs con bordes no coincidentes tras reproyectar; División 0→0, Cuencas 2→2 (IDs 315/316) y Áreas protegidas 2→2 (IDs 14/1459). Se vincula el resultado al SHA-256 del GeoJSON. Esto no convierte la hipótesis de cobertura en una regla temática universal.
 - CI verifica huellas, esquema, orientación, conteos y RFC; la validación GEOS/origen se ejecutó localmente y queda vinculada a los archivos por SHA-256. La geodatabase no está en CI ni en este PR.
 
 ## Advertencias de contenido
