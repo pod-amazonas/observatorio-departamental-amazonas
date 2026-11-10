@@ -349,3 +349,36 @@
 #view-avances-pod .obs10-footer-note{font-size:11px;line-height:1.65;color:#5a755d;margin:13px 0 0;padding:12px 15px;background:#f4f8f4;border-radius:9px}
 @media(max-width:900px){#view-avances-pod .obs10-apuestas{grid-template-columns:1fr}}
 @media(max-width:560px){#view-avances-pod .obs10-evidence-fields{grid-template-columns:1fr}#view-avances-pod .obs10-evidence-fields .wide{grid-column:span 1}#view-avances-pod .obs10-doc-open{display:none}}
+
+/* #25: foco de teclado fuera de Inicio. El halo blanco mantiene contraste
+   del anillo naranja también sobre controles y fondos verdes u oscuros.
+   !important permite sustituir los outline:0 de reglas locales antiguas. */
+body :focus-visible:not(:where(#view-inicio *)){
+ outline:3px solid #a34a06!important;outline-offset:2px!important;
+ box-shadow:0 0 0 7px #fff!important;
+}
+/* El summary toca el contenedor recortado: el anillo va dentro del control. */
+#view-avances-pod .obs10-group>summary:focus-visible,
+#view-geovisor .obs19-thematic-tree summary:focus-visible{
+ outline-offset:-4px!important;box-shadow:inset 0 0 0 6px #fff!important;
+}
+html{scroll-padding-top:108px;scroll-padding-bottom:16px}
+body :where(a[href],button,input,select,textarea,summary,[tabindex]):not(:where(#view-inicio *)){scroll-margin-block:8px}
+@media(max-width:800px){html{scroll-padding-top:93px}}
+/* Separación para que la lista siguiente no cubra el foco de los filtros. */
+#view-avances-pod .obs9-filterrow{margin-bottom:10px}
+/* Reservar espacio al anillo del mapa dentro de su panel con overflow:hidden. */
+#view-geovisor .map-stage>.visor-map{margin:7px}
+/* Los créditos quedan al borde del mapa: cada enlace necesita su propia caja. */
+.leaflet-control-attribution a{display:inline-block;margin:6px}
+/* El input oculto conserva una posición local para que Tab desplace el panel
+   hasta su etiqueta, sin llevar el foco a una coordenada fuera de pantalla. */
+#geojson-upload{position:static!important;left:auto!important;clip-path:inset(50%)}
+/* El input nativo permanece oculto: su etiqueta muestra el foco de teclado. */
+.local-import-control:has(+ #geojson-upload:focus-visible){outline:3px solid #a34a06;outline-offset:2px;box-shadow:0 0 0 7px #fff}
+/* Las pestañas pasan a otra línea para no enfocar controles parcialmente ocultos. */
+#view-admin .obs17-tabs{padding:7px 7px 10px;flex-wrap:wrap;overflow:visible}
+/* El panel se desplaza: no comprimir a cero las cajas que reciben foco. */
+#view-geovisor .geo-sidebar>*{flex-shrink:0}
+/* Evitar que el enlace normativo y su anillo se fragmenten entre líneas. */
+.obs19-legal-note a{display:inline-block;margin:7px}
