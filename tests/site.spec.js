@@ -199,9 +199,9 @@ test('portada: conserva la franja con los logos de las 16 entidades',async({page
 test('portada: respeta la preferencia de reducir movimiento',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
  await page.goto('/');
- await expect(page.locator('.portada-frase')).toHaveCSS('opacity','1');
- expect(await page.locator('.portada-navega').first().evaluate(e=>getComputedStyle(e).animationName)).toBe('none');
- for(const sel of ['.portada-barco','.portada-delfin','.portada-ave','.portada-humo'])expect(await page.locator(sel).first().evaluate(e=>getComputedStyle(e).animationName),sel).toBe('none');
+ const opacidades=await page.locator('.portada h1,.portada-frase,.portada-acciones,.portada-chips,.portada-logo').evaluateAll(es=>es.map(e=>getComputedStyle(e).opacity));
+ expect(opacidades.every(o=>o==='1')).toBe(true);
+ expect(await page.locator('.portada').evaluate(e=>e.getAnimations({subtree:true}).length)).toBe(0);
  await page.waitForTimeout(5200);
  await expect(page.locator('.portada')).toHaveAttribute('data-capa','rios');
 });
@@ -217,38 +217,34 @@ test('portada: cada capa se resalta sola y se activa con teclado',async({page})=
   await expect(portada.locator('.portada-capa-texto')).toHaveText(await boton.getAttribute('data-texto'));
   for(const [otra,otroNombre] of capasPortada){
    const activa=otra===capa;
-   await expect(portada.getByRole('button',{name:otroNombre,exact:true}),`botón ${otroNombre} con ${capa} activa`).toHaveAttribute('aria-pressed',String(activa));
-   await expect(portada.locator(`svg.portada-fondo .portada-capa-${otra}`),`capa ${otra} con ${capa} activa`).toHaveCSS('opacity',activa?'1':'0');
+   await expect(portada.getByRole('button',{name:otroNombre,exact:true})).toHaveAttribute('aria-pressed',String(activa));
+   await expect(portada.locator(`svg.portada-fondo .portada-capa-${otra}`)).toHaveCSS('opacity',activa?'1':'0');
   }
  }
 });
 const modulosPortada=[['Geovisor','geovisor'],['Geoportal','geoportal'],['Avances del POD','avances-pod'],['Biblioteca Digital','biblioteca'],['Documentos del POD','documentos-pod'],['Certificados ambientales','certificados']];
-test('portada: cada capa muestra su escena y pausa las demás',async({page})=>{
+test('portada: cada capa muestra su escena y detiene las ocultas',async({page})=>{
  await page.goto('/');
- const portada=page.locator('.portada');
- const estado=sel=>page.locator(sel).first().evaluate(e=>getComputedStyle(e).animationPlayState);
- const escenas=[['Ríos','.portada-delfin'],['Selva','.portada-ave'],['Territorio','.portada-humo'],['Movilidad fluvial','.portada-barco']];
- for(const [nombre,propia] of escenas){
-  await portada.getByRole('button',{name:nombre,exact:true}).click();
-  for(const [,sel] of escenas)expect(await estado(sel),`${sel} con ${nombre} activa`).toBe(sel===propia?'running':'paused');
+ for(const [capa,nombre] of capasPortada){
+  await page.locator('.portada').getByRole('button',{name:nombre,exact:true}).click();
+  await expect(page.locator('[data-paisaje]:not([hidden])')).toHaveAttribute('data-paisaje',capa);
+  expect(await page.locator('[data-paisaje][hidden]').evaluateAll(es=>es.every(e=>e.getAnimations({subtree:true}).length===0))).toBe(true);
  }
- await expect(page.locator('svg.portada-fondo use[href="#portada-peque"]')).toHaveCount(2);
- await expect(page.locator('svg.portada-fondo use[href="#portada-maloca"]')).toHaveCount(3);
- const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
- expect(overflow).toBeLessThanOrEqual(0);
+ await expect(page.locator('.maloca')).toHaveCount(1);
+ await expect(page.locator('.casa-ribera')).toHaveCount(2);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
 });
-test('portada: el delfín sale del agua cada vez que se muestra Ríos',async({page})=>{
+test('portada: el delfín emerge y se sumerge en una animación finita',async({page})=>{
  await page.goto('/');
- const medida=await page.locator('.portada-delfin').evaluate(el=>{
-  const animacion=el.getAnimations()[0];
-  const fondo=document.querySelector('svg.portada-fondo').getBoundingClientRect();
-  const linea=fondo.top+585*fondo.height/660;
-  const parte=t=>{animacion.pause();animacion.currentTime=t;return el.querySelector('use').getBoundingClientRect().top};
-  return {duracion:getComputedStyle(el).animationDuration,linea,inicio:parte(0),medio:parte(2300)};
+ const medida=await page.locator('.salto-delfin').first().evaluate(el=>{
+  const a=el.getAnimations()[0];a.pause();const {duration,delay,iterations}=a.effect.getTiming();
+  const linea=new DOMPoint(0,697).matrixTransform(el.ownerSVGElement.getScreenCTM()).y;
+  a.currentTime=delay;const inicio=el.getBoundingClientRect().top;
+  a.currentTime=delay+duration*.48;const medio=el.getBoundingClientRect().bottom;
+  return {duration,iterations,linea,inicio,medio};
  });
- expect(medida.duracion).toBe('4.6s');
- expect(medida.inicio).toBeGreaterThan(medida.linea-20);
- expect(medida.medio).toBeLessThan(medida.linea-30);
+ expect(medida.duration).toBeLessThanOrEqual(5000);expect(medida.iterations).toBe(1);
+ expect(medida.inicio).toBeGreaterThan(medida.linea);expect(medida.medio).toBeLessThan(medida.linea);
 });
 test('portada: las seis tarjetas son exactamente las esperadas',async({page})=>{
  await page.goto('/');
