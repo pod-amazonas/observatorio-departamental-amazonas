@@ -2,7 +2,8 @@
 (function(){'use strict';
 const $=id=>document.getElementById(id);
 const CATEGORIES=['Base cartográfica','Componente biofísico','Estructura institucional','Estructura funcional y de servicios','Socioeconómico y cultural','Gestión del riesgo','Ordenamiento territorial'];
-let catalog=null, selectedLayer=null, callDraft=[], publicCalls=[];
+let catalog=null, citizenCatalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
+const citizenState=new Map();
 const getLayers=()=>window.obs19Api?.getLayers?.()||[];
 function element(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
 function legalUrl(v){try{const u=new URL(v);return (u.protocol==='https:'&&u.username===''&&u.password==='')?u.href:null;}catch{return null;}}
@@ -14,8 +15,61 @@ function renderTree(){const tree=$('obs19-thematic-tree');if(!tree)return;clear(
   if(i===1){const mid=element('details');mid.open=true;mid.append(element('summary','','Determinantes ambientales · 33 capas previstas'));
    const sub=element('div');(catalog?.grupos||[]).forEach(g=>{const details=element('details');const summary=element('summary','',g.titulo+' · '+g.capas.filter(c=>!!c.archivo).length+' disponibles de '+g.capas.length);details.append(summary);g.capas.forEach(c=>{const b=element('button','obs19-topic-button',c.etiqueta||c.nombre||('Determinante '+c.objectid));b.type='button';b.disabled=!c.archivo;b.title=c.archivo?'Activar o desactivar esta capa':'Capa aprobada, pendiente de preparar para web';b.addEventListener('click',()=>togglePilot(c.objectid));details.append(b)});sub.append(details)});
    const faltantes=(catalog?.grupos||[]).reduce((n,g)=>n+g.capas.filter(c=>!c.archivo).length,0);const p=element('p','obs19-footnote',faltantes+' determinantes pendientes de integración técnica. Las rondas hídricas (19–31) requieren una versión web optimizada.');sub.append(p);mid.append(sub);outer.append(mid)
-  }else{outer.append(element('p','obs19-footnote','Categoría estructurada. Capas de esta temática pendientes de incorporación técnica.'))}
- tree.append(outer)})}
+  }else if(i!==0){outer.append(element('p','obs19-footnote','Categoría estructurada. Capas de esta temática pendientes de incorporación técnica.'))}
+  if(i===0||i===1){const mount=element('div');mount.dataset.citizenCategory=String(i);outer.append(mount)}
+ tree.append(outer)});renderCitizenLayers()}
+function citizenLayer(id){return getLayers().find(e=>e.idCitizen===id)}
+function renderCitizenLayers(){
+ citizenCatalog.forEach(meta=>{
+  const index=meta.id_capa==='division_politico_administrativa'?0:1;
+  const mount=document.querySelector('[data-citizen-category="'+index+'"]');if(!mount)return;
+  const card=element('div','obs20-pilot-card');card.dataset.citizenLayer=meta.id_capa;
+  const label=element('label','obs19-pilot-row'),cb=element('input');cb.type='checkbox';cb.dataset.citizenToggle=meta.id_capa;
+  cb.setAttribute('aria-label','Mostrar u ocultar '+meta.nombre_publico);
+  cb.addEventListener('change',()=>toggleCitizenLayer(meta,cb.checked));
+  const text=element('span');text.append(element('strong','',meta.nombre_publico),element('small','',meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo+' · '+meta.entidades+' entidades'));
+  label.append(cb,text);card.append(label);
+  card.append(element('p','obs19-footnote',meta.restricciones));
+  const status=element('p','obs19-footnote');status.dataset.citizenStatus=meta.id_capa;status.setAttribute('role','status');card.append(status);
+  const tools=element('div','obs20-pilot-tools'),zoom=element('button','','Zoom a capa ↗');zoom.type='button';zoom.dataset.citizenZoom=meta.id_capa;
+  zoom.addEventListener('click',()=>toggleCitizenLayer(meta,true));tools.append(zoom);
+  const opacity=element('label','obs20-range-label');opacity.append(document.createTextNode('Transparencia'));
+  const slider=element('input');slider.type='range';slider.min='0';slider.max='100';slider.step='5';slider.dataset.citizenOpacity=meta.id_capa;
+  slider.setAttribute('aria-label','Transparencia de '+meta.nombre_publico);const output=element('output');
+  slider.addEventListener('input',()=>{const entry=citizenLayer(meta.id_capa);if(!entry)return;entry.opacity=100-Number(slider.value);entry.layer.setStyle({fillOpacity:entry.opacity/100*.52});output.textContent=slider.value+'%';window.obs19Api.redraw()});
+  opacity.append(slider,output);tools.append(opacity);card.append(tools);mount.append(card);
+ });syncCitizenLayers()
+}
+function syncCitizenLayers(){
+ citizenCatalog.forEach(meta=>{
+  const card=document.querySelector('[data-citizen-layer="'+meta.id_capa+'"]');if(!card)return;
+  const entry=citizenLayer(meta.id_capa),state=citizenState.get(meta.id_capa),loading=!!state?.loading;
+  document.querySelectorAll('#v7-dynamic-legend .v7-legend-tag').forEach(tag=>{if(tag.title===meta.nombre_publico)tag.classList.add('pilot29-legend')});
+  const cb=card.querySelector('input[type="checkbox"]');cb.checked=loading?state.want:!!entry?.visible;cb.setAttribute('aria-busy',String(loading));
+  card.querySelector('[data-citizen-status]').textContent=state?.error|| (loading?'Cargando capa… Puedes desmarcarla para cancelar.':entry?.visible?'Capa visible · '+meta.fuente_declarada_encargo+' '+meta.anio_declarado_encargo:'Se descarga solo al activarla.');
+  const slider=card.querySelector('input[type="range"]');slider.disabled=!entry?.visible;slider.value=String(100-(entry?.opacity??65));slider.nextElementSibling.textContent=slider.value+'%';
+ });
+}
+async function toggleCitizenLayer(meta,want){
+ const id=meta.id_capa;let state=citizenState.get(id);if(!state){state={want:false};citizenState.set(id,state)}
+ state.want=want;state.error='';const current=citizenLayer(id);
+ if(!want){state.controller?.abort();state.loading=false;if(current)window.obs19Api.remove(current.id);syncCitizenLayers();return}
+ if(current){window.obs19Api.zoom(current.id);syncCitizenLayers();return}
+ if(state.loading)return;
+ const controller=new AbortController();state.controller=controller;state.loading=true;syncCitizenLayers();
+ try{
+  // Solo rutas locales relativas del paquete aprobado; nunca URLs del GeoJSON.
+  if(!/^capas\/(01_base_cartografica|02_componente_biofisico)\/[a-z0-9_]+\.geojson$/.test(meta.ruta_relativa))throw Error('Ruta de capa no autorizada');
+  if(!state.data){const response=await fetch('datos/piloto_29/'+meta.ruta_relativa,{signal:controller.signal});if(!response.ok)throw Error('Archivo no disponible ('+response.status+')');state.data=await response.json()}
+  if(controller.signal.aborted||!state.want)return;
+  const entry=window.obs19Api.add(meta.nombre_publico,state.data,meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo+' · piloto autorizado',true);
+  entry.idCitizen=id;entry.metadata={...meta,fuenteDeclarada:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo};
+  entry.color={division_politico_administrativa:'#a34a06',cuencas_hidrograficas:'#156f99',sistema_nacional_de_areas_protegidas:'#177749'}[id];
+  entry.layer.setStyle({color:entry.color,fillColor:entry.color,fillOpacity:entry.opacity/100*.52});selectedLayer=entry.id;
+  window.obs19Api.redraw();
+ }catch(error){if(error.name!=='AbortError'&&state.controller===controller){state.want=false;state.error='No se pudo cargar la capa: '+String(error.message||error)+'. Vuelve a activarla para reintentar.'}}
+ finally{if(state.controller===controller){state.loading=false;syncCitizenLayers()}}
+}
 function renderPilot(){
  const list=$('obs19-pilot-list');if(!list)return;clear(list);
  const layers=layersMeta();
@@ -58,7 +112,7 @@ async function togglePilot(id,want){const meta=layersMeta().find(x=>x.objectid==
  const row=$('obs19-pilot-list');try{const response=await fetch(encodeURI(url));if(!response.ok)throw Error('Archivo no disponible ('+response.status+').');const data=await response.json();const e=window.obs19Api.add('Det. '+id+' · '+(meta.etiqueta||meta.nombre),data,'Determinantes ambientales · publicación autorizada',true);e.idPilot=id;e.metadata=meta;e.opacity=Math.round((meta.opacidadSugerida||0.35)*100);e.layer.setStyle?.({fillOpacity:e.opacity/100*.52});selectedLayer=e.id;window.obs19Api.redraw();renderPilot();renderStats();}catch(err){renderPilot();if(row){const note=element('p','obs19-empty','No se pudo cargar la capa '+id+': '+String(err.message||err)+'. Abre el prototipo por HTTP.');row.prepend(note)}}}
 function getFeatures(d){if(!d)return[];if(d.type==='FeatureCollection')return Array.isArray(d.features)?d.features:[];return d.type==='Feature'?[d]:[{properties:{},geometry:d}]}
 function summariseStats(layer){const feats=getFeatures(layer.data),props=feats.map(f=>f.properties||{});const numeric={};const categoric={};props.forEach(p=>Object.entries(p).forEach(([k,v])=>{if(v==null||v==='')return;if(typeof v==='number'&&Number.isFinite(v)){(numeric[k]??=[]).push(v);}else if(typeof v==='string'&&v.length<80&&!/^(objectid|fid|shape_)/i.test(k)){const c=categoric[k]??={};c[v]=(c[v]||0)+1;}}));const group=Object.entries(categoric).filter(([k,counts])=>Object.keys(counts).length>=2&&Object.keys(counts).length<=12).sort((a,b)=>Object.keys(a[1]).length-Object.keys(b[1]).length)[0];return{feats,props,numeric,group}}
-function renderStats(){const overview=$('obs19-stat-overview'),detail=$('obs19-stat-detail');if(!overview||!detail)return;clear(overview);clear(detail);
+function renderStats(){syncCitizenLayers();const overview=$('obs19-stat-overview'),detail=$('obs19-stat-detail');if(!overview||!detail)return;clear(overview);clear(detail);
  const active=getLayers().filter(x=>x.visible);const counts=active.reduce((n,e)=>n+(e.count||0),0);const top=element('div','obs19-metrics');[['Capas visibles',active.length],['Registros cargados',counts]].forEach(([lab,val])=>{const d=element('div','obs19-metric');d.append(element('strong','',String(val)),element('small','',lab));top.append(d)});overview.append(top);
  if(!active.length){detail.append(element('div','obs19-empty','Activa una capa desde el panel izquierdo. Se mostrarán estadísticas según sus atributos.'));return}
  if(!active.some(x=>x.id===selectedLayer))selectedLayer=active[0].id;
@@ -148,6 +202,7 @@ function init(){
   observer.observe(geovisorMap);
  }
  initLocation();initDocuments();initCalls();initPartnersMarquee();fetch('catalogo_determinantes_para_geovisor.json').then(r=>{if(!r.ok)throw Error('Catálogo no encontrado');return r.json()}).then(data=>{catalog=data;renderTree();renderPilot()}).catch(()=>{catalog={grupos:[]};renderTree();renderPilot()});
+ fetch('datos/piloto_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo piloto no disponible');return r.json()}).then(data=>{citizenCatalog=data;renderCitizenLayers()}).catch(()=>{const tree=$('obs19-thematic-tree');tree?.append(element('p','obs19-empty','No se pudo cargar el catálogo del piloto. Comprueba la conexión y actualiza la página.'))});
  // Categorías del geoportal llevan a sus capas dentro del visor.
  document.querySelectorAll('#categories-grid').forEach(node=>node.addEventListener('click',e=>{if(e.target.closest('[data-open-theme]'))setTimeout(()=>{const t=$('obs19-thematic-tree');t?.querySelectorAll('details').forEach((d,i)=>d.open=i===1)},120)}));
 }

@@ -1,141 +1,115 @@
-# Piloto #29: entrega fiel y evaluación no adoptada
+# Piloto #29: tres capas integradas bajo demanda
 
-**Estado: borrador para revisión de datos, no listo para publicación.** Se prepararon exactamente las tres capas autorizadas. Ninguna cumple todavía la meta de 1 MB transferido. El solicitante autorizó evaluar simplificación de copias, **sin adoptarla antes de revisar sus efectos**. Por ello los GeoJSON del PR son fieles y los candidatos simplificados permanecen fuera de GitHub. No se cambian los datos de #26 ni el diseño del sitio.
+Alejandro autorizó publicar las fuentes IGAC, IDEAM y RUNAP y aplicar las decisiones de la revisión de Claude en #31 el 10 de noviembre de 2026. El PR se actualizó con main `bf1f72a`, que ya contiene #30 y #26. No se modifican los datos ni scripts del #26.
 
-La rama parte de la main consultada `a938c3e`. Durante el trabajo, tanto el conector como la API directa seguían mostrando #26 y #30 abiertos; no se fusionaron ni copiaron sus cambios. La preparación de estas capas es independiente de esos PR.
+## Decisiones aplicadas
 
-## Entrega y procedencia
+- **División político-administrativa:** se adopta exclusivamente la variante de 10 m evaluada, con bordes compartidos conservados. Se rotula **«representación simplificada»** en el menú y en la leyenda. No sirve para ubicación exacta, deslindes legales ni cálculo de superficies/distancias.
+- **Cuencas:** se publican las 19 entidades que intersectan la unión de las 11 unidades departamentales **originales, sin simplificar**, con GEOS Intersects en el SRC nativo; incluye contactos de borde. Cada cuenca conserva geometría y atributos públicos completos, sin recorte ni simplificación. Puede extenderse fuera del departamento.
+- **Áreas protegidas:** copia fiel exacta, con la misma huella del archivo revisado. Cinco registros no son cinco parques distintos.
 
-[Paquete de datos](../../datos/piloto_29/LEEME.md), [catálogo](../../datos/piloto_29/catalogo_entrega.json), [diccionario completo](../../datos/piloto_29/diccionario_campos.json), [control de calidad](../../datos/piloto_29/validacion.json) y [SHA256SUMS](../../datos/piloto_29/SHA256SUMS).
+[Paquete](../../datos/piloto_29/LEEME.md) · [catálogo](../../datos/piloto_29/catalogo_entrega.json) · [diccionario](../../datos/piloto_29/diccionario_campos.json) · [validación](../../datos/piloto_29/validacion.json) · [decisión y huellas por entidad](../../datos/piloto_29/adopcion.json) · [SHA-256](../../datos/piloto_29/SHA256SUMS).
 
-Fuentes/años declarados en el encargo: División (IGAC 2022), Cuencas (IDEAM 2022), Áreas protegidas (RUNAP 2021). No constituyen verificación de licencia, vigencia o aval institucional final. Se conserva la condición de prototipo; solo el responsable del proyecto decide integración/publicación.
+## Entrega final y presupuesto
 
-| Capa | Entidades | Polígonos | Anillos | Posiciones, incluido cierre | MB brutos | MB gzip6 |
-|---|---:|---:|---:|---:|---:|---:|
-| Division_Politico_Administrativa | 11 | 11 | 11 | 163742 | 6,671 | 2,537 |
-| Cuencas_Hidrograficas | 202 | 208 | 209 | 465853 | 18,484 | 6,936 |
-| Sistema_Nacional_de_Areas_Protegidas | 5 | 20 | 21 | 87295 | 3,553 | 1,365 |
+| Capa | Fuente / año del encargo | Entidades | MB brutos | MB gzip6 | Meta de 1 MB |
+|---|---|---:|---:|---:|---|
+| División político-administrativa — representación simplificada | IGAC / 2022 | 11 | 1.921 | 0.756 | Cumple |
+| Cuencas que intersectan Amazonas — completas | IDEAM / 2022 | 19 | 3.212 | 1.190 | Excepción aceptada por Alejandro |
+| Áreas protegidas — registros de la fuente | RUNAP / 2021 | 5 | 3.553 | 1.365 | Excepción aceptada por Alejandro |
 
-MB significa 1.000.000 bytes. El objetivo del encargo es transferencia, por eso se informa bruto y gzip por separado. gzip6 es una medición con Python/zlib documentados en el catálogo, no una promesa de compresión del alojamiento. Distintas implementaciones, por ejemplo Node, producen números de bytes distintos. Las huellas exactas corresponden a los archivos GeoJSON; CI comprueba también que la clasificación de peso sea correcta con su compresor. `--exigir-meta` falla con código 2: no se oculta el incumplimiento para obtener CI verde.
+MB = 1.000.000 bytes. Las dos excepciones permanecen explícitas en el catálogo y en las pruebas. gzip6 es medición local con Python/zlib documentados, no garantía del alojamiento; no se distribuyen solo `.gz`. El comprobador de integridad pasa; `--exigir-meta` **sigue devolviendo 2** por las dos capas de más de 1 MB, incluso estando autorizadas. CI comprueba ese resultado, sin presentar el presupuesto como cumplido.
 
-Los originales se abrieron solo en lectura. Se crearon copias técnicas separadas, con WKB y atributos íntegros en custodia interna. Únicamente las listas públicas del script pasan al paquete. El filtro textual de sensibilidad es defensa adicional: no garantiza ausencia de datos indirectos ni sustituye aprobación de fuentes/campos. No se derivan centroides ni se procesan otras capas.
+Se mantienen 35 entidades, 50 polígonos y 51 anillos; 213.420 posiciones. Solo División reduce posiciones. Fuente y salida son válidas individualmente con GEOS. Cuencas conserva las huellas de sus entidades completas y Áreas protegidas la huella del archivo completo. No se modifican áreas, referencias normativas o valores de atributos. No se inventa escala ni vigencia de las fuentes.
 
-## Equivalencia y RFC 7946
+La variante de División coincide exactamente con la huella del ensayo previo `coverage_vw`, parámetro 10 m. Conserva 11 polígonos/anillos y cobertura nativa sin nuevos bordes no coincidentes; Hausdorff **discreta** de bordes 9,173 m y diferencia simétrica sumada 94,564 ha. No se afirma máximo continuo exacto ni exactitud legal. El parámetro de 10 m no garantiza que todos los desplazamientos sean menores de 10 m.
 
-- FeatureCollection UTF-8, WGS84 longitud/latitud; sin `crs` alternativo, nulos/vacíos o coordenadas no finitas.
-- Fuente y salida válidas con GEOS 3.14.1. Se conservan entidades, polígonos, anillos, posiciones y atributos públicos, incluidos los ausentes como `null`.
-- Las tres fuentes son XY, con WKT nativo MAGNA CTM12. Se registran WKT, versiones de GDAL/GEOS/PROJ, huellas de geometrías nativas y procedimiento. PROJ_NETWORK=OFF: no se descargaron rejillas. No se asignó un EPSG por apariencia ni se acreditó una época geodésica.
-- No se simplifica ni impone seis decimales. Se exportan los doubles con precisión de ida/vuelta y se compacta JSON. Únicamente se invierten anillos para exterior antihorario/interior horario de RFC 7946.
-- Comparación inversa por posición, admitiendo la inversión de anillos: residuo máximo menor de 0,00001 unidades nativas (en estos datos, metros). Es un control numérico, **no exactitud real en terreno**.
-- [Cobertura de la copia fiel](cobertura_fiel.json): no aparecen nuevos IDs con bordes no coincidentes tras reproyectar; División 0→0, Cuencas 2→2 (IDs 315/316) y Áreas protegidas 2→2 (IDs 14/1459). Se vincula el resultado al SHA-256 del GeoJSON. Esto no convierte la hipótesis de cobertura en una regla temática universal.
-- CI verifica huellas, esquema, orientación, conteos y RFC; la validación GEOS/origen se ejecutó localmente y queda vinculada a los archivos por SHA-256. La geodatabase no está en CI ni en este PR.
+Los informes [evaluacion_simplificacion.json](evaluacion_simplificacion.json), [cobertura_consulta.json](cobertura_consulta.json) y [cobertura_fiel.json](cobertura_fiel.json) son evidencia **histórica previa a esta adopción**: sus campos `adoptado:false` y las huellas/conteos fieles describen aquel ensayo, no el estado actual. La decisión vigente y las huellas finales están en `datos/piloto_29/adopcion.json`. Ningún otro ensayo se adopta.
 
-## Advertencias de contenido
+## Integración al Geovisor
 
-- División tiene 11 unidades. `MpCategor` conserva sus códigos sin inventar su catálogo. `Restriccion` mantiene la advertencia original contra usar esta cartografía para ubicación exacta o cálculo de áreas/distancias. Los indicadores socioeconómicos agregados y superficies sin definición acreditada quedan fuera de este piloto base; no se sobrescriben en origen.
-- Cuencas contiene regiones de las cinco áreas hidrográficas nacionales, no un recorte del departamento. Se preservan las 202 entidades. No se recortan cuencas al límite administrativo ni se confunden con rondas hídricas.
-- Áreas protegidas contiene 5 registros, incluido «Yaigoje Apapori - Fuera»: no son cinco parques distintos. Las fechas de registro de entidades no son fecha de publicación. Valores de escala `1:1`/`Sin información` no se usan como escala acreditada. Se omiten centroides precalculados, IDs de aplicaciones, URLs y campos auxiliares de la consulta pública; no se copian sus valores a GitHub.
+División está en **Base cartográfica**; Cuencas y Áreas protegidas en **Componente biofísico**. Fuente, año del encargo, número de entidades y restricciones se leen en cada entrada. Las casillas funcionan con teclado; al activar se descarga y muestra la capa, se ajusta el mapa y aparece su leyenda. La fuente y el año aparecen también en el detalle de estadísticas. Hay zoom y transparencia. El nombre completo de División permanece visible en la leyenda, incluido el rótulo de simplificación.
 
-## Ensayos autorizados: ninguno adoptado
+Abrir la página o desplegar categorías solo obtiene el catálogo de metadatos: **no descarga los tres GeoJSON**. Se descargan al activarlos. Se muestra el estado de carga y se puede cancelar desmarcando; un error de red permite reintentar sin duplicar capas. La misma sesión conserva en memoria las capas ya descargadas para reactivarlas sin otra descarga. Quitar/ocultar desde los controles existentes se refleja en las casillas del menú.
 
-[Resultados reproducibles](evaluacion_simplificacion.json). Parámetros 10, 25 y 50 en metros nativos. Para División, cobertura válida: Visvalingam–Whyatt sobre bordes compartidos, permitiendo simplificar el contorno exterior. Para Cuencas/Áreas protegidas la fuente no cumple la hipótesis de cobertura (2 registros afectados en cada capa), aunque **cada geometría individual es válida**. Se ensayó Douglas–Peucker con preservación de topología por entidad, sin reparar la fuente.
+No se amplían los límites del importador local ni el máximo de capas simultáneas. Cuencas pesa ahora 3,21 MB brutos; desaparece el bloqueo anterior de 15 MiB para esta selección. No se utiliza Supabase de producción ni se incorporan dependencias o recursos de datos externos nuevos.
 
-La hipótesis de cobertura exige bordes coincidentes y ausencia de solapes; no es por sí sola una regla temática universal. Un solape puede ser legítimo. No se repararon las fuentes para satisfacer esta prueba. Los parámetros no deben interpretarse como límites garantizados de desplazamiento: se muestran distancias Hausdorff **discretas**, sin afirmar un máximo continuo exacto. Tampoco se ha certificado coherencia de límites entre capas distintas.
+## Celular, escritorio y red lenta
 
-| Capa | Parámetro | MB gzip6 | Hausdorff discreta máx. (m) | Diferencia simétrica sumada (ha) | Cambio neto de área (ha) | Registros con bordes no coincidentes: origen → candidato |
-|---|---:|---:|---:|---:|---:|---:|
-| division_politico_administrativa | 10 | 0,756 | 9,173 | 94,564 | 1,121 | 0 → 0 |
-| division_politico_administrativa | 25 | 0,493 | 32,438 | 507,043 | 7,973 | 0 → 0 |
-| division_politico_administrativa | 50 | 0,314 | 43,527 | 1.627,741 | 11,913 | 0 → 0 |
-| cuencas_hidrograficas | 10 | 4,493 | 10,000 | 3.142,979 | -22,173 | 2 → 182 |
-| cuencas_hidrograficas | 25 | 3,412 | 31,041 | 26.016,951 | -168,064 | 2 → 193 |
-| cuencas_hidrograficas | 50 | 2,422 | 62,225 | 75.777,162 | -337,190 | 2 → 193 |
-| sistema_nacional_de_areas_protegidas | 10 | 0,300 | 14,678 | 707,018 | 14,348 | 2 → 4 |
-| sistema_nacional_de_areas_protegidas | 25 | 0,185 | 24,986 | 1.896,407 | 21,982 | 2 → 4 |
-| sistema_nacional_de_areas_protegidas | 50 | 0,122 | 51,226 | 4.159,080 | -35,856 | 2 → 4 |
-
-En los nueve ensayos se conservan polígonos/anillos y son válidas las geometrías individuales nativas y exportadas. Eso **no basta** para aprobar una generalización: Cuencas aumenta los registros con bordes no coincidentes hasta 182/193, y Áreas protegidas de 2 a 4. No se recomiendan esas variantes para adopción. División a parámetro 10 reduce a unos 0,756 MB y conserva su cobertura, pero altera contornos; es solo candidata para revisar, no sustituye la copia fiel ni acredita límites legales. El JSON incluye cambios absolutos/relativos de superficie por entidad, no solo el neto que puede cancelar aumentos y pérdidas.
-
-### Consulta geográfica, solo estimación
-
-También se estimaron dos consultas sin recortar ni simplificar las geometrías de Cuencas. **No se produjo ni adoptó otra capa ni se cambió la selección autorizada**; la entrega conserva 202 entidades. [Cifras](cobertura_consulta.json).
-
-| Consulta hipotética | Entidades | MB gzip6 |
-|---|---:|---:|
-| interseccion_con_division_departamental | 19 | 1,190 |
-| atributo_NOM_AH_Amazonas | 57 | 2,824 |
-
-Aun la consulta de cuencas que intersectan las unidades departamentales supera la meta sin generalizar. Filtrar por `NOM_AH=Amazonas` no equivale a recortar al departamento. Cualquier cambio de cobertura pública requiere decisión expresa; no se aplicó.
-
-## Geovisor y conexión lenta
-
-[Mediciones](carga_red_lenta.json): Chromium/Leaflet 1.9.4, 1280×720 y 390×844; 1,6 Mbit/s, 150 ms, caché de la capa deshabilitada, transferencia gzip real por servidor local. Supabase y otros servicios simulados; teselas OpenStreetMap externas. Una corrida por caso, orientativa, no benchmark de producción. El hash de cada respuesta coincide con el GeoJSON de entrega.
-
-Se usó la misma API de carga que emplea el catálogo actual; **no se añadieron entradas al menú público**. La importación local vigente rechaza Cuencas porque sus 18,48 MB brutos exceden 15 MiB. Esa restricción no se amplió ni se ocultó: se prueba el rechazo. La previsualización técnica por API no debe presentarse como integración pública terminada.
+[Mediciones](carga_red_lenta.json): activación desde el menú real a 1280×720 y 390×844, Chromium/Leaflet 1.9.4, 1,6 Mbit/s y latencia 150 ms, caché de capa fría. Servidor HTTP local con gzip real; cada respuesta coincide por SHA-256 con el manifiesto. OSM externo para el mapa base, Supabase y demás servicios simulados. Una corrida por caso: orientativa, no medición de producción ni garantía del alojamiento. El tiempo hasta dibujo incluye la interacción del menú y renderizado, no solo descarga.
 
 | Capa | Escritorio: descarga → dibujo | Celular: descarga → dibujo |
 |---|---:|---:|
-| Division_Politico_Administrativa | 12,88 → 13,03 s | 12,87 → 13,01 s |
-| Cuencas_Hidrograficas | 34,93 → 35,17 s | 34,93 → 35,17 s |
-| Sistema_Nacional_de_Areas_Protegidas | 7,00 → 7,09 s | 7,00 → 7,08 s |
+| División político-administrativa — representación simplificada | 3.94 → 4.10 s | 3.94 → 4.07 s |
+| Cuencas que intersectan Amazonas — completas | 6.11 → 6.34 s | 6.11 → 6.29 s |
+| Áreas protegidas — registros de la fuente | 6.99 → 7.22 s | 6.99 → 7.17 s |
 
-Capturas del mapa real del geovisor, conservando la atribución visible de OpenStreetMap. La semejanza visual a escala general no valida precisión normativa ni autoriza generalización.
+Las capturas muestran las geometrías completas, el menú con fuente/año y la leyenda. Se conserva la atribución de OpenStreetMap. Una vista general no prueba precisión normativa.
 
-### Division_Politico_Administrativa
-
-Escritorio:
-
-![division_politico_administrativa a 1280](vistas/division_politico_administrativa_1280.png)
-
-Celular:
-
-![division_politico_administrativa a 390](vistas/division_politico_administrativa_390.png)
-
-### Cuencas_Hidrograficas
+### División político-administrativa — representación simplificada
 
 Escritorio:
 
-![cuencas_hidrograficas a 1280](vistas/cuencas_hidrograficas_1280.png)
+![Menú a 1280](vistas/division_politico_administrativa_menu_1280.png)
+
+![Mapa y leyenda a 1280](vistas/division_politico_administrativa_1280.png)
 
 Celular:
 
-![cuencas_hidrograficas a 390](vistas/cuencas_hidrograficas_390.png)
+![Menú a 390](vistas/division_politico_administrativa_menu_390.png)
 
-### Sistema_Nacional_de_Areas_Protegidas
+![Mapa y leyenda a 390](vistas/division_politico_administrativa_390.png)
+
+### Cuencas que intersectan Amazonas — completas
 
 Escritorio:
 
-![sistema_nacional_de_areas_protegidas a 1280](vistas/sistema_nacional_de_areas_protegidas_1280.png)
+![Menú a 1280](vistas/cuencas_hidrograficas_menu_1280.png)
+
+![Mapa y leyenda a 1280](vistas/cuencas_hidrograficas_1280.png)
 
 Celular:
 
-![sistema_nacional_de_areas_protegidas a 390](vistas/sistema_nacional_de_areas_protegidas_390.png)
+![Menú a 390](vistas/cuencas_hidrograficas_menu_390.png)
+
+![Mapa y leyenda a 390](vistas/cuencas_hidrograficas_390.png)
+
+### Áreas protegidas — registros de la fuente
+
+Escritorio:
+
+![Menú a 1280](vistas/sistema_nacional_de_areas_protegidas_menu_1280.png)
+
+![Mapa y leyenda a 1280](vistas/sistema_nacional_de_areas_protegidas_1280.png)
+
+Celular:
+
+![Menú a 390](vistas/sistema_nacional_de_areas_protegidas_menu_390.png)
+
+![Mapa y leyenda a 390](vistas/sistema_nacional_de_areas_protegidas_390.png)
+
+## Validación local
+
+`npm test`: **125 pruebas aprobadas en 2,7 min**, incluidas 14 del piloto, sobre main actualizado. Se comprobaron también integridad del paquete y ausencia de cambios en archivos del #26 respecto de main.
 
 ## Reproducir y verificar
 
-Se requiere Python 3.9+ para verificar. Para preparar/evaluar se usan las bibliotecas GDAL/GEOS ya disponibles y sus recursos PROJ. No hay instalador ni descargas automáticas. Las variables siguientes son parámetros locales, no deben copiarse con valores privados a GitHub.
+La preparación original sigue disponible en `scripts/preparar_piloto_29.py`. Para regenerar la adopción se necesita una copia fiel separada correspondiente al commit `eac66e4`, las copias técnicas custodiadas fuera del repositorio y el candidato de División de 10 m revisado. El adoptador exige sus hashes, verifica las copias nativas y su SRC, recalcula las 19 intersecciones y valida todas las geometrías con GEOS. No abre la geodatabase ni procesa otras capas. Ejecutar sobre el paquete ya existente conserva su diccionario y WKT.
 
 ```sh
-python3 scripts/preparar_piloto_29.py \
-  --geodatabase "$FUENTE_AUTORIZADA" \
-  --interno "$CUSTODIA_INTERNA_FUERA_DEL_REPO" \
-  --salida datos/piloto_29 --version 20261110 \
-  --gdal-library "$GDAL_LIBRARY" --geos-library "$GEOS_LIBRARY" \
-  --gdal-data "$GDAL_DATA" --proj-data "$PROJ_DATA"
+PROJ_NETWORK=OFF python3 scripts/adoptar_piloto_29.py \
+  --fiel "$PAQUETE_FIEL_SEPARADO" --interno "$COPIAS_TECNICAS" \
+  --division-10m "$CANDIDATO_DIVISION_10M" --salida datos/piloto_29 \
+  --gdal-library "$GDAL_LIBRARY" --geos-library "$GEOS_LIBRARY"
 
 python3 scripts/preparar_piloto_29.py --comprobar --salida datos/piloto_29
 python3 scripts/preparar_piloto_29.py --comprobar --exigir-meta --salida datos/piloto_29
-
-PROJ_NETWORK=OFF python3 scripts/evaluar_piloto_29.py \
-  --interno "$CUSTODIA_INTERNA_FUERA_DEL_REPO" \
-  --candidatos "$CANDIDATOS_INTERNOS_FUERA_DEL_REPO" \
-  --informe docs/piloto_29/evaluacion_simplificacion.json \
-  --gdal-library "$GDAL_LIBRARY" --geos-library "$GEOS_LIBRARY"
+npm test
 ```
 
-El preparador solo lee las tres capas de la lista, conserva copias técnicas fuera del repositorio y genera el paquete desde esas copias. Rechaza fuente nula/vacía/Z/M/inválida, esquemas/conteos inesperados y marcadores de sensibilidad. No corrige automáticamente. La evaluación no lee ni modifica la geodatabase; trabaja con esas copias y exige que sus candidatos se guarden fuera del repositorio. Las huellas permiten reproducir con las mismas versiones; no son aval de licencia o contenido.
+Se requieren GDAL/GEOS con sus recursos PROJ ya disponibles solo para regenerar; no hay instalación ni descarga automática. El comprobador usa únicamente Python 3.9+ estándar; CI no recibe el original ni los candidatos privados. Las bibliotecas/versiones y el WKT nativo quedan documentados. No se presupone que un residuo numérico de transformación mida exactitud de terreno.
 
-Para repetir las seis capturas y la medición local, con Playwright ya disponible:
+Para repetir vistas y medidas con Playwright disponible:
 
 ```sh
 python3 tests/servir_piloto29.py
@@ -143,13 +117,6 @@ python3 tests/servir_piloto29.py
 node scripts/capturar_piloto_29.cjs
 ```
 
-El servidor solo escucha en 127.0.0.1:8877 y sirve los tres GeoJSON públicos con gzip y sin caché; no abre el original. La captura intercepta la configuración/servicios de Supabase y permite únicamente las teselas de OpenStreetMap como recurso externo real. No usar este servidor para publicación.
+El servidor escucha solo en 127.0.0.1:8877 y comprime únicamente los tres GeoJSON públicos aprobados; no usar para publicación. Las pruebas cubren RFC/huellas/esquema/tratamientos autorizados, alteración de archivos, las dos excepciones de peso, carga real por menú en ambos tamaños, ausencia de descarga anticipada, controles, reintento, cancelación con teclado y conservación del foco/categorías desplegadas si el catálogo llega tarde.
 
-## Pendientes para publicación
-
-1. Revisión independiente de fidelidad, fuente, autorización de publicación y significado de atributos.
-2. Decidir si se adopta alguna generalización o se sigue evaluando otra estrategia; ninguna está aprobada. No prometer que las tres capas ya pesan menos de 1 MB.
-3. Resolver estrategia de cobertura/peso de Cuencas y su carga pública; no ampliar límites del importador solo para pasar la prueba.
-4. Integración al catálogo/menú en otro cambio acordado, con pruebas de interacción, leyendas, transparencia y descarga bajo demanda. Solo el responsable del proyecto fusiona/publica.
-
-Referencias: [RFC 7946](https://datatracker.ietf.org/doc/html/rfc7946), [GDAL GeoJSON](https://gdal.org/en/stable/drivers/vector/geojson.html), [API de coberturas GEOS](https://libgeos.org/doxygen/geos__c_8h.html).
+La autorización del piloto no sustituye revisión futura de vigencia y licencias específicas ni vuelve oficial el prototipo. No se alteran las fuentes originales ni se procesan ubicaciones de pueblos indígenas en aislamiento voluntario. Solo Alejandro fusiona.

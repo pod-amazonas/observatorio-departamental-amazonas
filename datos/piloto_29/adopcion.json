@@ -1,0 +1,112 @@
+{
+  "decision": "Alejandro / PR #31 / 2026-11-10",
+  "fuentes_autorizadas": [
+    "IGAC",
+    "IDEAM",
+    "RUNAP"
+  ],
+  "geos": "3.14.1-CAPI-1.20.5",
+  "sha256_adoptador": "b6389d06dcfb1a123663dae86e18cefe4998de2b40bef680e5829a3eb7a292f4",
+  "capas": {
+    "division_politico_administrativa": {
+      "sha256_fiel_previo": "30f92e6d130ecd16b62c345cb3a5d3ff6b29f2d58d4d2a22b806be347ed64bf8",
+      "parametro_m": 10,
+      "algoritmo": "GEOSCoverageSimplifyVW",
+      "bordes_compartidos_conservados": true,
+      "hausdorff_discreta_m": 9.173106455684275,
+      "sha256_publicado": "2c872bcc31316bc5ca485c3ca13ad8bf5133c67a918e00e56c940bcaddbe35d6",
+      "huellas_entidades_publicadas": {
+        "1": "0a05cfaf18ca755067c8c804b86eaebfbf937a5a087d584d7d9be707256331be",
+        "2": "aab1fee89703ec8cca8a04048f2d5d4fcdb65aea509ba0b980cd54be9127ba15",
+        "3": "4e943b84cc50881f8ffa84425a8808c89f6d46a7f28a87fc00fc8a9de17f12d5",
+        "4": "29fa10c2f1c8cedcaf0f73dd4553d0d051dc3eeeb65df629b136794bd1e8fdfb",
+        "5": "1e513f7c3da95a768c9b97fb85503ce749a9b963f23f06f1b7692cc54c5b2c7a",
+        "6": "a3a61b0089aec7c004fba5856e78087b46a4793dd80aed0751450acabed2f4ea",
+        "7": "dc355ac4c2a3fc3ed396d3fcae7110559b9d13e49805bd2f7e99e5058840de1c",
+        "8": "0b34f37340dcf6072e2cc502c31e424127829de3671acb97c41402f4ebc295f8",
+        "9": "877ba71f5e72b9236cd4d7d99b92f509ff192ecf6fe7ee4387d9232aaf0c6095",
+        "10": "72d3110d1e893d246cc91e7f908720ba84d25f57722e4f3d01044601a3941580",
+        "11": "ff1767faca62be183b9095d30ea7ce5e8240f376df7f7145f464b557a4e20231"
+      }
+    },
+    "cuencas_hidrograficas": {
+      "sha256_fiel_previo": "57086cddf92c06cf7786ef4e1eb3460ce629c652574c1d5227960870e0629130",
+      "ids_interseccion_nativa": [
+        230,
+        231,
+        232,
+        233,
+        261,
+        273,
+        276,
+        278,
+        279,
+        280,
+        281,
+        282,
+        283,
+        284,
+        285,
+        287,
+        288,
+        289,
+        301
+      ],
+      "metodo": "GEOS Intersects en SRC nativo contra unión de las 11 unidades originales; incluye contactos de borde; sin recortar ni simplificar",
+      "huellas_entidades_fieles_seleccionadas": {
+        "230": "a74e6d75f52801550873cb8da6a4442877810f2d387750eb3768dec50cdeb024",
+        "231": "75bc07044e3326f122ed3d59b413e6365f3b02e14cdf805f675b88827d35010b",
+        "232": "258b4b3bbe0cfd576e5039fc5ceb99d24b9f1429f407bb43c2646cc172b748db",
+        "233": "7595475aaa76d7b92de48a8ed280e079464acec9bc6816e65f88265e01529db3",
+        "261": "ef749b319da460584874aa96a95cf77b6f0cf699b754c1a3fc33cd1996f46791",
+        "273": "6248f346ffeaa081fa3b483b971539ee67278e5ec2a2b9cddbb6180ee91e6a4c",
+        "276": "af18a8b963fe7a85c9a0ee4cf0b7d5e0a2e8a03dbe97e7b9ea6d75070b91237e",
+        "278": "a25c4b8fa81a47ae7d877d7ef6577ba7e9dc885eea837522ea0ebfb85d580da4",
+        "279": "43ab727e689dafa46497bfd7a2818899be7f2420f982f6bb9ff5ad4e772130b0",
+        "280": "703ab8fc8d04ec1c08034cc8e73b36660ad1d52e34a51dac86ae903603b451f4",
+        "281": "742cbd0858f8f7afceb1a4e7d8c9508f756ae731df7aaab1bb37256f755a5037",
+        "282": "b54bfde8f1e55ed5e586f649c369fb392361041e28f73d88f9ed2323d758143d",
+        "283": "3dce6527ce637cf3159d49b19bbd8dccb261947109acc12150e9eb678b0df3ea",
+        "284": "f14e18d468cbb45658c640b6b723833280f3d52156bb84faa8a099a369c749f5",
+        "285": "a05dc5c148e92dbb3822d70199d95bdf277bf3178f9e0d63d4c9e58979ebe29f",
+        "287": "fb24c33068bdc1278fa76889fbcdf42357645eaad3751788c1e372fc043f3a9e",
+        "288": "7597d63b916d8c11e0dfc608c74fa6184040971976ddddbd2e85897b24b4dc97",
+        "289": "41c51341542ac5ddc4845a8b08541ce6db87daadb321fd91b89f4cc7292f5f0b",
+        "301": "6c3a6f75ebfb83c7526bc81f81955cf243d7870cfa62da71b70038009eac2951"
+      },
+      "sha256_publicado": "f33f09faea40b13e6737bcefb2ad0df162d1d562069f8f503cf461c90d9fbb07",
+      "huellas_entidades_publicadas": {
+        "230": "a74e6d75f52801550873cb8da6a4442877810f2d387750eb3768dec50cdeb024",
+        "231": "75bc07044e3326f122ed3d59b413e6365f3b02e14cdf805f675b88827d35010b",
+        "232": "258b4b3bbe0cfd576e5039fc5ceb99d24b9f1429f407bb43c2646cc172b748db",
+        "233": "7595475aaa76d7b92de48a8ed280e079464acec9bc6816e65f88265e01529db3",
+        "261": "ef749b319da460584874aa96a95cf77b6f0cf699b754c1a3fc33cd1996f46791",
+        "273": "6248f346ffeaa081fa3b483b971539ee67278e5ec2a2b9cddbb6180ee91e6a4c",
+        "276": "af18a8b963fe7a85c9a0ee4cf0b7d5e0a2e8a03dbe97e7b9ea6d75070b91237e",
+        "278": "a25c4b8fa81a47ae7d877d7ef6577ba7e9dc885eea837522ea0ebfb85d580da4",
+        "279": "43ab727e689dafa46497bfd7a2818899be7f2420f982f6bb9ff5ad4e772130b0",
+        "280": "703ab8fc8d04ec1c08034cc8e73b36660ad1d52e34a51dac86ae903603b451f4",
+        "281": "742cbd0858f8f7afceb1a4e7d8c9508f756ae731df7aaab1bb37256f755a5037",
+        "282": "b54bfde8f1e55ed5e586f649c369fb392361041e28f73d88f9ed2323d758143d",
+        "283": "3dce6527ce637cf3159d49b19bbd8dccb261947109acc12150e9eb678b0df3ea",
+        "284": "f14e18d468cbb45658c640b6b723833280f3d52156bb84faa8a099a369c749f5",
+        "285": "a05dc5c148e92dbb3822d70199d95bdf277bf3178f9e0d63d4c9e58979ebe29f",
+        "287": "fb24c33068bdc1278fa76889fbcdf42357645eaad3751788c1e372fc043f3a9e",
+        "288": "7597d63b916d8c11e0dfc608c74fa6184040971976ddddbd2e85897b24b4dc97",
+        "289": "41c51341542ac5ddc4845a8b08541ce6db87daadb321fd91b89f4cc7292f5f0b",
+        "301": "6c3a6f75ebfb83c7526bc81f81955cf243d7870cfa62da71b70038009eac2951"
+      }
+    },
+    "sistema_nacional_de_areas_protegidas": {
+      "sha256_fiel_previo": "74d37815e0d7b692e8b88baadf7f6c5ac98bab0f752d5748d8ef429c9711ffb6",
+      "sha256_publicado": "74d37815e0d7b692e8b88baadf7f6c5ac98bab0f752d5748d8ef429c9711ffb6",
+      "huellas_entidades_publicadas": {
+        "14": "3a42582584d945fb2c0686a35b75bab7acec8cfde0dc4e6b4316f78c768c2107",
+        "1188": "1416c664d6f3235e3716e70f8dab683fb2d4d4f77a1d733e0537e8ae68d521c9",
+        "1248": "5626fcf87ad7bc15588fe8889ae3042ce808eec20198890f8b5c92c312388cad",
+        "1268": "65e81d32398751a9f41d4ea8150dbc88ec36860cfc247434756d3210df713ce5",
+        "1459": "a8c255a0a1aa0d3adc319db823f682f197f81b78de13db697a8892a7a8aed0aa"
+      }
+    }
+  }
+}

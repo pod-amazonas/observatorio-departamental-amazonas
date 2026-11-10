@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Entrega fiel del piloto #29. No instala herramientas, simplifica ni repara.
+"""Preparación fiel y verificación del piloto #29. No instala herramientas.
 
 GDAL y GEOS se cargan únicamente al preparar. --comprobar usa la biblioteca
 estándar, por lo que CI puede verificar la entrega sin acceder al original.
+La adopción autorizada posterior se aplica con adoptar_piloto_29.py.
 """
 import argparse
 import ctypes as C
@@ -197,7 +198,7 @@ class GIS:
 
 def public_files(out):
  catalog=load(out/'catalogo_entrega.json')
- allowed={'catalogo_entrega.json','diccionario_campos.json','validacion.json','LEEME.md','SHA256SUMS'}
+ allowed={'catalogo_entrega.json','diccionario_campos.json','validacion.json','LEEME.md','SHA256SUMS','adopcion.json'}
  allowed.update(row['ruta_relativa'] for row in catalog)
  allowed.update(row['src_origen'] for row in catalog)
  files=sorted(p for p in out.rglob('*') if p.is_file() and p.name!='.DS_Store')
@@ -212,6 +213,7 @@ def checksum_file(out):
 
 def check(out,require_budget=False):
  catalog=load(out/'catalogo_entrega.json');dictionary=load(out/'diccionario_campos.json');quality=load(out/'validacion.json')
+ adopted=load(out/'adopcion.json') if (out/'adopcion.json').exists() else None
  if {r['id_capa'] for r in catalog}!=set(CONFIG):raise ValueError('Conjunto de capas incompleto o ajeno al piloto')
  expected={}
  for line in (out/'SHA256SUMS').read_text().splitlines():
@@ -222,14 +224,19 @@ def check(out,require_budget=False):
   expected[name]=sha
  actual={p.relative_to(out).as_posix() for p in public_files(out)}
  if set(expected)!=actual:raise ValueError('El manifiesto no cubre exactamente la entrega')
+ if adopted:
+  from adoptar_piloto_29 import check_adoption
+  check_adoption(out,adopted)
  over=[]
  for row in catalog:
   cfg=CONFIG[row['id_capa']];target=(out/row['ruta_relativa']).resolve()
   if not target.is_relative_to(out.resolve()) or target.suffix!='.geojson' or not target.name.startswith(row['id_capa']+'_v'):raise ValueError('Ruta GeoJSON no autorizada')
-  if row['limite_transferencia_bytes']!=LIMIT or row['simplificacion'] is not False or row['reduccion_precision'] is not False:raise ValueError('No es una entrega fiel o meta incorrecta')
+  simplified=bool(adopted and row['id_capa']=='division_politico_administrativa')
+  if row['limite_transferencia_bytes']!=LIMIT or row['simplificacion'] is not simplified or row['reduccion_precision'] is not False:raise ValueError('Tratamiento no autorizado o meta incorrecta')
   data=target.read_bytes();obj=load(target)
   if obj.get('type')!='FeatureCollection' or 'crs' in obj or set(obj)!= {'type','features'}:raise ValueError('FeatureCollection no conforme')
-  if len(obj['features'])!=cfg['entidades'] or row['entidades']!=cfg['entidades']:raise ValueError('Conteo incorrecto')
+  count=19 if adopted and row['id_capa']=='cuencas_hidrograficas' else cfg['entidades']
+  if len(obj['features'])!=count or row['entidades']!=count:raise ValueError('Conteo incorrecto')
   ids=[];totals={'poligonos':0,'anillos':0,'posiciones':0}
   for f in obj['features']:
    if f.get('type')!='Feature' or (not isinstance(f.get('id'),int) or isinstance(f.get('id'),bool)) or set(f['properties'])!=set(cfg['campos']):raise ValueError('ID/esquema público incorrecto')

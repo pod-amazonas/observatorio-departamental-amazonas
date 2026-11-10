@@ -7,7 +7,7 @@ const check=(dir,extra=[])=>spawnSync('python3',[path.join(root,'scripts/prepara
 
 test('piloto #29: RFC 7946, esquema, huellas y peso declarado',()=>{
  const result=check(folder);expect(result.status,result.stderr).toBe(0);
- expect(catalog.map(x=>x.entidades)).toEqual([11,202,5]);
+ expect(catalog.map(x=>x.entidades)).toEqual([11,19,5]);
  for(const row of catalog){
   const bytes=fs.readFileSync(path.join(folder,row.ruta_relativa)),data=JSON.parse(bytes);
   expect(hint(data,{precisionWarning:false}),row.id_capa).toEqual([]);
@@ -15,14 +15,14 @@ test('piloto #29: RFC 7946, esquema, huellas y peso declarado',()=>{
   // El número de bytes gzip depende del compresor; la meta debe coincidir
   // también con la compresión independiente de Node. La huella exacta es del GeoJSON.
   expect(zlib.gzipSync(bytes,{level:6}).length<=row.limite_transferencia_bytes).toBe(row.cumple_meta_transferencia);
-  expect(row.simplificacion).toBe(false);expect(row.reduccion_precision).toBe(false);
+  expect(row.simplificacion).toBe(row.id_capa==='division_politico_administrativa');expect(row.reduccion_precision).toBe(false);
  }
 });
 
-test('piloto #29: el gate de peso rechaza la entrega fiel y no oculta el incumplimiento',()=>{
+test('piloto #29: el gate mantiene visibles las dos excepciones de peso aprobadas',()=>{
  const result=check(folder,['--exigir-meta']);expect(result.status,result.stderr).toBe(2);
- expect(result.stdout).toContain('3 superan la meta');
- expect(catalog.every(x=>!x.cumple_meta_transferencia&&x.estado.includes('peso_pendiente'))).toBe(true);
+ expect(result.stdout).toContain('2 superan la meta');
+ expect(catalog.filter(x=>x.excepcion_peso_autorizada).map(x=>x.id_capa)).toEqual(['cuencas_hidrograficas','sistema_nacional_de_areas_protegidas']);
 });
 
 test('piloto #29: el manifiesto detecta una copia alterada',()=>{
@@ -34,11 +34,14 @@ test('piloto #29: el manifiesto detecta una copia alterada',()=>{
  }finally{fs.rmSync(tmp,{recursive:true,force:true})}
 });
 
-test('piloto #29: evaluación separada sin candidatos adoptados ni datos experimentales publicados',()=>{
+test('piloto #29: adopta solo División 10 m y conserva las entidades completas seleccionadas',()=>{
  const report=JSON.parse(fs.readFileSync(path.join(root,'docs/piloto_29/evaluacion_simplificacion.json'),'utf8'));
  expect(report.candidatos_adoptados).toBe(0);expect(report.adopcion_autorizada).toBe(false);expect(report.ensayos).toHaveLength(9);
  for(const row of report.ensayos)expect(row.adoptado).toBe(false);
- expect(catalog.every(x=>!x.simplificacion)).toBe(true);
+ const adoption=JSON.parse(fs.readFileSync(path.join(folder,'adopcion.json'),'utf8'));
+ expect(adoption.capas.division_politico_administrativa.sha256_publicado).toBe(report.ensayos.find(x=>x.capa==='division_politico_administrativa'&&x.parametro_m===10).sha256);
+ const basins=adoption.capas.cuencas_hidrograficas;expect(basins.ids_interseccion_nativa).toHaveLength(19);expect(basins.huellas_entidades_publicadas).toEqual(basins.huellas_entidades_fieles_seleccionadas);
+ expect(adoption.capas.sistema_nacional_de_areas_protegidas.sha256_publicado).toBe(adoption.capas.sistema_nacional_de_areas_protegidas.sha256_fiel_previo);
 });
 
 test.beforeEach(async({page})=>{
@@ -52,28 +55,64 @@ test.beforeEach(async({page})=>{
  });
 });
 for(const size of [{width:1280,height:720},{width:390,height:844}])for(const row of catalog){
- test(`piloto #29: ${row.id_capa}, ${size.width}px, carga por API del catálogo`,async({page})=>{
+ test(`piloto #29: ${row.id_capa}, ${size.width}px, menú bajo demanda, fuente, año, leyenda y controles`,async({page})=>{
   await page.setViewportSize(size);await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/#geovisor');
   await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
-  const result=await page.evaluate(async row=>{
-   const res=await fetch('datos/piloto_29/'+row.ruta_relativa);if(!res.ok)throw Error('GeoJSON no disponible');
-   const data=await res.json();const e=window.obs19Api.add(row.nombre_origen,data,'Piloto #29 — copia fiel',true);e.metadata={fuenteDeclarada:row.fuente_declarada_encargo};window.obs19SelectLayer(e.id);
-   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-   const map=window.obs19Api.getMap(),bounds=e.layer.getBounds();
-   return {count:e.count,features:e.layer.getLayers().length,visible:map.hasLayer(e.layer),bounds:bounds.isValid()};
-  },row);
-  expect(result.count).toBe(row.entidades);expect(result.features).toBe(row.entidades);expect(result.visible).toBe(true);expect(result.bounds).toBe(true);// fitBounds centra en la proyección del mapa, no en la media de latitudes.
-  // Lo que debe cumplirse es que el encuadre incluya toda la capa.
-  await expect.poll(()=>page.evaluate(name=>{const e=window.obs19Api.getLayers().find(x=>x.name===name);return window.obs19Api.getMap().getBounds().contains(e.layer.getBounds())},row.nombre_origen)).toBe(true);
-  await expect(page.locator('#obs19-stat-detail')).toContainText(row.nombre_origen);
-  await expect(page.locator('#obs19-stat-overview')).toContainText(String(row.entidades));
+  await expect(page.locator('[data-citizen-layer]')).toHaveCount(3);
+  expect(await page.evaluate(()=>window.obs19Api.getLayers().filter(e=>e.idCitizen).length)).toBe(0);
+  const card=page.locator('[data-citizen-layer="'+row.id_capa+'"]');
+  await card.evaluate(el=>el.closest('details').open=true);
+  await expect(card).toContainText(row.fuente_declarada_encargo+' · '+row.anio_declarado_encargo);
+  const cb=card.locator('input[type="checkbox"]');await cb.focus();await cb.press('Space');
+  await expect.poll(()=>page.evaluate(id=>window.obs19Api.getLayers().filter(e=>e.idCitizen===id).length,row.id_capa)).toBe(1);
+  const result=await page.evaluate(id=>{const entry=window.obs19Api.getLayers().find(e=>e.idCitizen===id);return {count:entry.count,features:entry.layer.getLayers().length,visible:window.obs19Api.getMap().hasLayer(entry.layer),bounds:entry.layer.getBounds().isValid()}},row.id_capa);
+  expect(result).toEqual({count:row.entidades,features:row.entidades,visible:true,bounds:true});
+  await expect.poll(()=>page.evaluate(id=>{const e=window.obs19Api.getLayers().find(x=>x.idCitizen===id);return window.obs19Api.getMap().getBounds().contains(e.layer.getBounds())},row.id_capa)).toBe(true);
+  await expect(page.locator('#v7-dynamic-legend')).toContainText(row.nombre_publico);
+  await expect(page.locator('#obs19-stat-detail')).toContainText(row.fuente_declarada_encargo+' · '+row.anio_declarado_encargo);
+  const slider=card.locator('input[type="range"]');await slider.fill('80');await slider.dispatchEvent('input');
+  expect(await page.evaluate(id=>window.obs19Api.getLayers().find(e=>e.idCitizen===id).layer.getLayers()[0].options.fillOpacity,row.id_capa)).toBeCloseTo(.2*.52);
+  await cb.uncheck();await expect(page.locator('#v7-dynamic-legend')).not.toContainText(row.nombre_publico);
+  await cb.check();await expect(page.locator('#v7-dynamic-legend')).toContainText(row.nombre_publico);
+  await card.locator('button').click();
+  expect(await page.evaluate(id=>window.obs19Api.getLayers().filter(e=>e.idCitizen===id).length,row.id_capa)).toBe(1);
 
  });
 }
 
-test('piloto #29: importador local conserva su límite de 15 MiB para Cuencas',async({page})=>{
- await page.goto('/#geovisor');await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
- const row=catalog.find(x=>x.id_capa==='cuencas_hidrograficas');
- await page.locator('#geojson-upload').setInputFiles(path.join(folder,row.ruta_relativa));
- await expect(page.locator('#local-layer-summary')).toContainText('supera 15 MB');
+test('piloto #29: no descarga geometrías al abrir el sitio o desplegar categorías',async({page})=>{
+ const requests=[];page.on('request',r=>{if(r.url().includes('/datos/piloto_29/capas/'))requests.push(r.url())});
+ await page.goto('/#geovisor');await expect(page.locator('[data-citizen-layer]')).toHaveCount(3);
+ await page.locator('#obs19-thematic-tree > details').evaluateAll(nodes=>nodes.forEach(n=>n.open=true));
+ await expect(page.locator('[data-citizen-layer]').first()).toBeVisible();expect(requests).toEqual([]);
+});
+
+test('piloto #29: llegada tardía del catálogo conserva el foco y las categorías desplegadas',async({page})=>{
+ let release;const held=new Promise(resolve=>release=resolve);
+ await page.route('**/datos/piloto_29/catalogo_entrega.json',async route=>{await held;await route.continue()});
+ try{
+  await page.goto('/#geovisor');const button=page.locator('#obs19-thematic-tree .obs19-topic-button:not([disabled])').first();
+  await button.waitFor({state:'attached'});await page.locator('#obs19-thematic-tree details').evaluateAll(nodes=>nodes.forEach(n=>n.open=true));await button.focus();
+  release();await expect(page.locator('[data-citizen-layer]')).toHaveCount(3);await expect(button).toBeFocused();
+  expect(await page.locator('#obs19-thematic-tree > details').evaluateAll(nodes=>nodes.every(n=>n.open))).toBe(true);
+ }finally{release()}
+});
+
+test('piloto #29: fallo de red permite reintentar sin duplicar capas',async({page})=>{
+ const row=catalog[0];let hits=0;
+ await page.route('**/datos/piloto_29/capas/**',route=>++hits===1?route.fulfill({status:503,body:'No disponible'}):route.continue());
+ await page.goto('/#geovisor');const card=page.locator('[data-citizen-layer="'+row.id_capa+'"]');await card.waitFor({state:'attached'});await card.evaluate(el=>el.closest('details').open=true);
+ const cb=card.locator('input[type="checkbox"]');await cb.focus();await cb.press('Space');await expect(card.locator('[data-citizen-status]')).toContainText('No se pudo cargar');await expect(cb).not.toBeChecked();
+ await cb.check();await expect(card.locator('[data-citizen-status]')).toContainText('Capa visible');expect(hits).toBe(2);
+ expect(await page.evaluate(()=>window.obs19Api.getLayers().filter(e=>e.idCitizen).length)).toBe(1);
+});
+
+test('piloto #29: cancelar descarga impide activación tardía y conserva foco de teclado',async({page})=>{
+ let release;const held=new Promise(resolve=>release=resolve);let started;const requested=new Promise(resolve=>started=resolve);
+ await page.route('**/datos/piloto_29/capas/**',async route=>{started();await held;try{await route.continue()}catch{}});
+ await page.goto('/#geovisor');const card=page.locator('[data-citizen-layer]').first();await card.waitFor({state:'attached'});await card.evaluate(el=>el.closest('details').open=true);
+ const cb=card.locator('input[type="checkbox"]');await cb.focus();await cb.press('Space');await requested;await expect(card.locator('[data-citizen-status]')).toContainText('Cargando');
+ await cb.press('Space');release();await expect(cb).not.toBeChecked();await expect(cb).toBeFocused();
+ await expect(card.locator('[data-citizen-status]')).toContainText('solo al activarla');
+ expect(await page.evaluate(()=>window.obs19Api.getLayers().filter(e=>e.idCitizen).length)).toBe(0);
 });
