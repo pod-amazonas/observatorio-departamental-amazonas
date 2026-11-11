@@ -2,7 +2,7 @@
 (function(){'use strict';
 const $=id=>document.getElementById(id);
 const CATEGORIES=['Base cartográfica','Componente biofísico','Estructura institucional','Estructura funcional y de servicios','Socioeconómico y cultural','Gestión del riesgo','Ordenamiento territorial'];
-let catalog=null, citizenCatalog=[], tandaCatalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
+let catalog=null, citizenCatalog=[], tandaCatalog=[], tanda2Catalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
 const layerState=new Map();
 const getLayers=()=>window.obs19Api?.getLayers?.()||[];
 function element(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
@@ -16,15 +16,16 @@ function determinant(meta){
   source:meta.fuenteDeclarada||'Fuente indicada en los atributos',restriction:'',opacity:Math.round((meta.opacidadSugerida??.35)*100),metadata:meta};
 }
 function citizen(meta){
- const tanda=Boolean(meta.categoria);
- return {key:'cit-'+meta.id_capa,kind:'citizen',id:meta.id_capa,label:meta.nombre_publico,name:meta.nombre_publico,available:true,tanda,url:(tanda?'datos/tanda_1_29/':'datos/piloto_29/')+meta.ruta_relativa,
+ const tanda=meta.lote===2?2:meta.categoria?1:0;
+ const directorio=tanda?'datos/tanda_'+tanda+'_29/':'datos/piloto_29/';
+ return {key:'cit-'+meta.id_capa,kind:'citizen',id:meta.id_capa,label:meta.nombre_publico,name:meta.nombre_publico,available:true,tanda,url:directorio+meta.ruta_relativa,
  description:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo+' · '+meta.entidades+' entidades',source:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo,
  restriction:meta.restricciones,opacity:65,metadata:{...meta,fuenteDeclarada:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo},
  color:tanda&&/^#[0-9a-f]{6}$/i.test(meta.color)?meta.color:{division_politico_administrativa:'#a34a06',cuencas_hidrograficas:'#156f99',sistema_nacional_de_areas_protegidas:'#177749'}[meta.id_capa]};}
 function activeLayer(def){return getLayers().find(e=>def.kind==='citizen'?e.idCitizen===def.id:e.idPilot===def.id&&e.origin==='Determinantes ambientales · publicación autorizada')}
 function layerCard(def){
  const card=element('div','obs20-pilot-card obs32-layer-card');card.dataset.layerKey=def.key;
- if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
+ if(def.tanda===2)card.dataset.tanda2Layer=def.id;else if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
  const title=element('h4','obs32-layer-title',def.label);card.append(title,element('p','obs32-layer-description',def.description));
  const control=element('button','obs32-layer-switch');control.type='button';control.setAttribute('role','switch');control.setAttribute('aria-checked','false');
  control.setAttribute('aria-label','Mostrar u ocultar '+def.label);control.disabled=!def.available;
@@ -57,7 +58,7 @@ function renderTree(){const tree=$('obs19-thematic-tree');if(!tree)return;clear(
  });renderCitizenLayers();syncLayerControls();
 }
 function renderCitizenLayers(){
- [...citizenCatalog,...tandaCatalog].forEach(meta=>{
+ [...citizenCatalog,...tandaCatalog,...tanda2Catalog].forEach(meta=>{
   const category=meta.categoria?CATEGORIES.indexOf(meta.categoria):(meta.id_capa==='division_politico_administrativa'?0:1);
   const mount=document.querySelector('[data-citizen-category="'+category+'"]');
   const def=citizen(meta);
@@ -66,7 +67,7 @@ function renderCitizenLayers(){
  });syncLayerControls();
 }
 function syncLayerControls(){
- const defs=[...layersMeta().map(determinant),...[...citizenCatalog,...tandaCatalog].map(citizen)];
+ const defs=[...layersMeta().map(determinant),...[...citizenCatalog,...tandaCatalog,...tanda2Catalog].map(citizen)];
  defs.forEach(def=>{
   const card=document.querySelector('[data-layer-key="'+def.key+'"]');if(!card)return;
   const entry=activeLayer(def),state=layerState.get(def.key),loading=!!state?.loading,on=!!entry?.visible;
@@ -97,7 +98,7 @@ async function toggleLayer(def,want){
  try{
   if(!window.obs19Api?.getMap?.())location.hash='#geovisor';
   await waitForMap(controller.signal);
-  const valid=def.tanda?/^datos\/tanda_1_29\/capas\/[a-z0-9_]+\.geojson$/:def.kind==='citizen'?/^datos\/piloto_29\/capas\/(01_base_cartografica|02_componente_biofisico)\/[a-z0-9_]+\.geojson$/:/^datos\/determinantes_ambientales\/[A-Z0-9_]+\/determinante_\d{2}\.geojson$/;
+  const valid=def.tanda?/^datos\/tanda_[12]_29\/capas\/[a-z0-9_]+\.geojson$/:def.kind==='citizen'?/^datos\/piloto_29\/capas\/(01_base_cartografica|02_componente_biofisico)\/[a-z0-9_]+\.geojson$/:/^datos\/determinantes_ambientales\/[A-Z0-9_]+\/determinante_\d{2}\.geojson$/;
   if(!valid.test(def.url))throw Error('Ruta de capa no autorizada');
   let data=state.data;
   if(!data){const response=await fetch(def.url,{signal:controller.signal});if(!response.ok)throw Error('Archivo no disponible ('+response.status+')');data=await response.json()}
@@ -107,7 +108,7 @@ async function toggleLayer(def,want){
   const entry=window.obs19Api.add(def.name,data,def.kind==='citizen'?def.source+(def.tanda?' · publicación autorizada':' · piloto autorizado'):'Determinantes ambientales · publicación autorizada',true);
   if(def.kind==='citizen')entry.idCitizen=def.id;else entry.idPilot=def.id;
   entry.metadata=def.metadata;entry.opacity=def.opacity;if(def.color)entry.color=def.color;
-  entry.layer.setStyle({color:entry.color,fillColor:entry.color,fillOpacity:entry.opacity/100*.52});selectedLayer=entry.id;window.obs19Api.redraw();
+  entry.layer.setStyle({color:entry.color,fillColor:entry.color,fillOpacity:entry.opacity/100*(entry.geomType==='Puntos'?1:.52)});selectedLayer=entry.id;window.obs19Api.redraw();
  }catch(error){if(error.name!=='AbortError'&&state.controller===controller){state.want=false;state.error='No se pudo cargar la capa: '+String(error.message||error)+'. Vuelve a encenderla para reintentar.'}}
  finally{if(state.controller===controller){state.loading=false;syncLayerControls()}}
 }
@@ -205,6 +206,7 @@ function init(){
  initLocation();initDocuments();initCalls();initPartnersMarquee();fetch('catalogo_determinantes_para_geovisor.json').then(r=>{if(!r.ok)throw Error('Catálogo no encontrado');return r.json()}).then(data=>{catalog=data;renderTree()}).catch(()=>{catalog={grupos:[]};renderTree()});
  fetch('datos/piloto_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo piloto no disponible');return r.json()}).then(data=>{citizenCatalog=data;renderCitizenLayers()}).catch(()=>{const tree=$('obs19-thematic-tree');tree?.append(element('p','obs19-empty','No se pudo cargar el catálogo del piloto. Comprueba la conexión y actualiza la página.'))});
  fetch('datos/tanda_1_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tandaCatalog=data;renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar el catálogo de la tanda 1.'))});
+ fetch('datos/tanda_2_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda2Catalog=data.map(row=>({...row,lote:2}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar el catálogo de la tanda 2.'))});
  // Categorías del geoportal llevan a sus capas dentro del visor.
  document.querySelectorAll('#categories-grid').forEach(node=>node.addEventListener('click',e=>{if(e.target.closest('[data-open-theme]'))setTimeout(()=>{const t=$('obs19-thematic-tree');t?.querySelectorAll('details').forEach((d,i)=>d.open=i===1)},120)}));
 }
