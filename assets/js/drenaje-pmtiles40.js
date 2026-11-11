@@ -1,4 +1,4 @@
-/* POC Drenaje_Doble. Datos parciales, no aptos para conteos ni navegación. */
+/* POC Drenaje_Doble. Dos geometrías corregidas en copias; no apto para conteos ni navegación. */
 (function(){'use strict';
 const ID=-40, key='drenaje_doble_pmtiles', base=new URL('../../',document.currentScript.src), url=new URL('datos/teselas_40/drenaje_doble.pmtiles',base).href;
 let meta=null,loading=false,controller=null,sequence=0,vendorPromise=null,error='';
@@ -21,9 +21,9 @@ function mount(){
  const parent=document.querySelector('[data-citizen-category="0"]');if(!parent)return;
  if(!parent.querySelector('[data-pmtiles-layer]')){
   const card=el('div');card.dataset.pmtilesLayer=key;card.className='obs20-pilot-card obs32-layer-card';
-  const title=el('h4','Drenaje doble · prueba incompleta');title.className='obs32-layer-title';card.append(title);
-  card.append(el('p','IGAC 2022 · según ficha POD 013 · 90 entidades originales.'));
-  card.append(el('p','Prueba incompleta: no incluye Río Caquetá (484) ni Río Putumayo (2165), inválidos en origen. No acredita navegabilidad ni límites.'));
+  const title=el('h4','Drenaje doble · teselas');title.className='obs32-layer-title';card.append(title);
+  card.append(el('p','IGAC 2022 · según ficha POD 013 · 92 entidades; originales conservados.'));
+  card.append(el('p','Río Caquetá (484) y Río Putumayo (2165): corrección topológica MakeValid en copias autorizada. No acredita navegabilidad ni límites.'));
   const sw=el('button');sw.type='button';sw.className='obs32-layer-switch';sw.setAttribute('role','switch');sw.setAttribute('aria-checked','false');sw.setAttribute('aria-label','Mostrar u ocultar drenaje doble en teselas');
   const track=el('span');track.className='obs32-switch-track';track.setAttribute('aria-hidden','true');const text=el('span','Apagada');text.className='obs32-switch-state';sw.append(track,text);sw.onclick=()=>toggle(loading?false:!active());card.append(sw);
   const legend=el('p');const symbol=el('span','■ ');symbol.style.color='#156f99';symbol.setAttribute('aria-hidden','true');legend.append(symbol,document.createTextNode('Leyenda: superficies de drenaje doble.'));card.append(legend);
@@ -90,7 +90,7 @@ async function toggle(want,zoom=false){
 }
 window.obs40Mount=mount;window.obs40Sync=sync;
 window.obs40Cancel=()=>{if(loading||active())toggle(false)};
-fetch(new URL('datos/teselas_40/catalogo.json',base)).then(r=>{if(!r.ok)throw Error('Ficha de drenaje no disponible');return r.json()}).then(data=>{if(data.entidades!==90||data.minzoom!==5||data.maxzoom!==12||!Number.isSafeInteger(data.bytes)||data.bytes<127)throw Error('Ficha de drenaje incorrecta');meta=data;mount()}).catch(err=>{error=err.message;mount()});
+fetch(new URL('datos/teselas_40/catalogo.json',base)).then(r=>{if(!r.ok)throw Error('Ficha de drenaje no disponible');return r.json()}).then(data=>{if(data.entidades!==92||![484,2165].every(id=>data.ids_seleccionados?.includes(id)&&data.reparados_autorizados?.includes(id))||data.minzoom!==5||data.maxzoom!==12||!Number.isSafeInteger(data.bytes)||data.bytes<127)throw Error('Ficha de drenaje incorrecta');meta=data;mount()}).catch(err=>{error=err.message;mount()});
 mount();
 document.getElementById('geojson-reset')?.addEventListener('click',()=>{sequence++;controller?.abort();loading=false;error='';sync()});
 })();

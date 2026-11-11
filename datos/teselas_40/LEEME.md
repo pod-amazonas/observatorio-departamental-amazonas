@@ -1,6 +1,6 @@
-# Drenaje doble en PMTiles — prueba incompleta
+# Drenaje doble en PMTiles — 92 entidades
 
-POC autorizada en #40. No es una entrega hidrográfica completa ni oficial. Se incluyen 90 registros válidos que intersectan el departamento de Amazonas, conservados completos: no se recortaron a su límite. Río Caquetá (FID 484) y Río Putumayo (2165), inválidos en origen, quedan fuera por autorización explícita de Alejandro. No se reparó ninguna geometría.
+POC autorizada en #40 y opción B de Alejandro en el PR #41 (11 de noviembre de 2026). Incluye los 92 registros que intersectan el departamento de Amazonas, completos, sin recortar a su límite. Río Caquetá (FID 484) y Río Putumayo (2165) se corrigieron exclusivamente en copias con MakeValid; los originales siguen intactos. Las 92 geometrías de referencia son válidas para GEOS. No es una entrega hidrográfica oficial ni una certificación del inventario completo de ríos.
 
 ## Origen y custodia
 
@@ -18,11 +18,37 @@ python3 scripts/auditar_pmtiles40.py --gdal-library LIBGDAL --geos-library LIBGE
 python3 scripts/preparar_pmtiles40.py --comprobar
 ```
 
-El preparador detiene el proceso si falta la fuente, cambia la cantidad de seleccionados o aparece otra geometría inválida. No reintenta el disco en bucle. La comparación inversa conserva las posiciones de la referencia linealizada con residuo numérico inferior a 0,000001 m; no equivale a precisión geográfica de la fuente. Los SHA-256 de las geometrías nativas seleccionadas y de la referencia quedan en catalogo.json. SHA256SUMS cubre el paquete público completo.
+El preparador detiene el proceso si falta la fuente, cambia la cantidad de seleccionados o aparece otra geometría inválida fuera de los dos FID autorizados. No reintenta el disco en bucle. La comparación inversa conserva las posiciones de la referencia linealizada con residuo numérico inferior a 0,000001 m; no equivale a precisión geográfica de la fuente. Los SHA-256 de las geometrías nativas seleccionadas y de la referencia quedan en catalogo.json. SHA256SUMS cubre el paquete público completo.
+
+## Corrección autorizada de Caquetá y Putumayo
+
+Se utiliza `OGR_G_MakeValidEx` con `METHOD=LINEWORK`, operación GEOS MakeValid equivalente a ST_MakeValid, con **GDAL 3.13.3 y GEOS 3.14.1 (CAPI 1.20.5)**. Se aplica solo a FID 484 y 2165 en copias MultiPolygon, en MAGNA CTM12 (metros), antes de reproyectar y de generar teselas. Estos dos originales no contienen curvas: la comparación de su reparación es contra sus vértices y segmentos nativos, sin linealización. No se aplica simplificación, redondeo, snap, buffer(0), ni reasignación de coordenadas en esta operación.
+
+Ambos pasan de inválidos a válidos y permanecen MultiPolygon. Se comprueba igualdad exacta de conjuntos de coordenadas y de segmentos no orientados con multiplicidad, usando los doubles originales. **No se mueve, añade ni elimina ninguna coordenada única ni segmento.** Cada reparación divide un anillo en dos y repite una coordenada de cierre: aumenta en una la cantidad de posiciones almacenadas, sin crear un vértice nuevo.
+
+| Control en SRC nativo | Caquetá 484 | Putumayo 2165 |
+|---|---:|---:|
+| Posiciones antes → después (incluye cierres) | 63.550 → 63.551 | 90.307 → 90.308 |
+| Vértices únicos antes = después | 63.273 | 89.812 |
+| Polígonos antes → después | 2 → 2 | 4 → 4 |
+| Anillos antes → después | 276 → 277 | 491 → 492 |
+| Desplazamiento máximo de vértices | **0 m** | **0 m** |
+| Área algebraica original / área reparada (m²) | 1.013.008.021,8382213 | 1.075.864.576,1442492 |
+| Diferencia de área, cálculo racional exacto | **0 m²** | **0 m²** |
+
+El área original de una geometría inválida no es una superficie OGC acreditada: se informa como suma algebraica de exteriores menos huecos. Se calcula por shoelace con aritmética racional exacta sobre los doubles, y se conserva numerador/denominador en reparaciones.json. La suma exacta es idéntica tras reparar. La API de área de GDAL da diferencias aproximadas de +0,000521 m² y −0,001083 m² por la acumulación float al reordenar anillos; también se guardan sus valores, sin presentarlas como cambios del territorio. No son áreas oficiales ni geodésicas.
+
+`reparaciones.json` registra método, versiones, validez y SHA-256 antes/después. Los originales se releen y sus WKB deben conservar el hash; los tamaños y mtime de todos los archivos de la geodatabase deben coincidir antes/después. Se abre OpenFileGDB sin permiso de actualización. No se afirma haber comparado byte a byte toda la geodatabase. Las copias originales y reparadas permanecen privadas fuera del repositorio.
+
+`control_90_previo.json` fija las huellas WKB y de cada Feature de la referencia anterior (commit 28f6e74). El preparador exige igualdad para las otras 90 entidades, incluidos atributos públicos y coordenadas, y falla si otra precisa reparación. `--comprobar` valida este control, las dos reparaciones autorizadas y el manifiesto sin requerir QGIS en CI. Los tests de conservación detectan un vértice movido, segmentos reconectados, pérdida de partes y reparación de un FID no autorizado.
+
+La auditoría MVT confirma que **484 y 2165 aparecen en todos los niveles 5–12**. El rótulo «prueba incompleta» se retira solo después de verificar las 92 referencias válidas y su inclusión; permanece la advertencia de corrección en copias y de uso exclusivamente visual. Esta reparación no cambia los parámetros de generalización por zoom ni repara fragmentos cuantizados de las teselas.
+
+Fuentes del método: [GEOS MakeValid](https://libgeos.org/doxygen/classgeos_1_1operation_1_1valid_1_1MakeValid.html), [API vectorial GDAL](https://gdal.org/en/stable/api/vector_c_api.html).
 
 ## Curvas, niveles y tolerancia
 
-74 de las 90 geometrías contienen curvas. MVT y Leaflet necesitan segmentos: GDAL las linealiza con paso angular máximo configurado de 4° y OGR_ARC_MAX_GAP de 25 m, en el SRC nativo MAGNA CTM12. Esta conversión de representación se documenta aparte: **la referencia para la comparación usa la misma linealización; no constituye una comparación exacta contra las curvas analíticas**. No se aplica una simplificación previa ni se eliminan vértices lineales de la referencia. Los anillos se orientan conforme a RFC 7946 al exportar la referencia, sin cambiar su trazo.
+74 de las 92 geometrías contienen curvas. MVT y Leaflet necesitan segmentos: GDAL las linealiza con paso angular máximo configurado de 4° y OGR_ARC_MAX_GAP de 25 m, en el SRC nativo MAGNA CTM12. Esta conversión de representación se documenta aparte: **la referencia para la comparación usa la misma linealización; no constituye una comparación exacta contra las curvas analíticas**. No se aplica una simplificación previa ni se eliminan vértices lineales de la referencia. Los anillos se orientan conforme a RFC 7946 al exportar la referencia, sin cambiar su trazo.
 
 GDALVectorTranslate genera PMTiles/MVT en EPSG:3857, zoom 5–12, EXTENT=4096 y BUFFER=80. La simplificación es 1 unidad de tesela en zoom 5–11 y 0 en zoom 12. Aun con simplificación 0 queda la cuantización obligatoria de coordenadas enteras MVT. El tamaño de una celda no es una garantía del desplazamiento máximo continuo. Los valores siguientes son metros de Web Mercator, no distancias terrestres certificadas; la escala local varía con la latitud.
 
@@ -37,22 +63,22 @@ GDALVectorTranslate genera PMTiles/MVT en EPSG:3857, zoom 5–12, EXTENT=4096 y 
 | 11 | 4,777 | 1 |
 | 12 | 2,389 | 0 |
 
-MAX_SIZE=100.000.000 bytes y MAX_FEATURES=200.000 evitan reducciones adicionales por límites de presupuesto. La tesela comprimida más grande mide 39.301 bytes, muy por debajo de ese límite. No se reducen geometrías de la referencia para llegar a un peso objetivo. El archivo completo pesa 2.232.666 bytes; la referencia 75.266.153 brutos / 27.361.797 gzip.
+MAX_SIZE=100.000.000 bytes y MAX_FEATURES=200.000 evitan reducciones adicionales por límites de presupuesto. La tesela comprimida más grande mide 44.872 bytes, muy por debajo de ese límite. No se reducen geometrías de la referencia para llegar a un peso objetivo. El archivo completo pesa 2.847.111 bytes; la referencia 81.493.852 brutos / 29.820.647 gzip.
 
 ## Auditoría y límites de uso
 
-El archivo contiene 1.639 teselas. auditoria_teselas.json lee cada zoom con CLIP=NO, evitando que el lector vuelva a recortar el búfer. Una entidad puede figurar en varias teselas; sus fragmentos no son registros originales distintos.
+El archivo contiene 2.135 teselas. auditoria_teselas.json lee cada zoom con CLIP=NO, evitando que el lector vuelva a recortar el búfer. Una entidad puede figurar en varias teselas; sus fragmentos no son registros originales distintos.
 
 | Zoom | IDs de origen representados | Fragmentos no válidos para GEOS |
 |---:|---:|---:|
-| 5 | 88 | 36 |
-| 6 | 89 | 41 |
-| 7 | 89 | 49 |
-| 8 | 90 | 40 |
-| 9 | 90 | 14 |
-| 10 | 90 | 0 |
-| 11 | 90 | 0 |
-| 12 | 90 | 5 |
+| 5 | 90 | 40 |
+| 6 | 91 | 47 |
+| 7 | 91 | 54 |
+| 8 | 92 | 45 |
+| 9 | 92 | 16 |
+| 10 | 92 | 1 |
+| 11 | 92 | 1 |
+| 12 | 92 | 7 |
 
 La cuantización y generalización visual pueden colapsar elementos muy pequeños o producir fragmentos que no cumplen validez OGC. No se reparan. Por ello la POC es **solo para visualizar**: no se reconstruyen entidades, no se cuentan ríos o fragmentos como registros y no se calculan áreas ni superficies con estas teselas. Al superar zoom 12 se amplía la representación existente, sin obtener más precisión. No acredita navegabilidad, límites, actualidad ni ubicación exacta de la cartografía original. La comparación con la referencia evalúa el cambio de representación, no certifica la fuente.
 

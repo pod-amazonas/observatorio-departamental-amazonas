@@ -6,11 +6,13 @@ const root=path.resolve(__dirname,'..'),file=path.join(root,'datos/teselas_40/dr
 const cardOf=p=>p.locator('[data-pmtiles-layer]');
 async function ready(page){await page.goto('/#geovisor');const card=cardOf(page);await abrirCapa(card);await expect(card.getByRole('switch')).toBeEnabled();return card}
 async function on(page,card){await card.getByRole('switch').click();await expect(card.getByRole('switch')).toHaveAttribute('aria-busy','false');await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','true');await expect(card.locator('#estado-pmtiles40')).toContainText('Drenaje visible')}
-test('PMTiles: archivo íntegro, zooms, exclusiones y campos públicos',()=>{
+test('PMTiles: archivo íntegro, zooms, reparaciones y campos públicos',()=>{
  const b=fs.readFileSync(file);expect(b.subarray(0,8)).toEqual(Buffer.from('PMTiles\x03'));expect(b.length).toBe(meta.bytes);expect(createHash('sha256').update(b).digest('hex')).toBe(meta.sha256);
- expect(meta.entidades).toBe(90);expect(meta.excluidos_invalidos).toEqual([484,2165]);expect(new Set(meta.ids_seleccionados).size).toBe(90);expect(meta.ids_seleccionados.some(x=>[484,2165].includes(x))).toBe(false);
+ expect(meta.entidades).toBe(92);expect(meta.excluidos_invalidos).toEqual([]);expect(meta.reparados_autorizados).toEqual([484,2165]);expect(new Set(meta.ids_seleccionados).size).toBe(92);expect([484,2165].every(x=>meta.ids_seleccionados.includes(x))).toBe(true);
+ const repairs=require('../datos/teselas_40/reparaciones.json');expect(repairs.fuente_sin_cambios).toBe(true);expect(repairs.otras_90_sin_cambios).toBe(true);
+ for(const r of repairs.reparaciones){expect(r.valida_antes).toBe(false);expect(r.valida_despues).toBe(true);expect(r.desplazamiento_max_vertices_m).toBe(0);expect(r.diferencia_area_exacta_m2).toBe(0);expect(r.segmentos_identicos_con_multiplicidad).toBe(true);expect(r.vertices_unicos_despues).toBe(r.vertices_unicos_antes);expect(r.sha256_wkb_original_releido).toBe(r.sha256_wkb_antes)}
  expect([b[100],b[101]]).toEqual([5,12]);expect(meta.simplification_max_zoom).toBe(0);expect(meta.max_size_configurado).toBe(100000000);expect(meta.residuo_inverso_m).toBeLessThan(.000001);
- const audit=require('../datos/teselas_40/auditoria_teselas.json');expect(audit.sha256_pmtiles).toBe(meta.sha256);expect(audit.por_zoom.at(-1).entidades_representadas).toBe(90);expect(audit.tesela_comprimida_max_bytes).toBeLessThan(meta.max_size_configurado);
+ const audit=require('../datos/teselas_40/auditoria_teselas.json');expect(audit.sha256_pmtiles).toBe(meta.sha256);expect(audit.por_zoom.at(-1).entidades_representadas).toBe(92);for(const z of audit.por_zoom)expect(z.ids_no_representados.some(id=>[484,2165].includes(id))).toBe(false);expect(audit.tesela_comprimida_max_bytes).toBeLessThan(meta.max_size_configurado);
  const r=spawnSync('python3',['scripts/preparar_pmtiles40.py','--comprobar'],{cwd:root,encoding:'utf8'});expect(r.status,r.stderr||r.stdout||r.error?.message).toBe(0);
  for(const dir of ['datos/teselas_40','vendor/protomaps-leaflet-5.1.0'])for(const line of fs.readFileSync(path.join(root,dir,'SHA256SUMS'),'utf8').trim().split('\n')){const [hash,name]=line.split('  ');expect(createHash('sha256').update(fs.readFileSync(path.join(root,dir,name))).digest('hex')).toBe(hash)}
 });
@@ -24,7 +26,7 @@ test.beforeEach(async({page})=>{
 for(const width of [1280,390])test(`PMTiles: rango real, dibujo, teclado, transparencia y limpieza a ${width}px`,async({page})=>{
  await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});
  const req=[],responses=[];page.on('request',r=>{if(r.url().endsWith('.pmtiles')||r.url().endsWith('/protomaps-leaflet.js'))req.push(r)});page.on('response',r=>{if(r.url().endsWith('.pmtiles'))responses.push(r)});
- const card=await ready(page);expect(req).toHaveLength(0);await expect(card).toContainText('IGAC 2022');await expect(card).toContainText('Río Caquetá');await expect(card).toContainText('Río Putumayo');await expect(card).toContainText('Leyenda');
+ const card=await ready(page);expect(req).toHaveLength(0);await expect(card).toContainText('IGAC 2022');await expect(card).toContainText('Río Caquetá');await expect(card).toContainText('Río Putumayo');await expect(card).not.toContainText('prueba incompleta');await expect(card).toContainText('MakeValid');await expect(card).toContainText('92 entidades');await expect(card).toContainText('Leyenda');
  const sw=card.getByRole('switch');await sw.focus();await sw.press('Space');await expect(sw).toHaveAttribute('aria-busy','false');await expect(sw).toHaveAttribute('aria-checked','true');
  await expect.poll(()=>page.evaluate(()=>{const e=window.obs19Api.getLayers().find(e=>e.vectorTiles);if(!e)return 0;let n=0;for(const c of e.layer.getContainer().querySelectorAll('canvas')){const a=c.getContext('2d').getImageData(0,0,c.width,c.height).data;for(let i=0;i<a.length;i+=4)if(Math.abs(a[i]-21)<4&&Math.abs(a[i+1]-111)<4&&Math.abs(a[i+2]-153)<4&&a[i+3]>15)n++}return n})).toBeGreaterThan(50);
  await expect(page.locator('#obs19-stat-overview')).toContainText('Sin conteo');await expect(page.locator('#v7-dynamic-legend')).toContainText('Drenaje doble');
@@ -51,3 +53,7 @@ test('PMTiles: funciona con el prefijo del proyecto de Pages, sin CDN',async({pa
  await page.route('**/observatorio-departamental-amazonas/**',route=>{const url=new URL(route.request().url());url.pathname=url.pathname.replace('/observatorio-departamental-amazonas','');return route.continue({url:url.href})});
  await page.goto('/observatorio-departamental-amazonas/#geovisor');const card=cardOf(page);await abrirCapa(card);await expect(card.getByRole('switch')).toBeEnabled();await on(page,card);
 });
+
+test('PMTiles: detecta movimiento, pérdida de partes y reparación fuera de autorización sin GIS en CI',()=>{const r=spawnSync('python3',['-m','unittest','discover','-s','tests','-p','test_reparar_drenaje40.py'],{cwd:root,encoding:'utf8'});expect(r.status,r.stderr||r.stdout||r.error?.message).toBe(0)});
+
+test('PMTiles: no habilita la capa si falta alguno de los dos ríos corregidos en la ficha',async({page})=>{await page.route('**/datos/teselas_40/catalogo.json',route=>route.fulfill({json:{...meta,ids_seleccionados:meta.ids_seleccionados.filter(id=>id!==2165)}}));await page.goto('/#geovisor');const card=cardOf(page);await abrirCapa(card);await expect(card.getByRole('switch')).toBeDisabled();await expect(card.locator('#estado-pmtiles40')).toContainText('Ficha de drenaje incorrecta')});

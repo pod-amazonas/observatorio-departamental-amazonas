@@ -1,36 +1,38 @@
 # POC de drenaje: transferencia y comparación visual
 
-Prueba incompleta autorizada: 90 registros válidos, excluyendo Río Caquetá 484 y Río Putumayo 2165. La comparación usa las mismas 90 entidades y la misma conversión de curvas a segmentos. No mide el efecto de las dos exclusiones ni certifica la cartografía original.
+Incluye las **92 entidades** seleccionadas por intersección con Amazonas. Caquetá 484 y Putumayo 2165 se corrigieron solo en copias mediante MakeValid, según la opción B de Alejandro en #41. Los 92 originales permanecen intactos. Método, áreas, vértices y prueba de desplazamiento 0 m están en [la documentación de datos](../../datos/teselas_40/LEEME.md) y [reparaciones.json](../../datos/teselas_40/reparaciones.json).
+
+La referencia compara las mismas 92 entidades, incluidas las dos copias reparadas. En las otras 90 se conserva la linealización anterior de curvas. No certifica la cartografía original ni compara exactamente curvas analíticas.
 
 ## Peso y red
 
-Archivo PMTiles: **2.232.666 bytes**, incluidas cabecera, directorio, metadatos y 1.639 teselas comprimidas internamente. Referencia privada: **75.266.153 bytes brutos / 27.361.797 gzip**. Biblioteca browser: **128.171 bytes brutos / 37.678 gzip**. El source map y las licencias no se cargan al abrir la capa.
+Archivo PMTiles: **2.847.111 bytes**, con **2.135 teselas** comprimidas internamente. Referencia privada: **81.493.852 bytes brutos / 29.820.647 gzip**. Biblioteca browser: **128.171 bytes brutos / 37.678 gzip**. El source map y las licencias no se cargan al abrir la capa.
 
-Medición local con Leaflet 1.9.4, Chromium, caché fría de la capa y del lector, **1,6 Mbit/s y 150 ms**. Se mide desde activar el interruptor hasta el dibujo y dos cuadros del navegador. Se cuentan cuerpos HTTP, sin cabeceras ni mapa OSM. La ficha y el módulo de interfaz, ya cargados antes de pulsar, añaden 17.519 + 9.936 bytes brutos, o 5.638 + 4.032 gzip en este servidor local. La copia de referencia se sirve solo desde la carpeta privada de análisis, sin subirla ni modificar el límite del importador público.
+Medición local con Leaflet 1.9.4, Chromium, caché fría de capa y lector, **1,6 Mbit/s y 150 ms**. Desde activar el interruptor hasta el dibujo y dos cuadros del navegador. Se cuentan cuerpos HTTP, sin cabeceras ni mapa OSM. Ficha y módulo de interfaz, cargados antes de pulsar: 27.410 + 10.065 bytes brutos / 9.627 + 4.111 gzip en el servidor de medición. La referencia se sirve solo desde una carpeta privada de análisis, sin subirla ni modificar el límite del importador público.
 
 | Vista | Peticiones PMTiles | Bytes PMTiles | Bytes lector | Total al activar | Hasta dibujo |
 |---|---:|---:|---:|---:|---:|
-| 1280 × 720 | 5 | 65.915 | 37.678 | 103.593 | 1,146 s |
-| 390 × 844 | 4 | 63.728 | 37.678 | 101.406 | 1,115 s |
+| 1280 × 720 | 6 | 80.868 | 37.678 | 118.546 | 1,214 s |
+| 390 × 844 | 5 | 78.681 | 37.678 | 116.359 | 1,195 s |
 
-En celular, la referencia completa transfirió 27.361.797 bytes gzip y tardó **137,828 s** con la misma red. La prueba de referencia en escritorio se hizo **sin limitar la red** para obtener las vistas; su tiempo no se compara con la red lenta. Una corrida registrada por caso, no promedios ni garantía de producción. Celular simulado con viewport 390 × 844, devicePixelRatio 1 y sin limitación de CPU; no es una medición de hardware móvil físico. Supabase simulado; no se utiliza producción. Las imágenes mantienen la atribución de OSM y la leyenda de la capa añade IGAC 2022. En las capturas el fondo base aparece gris: la comparación verifica el drenaje, no la disponibilidad ni la alineación de las teselas externas de OSM.
+En celular, la referencia completa transfirió 29.820.647 bytes gzip y tardó **150,516 s** con la misma red. La referencia en escritorio se cargó **sin limitar red** para obtener las vistas; su tiempo no se compara con la red lenta. Una corrida registrada por caso, no promedios ni garantía de producción. Celular simulado con viewport 390 × 844, DPR 1 y sin limitar CPU; no es una medición de hardware móvil físico. Supabase simulado; no se utiliza producción. En las capturas finales se espera la carga del fondo OSM y se mantiene su atribución. La máscara numérica no incluye ese fondo ni constituye una validación de alineación contra él.
 
 ## Diferencia visual
 
-Vistas al mismo centro/zoom y tamaño, con estilo azul y opacidad equivalentes, referencia Canvas sin simplificación de pantalla (`smoothFactor: 0`). La máscara compara exclusivamente el trazo de la capa, sin OSM ni controles. Un píxel se considera pintado con alfa > 10/255. Los resultados incluyen diferencias de cuantización, recorte de tesela, antialiasing y renderizado; **no son distancias métricas ni una garantía de equivalencia topológica**.
+Mismo centro, zoom, tamaño y estilo azul/opacidad; referencia Canvas sin simplificación de pantalla (`smoothFactor: 0`). **En la comparación privada se fija el alto del mapa al que tiene con teselas activas**, para evitar que el cambio de altura de la leyenda al apagar la capa desplace el centro en píxeles. Se exige igualdad de centro, zoom y dimensiones antes de comparar. Este ajuste no modifica el sitio público ni los tiempos de red, medidos previamente con el diseño real.
 
-IoU es la intersección dividida por la unión de los píxeles pintados. Se muestran tanto la coincidencia del trazo como la diferencia sobre el mapa completo para no ocultar pérdidas relativas en ríos delgados.
+La máscara compara exclusivamente el trazo de la capa, sin OSM ni controles; píxel pintado si alfa > 10/255. Incluye diferencias de cuantización, recorte de tesela, antialiasing y renderizado; **no son distancias métricas ni una garantía topológica**. IoU es la intersección dividida por la unión de píxeles pintados; se muestra también la diferencia sobre el mapa completo para no ocultar pérdidas relativas en ríos delgados.
 
 | Tamaño | Escena | Zoom | IoU del trazo | Píxeles diferentes / mapa |
 |---|---|---:|---:|---:|
-| 1280 | departamento | 6 | 82.73% | 0.400% |
-| 1280 | detalle | 10 | 93.77% | 0.253% |
-| 1280 | detalle_maximo | 12 | 98.61% | 0.245% |
-| 390 | departamento | 6 | 81.94% | 0.801% |
-| 390 | detalle | 10 | 94.85% | 0.352% |
-| 390 | detalle_maximo | 12 | 98.71% | 0.249% |
+| 1280 | departamento | 6 | 83,23% | 0,558% |
+| 1280 | detalle | 10 | 93,79% | 0,252% |
+| 1280 | detalle_maximo | 12 | 98,64% | 0,244% |
+| 390 | departamento | 6 | 82,95% | 1,165% |
+| 390 | detalle | 10 | 94,86% | 0,365% |
+| 390 | detalle_maximo | 12 | 98,72% | 0,270% |
 
-En la vista general, los trazos muy finos concentran la mayor diferencia relativa. En zoom 12 la coincidencia del trazo se aproxima al 98,6–98,7%. No se concluye que la geometría fuente sea correcta ni que las teselas sean aptas para superficies: la auditoría documenta fragmentos cuantizados no válidos para GEOS. Los niveles 5–7 no representan todos los IDs; desde zoom 8 aparecen los 90.
+En vista general, los trazos finos concentran la mayor diferencia relativa; en zoom 12 la coincidencia del trazo se aproxima al 98,6–98,7%. No se concluye que la cartografía fuente sea correcta ni que las teselas sirvan para superficies: la auditoría documenta fragmentos cuantizados no válidos para GEOS. Los niveles 5–7 no representan todos los IDs; desde zoom 8 aparecen los 92. **Caquetá y Putumayo sí figuran en todos los niveles 5–12.**
 
 ## Vistas verificables
 

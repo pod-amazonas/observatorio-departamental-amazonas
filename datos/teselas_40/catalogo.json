@@ -1,17 +1,19 @@
 {
   "id": "drenaje_doble_pmtiles",
-  "nombre": "Drenaje doble · prueba incompleta",
+  "nombre": "Drenaje doble · teselas",
   "fuente": "IGAC 2022, según ficha POD 013",
   "anio": 2022,
-  "advertencia": "Prueba incompleta: excluye Río Caquetá (484) y Río Putumayo (2165), inválidos en origen. Solo visualización; no acredita navegabilidad, límites ni áreas.",
-  "entidades": 90,
+  "advertencia": "Incluye 92 entidades. Río Caquetá (484) y Río Putumayo (2165): corrección topológica MakeValid en copias autorizada; originales intactos. Solo visualización; no acredita navegabilidad, límites ni áreas.",
+  "entidades": 92,
   "intersectan_departamento": 92,
-  "excluidos_invalidos": [
+  "excluidos_invalidos": [],
+  "reparados_autorizados": [
     484,
     2165
   ],
   "ids_seleccionados": [
     28,
+    484,
     539,
     542,
     544,
@@ -32,6 +34,7 @@
     568,
     569,
     570,
+    2165,
     2613,
     2624,
     2636,
@@ -104,13 +107,13 @@
   ],
   "curvas_linealizadas": 74,
   "bbox": [
-    -76.36396010729246,
+    -76.98772223080603,
     -5.101979944053804,
     -64.62408471402503,
-    1.188517148356537
+    1.4431994032022066
   ],
-  "bytes": 2232666,
-  "sha256": "f87d7d41fdbad6b26d0f8bb02b395dfc673f212f2d82b42ea8866fab3409226f",
+  "bytes": 2847111,
+  "sha256": "915b2d190608b71135d16dd363092c6ef644fca7acc21e08a210ec6f8058e52e",
   "minzoom": 5,
   "maxzoom": 12,
   "extent": 4096,
@@ -129,25 +132,25 @@
   "src_origen": "MAGNA CTM12, metros",
   "src_referencia": "OGC:CRS84",
   "src_teselas": "EPSG:3857",
-  "referencia_bytes": 75266153,
-  "referencia_gzip_6": 27361797,
-  "referencia_sha256": "110b8911461ab16cd63a49e3cf0298d36adb43cbfd709903d04707b4d19b7570",
-  "poligonos_referencia": 133,
-  "anillos_referencia": 527,
-  "posiciones_referencia": 1859206,
+  "referencia_bytes": 81493852,
+  "referencia_gzip_6": 29820647,
+  "referencia_sha256": "de8311acb9277b7a15660735c25f6e9c5e4469eac9d3cc6f474504a1355af3d3",
+  "poligonos_referencia": 139,
+  "anillos_referencia": 1296,
+  "posiciones_referencia": 2013065,
   "residuo_inverso_m": 2.803652216399157e-09,
   "cabecera": {
     "root_offset": 127,
-    "root_bytes": 3704,
-    "metadata_offset": 3831,
-    "metadata_bytes": 1023,
-    "leaf_offset": 4854,
+    "root_bytes": 4723,
+    "metadata_offset": 4850,
+    "metadata_bytes": 1051,
+    "leaf_offset": 5901,
     "leaf_bytes": 0,
-    "tile_offset": 4854,
-    "tile_bytes": 2227812,
-    "addressed_tiles": 1639,
-    "tile_entries": 1639,
-    "tile_contents": 1639,
+    "tile_offset": 5901,
+    "tile_bytes": 2841210,
+    "addressed_tiles": 2135,
+    "tile_entries": 2135,
+    "tile_contents": 2135,
     "clustered": 1,
     "internal_compression": 2,
     "tile_compression": 2,
@@ -159,451 +162,553 @@
     {
       "id": 28,
       "sha256_wkb_original": "276604484ae1ab9ac21670786ab69954f42a114b795823e15c14738522285e60",
+      "sha256_feature_referencia": "7ac5b6a580aba4b68eaf813ce2229e608088b0702650b350ac5ceb8e504edeec",
       "anillos_reorientados": 5
+    },
+    {
+      "id": 484,
+      "sha256_wkb_original": "8ea2b75e2e4c190b09b38a8fcfac957a9bc3c34967d50ebc24f026a82e3b1728",
+      "sha256_feature_referencia": "49ebdc3dc894c8c8934f18bd4b34c69a02f1f8a2944609b5afa9fa6d3ae4328c",
+      "anillos_reorientados": 277
     },
     {
       "id": 539,
       "sha256_wkb_original": "6465abf694ea32cda991ebac6bf75dbdfd21cc302a4f736ebcf2c8660c368eae",
+      "sha256_feature_referencia": "085175e865f900321e2b6deb54756885fd96aeb2b6aa6e7c4d8475ec279c2607",
       "anillos_reorientados": 38
     },
     {
       "id": 542,
       "sha256_wkb_original": "0e827672362ab0e12178d0f32df058e59ac15408f0fe9d3e9a97ddc8dcd1f767",
+      "sha256_feature_referencia": "b6a77a3efa5a40bed1165d33a2b28deebfd3c4ea844fec00d08d6da1d735ead9",
       "anillos_reorientados": 6
     },
     {
       "id": 544,
       "sha256_wkb_original": "0a9e6db19ffae68f6e0ff0c45c459ac2d6857946fd6f302ceecfc285413a9c56",
+      "sha256_feature_referencia": "07660a93f7676f32b72b2c3ec9dc00b1ab894783768912a24be18cb23daf293c",
       "anillos_reorientados": 1
     },
     {
       "id": 545,
       "sha256_wkb_original": "26abdfd9daa50c7f188a4ecf0bcc2f82007b9c664321bdc5b03024c6b8cf5d43",
+      "sha256_feature_referencia": "ea3c9b9dcb79cf7c888b445ee27940f7f38cf2f80e8dd66dceb0945b33018b6f",
       "anillos_reorientados": 1
     },
     {
       "id": 551,
       "sha256_wkb_original": "190766d91c0e985c14989c812bdca99166593bcdae5aabdfa971d50a5e62b8c0",
+      "sha256_feature_referencia": "8292f8f66da9b5b06bd2f2ba9e0ddaeb80e45bad672e242d87671fe2941e4562",
       "anillos_reorientados": 1
     },
     {
       "id": 552,
       "sha256_wkb_original": "79671ac5bfdb58f33f5a3f2d91617b6925d91b7953609c3feea8ddc56df48f21",
+      "sha256_feature_referencia": "2b21237a1b2fbe145068ea15d3d6a07d0586d128de9e8668bad1e6b1d790d3ce",
       "anillos_reorientados": 1
     },
     {
       "id": 553,
       "sha256_wkb_original": "14bf342d9c30e665564a4897375b667cf2c6839ad29a470c3c2f541acd81c27f",
+      "sha256_feature_referencia": "c7ecda0be2f04225eecf3e079054360b8bb3a3ff11c5df7d0e98186a3e2817eb",
       "anillos_reorientados": 1
     },
     {
       "id": 554,
       "sha256_wkb_original": "1826cab5f54fafa5a539e662e200b8c8885edecdaa6aa21ef7b0cc9eebe37f33",
+      "sha256_feature_referencia": "229af855b2555fd4b99488d0a02bd77a81e7214f68bed252810e8e251f1db4a5",
       "anillos_reorientados": 2
     },
     {
       "id": 555,
       "sha256_wkb_original": "f719b974e8548f691f94fc96725c887e0ac5f8ac7682d63e661ba710ca022380",
+      "sha256_feature_referencia": "8227bd0ec989abd603dc29cb14267b1256d93c5b22a251a7fd96d45ed3b74212",
       "anillos_reorientados": 3
     },
     {
       "id": 560,
       "sha256_wkb_original": "557d601d35f95ae33b9d9b355a10f7f22e9f3a8a20b1186fc32c812ef0ebef3f",
+      "sha256_feature_referencia": "376703a6ff92ce804ee59793e3ca0deac8cc1af77eb866fc5b13447080da50d6",
       "anillos_reorientados": 1
     },
     {
       "id": 561,
       "sha256_wkb_original": "daefdc1edf93e3588e54d87e530c364cc05d7453ab311842294056a1b6e84150",
+      "sha256_feature_referencia": "902311ba970ab014496f259ca5813cf56c96f44687d1c9498982a09df912a79c",
       "anillos_reorientados": 1
     },
     {
       "id": 562,
       "sha256_wkb_original": "f041c7d1685c4011a12119948381328248e94f55281617f71adbea8b8073bff1",
+      "sha256_feature_referencia": "f8251b6cad14e21b31e9d2b8edf65717f162ad6b3cf9468bd8026d97c8718c1d",
       "anillos_reorientados": 1
     },
     {
       "id": 563,
       "sha256_wkb_original": "2e4e260530028ee9b88f10ab2f50ab9c07211adb72179947308c71630af9742a",
+      "sha256_feature_referencia": "1b8e43e016d81e53cab5bc769000206e263625419e4371c85dd64835a733302e",
       "anillos_reorientados": 2
     },
     {
       "id": 564,
       "sha256_wkb_original": "58893186a31426ed95c372f138b6a0fa93983d9bc5f976c541765cb5027e2ebb",
+      "sha256_feature_referencia": "9b4edc82dac8afdf52c2af9a39bc0eee0ec25885433376dbbf532a7888166d63",
       "anillos_reorientados": 1
     },
     {
       "id": 565,
       "sha256_wkb_original": "275c4a291ae083d1a07497488694b0838346a1f6efa788f9406e7d033b2fc5b9",
+      "sha256_feature_referencia": "fd01be9d9008744f1aa0d6ba3a454cd9a73723bc9c3249b31089ca9cef4cb1f3",
       "anillos_reorientados": 1
     },
     {
       "id": 566,
       "sha256_wkb_original": "1c84779bfb1d61d0dfc03d05a30a8c99bf432f5b496711ab64e21497a3c314bc",
+      "sha256_feature_referencia": "a54634716b2a977878437aff264bac325f4f28f76dc04e0a105bfe85ca165eea",
       "anillos_reorientados": 5
     },
     {
       "id": 567,
       "sha256_wkb_original": "aeec33e78a96d8c05134b9ce6a4a02b6dd3de07e7180464fedeb542146ec2d8f",
+      "sha256_feature_referencia": "29d80364f79cb691e7073801e4cda73f53a50b2b04627038cb1bfbe151d1eaa1",
       "anillos_reorientados": 1
     },
     {
       "id": 568,
       "sha256_wkb_original": "94a114f9440b73f74c14d9d1e82c1eff2efea20fffeeae5406bc0108d35b3947",
+      "sha256_feature_referencia": "900f39a52bdbbec1c1f5d8fd8395b8b39beaf0b99ae030e3b31632d9ce59131d",
       "anillos_reorientados": 1
     },
     {
       "id": 569,
       "sha256_wkb_original": "373e0542d82010a9bd777cb874a608c507974651d0d5287ccdef8b88989b1108",
+      "sha256_feature_referencia": "e98079c3949723ba8278fa408fd5e77175e679d11ff066c42b995ab2f72a64fa",
       "anillos_reorientados": 228
     },
     {
       "id": 570,
       "sha256_wkb_original": "8394adfd2b3d2c9579c21d21a1afa594a28750d37d962223941d7a532bbc4a33",
+      "sha256_feature_referencia": "45b4607dcc0740dad4559ed0efc1a5d9b21776293572bd037c7120a6fff84798",
       "anillos_reorientados": 2
+    },
+    {
+      "id": 2165,
+      "sha256_wkb_original": "abde29640428efb01450a94121db29f7291fc440d78ed2c81bdb3170ed0d5c6e",
+      "sha256_feature_referencia": "617ad75a7de0954d2e555418384fedead17e693d212936064ce8c598642e5f5a",
+      "anillos_reorientados": 492
     },
     {
       "id": 2613,
       "sha256_wkb_original": "de904468c84bf3b187be9ab57149178f8b65b54daa610b7ec4b86bc33b9dff0b",
+      "sha256_feature_referencia": "005caabf83222248498189db107ec187cab9d08c747e7b24293bbd426b350152",
       "anillos_reorientados": 86
     },
     {
       "id": 2624,
       "sha256_wkb_original": "0edd5dbc713e4441bcd29f4ff0e4924b94fbe81979737ddaa6fec60dd619f004",
+      "sha256_feature_referencia": "ae73d562ab0ab796989be93e2178cb9290be024ecaadc606a453a8856f1a02eb",
       "anillos_reorientados": 2
     },
     {
       "id": 2636,
       "sha256_wkb_original": "439d8666a469b7db8c29542d239ffcdf2e8fe1fe8b06761d47510467646b8dee",
+      "sha256_feature_referencia": "89d4b5fece6a8fedf7160376fe8596be6b18e68e2046e7676ee0416ffcdc01fa",
       "anillos_reorientados": 1
     },
     {
       "id": 2637,
       "sha256_wkb_original": "19a848a3c616e112dd922922df09e920d0aa3463fa47493b4d322aafac05aa7a",
+      "sha256_feature_referencia": "c45a3f86956d51b786327417aa90b18d12e444f9eac99ae654ac83ba6cf8dfac",
       "anillos_reorientados": 3
     },
     {
       "id": 2640,
       "sha256_wkb_original": "d68660bae5ddef11ada8ec0d7889bbdc1e8022e30dd9a30fcb5e3efaa2a9c4e0",
+      "sha256_feature_referencia": "4e4f213d7329f9813efac6f188297092a4e066c2cf821877de58147c3b6613da",
       "anillos_reorientados": 1
     },
     {
       "id": 2643,
       "sha256_wkb_original": "2f8973a9c9ecd250055ce6d05e7d3e6aa2353cd36ce05fd0bff68244b559e1a5",
+      "sha256_feature_referencia": "1ce4919f463fce9a75edf70b48188d7c36554369d7c24f7e1ac13d238fe29f2e",
       "anillos_reorientados": 1
     },
     {
       "id": 2645,
       "sha256_wkb_original": "922fabb326915adf394f5050e529212db49510505cc8f157c6e6e93bfaa2e247",
+      "sha256_feature_referencia": "406223af510e173096cbb8323a7a19ee21be3c7bd9715517a3cd4953b1fd9c58",
       "anillos_reorientados": 1
     },
     {
       "id": 2646,
       "sha256_wkb_original": "352e46756efb4c86dca7008e5510457465e7dcfe338cf4512e86d2100716fd68",
+      "sha256_feature_referencia": "11d5d8aebc4540b913ce637fd51649fa499da9124d1f0e2860c9e03b6b9637d2",
       "anillos_reorientados": 7
     },
     {
       "id": 2647,
       "sha256_wkb_original": "6ff1bb457343d42b6d77516e41e885998343426378a633986501c1d523d6ab1c",
+      "sha256_feature_referencia": "870242dbcc22f7aeedd44da45e22ad7a89c03417c1db315077a7a8c10208a852",
       "anillos_reorientados": 3
     },
     {
       "id": 2648,
       "sha256_wkb_original": "5735b9c17f59492e4115d66a00f4de03faf217da55f000e97fd09186f7d3c797",
+      "sha256_feature_referencia": "b7401d622477c9950f0fd894a4b64a6eb4dc9e51a99cce9aed43395c191e36ee",
       "anillos_reorientados": 5
     },
     {
       "id": 2649,
       "sha256_wkb_original": "a34997214a89b02d5e74b9c8e1fffadef8fcfa17ab2d2c1acbe3af6930d36e8f",
+      "sha256_feature_referencia": "01a2aabb5a76632174ff752f49b5aed812d887a0ed77a7a3af67bd9acf6c1f02",
       "anillos_reorientados": 6
     },
     {
       "id": 2651,
       "sha256_wkb_original": "e94ec5d908b1c027d4b014e29d0ae3a649f7e7123633166267e4eb79df95ae07",
+      "sha256_feature_referencia": "4d048a981b87adcc352ce7c14ceecc07f787c6642b79b1c489f3e0d470617471",
       "anillos_reorientados": 1
     },
     {
       "id": 2652,
       "sha256_wkb_original": "e37b5cb98b4416f2983d490dab3f1b85f7d69e16d1704d18a3d4d155be897949",
+      "sha256_feature_referencia": "88c070f53192ee5087382a5ed45269eeaaa2d72fdf883ad5307130e7c443d8a0",
       "anillos_reorientados": 2
     },
     {
       "id": 2653,
       "sha256_wkb_original": "de6971169478bb7f2e4825eae25a9ab34e33a93a1cb8d783fd6b6984743070dc",
+      "sha256_feature_referencia": "70a4bd675e787fda6f7c51bc24d9527d0d8ec6e56837f7c6dbbd5d1e3387d3ca",
       "anillos_reorientados": 3
     },
     {
       "id": 2654,
       "sha256_wkb_original": "82abacc53e937657d6992ea9f9ec09014d3a336c53a0d629e195104a6167ed1b",
+      "sha256_feature_referencia": "0dbfc93d8966a9b43ccff5d13aef22340248a5534a06aa9d7212baa03be5759a",
       "anillos_reorientados": 3
     },
     {
       "id": 2656,
       "sha256_wkb_original": "99214cec9aa7c9c513a32b3c99a829a438dfabd719a5811af16c1c95a039b706",
+      "sha256_feature_referencia": "c770992fd74e7b6ae8cf7d5e10e4cab74130468ba5d34e5648af077107bf4a9f",
       "anillos_reorientados": 10
     },
     {
       "id": 4851,
       "sha256_wkb_original": "a8edcbab976b5a95e177b5cb7a70f78a4707e9ef3cdb74e4a999d2ce4b346dff",
+      "sha256_feature_referencia": "1fc74e9226e83d53db130c7cf7060c9359fae27180cdaafdbd20571188a304e6",
       "anillos_reorientados": 5
     },
     {
       "id": 4857,
       "sha256_wkb_original": "5f7436f4a69defbc0229be071299c8bd34e87dcdefcf4fbabb34b58a906c20f2",
+      "sha256_feature_referencia": "bfbd2e9115645bf0caa52c516e514c1d8f5a33c90aae556cffcc0219a4285c43",
       "anillos_reorientados": 19
     },
     {
       "id": 4867,
       "sha256_wkb_original": "44cf007afba81d5574afb828a780b279d3cbfe65e41671755c69ce9254e5ab17",
+      "sha256_feature_referencia": "0a70cc89135c4c4d42f2b22d155321b2bf121a2a61b5aa0520c7e207d9a10026",
       "anillos_reorientados": 11
     },
     {
       "id": 5122,
       "sha256_wkb_original": "f43957442df755ade33d63b25a3fd7b1709428b884986caeaf9d096cbad5f037",
+      "sha256_feature_referencia": "501a7c5f46ab631a82a92c29620e0e3f1e45982138657009969b45eb16641eee",
       "anillos_reorientados": 2
     },
     {
       "id": 5123,
       "sha256_wkb_original": "9d175ed875f2a247b7bd6b38283d6b1da36a2d74960c28c7db2cf7d4995998fd",
+      "sha256_feature_referencia": "daa611967cae028424d7fe586d1a049d7f47f4b21535a4aa289898fbfbf71ab8",
       "anillos_reorientados": 1
     },
     {
       "id": 5124,
       "sha256_wkb_original": "50aabf4633818180a46aac9d7c1448b8572fbf2f7719d4266fc614e441de132c",
+      "sha256_feature_referencia": "2a725096c0ff5a685a6b9652280ccc690fa11a0f40ecc240ebcd971dedc64834",
       "anillos_reorientados": 1
     },
     {
       "id": 5125,
       "sha256_wkb_original": "d772566f1669af4a85fe8a16ff2c69106e4ce58133a90291dc2774eea334e242",
+      "sha256_feature_referencia": "a7aa90d9f8ff06be6462a75412e358ab88e881b090fc411d7430aa14f1022cc1",
       "anillos_reorientados": 2
     },
     {
       "id": 5126,
       "sha256_wkb_original": "05ac8bd83dfbb30c75f37a0e88925ce60abdc690ffff3d7b46448a0c4f3204f2",
+      "sha256_feature_referencia": "2960d02b26053f03f7475d884a7d1d0603d9e3b1387cca76b00e87b02a4c7fd2",
       "anillos_reorientados": 1
     },
     {
       "id": 5129,
       "sha256_wkb_original": "132e137e1902c6a118c472013195c9d3c2812b17656e61aac159618b9c47aafe",
+      "sha256_feature_referencia": "9ce869622ac71edfa13b7281efc916d6aca840381373bcdf1ae1569bbab547bb",
       "anillos_reorientados": 1
     },
     {
       "id": 5130,
       "sha256_wkb_original": "a8f9d4da9431fcfd83eca43493531542c61786cfbe60e3c14e30922fdb62761b",
+      "sha256_feature_referencia": "019f860128ea9ea9cc2f728070cf014962aa3a3e4c752f7462322e3f507b2576",
       "anillos_reorientados": 2
     },
     {
       "id": 5131,
       "sha256_wkb_original": "213bbe213f9d4a5c11ba29efda149d48696ca9fdae972ca0015ffb8ff9f1ea1e",
+      "sha256_feature_referencia": "baf331309db6b149da2239a18551dd995e7c6a9f8461a1ab2a59ebda34a27fbb",
       "anillos_reorientados": 1
     },
     {
       "id": 5132,
       "sha256_wkb_original": "1701c9e567507ef817ec370186ef0af3ae6c22014682c78de2816767cbe0a5d9",
+      "sha256_feature_referencia": "8ff3cae668b75416423606397a9f4c4730c9e30f1822cdb46203b3bfd7a21dcc",
       "anillos_reorientados": 1
     },
     {
       "id": 5133,
       "sha256_wkb_original": "fb4ad56d3c6bbb7573e8824abfaa5f4ea0191e57f3a6cfb16e8929f2fd36079a",
+      "sha256_feature_referencia": "f642cfcc248eefb0c1fc539cf2ff4eb9733277602c4f8a4442b621b027be544f",
       "anillos_reorientados": 1
     },
     {
       "id": 5134,
       "sha256_wkb_original": "22e5e8375c85251f55045f86f339474923de8089454cf406c4e89dcd59104a2f",
+      "sha256_feature_referencia": "07981e6ebfa2b83a47ac15c9129484ac4926d0929731091ee12ea3a9e6595ea8",
       "anillos_reorientados": 1
     },
     {
       "id": 5135,
       "sha256_wkb_original": "11f7b85b784d3432807e2c4a48fe0bdedc466834a87b2fcd345d5842e0cdbd5a",
+      "sha256_feature_referencia": "d95c028daff342c8dc52c48c88f94af49b0a944ac030fb592a0a5e70563c6c17",
       "anillos_reorientados": 1
     },
     {
       "id": 5136,
       "sha256_wkb_original": "26fcf8117b6e46aba12d0e88c6f3aa426faf4313dd9caa3c4eb10e9f9422c55d",
+      "sha256_feature_referencia": "a281274a0713f640ad8bb88593a88b202d696a39d6e9aec36826c1aff23dc50e",
       "anillos_reorientados": 1
     },
     {
       "id": 5137,
       "sha256_wkb_original": "1d1e374aa55c7357d04a6809071150e1193973437843b3b902d0c8d3ce33bd02",
+      "sha256_feature_referencia": "e01807749c5c8d55bb92097faddf6c03fba13c9ca1b927bb53750f13f52a48ee",
       "anillos_reorientados": 1
     },
     {
       "id": 5139,
       "sha256_wkb_original": "c27a033dc0557dbeaf27c997e517e64dbd6d7198c9e323079a30f1b73cfe93e1",
+      "sha256_feature_referencia": "8b2619f14bb439eae4a22836289831df391f8b427222a4e4178b00a477436be4",
       "anillos_reorientados": 1
     },
     {
       "id": 5142,
       "sha256_wkb_original": "94313f0d1d1aa4f612a4501485af7ba0a7759837cf684c3d1f798b18ab5dae1c",
+      "sha256_feature_referencia": "cb160ec9e4b9c679b63cbb9722f7541c5b2db6234428416d157ef5bc120c0181",
       "anillos_reorientados": 1
     },
     {
       "id": 5143,
       "sha256_wkb_original": "0393217e81796287d753d90a80ca2696a08186d90d5c67349012d6b38ad5710d",
+      "sha256_feature_referencia": "e46407920ee47b44d9be6bf816dc4c6fe66c36ad7b4989b36e98ec27995c2cc6",
       "anillos_reorientados": 1
     },
     {
       "id": 5144,
       "sha256_wkb_original": "ec87c700fb06cf858d72b98b03a54c844cb1731bfd70b221d40d587359a408fa",
+      "sha256_feature_referencia": "01b43de1f278edb4cd170e7369d52d365df7b1e9c2a2dd286cbb9a43d138420d",
       "anillos_reorientados": 1
     },
     {
       "id": 5145,
       "sha256_wkb_original": "42e256e5e88aadaa4c95027749daff4a6898c297268544c589ee0bc44cce3da4",
+      "sha256_feature_referencia": "bc0fb8357cf1da63ec6c6fe805749246b3399e4c0077f677da423988f4d75b14",
       "anillos_reorientados": 1
     },
     {
       "id": 5146,
       "sha256_wkb_original": "f8572da3b04ab822eec440f6124d6f86208cad7241bc371a76e5efa8e9252618",
+      "sha256_feature_referencia": "4f1d3095a6d9e848a18b92a553075c9cdd627786fc379afea877d6192692a763",
       "anillos_reorientados": 1
     },
     {
       "id": 5148,
       "sha256_wkb_original": "e4ed1784d6fe3b23034b313620d99c9909b88c02c7fd73fd97bc15d0668c6e72",
+      "sha256_feature_referencia": "27292e9b6709a4c1759ea144ebd18a4be6d4c16fc6575afb64bf190aceb7b72e",
       "anillos_reorientados": 1
     },
     {
       "id": 5149,
       "sha256_wkb_original": "cfbe7ba65edae274fc8d60bcaac46686dcc999f241e740b7a4a6d6507cb68bbb",
+      "sha256_feature_referencia": "7ffdf7427335f84e0a405c8530161595892792f482f46722c339753cc1723f8e",
       "anillos_reorientados": 1
     },
     {
       "id": 5150,
       "sha256_wkb_original": "2ddbf96eef9dca7db3f58bd4d87607363c8acfb4c7849d8c814a09ffde4d538b",
+      "sha256_feature_referencia": "cb0517d85c361bf5d13f61927626336d04ff4b2ba1ae16be2e18f6a327b8b377",
       "anillos_reorientados": 1
     },
     {
       "id": 5152,
       "sha256_wkb_original": "f8ef003c1ebf8cea61c4b060124ac9fb73b45d3d96bd0dbc746620f980234fba",
+      "sha256_feature_referencia": "913b9e4bb8439c8f14d3bc1fce737d4503713ebd64a2800a0ba722e70005e32e",
       "anillos_reorientados": 1
     },
     {
       "id": 5153,
       "sha256_wkb_original": "fab7a34747b7db394dbf9d2af7b3d9906972fb35b6f10ce42a406904a1c1ef34",
+      "sha256_feature_referencia": "b64891f7d1751f83c0e040c76e269b6e58b0aafcf6eb1a6a21ea4d5efcd6f38f",
       "anillos_reorientados": 1
     },
     {
       "id": 5154,
       "sha256_wkb_original": "ec40cde831eb902bf99128aebb0a644d0a0f5cc7ae4ce085244faa013f061298",
+      "sha256_feature_referencia": "eff1c2dd95ab61ff7f314c9f47ff73c1a288431cc9279725ee0b2eeec18a7952",
       "anillos_reorientados": 1
     },
     {
       "id": 5155,
       "sha256_wkb_original": "3ee6294a366a8846bbdf03be6fddc07d16b89451625677cd6a7ab7fe55a81023",
+      "sha256_feature_referencia": "5efc1e71f72717340aa27cbe40f0034c08a8c774e93447811e966890062ab8d4",
       "anillos_reorientados": 1
     },
     {
       "id": 5156,
       "sha256_wkb_original": "d0f842d5e801ef7cb41012562dd4cd2ccd746241c798b23549c1781acceec95c",
+      "sha256_feature_referencia": "62d709de4309de9f705e4c6681db04183c70d9ded627a45e1cda1dcf1ff222d2",
       "anillos_reorientados": 1
     },
     {
       "id": 5157,
       "sha256_wkb_original": "8b1b0aeca798833aebd771def8d409fb3c192f436e648c7367710a42baeff2a8",
+      "sha256_feature_referencia": "4780dcf7cc94a47f3a4ae3cb5579147eaaf00cbda22b2f6a73c4c25aeacfbfb3",
       "anillos_reorientados": 1
     },
     {
       "id": 5158,
       "sha256_wkb_original": "7b7d3bbedd168ebc3f322eacb7dbe85ffc62ca609a5ac51e8d5d39f024ba435a",
+      "sha256_feature_referencia": "fffe58f0709be9e430a834d93a31e9ca9049dbddeeac5d972f2cadb13825e1ad",
       "anillos_reorientados": 1
     },
     {
       "id": 5159,
       "sha256_wkb_original": "41b99774513b54c4f9f84f529b5424a0cb463702d4fb4fa191921eadb2846189",
+      "sha256_feature_referencia": "cf7c84934341b934129a03a03b31e898292b84a75695de1fef22d61e7b34f363",
       "anillos_reorientados": 1
     },
     {
       "id": 5160,
       "sha256_wkb_original": "c57d05244d938d7cc3866731ac981188532e85e7f43a3bfe7e267605eeef65ec",
+      "sha256_feature_referencia": "9ec7f42c19e7ab288fd0e293a5538f5825818662a300fa60849691ece8d5c0e4",
       "anillos_reorientados": 1
     },
     {
       "id": 5161,
       "sha256_wkb_original": "bcb48bf99844f698897bd9b5e72570f19cd660c75a8ccc33e92fdd732db3e907",
+      "sha256_feature_referencia": "1e25aede04722fd3bc284f26616379fb230ac6524c35f85ef2b10fa48eee12b7",
       "anillos_reorientados": 1
     },
     {
       "id": 5162,
       "sha256_wkb_original": "564bd3deb6da80789389c82d2269dc35a12cb45cd4047f9750604fd1caa4b181",
+      "sha256_feature_referencia": "8afb82333374b5370afafb29ae40491c1f85cd2b0cc7aa14dc5e2be5d95fe0aa",
       "anillos_reorientados": 1
     },
     {
       "id": 5163,
       "sha256_wkb_original": "2f2d0e1f38d1f7979431fe1a212398238515672cd5f564ca3074bbb4b412e7da",
+      "sha256_feature_referencia": "f03524760ea45817b26abebaf4f88436641785d7a78439adce03d832a333fc44",
       "anillos_reorientados": 1
     },
     {
       "id": 5164,
       "sha256_wkb_original": "d3681c1f8601638763de4178bd9b7ced180115870fd03913bc3aedeba77f9605",
+      "sha256_feature_referencia": "d2dce1f61b2acfd6ac1ef6aca3182353347348a1b000462c7a5a62f6e3afc952",
       "anillos_reorientados": 1
     },
     {
       "id": 5165,
       "sha256_wkb_original": "b26c2eb8d6c1d87eafb4c0c5e313af9ac0d718b7ca5924f21a0145445818a89e",
+      "sha256_feature_referencia": "b0bae734eb321ec21447d5149426211e4d8adc2007b12c40faf7e8a8744de098",
       "anillos_reorientados": 1
     },
     {
       "id": 5166,
       "sha256_wkb_original": "4c07374e550e8191ca40670b8b0e8d173815e365eb02f858ddbbde98a1b51946",
+      "sha256_feature_referencia": "3b02e26c5a876b9e8b30f99d214a7cc3dc7957e066cd0f44cf395003395cbecf",
       "anillos_reorientados": 1
     },
     {
       "id": 5167,
       "sha256_wkb_original": "583c9f56cba7c85f7d85076957e34f18287513bbe7a96edeaa0f16c78799f7d8",
+      "sha256_feature_referencia": "b9be672274a158f33c6059343a13b85e48f7041bab3cfcaf96af6931c72a0587",
       "anillos_reorientados": 1
     },
     {
       "id": 5168,
       "sha256_wkb_original": "634b39a96946ab661a212e48f70a8d1f85121b66979566759c5b46115f1ee4c5",
+      "sha256_feature_referencia": "5d07fbe7e39717550b5dd20c380c01f2c6a28b5037a6421c94e478500d84918b",
       "anillos_reorientados": 1
     },
     {
       "id": 5169,
       "sha256_wkb_original": "9ecdd35d3643dd12727538c93a26dccbc07e87c9016b52635597f5115f577cfa",
+      "sha256_feature_referencia": "dae4b179cc1aee7c83120175f4749d0d07d21c50271e957542cdcf73c131365a",
       "anillos_reorientados": 1
     },
     {
       "id": 5170,
       "sha256_wkb_original": "6df4155e64ca1db61975113cf75b3acd37a0cf2731957c07efdf6f32126da3c6",
+      "sha256_feature_referencia": "50d819f4df1cfd92c30b1fa91178c1200835f928d913bdd4f537ca6f6bb8c269",
       "anillos_reorientados": 2
     },
     {
       "id": 5175,
       "sha256_wkb_original": "c5c4cefbaf6c0bf897b9d98e960ff94840f842e5058a3cc095bb9595f571e3d7",
+      "sha256_feature_referencia": "76cb3017e80b8e9c3db793a8ad189b6d0cce8cd849105dd0d8f19c2f888fc937",
       "anillos_reorientados": 1
     },
     {
       "id": 5177,
       "sha256_wkb_original": "afb091e2ff07dd77dc6f3e26975eed1b574a2ef7d1f3c6ec6cdbb6bd5af6ffe5",
+      "sha256_feature_referencia": "d752def378c4ff6560919a4d538fa35c1b9b58d12ff8fef21d91f3fc0d3ab6b0",
       "anillos_reorientados": 1
     },
     {
       "id": 5178,
       "sha256_wkb_original": "95b5b648262ec2383fa8ad6069e8760eaab5ddfa359dc155ca44755677b53482",
+      "sha256_feature_referencia": "5193522fa417c6bfe2e92ae8ddeea8211791340e234b44f4fd76e5a6004644ea",
       "anillos_reorientados": 1
     },
     {
       "id": 5179,
       "sha256_wkb_original": "8984b112b1edab0b725d4132a44f4e2e6eb9792c4b0cad8a8c81c8be2db6ba1b",
+      "sha256_feature_referencia": "3ceb5c058606abe4b8f49daede194bba76b4cd185e7eb44b36d24993073cf8ef",
       "anillos_reorientados": 1
     },
     {
       "id": 5181,
       "sha256_wkb_original": "ab1de6dd87c30f38555ff841de0fff5d3cd0a3d8ec264872268fd2b3005bd530",
+      "sha256_feature_referencia": "75a6a40f5d94f1450cc90a2e5c8b787210b97896472488dd94e90133603e2a17",
       "anillos_reorientados": 1
     },
     {
       "id": 5183,
       "sha256_wkb_original": "2784ec3e39ece6044acbeb8a637ae5455eac89b21993449537d72a2d1b295465",
+      "sha256_feature_referencia": "3f26e4e3f027549041bddf471f14c50c03a5f18c5e23887ee35cce2fa4ec9eb8",
       "anillos_reorientados": 1
     },
     {
       "id": 5184,
       "sha256_wkb_original": "2d766d9a08b28f0979f74a7cacdcc7699a6b9be99130abad5e841f603a98aa08",
+      "sha256_feature_referencia": "30c29e78038406c1708bca72ca3c8ca86c3774c0a4989ac646b0bae5f961e9f2",
       "anillos_reorientados": 1
     },
     {
       "id": 5185,
       "sha256_wkb_original": "d97b763cc99b02a88a24f55d925cc838abf042b6dc9c02fd7f942e320e0b96f2",
+      "sha256_feature_referencia": "c63a4c9d34f473575e9bca43316f8f35729580f01791962b7888c2e271c4d6c4",
       "anillos_reorientados": 1
     }
   ],

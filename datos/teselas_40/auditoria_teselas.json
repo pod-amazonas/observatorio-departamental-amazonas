@@ -2,10 +2,11 @@
   "por_zoom": [
     {
       "zoom": 5,
-      "fragmentos": 92,
-      "fragmentos_no_validos_geos": 36,
+      "fragmentos": 96,
+      "fragmentos_no_validos_geos": 40,
       "ids_con_fragmentos_no_validos": [
         28,
+        484,
         539,
         542,
         544,
@@ -15,6 +16,7 @@
         567,
         569,
         570,
+        2165,
         2636,
         2637,
         2645,
@@ -42,7 +44,7 @@
         5169,
         5170
       ],
-      "entidades_representadas": 88,
+      "entidades_representadas": 90,
       "ids_no_representados": [
         551,
         5177
@@ -52,10 +54,11 @@
     },
     {
       "zoom": 6,
-      "fragmentos": 96,
-      "fragmentos_no_validos_geos": 41,
+      "fragmentos": 102,
+      "fragmentos_no_validos_geos": 47,
       "ids_con_fragmentos_no_validos": [
         28,
+        484,
         539,
         542,
         544,
@@ -63,6 +66,7 @@
         567,
         569,
         570,
+        2165,
         2624,
         2636,
         2637,
@@ -96,7 +100,7 @@
         5165,
         5170
       ],
-      "entidades_representadas": 89,
+      "entidades_representadas": 91,
       "ids_no_representados": [
         5177
       ],
@@ -105,16 +109,18 @@
     },
     {
       "zoom": 7,
-      "fragmentos": 122,
-      "fragmentos_no_validos_geos": 49,
+      "fragmentos": 133,
+      "fragmentos_no_validos_geos": 54,
       "ids_con_fragmentos_no_validos": [
         28,
+        484,
         542,
         544,
         566,
         567,
         569,
         570,
+        2165,
         2624,
         2636,
         2637,
@@ -153,7 +159,7 @@
         5170,
         5175
       ],
-      "entidades_representadas": 89,
+      "entidades_representadas": 91,
       "ids_no_representados": [
         5177
       ],
@@ -162,13 +168,14 @@
     },
     {
       "zoom": 8,
-      "fragmentos": 139,
-      "fragmentos_no_validos_geos": 40,
+      "fragmentos": 158,
+      "fragmentos_no_validos_geos": 45,
       "ids_con_fragmentos_no_validos": [
         28,
         539,
         566,
         569,
+        2165,
         2624,
         2636,
         2637,
@@ -201,16 +208,18 @@
         5170,
         5175
       ],
-      "entidades_representadas": 90,
+      "entidades_representadas": 92,
       "ids_no_representados": [],
       "metros_mercator_por_unidad": 38.21851414258813,
       "tolerancia_simplificacion_unidades": 1
     },
     {
       "zoom": 9,
-      "fragmentos": 197,
-      "fragmentos_no_validos_geos": 14,
+      "fragmentos": 235,
+      "fragmentos_no_validos_geos": 16,
       "ids_con_fragmentos_no_validos": [
+        484,
+        2165,
         2636,
         5125,
         5130,
@@ -226,50 +235,55 @@
         5170,
         5183
       ],
-      "entidades_representadas": 90,
+      "entidades_representadas": 92,
       "ids_no_representados": [],
       "metros_mercator_por_unidad": 19.109257071294063,
       "tolerancia_simplificacion_unidades": 1
     },
     {
       "zoom": 10,
-      "fragmentos": 314,
-      "fragmentos_no_validos_geos": 0,
-      "ids_con_fragmentos_no_validos": [],
-      "entidades_representadas": 90,
+      "fragmentos": 392,
+      "fragmentos_no_validos_geos": 1,
+      "ids_con_fragmentos_no_validos": [
+        484
+      ],
+      "entidades_representadas": 92,
       "ids_no_representados": [],
       "metros_mercator_por_unidad": 9.554628535647032,
       "tolerancia_simplificacion_unidades": 1
     },
     {
       "zoom": 11,
-      "fragmentos": 529,
-      "fragmentos_no_validos_geos": 0,
-      "ids_con_fragmentos_no_validos": [],
-      "entidades_representadas": 90,
+      "fragmentos": 689,
+      "fragmentos_no_validos_geos": 1,
+      "ids_con_fragmentos_no_validos": [
+        2165
+      ],
+      "entidades_representadas": 92,
       "ids_no_representados": [],
       "metros_mercator_por_unidad": 4.777314267823516,
       "tolerancia_simplificacion_unidades": 1
     },
     {
       "zoom": 12,
-      "fragmentos": 1037,
-      "fragmentos_no_validos_geos": 5,
+      "fragmentos": 1414,
+      "fragmentos_no_validos_geos": 7,
       "ids_con_fragmentos_no_validos": [
         545,
         570,
+        2165,
         2654,
         4851,
         4857
       ],
-      "entidades_representadas": 90,
+      "entidades_representadas": 92,
       "ids_no_representados": [],
       "metros_mercator_por_unidad": 2.388657133911758,
       "tolerancia_simplificacion_unidades": 0
     }
   ],
-  "tesela_comprimida_max_bytes": 39301,
+  "tesela_comprimida_max_bytes": 44872,
   "no_reduccion_adaptativa_por_tamano": true,
-  "sha256_pmtiles": "f87d7d41fdbad6b26d0f8bb02b395dfc673f212f2d82b42ea8866fab3409226f",
+  "sha256_pmtiles": "915b2d190608b71135d16dd363092c6ef644fca7acc21e08a210ec6f8058e52e",
   "nota": "Lectura CLIP=NO para evitar que el lector recorte otra vez el b\u00fafer. Los fragmentos no son entidades originales: una entidad aparece en varias teselas. Lo ausente a zoom bajo puede colapsar por cuantizaci\u00f3n; no se borr\u00f3 de la referencia."
 }

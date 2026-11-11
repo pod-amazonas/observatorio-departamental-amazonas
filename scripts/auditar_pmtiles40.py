@@ -12,7 +12,8 @@ for z in range(5,13):
   f=g.OGR_L_GetNextFeature(layer)
   if not f:break
   d=g.OGR_F_GetDefnRef(f);idx=next(i for i in range(g.OGR_FD_GetFieldCount(d)) if g.OGR_Fld_GetNameRef(g.OGR_FD_GetFieldDefn(d,i))==b'origen_id');source_id=g.OGR_F_GetFieldAsInteger64(f,idx);seen.add(source_id);n+=1
-  if not q.valid(g.OGR_F_GetGeometryRef(f)):invalid.append(source_id);g.OGR_F_Destroy(f)
+  if not q.valid(g.OGR_F_GetGeometryRef(f)):invalid.append(source_id)
+  g.OGR_F_Destroy(f)
  g.GDALClose(ds);results.append({'zoom':z,'fragmentos':n,'fragmentos_no_validos_geos':len(invalid),'ids_con_fragmentos_no_validos':sorted(set(invalid)),'entidades_representadas':len(seen),'ids_no_representados':sorted(set(m['ids_seleccionados'])-seen),'metros_mercator_por_unidad':40075016.68557849/(2**z*4096),'tolerancia_simplificacion_unidades':0 if z==12 else 1});print(z,n,len(seen),flush=True)
 b=p.read_bytes();h=header(b);raw=gzip.decompress(b[h['root_offset']:h['root_offset']+h['root_bytes']]);at=0
 def varint():
