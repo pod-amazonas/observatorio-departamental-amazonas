@@ -1,0 +1,22 @@
+[
+  {
+    "id_capa": "puerto",
+    "nombre_origen": "Puerto",
+    "nombre_publico": "Puertos y embarcaderos según IGAC 2022",
+    "categoria": "Estructura funcional y de servicios",
+    "fuente_declarada_encargo": "IGAC",
+    "anio_declarado_encargo": 2022,
+    "color": "#176d42",
+    "restricciones": "Puntos que intersectan el límite departamental de Amazonas. No garantiza acceso público, operación actual ni seguridad de navegación.",
+    "ruta_relativa": "capas/puerto.geojson",
+    "entidades": 2,
+    "bytes": 376,
+    "bytes_gzip_6": 232,
+    "sha256": "faae4b28fafe9f8736fe001b3a32d6b4069a065aa525fc315d65539746479a28",
+    "src_origen": "metadatos/src_3a6d4538f4c1.wkt",
+    "src_salida": "OGC:CRS84",
+    "campos_publicos": [
+      "NOMBRE_GEOGRAFICO"
+    ]
+  }
+]

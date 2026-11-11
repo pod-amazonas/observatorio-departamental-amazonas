@@ -62,6 +62,7 @@ async function recorrerConTab(page,vista){
  await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
  await expect(page.locator('[data-citizen-layer]')).toHaveCount(3);
  await expect(page.locator('[data-tanda-layer]')).toHaveCount(require('../datos/tanda_1_29/catalogo_entrega.json').length);
+ await expect(page.locator('[data-tanda2-layer]')).toHaveCount(require('../datos/tanda_2_29/catalogo_entrega.json').length);
  if(vista==='geovisor')await page.locator('#obs19-thematic-tree details').evaluateAll(nodes=>nodes.forEach(n=>n.open=true));
  const esperados=await page.locator(controles).evaluateAll(els=>{
   const cerrados=[...document.querySelectorAll('details:not([open])')];

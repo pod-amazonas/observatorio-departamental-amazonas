@@ -1,0 +1,25 @@
+{
+  "puerto": {
+    "total_origen": 85,
+    "seleccion": 2,
+    "geometrias": {
+      "Point": 2
+    },
+    "posiciones": 2,
+    "residuo_inverso_m": 1.862645149230957e-09,
+    "huellas_nativas": [
+      [
+        18,
+        "ad89f0e130c3ae5baa0578894d77a4211019a8193f9de47524b1315dd2128e28"
+      ],
+      [
+        40,
+        "209fa9bbc1f3a654f21e143c2ecfb60fced1af6a1481d2a4bfbeffcb5ad3820f"
+      ]
+    ],
+    "validez_geos_origen_y_salida": true,
+    "recorte": false,
+    "simplificacion": false,
+    "filtro": "GEOS Intersects sobre el GeoJSON publicado departamento_amazonas, DeCodigo 91."
+  }
+}

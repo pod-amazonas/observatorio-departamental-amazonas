@@ -4,9 +4,11 @@ const fs=require('node:fs'),path=require('node:path');
 const determinants=require('../catalogo_determinantes_para_geovisor.json').grupos.flatMap(g=>g.capas);
 const pilot=require('../datos/piloto_29/catalogo_entrega.json');
 const tanda=require('../datos/tanda_1_29/catalogo_entrega.json');
+const tanda2=require('../datos/tanda_2_29/catalogo_entrega.json');
 const available=[...determinants.filter(c=>c.archivo).map(c=>({selector:'[data-determinant-layer="'+c.objectid+'"]',id:c.objectid,kind:'idPilot',count:JSON.parse(fs.readFileSync(path.join(__dirname,'..',c.archivo),'utf8')).features.length})),
  ...pilot.map(c=>({selector:'[data-citizen-layer="'+c.id_capa+'"]',id:c.id_capa,kind:'idCitizen',count:c.entidades})),
- ...tanda.map(c=>({selector:'[data-tanda-layer="'+c.id_capa+'"]',id:c.id_capa,kind:'idCitizen',count:c.entidades,metadata:c}))];
+ ...tanda.map(c=>({selector:'[data-tanda-layer="'+c.id_capa+'"]',id:c.id_capa,kind:'idCitizen',count:c.entidades,metadata:c})),
+ ...tanda2.map(c=>({selector:'[data-tanda2-layer="'+c.id_capa+'"]',id:c.id_capa,kind:'idCitizen',count:c.entidades,metadata:c}))];
 test.beforeEach(async({page})=>{
  await page.route('**/*',route=>{
   const u=new URL(route.request().url());
@@ -19,11 +21,11 @@ for(const width of [1280,390])test(`menú único: todas las capas con interrupto
  test.setTimeout(120000);await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});
  const requests=[];page.on('request',r=>{if(r.url().endsWith('.geojson'))requests.push(r.url())});
  await page.goto('/#geovisor');const tree=page.locator('#obs19-thematic-tree');
- await expect(tree.locator('[role="switch"]')).toHaveCount(36+tanda.length);
+ await expect(tree.locator('[role="switch"]')).toHaveCount(36+tanda.length+tanda2.length);
  await expect(page.locator('#obs19-pilot-list')).toHaveCount(0);
  await expect(page.getByRole('heading',{name:'Determinantes ambientales · Capas individuales'})).toHaveCount(0);
  await expect(tree.locator('input[type="checkbox"]')).toHaveCount(0);
- expect(requests).toEqual([]);expect(available).toHaveLength(23+tanda.length);
+ expect(requests).toEqual([]);expect(available).toHaveLength(23+tanda.length+tanda2.length);
  for(const pending of determinants.filter(c=>!c.archivo)){
   const card=tree.locator('[data-determinant-layer="'+pending.objectid+'"]');
   await expect(card).toContainText('Pendiente de preparación web');
@@ -40,6 +42,7 @@ for(const width of [1280,390])test(`menú único: todas las capas con interrupto
    const meta=def.metadata;
    await expect(card.locator('xpath=ancestor::details[1]/summary')).toHaveText(meta.categoria);
    await expect(card).toContainText(meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo);
+   if(def.id==='puerto')await expect(card.getByText('No garantiza acceso público, operación actual ni seguridad de navegación.',{exact:false})).toBeVisible();
    await expect(page.locator('#v7-dynamic-legend')).toContainText(meta.nombre_publico);
   }
   // Las temáticas no reaparecen con una casilla duplicada en archivos locales.
