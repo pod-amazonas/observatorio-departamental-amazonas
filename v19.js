@@ -210,6 +210,7 @@ async function toggleLayer(def,want){
      box.append(element('p','',def.source),element('p','',def.restriction));return box;
     },{maxHeight:Math.min(320,Math.max(80,size.y-120)),maxWidth:Math.min(320,Math.max(100,size.x-120)),autoPanPaddingTopLeft:[45,10],autoPanPaddingBottomRight:[10,35]});
     const node=layer.getElement();if(node){node.setAttribute('tabindex','0');node.setAttribute('role','button');node.setAttribute('aria-label','Consultar '+name);
+     node.addEventListener('focus',()=>{map.closePopup();map.panInside(layer.getLatLng(),{padding:[30,30],animate:false})});
      node.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();layer.openPopup()}};
     }
    });
