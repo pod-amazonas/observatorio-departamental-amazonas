@@ -4,6 +4,7 @@ const $=id=>document.getElementById(id);
 const CATEGORIES=['Base cartográfica','Componente biofísico','Estructura institucional','Estructura funcional y de servicios','Socioeconómico y cultural','Gestión del riesgo','Ordenamiento territorial'];
 let catalog=null, citizenCatalog=[], tandaCatalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
 const layerState=new Map();
+let indicatorData=null, indicatorLoading=false;
 const getLayers=()=>window.obs19Api?.getLayers?.()||[];
 function element(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
 function legalUrl(v){try{const u=new URL(v);return (u.protocol==='https:'&&u.username===''&&u.password==='')?u.href:null;}catch{return null;}}
@@ -63,7 +64,84 @@ function renderCitizenLayers(){
   const def=citizen(meta);
   if(mount&&!mount.querySelector('[data-layer-key="'+def.key+'"]'))mount.append(layerCard(def));
   if(mount&&def.tanda)mount.parentElement.querySelector(':scope > .obs19-footnote')?.remove();
- });syncLayerControls();
+ });renderIndicatorsAction();syncLayerControls();
+}
+function renderIndicatorsAction(){
+ const mount=document.querySelector('[data-citizen-category="4"]');
+ if(!mount)return;
+ let card=$('indicadores-municipales');
+ if(!card){
+  card=element('div','obs20-pilot-card obs32-layer-card');card.id='indicadores-municipales';
+  card.append(element('h4','obs32-layer-title','Indicadores municipales'));
+  card.append(element('p','obs19-footnote','Consulta servicios públicos, pobreza, salud y educación en cada unidad territorial.'));
+  const button=element('button','ghost-button','Consultar indicadores municipales');button.type='button';button.id='consultar-indicadores';
+  button.addEventListener('click',openMunicipalIndicators);
+  const status=element('p','obs19-footnote');status.id='estado-indicadores';status.setAttribute('role','status');
+  card.append(button,status);mount.append(card);
+  mount.parentElement.querySelector(':scope > .obs19-footnote')?.remove();
+ }
+ $('consultar-indicadores').disabled=indicatorLoading||!citizenCatalog.some(meta=>meta.id_capa==='division_politico_administrativa');
+}
+async function openMunicipalIndicators(){
+ if(indicatorLoading)return;
+ indicatorLoading=true;
+ const button=$('consultar-indicadores'),status=$('estado-indicadores');
+ button.disabled=true;status.textContent='Cargando indicadores…';
+ try{
+  const meta=citizenCatalog.find(row=>row.id_capa==='division_politico_administrativa');
+  if(!meta)throw Error('El catálogo de División aún está cargando');
+  const def=citizen(meta);
+  await toggleLayer(def,true);
+  const entry=activeLayer(def);
+  if(!entry)throw Error('Activa División político-administrativa y vuelve a intentarlo');
+  let data=indicatorData;
+  if(!data){
+   const response=await fetch('datos/indicadores_29/municipios.json');
+   if(!response.ok)throw Error('Datos de indicadores no disponibles ('+response.status+')');
+   data=await response.json();
+  }
+  if(!Array.isArray(data.municipios)||!Array.isArray(data.indicadores))throw Error('Tabla de indicadores incorrecta');
+  const byCode=new Map();
+  for(const row of data.municipios){
+   if(typeof row.codigo!=='string'||byCode.has(row.codigo)||!row.valores)throw Error('Código municipal incorrecto o duplicado');
+   byCode.set(row.codigo,row);
+  }
+  const features=getFeatures(entry.data);
+  if(byCode.size!==features.length||features.some(feature=>!byCode.has(String(feature.properties?.MpCodigo))))throw Error('Los códigos no coinciden con División');
+  if(activeLayer(def)!==entry)throw Error('La capa se apagó durante la consulta; vuelve a activarla');
+  const map=window.obs19Api.getMap();
+  map.invalidateSize({pan:false});
+  const mapSize=map.getSize();
+  const popupOptions={maxHeight:Math.min(320,Math.max(80,mapSize.y-120)),maxWidth:Math.min(320,Math.max(100,mapSize.x-120)),autoPanPaddingTopLeft:[45,10],autoPanPaddingBottomRight:[10,35]};
+  entry.layer.eachLayer(layer=>{
+   const props=layer.feature.properties;
+   const record=byCode.get(String(props.MpCodigo));
+   layer.bindPopup(()=>{
+    const box=element('div');box.dataset.indicatorCode=String(props.MpCodigo);
+    box.append(element('h3','',props.MpNombre),element('p','','División político-administrativa · representación simplificada'));
+    for(const field of data.indicadores){
+     const section=element('section');section.append(element('strong','',field.nombre));
+     const value=record.valores[field.campo];
+     section.append(element('p','','Valor: '+(value===null||value===undefined?'Sin dato':String(value))));
+     section.append(element('p','','Año: '+field.anio+' · Unidad: '+field.unidad));
+     section.append(element('p','','Definición: '+field.definicion));
+     section.append(element('p','','Fuente: '+field.fuente));box.append(section);
+    }
+    return box;
+   },popupOptions);
+   const node=layer.getElement();
+   if(node){
+    node.setAttribute('tabindex','0');node.setAttribute('role','button');
+    node.setAttribute('aria-label','Indicadores de '+props.MpNombre);
+    node.onkeydown=event=>{
+     if(event.key==='Enter'||event.key===' '){event.preventDefault();layer.openPopup()}
+    };
+   }
+  });
+  indicatorData=data;
+  status.textContent='Selecciona una unidad del mapa para ver sus indicadores. Las definiciones pendientes están rotuladas «por confirmar».';
+ }catch(error){status.textContent='No se pudieron consultar los indicadores: '+String(error.message||error)+'. Puedes reintentar.'}
+ finally{indicatorLoading=false;button.disabled=false}
 }
 function syncLayerControls(){
  const defs=[...layersMeta().map(determinant),...[...citizenCatalog,...tandaCatalog].map(citizen)];
