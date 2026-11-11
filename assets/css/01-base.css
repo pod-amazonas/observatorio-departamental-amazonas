@@ -373,7 +373,9 @@ body :where(a[href],button,input,select,textarea,summary,[tabindex]):not(:where(
 .leaflet-control-attribution a{display:inline-block;margin:6px}
 /* El input oculto conserva una posición local para que Tab desplace el panel
    hasta su etiqueta, sin llevar el foco a una coordenada fuera de pantalla. */
-#geojson-upload{position:static!important;left:auto!important;clip-path:inset(50%)}
+/* Reservar también la altura de la etiqueta al enfocar el input de 1 px,
+   incluso con el catálogo ampliado de teselas y todos sus grupos abiertos. */
+#geojson-upload{position:static!important;left:auto!important;clip-path:inset(50%);scroll-margin-block-start:80px}
 /* El input nativo permanece oculto: su etiqueta muestra el foco de teclado. */
 .local-import-control:has(+ #geojson-upload:focus-visible){outline:3px solid #a34a06;outline-offset:2px;box-shadow:0 0 0 7px #fff}
 /* Las pestañas pasan a otra línea para no enfocar controles parcialmente ocultos. */

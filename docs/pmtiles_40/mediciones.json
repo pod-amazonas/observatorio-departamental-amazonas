@@ -1,0 +1,166 @@
+[
+  {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "hasta_dibujo_ms": 1146.4000000003725,
+    "bytes_pmtiles": 65915,
+    "bytes_lector": 37678,
+    "peticiones_pmtiles": 5,
+    "zoom": 6,
+    "errores_js": [],
+    "comparaciones": [
+      {
+        "escena": "departamento",
+        "zoom": 6,
+        "centro": [
+          -1.44,
+          -71.57
+        ],
+        "dimensiones": {
+          "w": 582,
+          "h": 427
+        },
+        "pixeles_union": 5895,
+        "pixeles_coincidentes": 4877,
+        "pixeles_diferentes": 1018,
+        "pixeles_teselas": 5098,
+        "pixeles_referencia": 5674,
+        "interseccion_sobre_union": 0.8273112807463953,
+        "diferencia_sobre_mapa_pct": 0.4002610740207758
+      },
+      {
+        "escena": "detalle",
+        "zoom": 10,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 582,
+          "h": 427
+        },
+        "pixeles_union": 10333,
+        "pixeles_coincidentes": 9689,
+        "pixeles_diferentes": 644,
+        "pixeles_teselas": 9910,
+        "pixeles_referencia": 10112,
+        "interseccion_sobre_union": 0.9376754088841576,
+        "diferencia_sobre_mapa_pct": 0.25321034545125704
+      },
+      {
+        "escena": "detalle_maximo",
+        "zoom": 12,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 582,
+          "h": 427
+        },
+        "pixeles_union": 44787,
+        "pixeles_coincidentes": 44165,
+        "pixeles_diferentes": 622,
+        "pixeles_teselas": 44453,
+        "pixeles_referencia": 44499,
+        "interseccion_sobre_union": 0.9861120414405966,
+        "diferencia_sobre_mapa_pct": 0.24456030259422648
+      }
+    ],
+    "referencia": {
+      "red_lenta": false,
+      "hasta_dibujo_ms": 957.8000000007451,
+      "bytes_gzip": 27361797,
+      "bytes_brutos": 75266153
+    }
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "hasta_dibujo_ms": 1115.5,
+    "bytes_pmtiles": 63728,
+    "bytes_lector": 37678,
+    "peticiones_pmtiles": 4,
+    "zoom": 6,
+    "errores_js": [],
+    "comparaciones": [
+      {
+        "escena": "departamento",
+        "zoom": 6,
+        "centro": [
+          -1.44,
+          -71.57
+        ],
+        "dimensiones": {
+          "w": 344,
+          "h": 307
+        },
+        "pixeles_union": 5077,
+        "pixeles_coincidentes": 4160,
+        "pixeles_diferentes": 917,
+        "pixeles_teselas": 4359,
+        "pixeles_referencia": 4878,
+        "interseccion_sobre_union": 0.8193815245223557,
+        "diferencia_sobre_mapa_pct": 0.8005098121377191
+      },
+      {
+        "escena": "detalle",
+        "zoom": 10,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 344,
+          "h": 307
+        },
+        "pixeles_union": 7829,
+        "pixeles_coincidentes": 7426,
+        "pixeles_diferentes": 403,
+        "pixeles_teselas": 7574,
+        "pixeles_referencia": 7681,
+        "interseccion_sobre_union": 0.9485247158002299,
+        "diferencia_sobre_mapa_pct": 0.3518052936657588
+      },
+      {
+        "escena": "detalle_maximo",
+        "zoom": 12,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 344,
+          "h": 307
+        },
+        "pixeles_union": 22064,
+        "pixeles_coincidentes": 21779,
+        "pixeles_diferentes": 285,
+        "pixeles_teselas": 21897,
+        "pixeles_referencia": 21946,
+        "interseccion_sobre_union": 0.9870830311820159,
+        "diferencia_sobre_mapa_pct": 0.2487953069348418
+      }
+    ],
+    "referencia": {
+      "red_lenta": true,
+      "hasta_dibujo_ms": 137827.90000000037,
+      "bytes_gzip": 27361797,
+      "bytes_brutos": 75266153
+    }
+  }
+]
