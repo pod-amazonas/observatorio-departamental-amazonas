@@ -28,7 +28,8 @@ test('tanda 2: integridad, campos públicos, RFC 7946 y presupuesto de transfere
   for(const feature of geojson.features)expect(Object.keys(feature.properties).sort()).toEqual(fields);
   expect(quality[row.id_capa]).toMatchObject({validez_geos_origen_y_salida:true,recorte:false,simplificacion:false});
   if(row.id_capa==='puerto'){
-   expect(quality.puerto).toMatchObject({total_origen:85,seleccion:85});
+   expect(quality.puerto).toMatchObject({total_origen:85,seleccion:2});
+   expect(geojson.features.map(feature=>feature.id)).toEqual([18,40]);
    expect(row.nombre_publico).toBe('Puertos y embarcaderos según IGAC 2022');
    expect(fields).toEqual(['NOMBRE_GEOGRAFICO']);
    expect(geojson.features.every(feature=>feature.geometry.type==='Point')).toBe(true);

@@ -2,13 +2,9 @@
 
 ## Puerto
 
-Alejandro autorizó los 85 registros de IGAC 2022 en #29. Se conserva la copia fiel de análisis, creada con OpenFileGDB en solo lectura, GDAL/PROJ para reproyectar a CRS84 y GEOS para validar. Se conservaron las 85 posiciones, incluidas dos entidades que comparten coordenadas. Se publica el rótulo geográfico como único atributo de origen. El diccionario documenta los campos excluidos.
+Alejandro autorizó publicar los puntos de IGAC 2022 que intersectan el límite departamental publicado de Amazonas (código 91). GEOS Intersects seleccionó 2 de los 85 registros. Se conservaron íntegros los registros seleccionados, con sus coordenadas y rótulo original.
 
-De los 85 registros, 82 quedan fuera del rectángulo que enmarca el departamento de Amazonas. El menú informa que el alcance va más allá del departamento y muestra la advertencia sobre acceso público, operación actual y seguridad de navegación.
-
-Peso de la capa: 13.759 bytes brutos y 2.414 bytes gzip nivel 6.
-
-En la prueba local desde el interruptor, con gzip, caché fría, 1,6 Mbit/s y 150 ms, el dibujo tardó 0,28 s en escritorio (1280 × 720) y 0,25 s en celular (390 × 844). Se comprobó SHA-256 de la respuesta y que el GeoJSON se solicita al activar.
+Peso: 376 bytes brutos y 232 bytes gzip nivel 6. El menú advierte que el dato no garantiza acceso público, operación actual ni seguridad de navegación.
 
 ## Capas revisadas pendientes
 
