@@ -1,0 +1,82 @@
+[
+  {
+    "capa": "equipamientos_publicos",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor real del menú; servidor local con gzip; dibujo de la capa, sin esperar a la base OSM externa. Supabase simulado. Una corrida por caso.",
+    "errores_js": [],
+    "entidades": 25,
+    "visible": true,
+    "descarga_ms": 168.89999999990687,
+    "hasta_dibujo_ms": 257.10000000009313,
+    "bytes_gzip": 1370,
+    "bytes_brutos": 6648
+  },
+  {
+    "capa": "centros_poblados",
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor real del menú; servidor local con gzip; dibujo de la capa, sin esperar a la base OSM externa. Supabase simulado. Una corrida por caso.",
+    "errores_js": [],
+    "entidades": 11,
+    "visible": true,
+    "descarga_ms": 160.79999999981374,
+    "hasta_dibujo_ms": 245.39999999990687,
+    "bytes_gzip": 681,
+    "bytes_brutos": 2577
+  },
+  {
+    "capa": "equipamientos_publicos",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor real del menú; servidor local con gzip; dibujo de la capa, sin esperar a la base OSM externa. Supabase simulado. Una corrida por caso.",
+    "errores_js": [],
+    "entidades": 25,
+    "visible": true,
+    "descarga_ms": 166.29999999981374,
+    "hasta_dibujo_ms": 245.1999999997206,
+    "bytes_gzip": 1370,
+    "bytes_brutos": 6648
+  },
+  {
+    "capa": "centros_poblados",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits_por_segundo": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "metodo": "Interruptor real del menú; servidor local con gzip; dibujo de la capa, sin esperar a la base OSM externa. Supabase simulado. Una corrida por caso.",
+    "errores_js": [],
+    "entidades": 11,
+    "visible": true,
+    "descarga_ms": 170,
+    "hasta_dibujo_ms": 314.5,
+    "bytes_gzip": 681,
+    "bytes_brutos": 2577
+  }
+]
