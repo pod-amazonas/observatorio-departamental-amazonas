@@ -7,11 +7,15 @@ from pathlib import Path
 
 class TestHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
-        # Rango real para la única POC; el resto del servidor no cambia.
-        if self.path.split('?', 1)[0] != '/datos/teselas_40/drenaje_doble.pmtiles' or not self.headers.get('Range'):
-            return super().do_GET()
+        # Rangos reales para las familias PMTiles autorizadas; el resto no cambia.
         import re
-        path = Path(self.directory) / 'datos/teselas_40/drenaje_doble.pmtiles'
+        archive = self.path.split('?', 1)[0]
+        if not re.fullmatch(r'/datos/(?:teselas_40/drenaje_doble|rondas_43/teselas/determinante_(?:2[0-9]|3[01]))\.pmtiles', archive) or not self.headers.get('Range'):
+            return super().do_GET()
+        path = Path(self.directory) / archive.lstrip('/')
+        if not path.is_file():
+            self.send_error(404)
+            return
         size = path.stat().st_size
         match = re.fullmatch(r'bytes=(\d+)-(\d+)', self.headers['Range'])
         if not match or int(match[1]) >= size or int(match[2]) < int(match[1]):
@@ -26,7 +30,10 @@ class TestHandler(SimpleHTTPRequestHandler):
         self.end_headers()
         with path.open('rb') as stream:
             stream.seek(start)
-            self.wfile.write(stream.read(end-start+1))
+            try:
+                self.wfile.write(stream.read(end-start+1))
+            except (BrokenPipeError, ConnectionResetError):
+                pass  # El cliente puede cancelar un rango en curso.
 
 
 class TestHTTPServer(ThreadingHTTPServer):

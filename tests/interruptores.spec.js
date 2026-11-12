@@ -28,7 +28,7 @@ for(const width of [1280,390])test(`menú único: todas las capas con interrupto
  await expect(page.getByRole('heading',{name:'Determinantes ambientales · Capas individuales'})).toHaveCount(0);
  await expect(tree.locator('input[type="checkbox"]')).toHaveCount(0);
  expect(requests).toEqual([]);expect(available).toHaveLength(23+tanda.length+tanda2.length+tanda3.filter(c=>c.estado==='publicable').length);
- for(const pending of determinants.filter(c=>!c.archivo)){
+ for(const pending of determinants.filter(c=>!c.archivo&&!c.archivoTeselas)){
   const card=tree.locator('[data-determinant-layer="'+pending.objectid+'"]');
   await expect(card).toContainText('Pendiente de preparación web');
   await expect(card.locator('[role="switch"]')).toBeDisabled();await expect(card.locator('[role="switch"]')).toHaveAttribute('aria-checked','false');

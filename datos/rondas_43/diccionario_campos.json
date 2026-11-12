@@ -1,0 +1,10 @@
+{
+  "objectid": "Identificador de la determinante en el catálogo; no recuento de fragmentos.",
+  "fid_ronda": "Identificador original de Rondas_Hidricas.",
+  "Nombre": "Nombre literal de Determinantes_Ambientales_CAR, verificado por correspondencia WKB.",
+  "Norma_Asociada": "Referencia normativa literal del registro de determinantes. No acredita un acto individual de acotamiento.",
+  "Fuente": "Corpoamazonia, según autorización de publicación.",
+  "Anio": "2022, año de fuente declarado por Alejandro; no fecha acreditada por entidad.",
+  "Fuente_hidrica": "Atributo literal de Rondas_Hidricas.",
+  "Longitud_buffer": "Valor original del atributo (30). No se interpreta como ancho normativo verificado."
+}

@@ -2,6 +2,7 @@
 (function(){'use strict';
 const $=id=>document.getElementById(id);
 const CATEGORIES=['Base cartográfica','Componente biofísico','Estructura institucional','Estructura funcional y de servicios','Socioeconómico y cultural','Gestión del riesgo','Ordenamiento territorial'];
+let tileReaderReady=null;
 let catalog=null, citizenCatalog=[], tandaCatalog=[], tanda2Catalog=[], tanda3Catalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
 const layerState=new Map();
 let indicatorData=null, indicatorLoading=false;
@@ -11,10 +12,11 @@ function legalUrl(v){try{const u=new URL(v);return (u.protocol==='https:'&&u.use
 function clear(el){if(el)el.replaceChildren();}
 function layersMeta(){return catalog?.grupos?.flatMap(g=>g.capas.map(c=>({...c,group:g.titulo})))||[];}
 function determinant(meta){
- const label=meta.etiqueta||meta.nombre||('Determinante '+meta.objectid);
- return {key:'det-'+meta.objectid,kind:'determinant',id:meta.objectid,label,name:'Det. '+meta.objectid+' · '+label,available:!!meta.archivo,url:meta.archivo,
-  description:meta.group+' · ID '+meta.objectid+' · '+(meta.archivo?'Disponible':'Pendiente de preparación web'),
-  source:meta.fuenteDeclarada||'Fuente indicada en los atributos',restriction:'',opacity:Math.round((meta.opacidadSugerida??.35)*100),metadata:meta};
+ const label=meta.etiqueta||meta.nombre||('Determinante '+meta.objectid),tiles=!!meta.archivoTeselas;
+ const source=(meta.fuenteDeclarada||'Fuente indicada en los atributos')+(meta.anioFuente?' · '+meta.anioFuente:'');
+ return {key:'det-'+meta.objectid,kind:'determinant',id:meta.objectid,label,name:'Det. '+meta.objectid+' · '+(tiles?meta.nombre:label)+(tiles?' · '+source:''),available:!!(meta.archivo||meta.archivoTeselas),url:meta.archivoTeselas||meta.archivo,vectorTiles:tiles,
+  description:meta.group+' · ID '+meta.objectid+' · '+(meta.archivo||tiles?'Disponible':'Pendiente de preparación web')+(tiles?' · '+source:''),
+  source,restriction:meta.advertencia||'',opacity:Math.round((meta.opacidadSugerida??.35)*100),color:tiles?'#176c8b':undefined,metadata:meta};
 }
 function citizen(meta){
  const tanda=meta.lote===3?3:meta.lote===2?2:meta.categoria?1:0;
@@ -42,6 +44,10 @@ function layerCard(def){
    row.append(symbol,document.createTextNode(item.valor+' · '+item.entidades));legend.append(row);
   });card.append(legend);
  }
+ if(def.vectorTiles){
+  const legend=element('p','obs32-layer-description'),symbol=element('span','','■ ');symbol.style.color=def.color;symbol.setAttribute('aria-hidden','true');
+  legend.append(symbol,document.createTextNode('Leyenda: '+def.metadata.leyenda+' · Norma: '+def.metadata.norma));card.append(legend);
+ }
  const status=element('p','obs19-footnote');status.id='estado-'+def.key;status.dataset.layerStatus=def.key;status.setAttribute('role','status');
  if(def.kind==='citizen')status.dataset.citizenStatus=def.id;
  control.setAttribute('aria-describedby',status.id);card.append(status);
@@ -56,10 +62,10 @@ function layerCard(def){
 function renderTree(){const tree=$('obs19-thematic-tree');if(!tree)return;clear(tree);
  CATEGORIES.forEach((cat,i)=>{const outer=element('details');outer.open=i===1;outer.append(element('summary','',cat));
   if(i===1){const mid=element('details');mid.open=true;mid.append(element('summary','','Determinantes ambientales · 33 capas previstas'));
-   (catalog?.grupos||[]).forEach(g=>{const details=element('details');details.append(element('summary','',g.titulo+' · '+g.capas.filter(c=>!!c.archivo).length+' disponibles de '+g.capas.length));
+   (catalog?.grupos||[]).forEach(g=>{const details=element('details');details.append(element('summary','',g.titulo+' · '+g.capas.filter(c=>!!(c.archivo||c.archivoTeselas)).length+' disponibles de '+g.capas.length));
     g.capas.forEach(c=>details.append(layerCard(determinant({...c,group:g.titulo}))));mid.append(details)});
    if(!catalog?.grupos?.length)mid.append(element('p','obs19-empty','El catálogo de determinantes no está disponible. Comprueba la conexión y actualiza la página.'));
-   const pending=layersMeta().filter(c=>!c.archivo).length;
+   const pending=layersMeta().filter(c=>!c.archivo&&!c.archivoTeselas).length;
    mid.append(element('p','obs19-footnote',pending+' determinantes pendientes de preparación web.'));outer.append(mid);
   }else if(i!==0){outer.append(element('p','obs19-footnote','Categoría estructurada. Capas de esta temática pendientes de incorporación técnica.'))}
   const mount=element('div');mount.dataset.citizenCategory=String(i);outer.append(mount);
@@ -173,6 +179,30 @@ async function waitForMap(signal){
  }
  if(signal.aborted)throw new DOMException('Carga cancelada','AbortError');
 }
+async function addTileDeterminant(def,state,controller){
+ if(!/^datos\/rondas_43\/teselas\/determinante_(19|2[0-9]|3[01])\.pmtiles$/.test(def.url))throw Error('Ruta de teselas no autorizada');
+ if(!await tileReaderReady||!window.obs40Tiles)throw Error('Lector de teselas no disponible; actualiza la página');
+ const spec=def.metadata.teselas;
+ if(!spec||!Number.isSafeInteger(spec.bytes)||spec.bytes<127||spec.minzoom!==5||spec.maxzoom!==12||spec.dataLayer!=='rondas'||!Array.isArray(spec.bbox)||spec.bbox.length!==4)throw Error('Ficha de teselas incorrecta');
+ const signal=controller.signal,map=window.obs19Api.getMap();let layer;
+ const fail=error=>{
+  if(signal.aborted||state.controller!==controller||error.name==='AbortError')return;
+  state.error='No se pudo cargar la capa: '+String(error.message||error)+'. Vuelve a encenderla para reintentar.';state.want=false;state.loading=false;controller.abort();
+  const current=activeLayer(def);if(current&&current.layer===layer)window.obs19Api.remove(current.id);else layer?.remove();syncLayerControls();
+ };
+ try{
+  layer=await window.obs40Tiles.create({...spec,url:def.url,color:def.color,opacity:def.opacity/100,lineas:true},signal,fail);
+  if(signal.aborted||!state.want||state.controller!==controller)return;
+  if(getLayers().length>=8)throw Error('Ya se alcanzó el máximo de 8 capas');
+  const entry={id:-4300-def.id,idPilot:def.id,name:def.name,origin:'Determinantes ambientales · publicación autorizada',visible:true,opacity:def.opacity,layer,data:null,count:0,geomType:'Teselas vectoriales',color:def.color,vectorTiles:true,metadata:{...def.metadata,fuenteDeclarada:def.source}};
+  map.fitBounds(layer.getBounds(),{padding:[16,16],maxZoom:12,animate:false});
+  const ready=window.obs40Tiles.ready(layer,map,signal);
+  getLayers().push(entry);layer.on('remove',()=>{controller.abort();if(state.controller===controller){state.want=false;state.loading=false;syncLayerControls()}});
+  layer.addTo(map);window.obs19Api.redraw();await ready;
+  if(signal.aborted||state.controller!==controller)return;
+  selectedLayer=entry.id;window.obs19Api.redraw();
+ }catch(error){fail(error);if(error.name==='AbortError')return;throw error}
+}
 async function toggleLayer(def,want){
  if(!def.available)return;
  let state=layerState.get(def.key);if(!state){state={want:false};layerState.set(def.key,state)}
@@ -184,6 +214,7 @@ async function toggleLayer(def,want){
  try{
   if(!window.obs19Api?.getMap?.())location.hash='#geovisor';
   await waitForMap(controller.signal);
+  if(def.vectorTiles){await addTileDeterminant(def,state,controller);return}
   const valid=def.tanda?/^datos\/tanda_[123]_29\/capas\/[a-z0-9_]+\.geojson$/:def.kind==='citizen'?/^datos\/piloto_29\/capas\/(01_base_cartografica|02_componente_biofisico)\/[a-z0-9_]+\.geojson$/:/^datos\/determinantes_ambientales\/[A-Z0-9_]+\/determinante_\d{2}\.geojson$/;
   if(!valid.test(def.url))throw Error('Ruta de capa no autorizada');
   let data=state.data;
@@ -222,11 +253,11 @@ async function toggleLayer(def,want){
 function getFeatures(d){if(!d)return[];if(d.type==='FeatureCollection')return Array.isArray(d.features)?d.features:[];return d.type==='Feature'?[d]:[{properties:{},geometry:d}]}
 function summariseStats(layer){const feats=getFeatures(layer.data),props=feats.map(f=>f.properties||{});const numeric={};const categoric={};props.forEach(p=>Object.entries(p).forEach(([k,v])=>{if(v==null||v==='')return;if(typeof v==='number'&&Number.isFinite(v)){(numeric[k]??=[]).push(v);}else if(typeof v==='string'&&v.length<80&&!/^(objectid|fid|shape_)/i.test(k)){const c=categoric[k]??={};c[v]=(c[v]||0)+1;}}));const group=Object.entries(categoric).filter(([k,counts])=>Object.keys(counts).length>=2&&Object.keys(counts).length<=12).sort((a,b)=>Object.keys(a[1]).length-Object.keys(b[1]).length)[0];return{feats,props,numeric,group}}
 function renderStats(){syncLayerControls();const overview=$('obs19-stat-overview'),detail=$('obs19-stat-detail');if(!overview||!detail)return;clear(overview);clear(detail);
- const active=getLayers().filter(x=>x.visible);const counts=active.reduce((n,e)=>n+(e.count||0),0);const top=element('div','obs19-metrics');[['Capas visibles',active.length],['Registros cargados',active.some(e=>e.vectorTiles)&&active.every(e=>e.vectorTiles)?'Sin conteo':counts]].forEach(([lab,val])=>{const d=element('div','obs19-metric');d.append(element('strong','',String(val)),element('small','',lab));top.append(d)});overview.append(top);if(active.some(e=>e.vectorTiles))overview.append(element('p','obs19-footnote','El drenaje en teselas no se incluye en el conteo de registros.'));
+ const active=getLayers().filter(x=>x.visible);const counts=active.reduce((n,e)=>n+(e.count||0),0);const top=element('div','obs19-metrics');[['Capas visibles',active.length],['Registros cargados',active.some(e=>e.vectorTiles)&&active.every(e=>e.vectorTiles)?'Sin conteo':counts]].forEach(([lab,val])=>{const d=element('div','obs19-metric');d.append(element('strong','',String(val)),element('small','',lab));top.append(d)});overview.append(top);if(active.some(e=>e.vectorTiles))overview.append(element('p','obs19-footnote','Las capas en teselas no se incluyen en el conteo de registros.'));
  if(!active.length){detail.append(element('div','obs19-empty','Activa una capa desde el panel izquierdo. Se mostrarán estadísticas según sus atributos.'));return}
  if(!active.some(x=>x.id===selectedLayer))selectedLayer=active[0].id;
  const switches=element('div','obs19-layer-switches');active.forEach(e=>{const b=element('button',selectedLayer===e.id?'active':'',e.name.length>28?e.name.slice(0,27)+'…':e.name);b.type='button';b.onclick=()=>{selectedLayer=e.id;renderStats()};switches.append(b)});detail.append(switches);
- const e=active.find(x=>x.id===selectedLayer);if(e.vectorTiles){const card=element('div','obs19-stat-card');card.append(element('h3','',e.name),element('p','',e.origin),element('p','',e.metadata.advertencia),element('p','','Visualización por teselas: no reconstruye entidades completas ni permite calcular conteos o superficies.'));detail.append(card);return}const data=summariseStats(e);const card=element('div','obs19-stat-card');card.append(element('h3','',e.name),element('p','','Tipo: '+e.geomType+' · '+data.feats.length+' registros · '+e.origin));
+ const e=active.find(x=>x.id===selectedLayer);if(e.vectorTiles){const card=element('div','obs19-stat-card');card.append(element('h3','',e.name),element('p','',e.metadata.fuenteDeclarada||e.origin),...(e.metadata.norma?[element('p','','Norma referida: '+e.metadata.norma)]:[]),element('p','',e.metadata.advertencia),element('p','','Visualización por teselas: no reconstruye entidades completas ni permite calcular conteos o superficies.'));detail.append(card);return}const data=summariseStats(e);const card=element('div','obs19-stat-card');card.append(element('h3','',e.name),element('p','','Tipo: '+e.geomType+' · '+data.feats.length+' registros · '+e.origin));
  const p=data.props[0]||{};let displayed=0;for(const [k,v] of Object.entries(p)){if(v==null||String(v)==='')continue;if(displayed++>=9)break;const r=element('div','obs19-attr');r.append(element('span','',k.replaceAll('_',' ')),element('strong','',String(v).slice(0,180)));card.append(r)}
  if(!displayed)card.append(element('p','','No hay atributos textuales disponibles en la capa.'));
  detail.append(card);
@@ -296,7 +327,8 @@ function renderCalls(){const publicEl=$('obs19-opportunities'), admin=$('obs19-a
 function initCalls(){const form=$('obs19-call-form'),button=$('obs19-calls-export');form?.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(form);const row=Object.fromEntries(fd.entries());if(!legalUrl(row.url)){alert('Utiliza una URL HTTPS válida.');return}row.tipo=row.tipo==='curso'?'curso':'convocatoria';callDraft.push(row);form.reset();renderCalls()});button?.addEventListener('click',()=>{const content=JSON.stringify(callDraft,null,2);const a=document.createElement('a'),obj=URL.createObjectURL(new Blob([content],{type:'application/json'}));a.href=obj;a.download='convocatorias_para_revision.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(obj),1500)});
  fetch('convocatorias_publicadas.json').then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{if(Array.isArray(data))publicCalls=data.filter(x=>x&&['curso','convocatoria'].includes(x.tipo)&&typeof x.titulo==='string'&&legalUrl(x.url)).slice(0,100);renderCalls()}).catch(()=>renderCalls());renderCalls()}
 function init(){
- const tilesScript=document.createElement('script');tilesScript.src='assets/js/drenaje-pmtiles40.js';document.head.append(tilesScript);
+ tileReaderReady=new Promise(resolve=>{const tilesScript=document.createElement('script');tilesScript.src='assets/js/drenaje-pmtiles40.js';tilesScript.onload=()=>resolve(true);tilesScript.onerror=()=>resolve(false);document.head.append(tilesScript)});
+ $('geojson-reset')?.addEventListener('click',()=>{for(const state of layerState.values()){state.want=false;state.controller?.abort();state.loading=false}syncLayerControls()});
  // Reajusta Leaflet cuando el contenedor cambia de altura/anchura.
  const geovisorMap=$('visor-map');
  if(geovisorMap && typeof ResizeObserver==='function'){
