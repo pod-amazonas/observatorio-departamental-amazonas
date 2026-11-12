@@ -1,0 +1,461 @@
+{
+  "fuente": "Rondas_Hidricas",
+  "entidad": "Corpoamazonia",
+  "anio_declarado": 2022,
+  "registros": [
+    {
+      "fid": 1,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "f23e783e12967318b1d836b8287c096cbeae455c16ef3254b7f8af6741576d0f",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 2,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "710519f9a275ce46100e8817d11449b250e31d8ae1a7c14da87ac6455f6e4ea3",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 3,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "8645cbba9f084513c33180e7e770d8be3903ee639d673f3e6846a93992a5daff",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 4,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "6264b06cbad67ac558353c73b0964db995f05fd1754a9530660d6d837e5dfeb8",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 5,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "7a09e7aaff2a340ac1ca17e0958b1febc547e9e7b24b05bcb473ac5bfa58f289",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 6,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": false,
+      "sha256_wkb_original": "aafb3687c4a81b0be35a460f9b36b96ed04e3a6431ea093c9ebb64263849751c",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Ring Self-intersection"
+    },
+    {
+      "fid": 7,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": false,
+      "sha256_wkb_original": "ee6a4a22e1e4f9528c414b5039ac6449d7a85d6da1d83207c78aad074ffe633d",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Self-intersection"
+    },
+    {
+      "fid": 8,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": false,
+      "sha256_wkb_original": "0b70e60763e349266a3b7edac344d5fd0911bb9e327d86b3159bb69dd98f249d",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Self-intersection"
+    },
+    {
+      "fid": 9,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": false,
+      "sha256_wkb_original": "021b6e7c848e02e54d1b7cd9df8ac3599d0479f5eb57763409626b34fb1cbd5c",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Self-intersection"
+    },
+    {
+      "fid": 10,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "6d5a7321d2010730ea3cad0c2dc24e7973f12a28f95756edaae543f029d0420f",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 11,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "9afaeea2f8b259aae22c5cc7509282f32790fa0154487eb7d17e22d6667b9079",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 12,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "b75acdac110e5a5bc018289109f30820289bdb5f7be11963332b87f2d1e96887",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    },
+    {
+      "fid": 13,
+      "fuente_hidrica": "Drenaje sencillo Amazonas",
+      "geometria": "MULTIPOLYGON",
+      "curvas": false,
+      "valida_geos": true,
+      "sha256_wkb_original": "aa3d39f8efe370bdbf55d04ab2075ff4d985960297353690a95a16deb588d76b",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "longitud_buffer_atributo": 30,
+      "motivo_validez": "Valid Geometry"
+    }
+  ],
+  "correspondencias": [
+    {
+      "objectid": 19,
+      "fid_ronda_por_wkb_exacto": null,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "2c60f8a2a4c1ab72abe471654ae75169a301d422574bd662be6f733757d6436f"
+    },
+    {
+      "objectid": 20,
+      "fid_ronda_por_wkb_exacto": 2,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "710519f9a275ce46100e8817d11449b250e31d8ae1a7c14da87ac6455f6e4ea3"
+    },
+    {
+      "objectid": 21,
+      "fid_ronda_por_wkb_exacto": 3,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "8645cbba9f084513c33180e7e770d8be3903ee639d673f3e6846a93992a5daff"
+    },
+    {
+      "objectid": 22,
+      "fid_ronda_por_wkb_exacto": 4,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "6264b06cbad67ac558353c73b0964db995f05fd1754a9530660d6d837e5dfeb8"
+    },
+    {
+      "objectid": 23,
+      "fid_ronda_por_wkb_exacto": 5,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "7a09e7aaff2a340ac1ca17e0958b1febc547e9e7b24b05bcb473ac5bfa58f289"
+    },
+    {
+      "objectid": 24,
+      "fid_ronda_por_wkb_exacto": 6,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "aafb3687c4a81b0be35a460f9b36b96ed04e3a6431ea093c9ebb64263849751c"
+    },
+    {
+      "objectid": 25,
+      "fid_ronda_por_wkb_exacto": 7,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "ee6a4a22e1e4f9528c414b5039ac6449d7a85d6da1d83207c78aad074ffe633d"
+    },
+    {
+      "objectid": 26,
+      "fid_ronda_por_wkb_exacto": 8,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "0b70e60763e349266a3b7edac344d5fd0911bb9e327d86b3159bb69dd98f249d"
+    },
+    {
+      "objectid": 27,
+      "fid_ronda_por_wkb_exacto": 9,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "021b6e7c848e02e54d1b7cd9df8ac3599d0479f5eb57763409626b34fb1cbd5c"
+    },
+    {
+      "objectid": 28,
+      "fid_ronda_por_wkb_exacto": 10,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "6d5a7321d2010730ea3cad0c2dc24e7973f12a28f95756edaae543f029d0420f"
+    },
+    {
+      "objectid": 29,
+      "fid_ronda_por_wkb_exacto": 11,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "9afaeea2f8b259aae22c5cc7509282f32790fa0154487eb7d17e22d6667b9079"
+    },
+    {
+      "objectid": 30,
+      "fid_ronda_por_wkb_exacto": 12,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "b75acdac110e5a5bc018289109f30820289bdb5f7be11963332b87f2d1e96887"
+    },
+    {
+      "objectid": 31,
+      "fid_ronda_por_wkb_exacto": 13,
+      "nombre": "Rondas hídricas",
+      "norma": "Resolución 957 de 2018",
+      "car": "Corpoamazonia",
+      "sha256_wkb_determinante": "aa3d39f8efe370bdbf55d04ab2075ff4d985960297353690a95a16deb588d76b"
+    }
+  ],
+  "discrepancia_19": {
+    "issue": 44,
+    "metodo": "Distancia entre posiciones homólogas, mismo orden de polígonos/anillos/posiciones; no es Hausdorff",
+    "distancia_min_m": 53.14623516100448,
+    "distancia_mediana_m": 53.220688876410144,
+    "distancia_max_m": 53.3147647850908,
+    "dx_min_m": -4.294300000183284,
+    "dx_max_m": -4.059700000099838,
+    "dy_min_m": 52.985700000077486,
+    "dy_max_m": 53.14780000038445,
+    "posiciones_ronda": 470634,
+    "posiciones_determinante": 470634,
+    "vertices_solo_ronda": 469903,
+    "vertices_solo_determinante": 469903,
+    "poligonos": [
+      554,
+      554
+    ],
+    "anillos": [
+      731,
+      731
+    ],
+    "area_ronda_m2": 1153122958.4173307,
+    "area_determinante_m2": 1153123363.4452121,
+    "diferencia_area_determinante_menos_ronda_m2": 405.02788142999003
+  },
+  "reparaciones": [
+    {
+      "fid": 6,
+      "valida_antes": false,
+      "valida_despues": true,
+      "gdal": "3.13.3",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "metodo": "OGR_G_MakeValidEx, METHOD=LINEWORK; SRC nativo, sin reproyectar ni simplificar",
+      "antes": {
+        "posiciones": 3967722,
+        "poligonos": 487,
+        "anillos": 541,
+        "tipos": {
+          "6": 1,
+          "3": 487
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 824265234.0985852
+      },
+      "despues": {
+        "posiciones": 3967723,
+        "poligonos": 487,
+        "anillos": 542,
+        "tipos": {
+          "6": 1,
+          "3": 487
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 824265234.0985852
+      },
+      "vertices_unicos_antes": 3967178,
+      "vertices_unicos_despues": 3967178,
+      "vertices_originales_ausentes": 0,
+      "coordenadas_nuevas": 0,
+      "desplazamiento_max_vertices_m": 0.0,
+      "diferencia_area_exacta_m2": 0.0,
+      "diferencia_area_numerador": "0",
+      "diferencia_area_denominador": "1",
+      "sha256_original": "aafb3687c4a81b0be35a460f9b36b96ed04e3a6431ea093c9ebb64263849751c",
+      "sha256_reparado": "f45cafce016416edb86eaceff034a164afdedc446d94ddbaf8b61023205744fc"
+    },
+    {
+      "fid": 7,
+      "valida_antes": false,
+      "valida_despues": true,
+      "gdal": "3.13.3",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "metodo": "OGR_G_MakeValidEx, METHOD=LINEWORK; SRC nativo, sin reproyectar ni simplificar",
+      "antes": {
+        "posiciones": 2138629,
+        "poligonos": 77,
+        "anillos": 79,
+        "tipos": {
+          "6": 1,
+          "3": 77
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 128963175.06291285
+      },
+      "despues": {
+        "posiciones": 2138619,
+        "poligonos": 67,
+        "anillos": 69,
+        "tipos": {
+          "7": 1,
+          "6": 1,
+          "3": 67,
+          "5": 1,
+          "2": 10
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 128963175.06291285
+      },
+      "vertices_unicos_antes": 2138530,
+      "vertices_unicos_despues": 2138530,
+      "vertices_originales_ausentes": 0,
+      "coordenadas_nuevas": 0,
+      "desplazamiento_max_vertices_m": 0.0,
+      "diferencia_area_exacta_m2": 0.0,
+      "diferencia_area_numerador": "0",
+      "diferencia_area_denominador": "1",
+      "sha256_original": "ee6a4a22e1e4f9528c414b5039ac6449d7a85d6da1d83207c78aad074ffe633d",
+      "sha256_reparado": "0addf8efe7aa34c1badf880792a8abd079878664a9f87e7d67727703cfcf34c3"
+    },
+    {
+      "fid": 8,
+      "valida_antes": false,
+      "valida_despues": true,
+      "gdal": "3.13.3",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "metodo": "OGR_G_MakeValidEx, METHOD=LINEWORK; SRC nativo, sin reproyectar ni simplificar",
+      "antes": {
+        "posiciones": 3520804,
+        "poligonos": 6,
+        "anillos": 27,
+        "tipos": {
+          "6": 1,
+          "3": 6
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 137453022.7027687
+      },
+      "despues": {
+        "posiciones": 3520800,
+        "poligonos": 2,
+        "anillos": 23,
+        "tipos": {
+          "7": 1,
+          "6": 1,
+          "3": 2,
+          "5": 1,
+          "2": 4
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 137453022.7027687
+      },
+      "vertices_unicos_antes": 3520769,
+      "vertices_unicos_despues": 3520769,
+      "vertices_originales_ausentes": 0,
+      "coordenadas_nuevas": 0,
+      "desplazamiento_max_vertices_m": 0.0,
+      "diferencia_area_exacta_m2": 0.0,
+      "diferencia_area_numerador": "0",
+      "diferencia_area_denominador": "1",
+      "sha256_original": "0b70e60763e349266a3b7edac344d5fd0911bb9e327d86b3159bb69dd98f249d",
+      "sha256_reparado": "f2198becb3dcdd0114ff0cc509b88b1779bafef1eb7e851e3f95d5fc17d4b7c3"
+    },
+    {
+      "fid": 9,
+      "valida_antes": false,
+      "valida_despues": true,
+      "gdal": "3.13.3",
+      "geos": "3.14.1-CAPI-1.20.5",
+      "metodo": "OGR_G_MakeValidEx, METHOD=LINEWORK; SRC nativo, sin reproyectar ni simplificar",
+      "antes": {
+        "posiciones": 3582026,
+        "poligonos": 17,
+        "anillos": 43,
+        "tipos": {
+          "6": 1,
+          "3": 17
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 288652290.946084
+      },
+      "despues": {
+        "posiciones": 3582020,
+        "poligonos": 11,
+        "anillos": 37,
+        "tipos": {
+          "7": 1,
+          "6": 1,
+          "3": 11,
+          "5": 1,
+          "2": 6
+        },
+        "anillos_abiertos": 0,
+        "area_m2": 288652290.946084
+      },
+      "vertices_unicos_antes": 3581970,
+      "vertices_unicos_despues": 3581970,
+      "vertices_originales_ausentes": 0,
+      "coordenadas_nuevas": 0,
+      "desplazamiento_max_vertices_m": 0.0,
+      "diferencia_area_exacta_m2": 0.0,
+      "diferencia_area_numerador": "0",
+      "diferencia_area_denominador": "1",
+      "sha256_original": "021b6e7c848e02e54d1b7cd9df8ac3599d0479f5eb57763409626b34fb1cbd5c",
+      "sha256_reparado": "68575abd9accb3cb83d9a754b2f911de145da7581f3276b693eb964cda060bbf"
+    }
+  ],
+  "control_fuente": {
+    "lectura": "OpenFileGDB read-only",
+    "archivos_sin_cambios_tamano_mtime": true,
+    "huella_metadatos_archivos": "bcc1dbddb720271117edd446df92602df80a67fba2fec2358dd3bbc38412e0ed"
+  },
+  "src_nativo_wkt_sha256": "9bc3a2ca20181322c2d6d97b44f6cae4a2e0676ff83fd1187a45cf325c3f60cc",
+  "unidad_nativa": "metro",
+  "src_wkt_referencia": "PROJCS[\"MAGNA CTM12\",GEOGCS[\"MAGNA-SIRGAS\",DATUM[\"Marco_Geocentrico_Nacional_de_Referencia\",SPHEROID[\"GRS 1980\",6378137,298.257222101,AUTHORITY[\"EPSG\",\"7019\"]],AUTHORITY[\"EPSG\",\"6686\"]],PRIMEM[\"Greenwich\",0],UNIT[\"Degree\",0.0174532925199433]],PROJECTION[\"Transverse_Mercator\"],PARAMETER[\"latitude_of_origin\",4],PARAMETER[\"central_meridian\",-73],PARAMETER[\"scale_factor\",0.9992],PARAMETER[\"false_easting\",5000000],PARAMETER[\"false_northing\",2000000],UNIT[\"metre\",1,AUTHORITY[\"EPSG\",\"9001\"]],AXIS[\"Easting\",EAST],AXIS[\"Northing\",NORTH]]"
+}

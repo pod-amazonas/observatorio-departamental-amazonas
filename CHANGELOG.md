@@ -9,6 +9,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 - El indicador de foco de la portada pasa a `#a34a06` y alcanza al menos 5:1 sobre sus fondos (#17).
 
 ### Agregado
+- Doce rondas hídricas (determinantes 20–31, Corpoamazonia 2022) en PMTiles con el lector compartido del drenaje, controles únicos, fuente/año/leyenda y referencia normativa. Cuatro geometrías corregidas solo en copias con 0 m / 0 m²; la 19 permanece pendiente por discrepancia entre fuentes (#43, #44).
 - `scripts/reducir_precision_geojson.py` (solo capas autorizadas en el catálogo) y `scripts/topologia_geojson.py` (validador topológico exacto, sin dependencias), con un manifiesto de capas procesadas y pruebas que exigen datos procesados y válidos.
 - `PRODUCT.md`: contexto del producto (público, propósito, restricciones y principios) para guiar el diseño.
 - `CHANGELOG.md`: este registro.

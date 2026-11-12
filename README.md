@@ -11,7 +11,7 @@ npm run test:local
 
 La primera ejecución requiere red para descargar dependencias y navegador. En Linux puede ser necesario `npx playwright install --with-deps chromium` para las bibliotecas del sistema. Con todo instalado, `npm test` repite la suite.
 
-Playwright levanta un servidor HTTP exclusivo en `127.0.0.1:8765` y lo cierra al terminar. Comprueba las diez vistas, errores JavaScript, creación del mapa Leaflet, las 33 entradas y la activación/desactivación real de la capa 1. Valida los 20 archivos GeoJSON declarados; las 13 entradas 19–31 no declaran archivo y siguen pendientes de preparación web.
+Playwright levanta un servidor HTTP exclusivo en `127.0.0.1:8765` y lo cierra al terminar. Comprueba las diez vistas, errores JavaScript, creación del mapa Leaflet, las 33 entradas y la activación/desactivación real de la capa 1. Valida los 20 archivos GeoJSON y las doce rondas 20–31 en PMTiles. La determinante 19 sigue pendiente de verificar su ubicación (#44); no se publica su geometría. Las pruebas comprueban interruptores y dibujo real por rangos en escritorio y celular.
 
 El servidor de pruebas (`tests/serve.py`) conserva el manejo HTTP de Python y usa una cola explícita de 128 conexiones pendientes. Evita que las ráfagas de recursos de Chromium saturen la cola predeterminada de 5 en Python 3.9 y causen `ERR_CONNECTION_RESET`. Las pruebas siguen fallando ante cualquier solicitud local fallida; el diagnóstico incluye el motivo y el tipo de recurso.
 
@@ -37,3 +37,13 @@ python3 scripts/topologia_geojson.py datos/determinantes_ambientales/*/*.geojson
 - No toca atributos, `name` ni `crs`. Conserva la Z si existe. Rechaza NaN e Infinity.
 - Rechaza archivos cuyo nombre o atributos mencionen «aislamiento». Es una defensa adicional: no sustituye la revisión institucional de cada capa exigida en `AGENTS.md`.
 - El validador sigue las reglas de validez de OGC/GEOS para polígonos y se contrasta con casos sintéticos en `tests/regresiones_topologia.py`. No es GEOS: ante una duda de validez, la referencia es GEOS.
+
+## Rondas hídricas en teselas
+
+Las determinantes 20–31 proceden de Rondas_Hidricas (Corpoamazonia 2022), cotejadas con su nombre, norma y WKB original en Determinantes_Ambientales_CAR. Las cuatro geometrías inválidas se corrigen solo en copias con MakeValid, sin desplazar vértices ni cambiar el área algebraica exacta; se conservan sus partes lineales. La 19 permanece pendiente por decisión de Alejandro (#44). No se recortan al departamento ni se simplifican antes de generar niveles de zoom.
+
+El lector local del drenaje (#41) se comparte sin duplicar solicitudes por rango ni librería. No se descargan los archivos completos al entrar: cada interruptor activa solo sus rangos. Fuente, año, leyenda, norma, transparencia, zoom, estado y errores están en el menú. Los fragmentos de teselas no se usan para conteos ni superficies; su validez tras cuantización es distinta de la validez de la referencia nativa.
+
+- [Método, trazabilidad, campos y reproducción](datos/rondas_43/LEEME.md).
+- [Mediciones de conexión lenta y capturas de escritorio/celular](docs/rondas_43/LEEME.md).
+- Comprobación sin QGIS en CI: `python3 scripts/preparar_rondas43.py --comprobar`.

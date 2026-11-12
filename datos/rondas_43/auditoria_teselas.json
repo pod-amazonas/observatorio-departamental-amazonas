@@ -1,0 +1,1309 @@
+{
+  "capas": [
+    {
+      "objectid": 20,
+      "fid_ronda": 2,
+      "sha256_pmtiles": "5904cb6780185faf475df57c4c1342819d0b9650aaa4792a5bd3e63dbde07bcf",
+      "teselas": 436,
+      "tesela_comprimida_max_bytes": 53999,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 5308
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 6593
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 5,
+          "fragmentos_invalidos_geos": 4,
+          "tipos_geometria": {
+            "6": 5,
+            "3": 5658
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 7,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 7,
+            "3": 646
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 14,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 14,
+            "3": 636
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 32,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 32,
+            "3": 870
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 90,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 90,
+            "3": 1334
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            20
+          ],
+          "fragmentos": 285,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 285,
+            "3": 2301
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 21,
+      "fid_ronda": 3,
+      "sha256_pmtiles": "6d4ea469a887caff9c231881e7b518a3b55ffc833a576e582ebc8e24cba9051c",
+      "teselas": 373,
+      "tesela_comprimida_max_bytes": 26641,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 2672
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 3299
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 3,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 2383
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 6,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 6,
+            "3": 334
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 18,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 18,
+            "3": 391
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 36,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 36,
+            "3": 456
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 86,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 86,
+            "3": 733
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            21
+          ],
+          "fragmentos": 221,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 221,
+            "3": 1189
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 22,
+      "fid_ronda": 4,
+      "sha256_pmtiles": "76f49e9f2c73d13ea9aaea82644fd65b11f968549283a3b6edea28c73c7a855a",
+      "teselas": 166,
+      "tesela_comprimida_max_bytes": 27423,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 1816
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 2337
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 1737
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 4,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 4,
+            "3": 199
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 10,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 10,
+            "3": 282
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 15,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 15,
+            "3": 301
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 36,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 36,
+            "3": 453
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            22
+          ],
+          "fragmentos": 96,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 96,
+            "3": 747
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 23,
+      "fid_ronda": 5,
+      "sha256_pmtiles": "68f04470f9f649c3a44690a97b39ef823995508c162c2f1176a57116d1d9e091",
+      "teselas": 217,
+      "tesela_comprimida_max_bytes": 55480,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 3672
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 4406
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 3195
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 5,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 5,
+            "3": 390
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 7,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 7,
+            "3": 371
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 16,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 16,
+            "3": 492
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 42,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 42,
+            "3": 833
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            23
+          ],
+          "fragmentos": 143,
+          "fragmentos_invalidos_geos": 6,
+          "tipos_geometria": {
+            "6": 143,
+            "3": 1461
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 24,
+      "fid_ronda": 6,
+      "sha256_pmtiles": "50d4e399fd3af854cfbb804907daec27f85c1f8da64569967ba6b0499bd90af8",
+      "teselas": 475,
+      "tesela_comprimida_max_bytes": 54314,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 5309
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 3,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 6517
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 3,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 5344
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 7,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 7,
+            "3": 815
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 18,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 18,
+            "3": 864
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 36,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 36,
+            "3": 1054
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 104,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 104,
+            "3": 1486
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            24
+          ],
+          "fragmentos": 302,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 302,
+            "3": 2369
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 25,
+      "fid_ronda": 7,
+      "sha256_pmtiles": "7166a9494f8ac7fab81d299e17dc69c6e05cf62baf41013ef532411dc1627e7b",
+      "teselas": 119,
+      "tesela_comprimida_max_bytes": 22239,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 828,
+            "5": 1,
+            "2": 6
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 999,
+            "5": 1,
+            "2": 5
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 4,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 712,
+            "5": 2,
+            "2": 12
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 5,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 90,
+            "5": 2,
+            "2": 11
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 9,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 7,
+            "3": 178,
+            "5": 2,
+            "2": 10
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 16,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 12,
+            "3": 195,
+            "5": 2,
+            "2": 10
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 34,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 29,
+            "3": 247,
+            "5": 3,
+            "2": 10
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            25
+          ],
+          "fragmentos": 70,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 64,
+            "3": 355,
+            "5": 3,
+            "2": 11
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 26,
+      "fid_ronda": 8,
+      "sha256_pmtiles": "24c528203a9c804c0bc6771eab1f06d188347ba983432d4110044dbfa4c538f5",
+      "teselas": 79,
+      "tesela_comprimida_max_bytes": 28932,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 944
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 1222,
+            "2": 1
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 360,
+            "5": 1,
+            "2": 4
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 31,
+            "5": 1,
+            "2": 4
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 5,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 4,
+            "3": 75,
+            "5": 1,
+            "2": 4
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 10,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 8,
+            "3": 127,
+            "5": 1,
+            "2": 5
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 20,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 17,
+            "3": 171,
+            "2": 5,
+            "5": 1
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            26
+          ],
+          "fragmentos": 47,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 44,
+            "3": 334,
+            "2": 4,
+            "5": 1
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 27,
+      "fid_ronda": 9,
+      "sha256_pmtiles": "4b828a5ccbea11e7471a95e09d06be559e40dd792ef29eb538b8ba14eae1967f",
+      "teselas": 160,
+      "tesela_comprimida_max_bytes": 37048,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 1917,
+            "2": 1
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 2545,
+            "5": 1,
+            "2": 4
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 4,
+          "fragmentos_invalidos_geos": 3,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 2018,
+            "5": 1,
+            "2": 6
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 5,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 4,
+            "3": 72,
+            "5": 1,
+            "2": 6
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 8,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 7,
+            "3": 60,
+            "5": 1,
+            "2": 6
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 16,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 15,
+            "3": 151,
+            "5": 1,
+            "2": 6
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 37,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 35,
+            "3": 328,
+            "5": 2,
+            "2": 6
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            27
+          ],
+          "fragmentos": 95,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 93,
+            "3": 641,
+            "5": 2,
+            "2": 6
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 28,
+      "fid_ronda": 10,
+      "sha256_pmtiles": "55c491427a761d309ca9ad57be737e1aede2a3b2de01ed46222e2a7ee95fbc11",
+      "teselas": 142,
+      "tesela_comprimida_max_bytes": 38693,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 1929
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 3487
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 2075
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 4,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 4,
+            "3": 153
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 7,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 7,
+            "3": 118
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 15,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 15,
+            "3": 174
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 30,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 30,
+            "3": 352
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            28
+          ],
+          "fragmentos": 81,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 81,
+            "3": 694
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 29,
+      "fid_ronda": 11,
+      "sha256_pmtiles": "048a9ee399222d354b5da4014c3c1b6183efa7d49a3c51bd8a71cad7fc8b7974",
+      "teselas": 198,
+      "tesela_comprimida_max_bytes": 51350,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 2985
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 3841
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 2682
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 67
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 6,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 6,
+            "3": 97
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 16,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 16,
+            "3": 259
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 43,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 43,
+            "3": 546
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            29
+          ],
+          "fragmentos": 125,
+          "fragmentos_invalidos_geos": 5,
+          "tipos_geometria": {
+            "6": 125,
+            "3": 1030
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 30,
+      "fid_ronda": 12,
+      "sha256_pmtiles": "027901f2fe65cdfe6e247162632d87c3a1d90961e5a39466264abc0c64c97d0a",
+      "teselas": 309,
+      "tesela_comprimida_max_bytes": 68052,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 1,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 1,
+            "3": 4409
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 5337
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 3,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 4138
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 7,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 7,
+            "3": 160
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 13,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 13,
+            "3": 147
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 29,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 29,
+            "3": 424
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 65,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 65,
+            "3": 770
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            30
+          ],
+          "fragmentos": 189,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 189,
+            "3": 1495
+          }
+        }
+      ]
+    },
+    {
+      "objectid": 31,
+      "fid_ronda": 13,
+      "sha256_pmtiles": "96e0495f1c7c5238634715f8bacb19f0b709304dd9bcc63ab7223a47b34198be",
+      "teselas": 296,
+      "tesela_comprimida_max_bytes": 79780,
+      "por_zoom": [
+        {
+          "zoom": 5,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 4617
+          }
+        },
+        {
+          "zoom": 6,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 2,
+          "fragmentos_invalidos_geos": 2,
+          "tipos_geometria": {
+            "6": 2,
+            "3": 5042
+          }
+        },
+        {
+          "zoom": 7,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 3,
+          "fragmentos_invalidos_geos": 3,
+          "tipos_geometria": {
+            "6": 3,
+            "3": 3429
+          }
+        },
+        {
+          "zoom": 8,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 4,
+          "fragmentos_invalidos_geos": 1,
+          "tipos_geometria": {
+            "6": 4,
+            "3": 147
+          }
+        },
+        {
+          "zoom": 9,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 8,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 8,
+            "3": 177
+          }
+        },
+        {
+          "zoom": 10,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 24,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 24,
+            "3": 418
+          }
+        },
+        {
+          "zoom": 11,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 64,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 64,
+            "3": 804
+          }
+        },
+        {
+          "zoom": 12,
+          "objectids": [
+            31
+          ],
+          "fragmentos": 189,
+          "fragmentos_invalidos_geos": 0,
+          "tipos_geometria": {
+            "6": 189,
+            "3": 1581
+          }
+        }
+      ]
+    }
+  ],
+  "nota": "Los fragmentos de MVT no son entidades originales y pueden ser inválidos tras cuantización. CLIP=NO evita recortar dos veces. No se reparan ni usan para análisis de superficies."
+}

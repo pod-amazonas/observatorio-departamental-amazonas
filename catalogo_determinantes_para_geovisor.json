@@ -1,12 +1,12 @@
 {
   "titulo": "Observatorio Departamental del Amazonas — Determinantes ambientales",
-  "estado": "publicacion_autorizada_por_equipo_POD_20_geojson_preparados",
-  "formato": "GeoJSON",
+  "estado": "publicacion_autorizada_20_geojson_12_pmtiles",
+  "formato": "GeoJSON y PMTiles",
   "srcCoordenadas": "EPSG:4326 (longitud, latitud)",
-  "nota": "Las 33 determinantes tienen aprobación de publicación comunicada por el equipo POD. Las determinantes 01–18, 32 y 33 están preparadas en GeoJSON; las rondas hídricas 19–31 se integrarán como teselas vectoriales en una etapa separada. Estadísticas calculadas en navegador no equivalen a certificaciones oficiales.",
+  "nota": "33 determinantes autorizadas: 20 GeoJSON y 12 en teselas vectoriales. La determinante 19 sigue pendiente de verificar su correspondencia geométrica. Las cifras del navegador no son cifras oficiales.",
   "cantidadTotalEsperada": 33,
   "cantidadGeoJSONPiloto": 20,
-  "pendientes": 13,
+  "pendientes": 1,
   "organizacion": [
     "Componente biofísico",
     "Determinantes ambientales"
@@ -563,107 +563,385 @@
       "capas": [
         {
           "objectid": 19,
-          "etiqueta": "Determinante 19 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 19 (pendiente de verificación)",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_pendiente_verificacion_fuente",
+          "visiblePorDefecto": false,
+          "advertencia": "Pendiente de verificar la ubicación con la fuente responsable; no se publica esta geometría.",
+          "nombre": "Rondas hídricas"
         },
         {
           "objectid": 20,
-          "etiqueta": "Determinante 20 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 20",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_20.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 2,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 3168650,
+            "sha256": "5904cb6780185faf475df57c4c1342819d0b9650aaa4792a5bd3e63dbde07bcf",
+            "bbox": [
+              -73.15614818067506,
+              -4.225938439236973,
+              -69.56159890683814,
+              -2.0958093675875213
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 21,
-          "etiqueta": "Determinante 21 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 21",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_21.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 3,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 1748540,
+            "sha256": "6d4ea469a887caff9c231881e7b518a3b55ffc833a576e582ebc8e24cba9051c",
+            "bbox": [
+              -74.38551997335641,
+              -2.3604586300082966,
+              -69.55246602777812,
+              -0.4180290924157313
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 22,
-          "etiqueta": "Determinante 22 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 22",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_22.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 4,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 1329832,
+            "sha256": "76f49e9f2c73d13ea9aaea82644fd65b11f968549283a3b6edea28c73c7a855a",
+            "bbox": [
+              -73.90617266047492,
+              -2.0768476450909508,
+              -70.78847547689458,
+              -0.388940632243612
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 23,
-          "etiqueta": "Determinante 23 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 23",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_23.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 5,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 2143108,
+            "sha256": "68f04470f9f649c3a44690a97b39ef823995508c162c2f1176a57116d1d9e091",
+            "bbox": [
+              -71.8906322764221,
+              -2.07758022907255,
+              -69.54256307871891,
+              -1.0177597490988641
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 24,
-          "etiqueta": "Determinante 24 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 24",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_24.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 6,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies. Geometría corregida solo en copia, sin desplazar vértices ni cambiar el área algebraica.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 3203478,
+            "sha256": "50d4e399fd3af854cfbb804907daec27f85c1f8da64569967ba6b0499bd90af8",
+            "bbox": [
+              -73.05364614186836,
+              -2.3310395699178734,
+              -69.40515054863485,
+              0.05724566401127218
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 25,
-          "etiqueta": "Determinante 25 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 25",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_25.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 7,
+          "leyenda": "Rondas hídricas y partes lineales conservadas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies. Geometría corregida solo en copia, sin desplazar vértices ni cambiar el área algebraica. Conserva 10 partes lineales tras la reparación.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 682305,
+            "sha256": "7166a9494f8ac7fab81d299e17dc69c6e05cf62baf41013ef532411dc1627e7b",
+            "bbox": [
+              -72.09065765212972,
+              -2.326749636777149,
+              -69.6890611760216,
+              -1.889918020564174
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 26,
-          "etiqueta": "Determinante 26 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 26",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_26.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 8,
+          "leyenda": "Rondas hídricas y partes lineales conservadas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies. Geometría corregida solo en copia, sin desplazar vértices ni cambiar el área algebraica. Conserva 4 partes lineales tras la reparación.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 838624,
+            "sha256": "24c528203a9c804c0bc6771eab1f06d188347ba983432d4110044dbfa4c538f5",
+            "bbox": [
+              -70.70720597208623,
+              -2.345688290939799,
+              -69.66159710115396,
+              -1.9634444545562795
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 27,
-          "etiqueta": "Determinante 27 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 27",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_27.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 9,
+          "leyenda": "Rondas hídricas y partes lineales conservadas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies. Geometría corregida solo en copia, sin desplazar vértices ni cambiar el área algebraica. Conserva 6 partes lineales tras la reparación.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 1317371,
+            "sha256": "4b828a5ccbea11e7471a95e09d06be559e40dd792ef29eb538b8ba14eae1967f",
+            "bbox": [
+              -73.26510260475789,
+              -2.106777097828245,
+              -69.53566275792004,
+              -1.4365104069357317
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 28,
-          "etiqueta": "Determinante 28 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 28",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_28.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 10,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 1326113,
+            "sha256": "55c491427a761d309ca9ad57be737e1aede2a3b2de01ed46222e2a7ee95fbc11",
+            "bbox": [
+              -74.23139714455614,
+              -1.544888640856847,
+              -72.71617403201876,
+              -0.6782344626611724
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 29,
-          "etiqueta": "Determinante 29 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 29",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_29.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 11,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 1974299,
+            "sha256": "048a9ee399222d354b5da4014c3c1b6183efa7d49a3c51bd8a71cad7fc8b7974",
+            "bbox": [
+              -74.31364118640474,
+              -2.016511891059231,
+              -71.75762453690851,
+              -0.48743551642861094
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 30,
-          "etiqueta": "Determinante 30 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 30",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_30.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 12,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 2628279,
+            "sha256": "027901f2fe65cdfe6e247162632d87c3a1d90961e5a39466264abc0c64c97d0a",
+            "bbox": [
+              -73.16215357399413,
+              -2.0780758545498372,
+              -70.0262600831375,
+              -0.26530292556591734
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         },
         {
           "objectid": 31,
-          "etiqueta": "Determinante 31 — pendiente de preparar",
+          "etiqueta": "Rondas hídricas — entidad 31",
           "categoria": "Rondas hídricas",
           "archivo": null,
-          "estado": "aprobada_pendiente_preparacion_web",
-          "visiblePorDefecto": false
+          "estado": "aprobada_disponible_teselas",
+          "visiblePorDefecto": false,
+          "nombre": "Rondas hídricas",
+          "archivoTeselas": "datos/rondas_43/teselas/determinante_31.pmtiles",
+          "fuenteDeclarada": "Corpoamazonia",
+          "anioFuente": 2022,
+          "norma": "Resolución 957 de 2018",
+          "fidFuente": 13,
+          "leyenda": "Rondas hídricas",
+          "advertencia": "Representación de la fuente; no certifica un acotamiento normativo ni permite calcular superficies.",
+          "opacidadSugerida": 0.65,
+          "carga": "bajo_demanda",
+          "teselas": {
+            "bytes": 2577611,
+            "sha256": "96e0495f1c7c5238634715f8bacb19f0b709304dd9bcc63ab7223a47b34198be",
+            "bbox": [
+              -71.86934782614554,
+              -1.2603144535948005,
+              -69.95091024394645,
+              0.02862791749769834
+            ],
+            "minzoom": 5,
+            "maxzoom": 12,
+            "dataLayer": "rondas"
+          }
         }
       ]
     },
@@ -736,5 +1014,7 @@
       ]
     }
   ],
-  "cantidadGeoJSONDisponibles": 18
+  "cantidadGeoJSONDisponibles": 18,
+  "srcTeselas": "EPSG:3857",
+  "cantidadTeselas": 12
 }
