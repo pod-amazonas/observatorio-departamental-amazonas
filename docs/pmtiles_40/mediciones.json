@@ -1,0 +1,168 @@
+[
+  {
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "red": {
+      "megabits": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "hasta_dibujo_ms": 1214.1000000014901,
+    "bytes_pmtiles": 80868,
+    "bytes_lector": 37678,
+    "peticiones_pmtiles": 6,
+    "zoom": 6,
+    "errores_js": [],
+    "comparaciones": [
+      {
+        "escena": "departamento",
+        "zoom": 6,
+        "centro": [
+          -1.44,
+          -71.57
+        ],
+        "dimensiones": {
+          "w": 582,
+          "h": 427
+        },
+        "pixeles_union": 8263,
+        "pixeles_coincidentes": 6877,
+        "pixeles_diferentes": 1386,
+        "pixeles_teselas": 7134,
+        "pixeles_referencia": 8006,
+        "interseccion_sobre_union": 0.8322643107830086,
+        "diferencia_sobre_mapa_pct": 0.5577150583065743
+      },
+      {
+        "escena": "detalle",
+        "zoom": 10,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 582,
+          "h": 427
+        },
+        "pixeles_union": 10099,
+        "pixeles_coincidentes": 9472,
+        "pixeles_diferentes": 627,
+        "pixeles_teselas": 9689,
+        "pixeles_referencia": 9882,
+        "interseccion_sobre_union": 0.9379146450143578,
+        "diferencia_sobre_mapa_pct": 0.25229966923392644
+      },
+      {
+        "escena": "detalle_maximo",
+        "zoom": 12,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 582,
+          "h": 427
+        },
+        "pixeles_union": 44557,
+        "pixeles_coincidentes": 43951,
+        "pixeles_diferentes": 606,
+        "pixeles_teselas": 44229,
+        "pixeles_referencia": 44279,
+        "interseccion_sobre_union": 0.9863994434095653,
+        "diferencia_sobre_mapa_pct": 0.24384944107776624
+      }
+    ],
+    "referencia": {
+      "red_lenta": false,
+      "hasta_dibujo_ms": 1225.300000000745,
+      "bytes_gzip": 29820647,
+      "bytes_brutos": 81493852
+    },
+    "control_ventana": "Alto fijado al de teselas activas solo en comparación privada; centro, zoom y dimensiones idénticos comprobados. No modifica medición de red."
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "red": {
+      "megabits": 1.6,
+      "latencia_ms": 150,
+      "cache": "fria"
+    },
+    "hasta_dibujo_ms": 1195.4000000022352,
+    "bytes_pmtiles": 78681,
+    "bytes_lector": 37678,
+    "peticiones_pmtiles": 5,
+    "zoom": 6,
+    "errores_js": [],
+    "comparaciones": [
+      {
+        "escena": "departamento",
+        "zoom": 6,
+        "centro": [
+          -1.44,
+          -71.57
+        ],
+        "dimensiones": {
+          "w": 344,
+          "h": 307
+        },
+        "pixeles_union": 7212,
+        "pixeles_coincidentes": 5982,
+        "pixeles_diferentes": 1230,
+        "pixeles_teselas": 6206,
+        "pixeles_referencia": 6988,
+        "interseccion_sobre_union": 0.829450915141431,
+        "diferencia_sobre_mapa_pct": 1.1646844935989698
+      },
+      {
+        "escena": "detalle",
+        "zoom": 10,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 344,
+          "h": 307
+        },
+        "pixeles_union": 7490,
+        "pixeles_coincidentes": 7105,
+        "pixeles_diferentes": 385,
+        "pixeles_teselas": 7243,
+        "pixeles_referencia": 7352,
+        "interseccion_sobre_union": 0.9485981308411215,
+        "diferencia_sobre_mapa_pct": 0.3645557154761003
+      },
+      {
+        "escena": "detalle_maximo",
+        "zoom": 12,
+        "centro": [
+          -4.204148899984196,
+          -69.9500633999466
+        ],
+        "dimensiones": {
+          "w": 344,
+          "h": 307
+        },
+        "pixeles_union": 22305,
+        "pixeles_coincidentes": 22020,
+        "pixeles_diferentes": 285,
+        "pixeles_teselas": 22140,
+        "pixeles_referencia": 22185,
+        "interseccion_sobre_union": 0.9872225958305313,
+        "diferencia_sobre_mapa_pct": 0.26986591924854175
+      }
+    ],
+    "referencia": {
+      "red_lenta": true,
+      "hasta_dibujo_ms": 150515.5,
+      "bytes_gzip": 29820647,
+      "bytes_brutos": 81493852
+    },
+    "control_ventana": "Alto fijado al de teselas activas solo en comparación privada; centro, zoom y dimensiones idénticos comprobados. No modifica medición de red."
+  }
+]

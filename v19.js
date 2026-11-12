@@ -73,7 +73,7 @@ function renderCitizenLayers(){
   const def=citizen(meta);
   if(mount&&!mount.querySelector('[data-layer-key="'+def.key+'"]'))mount.append(layerCard(def));
   if(mount&&def.tanda)mount.parentElement.querySelector(':scope > .obs19-footnote')?.remove();
- });renderIndicatorsAction();syncLayerControls();
+ });renderIndicatorsAction();window.obs40Mount?.();syncLayerControls();
 }
 function renderIndicatorsAction(){
  const mount=document.querySelector('[data-citizen-category="4"]');
@@ -162,7 +162,7 @@ function syncLayerControls(){
   card.querySelector('[data-layer-status]').textContent=!def.available?'Pendiente de preparación web.':state?.error||(loading?'Cargando capa… Pulsa el interruptor para cancelar.':on?'Capa visible · '+def.source:'Se descarga solo al activarla.');
   const slider=card.querySelector('input[type="range"]');slider.disabled=!on;slider.value=String(100-(entry?.opacity??def.opacity));slider.nextElementSibling.textContent=slider.value+'%';
   if(def.kind==='citizen')document.querySelectorAll('#v7-dynamic-legend .v7-legend-tag').forEach(tag=>{if(tag.title===def.name)tag.classList.add('pilot29-legend')});
- });
+ });window.obs40Sync?.();
 }
 async function waitForMap(signal){
  const deadline=performance.now()+8000;
@@ -222,11 +222,11 @@ async function toggleLayer(def,want){
 function getFeatures(d){if(!d)return[];if(d.type==='FeatureCollection')return Array.isArray(d.features)?d.features:[];return d.type==='Feature'?[d]:[{properties:{},geometry:d}]}
 function summariseStats(layer){const feats=getFeatures(layer.data),props=feats.map(f=>f.properties||{});const numeric={};const categoric={};props.forEach(p=>Object.entries(p).forEach(([k,v])=>{if(v==null||v==='')return;if(typeof v==='number'&&Number.isFinite(v)){(numeric[k]??=[]).push(v);}else if(typeof v==='string'&&v.length<80&&!/^(objectid|fid|shape_)/i.test(k)){const c=categoric[k]??={};c[v]=(c[v]||0)+1;}}));const group=Object.entries(categoric).filter(([k,counts])=>Object.keys(counts).length>=2&&Object.keys(counts).length<=12).sort((a,b)=>Object.keys(a[1]).length-Object.keys(b[1]).length)[0];return{feats,props,numeric,group}}
 function renderStats(){syncLayerControls();const overview=$('obs19-stat-overview'),detail=$('obs19-stat-detail');if(!overview||!detail)return;clear(overview);clear(detail);
- const active=getLayers().filter(x=>x.visible);const counts=active.reduce((n,e)=>n+(e.count||0),0);const top=element('div','obs19-metrics');[['Capas visibles',active.length],['Registros cargados',counts]].forEach(([lab,val])=>{const d=element('div','obs19-metric');d.append(element('strong','',String(val)),element('small','',lab));top.append(d)});overview.append(top);
+ const active=getLayers().filter(x=>x.visible);const counts=active.reduce((n,e)=>n+(e.count||0),0);const top=element('div','obs19-metrics');[['Capas visibles',active.length],['Registros cargados',active.some(e=>e.vectorTiles)&&active.every(e=>e.vectorTiles)?'Sin conteo':counts]].forEach(([lab,val])=>{const d=element('div','obs19-metric');d.append(element('strong','',String(val)),element('small','',lab));top.append(d)});overview.append(top);if(active.some(e=>e.vectorTiles))overview.append(element('p','obs19-footnote','El drenaje en teselas no se incluye en el conteo de registros.'));
  if(!active.length){detail.append(element('div','obs19-empty','Activa una capa desde el panel izquierdo. Se mostrarán estadísticas según sus atributos.'));return}
  if(!active.some(x=>x.id===selectedLayer))selectedLayer=active[0].id;
  const switches=element('div','obs19-layer-switches');active.forEach(e=>{const b=element('button',selectedLayer===e.id?'active':'',e.name.length>28?e.name.slice(0,27)+'…':e.name);b.type='button';b.onclick=()=>{selectedLayer=e.id;renderStats()};switches.append(b)});detail.append(switches);
- const e=active.find(x=>x.id===selectedLayer);const data=summariseStats(e);const card=element('div','obs19-stat-card');card.append(element('h3','',e.name),element('p','','Tipo: '+e.geomType+' · '+data.feats.length+' registros · '+e.origin));
+ const e=active.find(x=>x.id===selectedLayer);if(e.vectorTiles){const card=element('div','obs19-stat-card');card.append(element('h3','',e.name),element('p','',e.origin),element('p','',e.metadata.advertencia),element('p','','Visualización por teselas: no reconstruye entidades completas ni permite calcular conteos o superficies.'));detail.append(card);return}const data=summariseStats(e);const card=element('div','obs19-stat-card');card.append(element('h3','',e.name),element('p','','Tipo: '+e.geomType+' · '+data.feats.length+' registros · '+e.origin));
  const p=data.props[0]||{};let displayed=0;for(const [k,v] of Object.entries(p)){if(v==null||String(v)==='')continue;if(displayed++>=9)break;const r=element('div','obs19-attr');r.append(element('span','',k.replaceAll('_',' ')),element('strong','',String(v).slice(0,180)));card.append(r)}
  if(!displayed)card.append(element('p','','No hay atributos textuales disponibles en la capa.'));
  detail.append(card);
@@ -296,6 +296,7 @@ function renderCalls(){const publicEl=$('obs19-opportunities'), admin=$('obs19-a
 function initCalls(){const form=$('obs19-call-form'),button=$('obs19-calls-export');form?.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(form);const row=Object.fromEntries(fd.entries());if(!legalUrl(row.url)){alert('Utiliza una URL HTTPS válida.');return}row.tipo=row.tipo==='curso'?'curso':'convocatoria';callDraft.push(row);form.reset();renderCalls()});button?.addEventListener('click',()=>{const content=JSON.stringify(callDraft,null,2);const a=document.createElement('a'),obj=URL.createObjectURL(new Blob([content],{type:'application/json'}));a.href=obj;a.download='convocatorias_para_revision.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(obj),1500)});
  fetch('convocatorias_publicadas.json').then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{if(Array.isArray(data))publicCalls=data.filter(x=>x&&['curso','convocatoria'].includes(x.tipo)&&typeof x.titulo==='string'&&legalUrl(x.url)).slice(0,100);renderCalls()}).catch(()=>renderCalls());renderCalls()}
 function init(){
+ const tilesScript=document.createElement('script');tilesScript.src='assets/js/drenaje-pmtiles40.js';document.head.append(tilesScript);
  // Reajusta Leaflet cuando el contenedor cambia de altura/anchura.
  const geovisorMap=$('visor-map');
  if(geovisorMap && typeof ResizeObserver==='function'){

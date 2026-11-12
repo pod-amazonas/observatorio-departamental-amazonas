@@ -1,8 +1,9 @@
 # Dependencias locales del navegador
 
-Copias sin modificar de los paquetes oficiales npm. Leaflet 1.9.4 (BSD-2-Clause) y @supabase/supabase-js 2.118.0 (MIT, última versión estable 2.x consultada el 2026-11-03). Las licencias completas se incluyen junto a cada distribución. El UMD de Supabase incorpora sus dependencias de navegador.
+Copias sin modificar de los paquetes oficiales npm. Leaflet 1.9.4 (BSD-2-Clause) y @supabase/supabase-js 2.118.0 (MIT, última versión estable 2.x consultada el 2026-11-03). Las licencias completas se incluyen junto a cada distribución. El UMD de Supabase incorpora sus dependencias de navegador. La POC añade protomaps-leaflet 5.1.0 (BSD-3-Clause), con avisos de sus dependencias permisivas; el sitio lo solicita solo al activar el drenaje en teselas.
 
 Origen de los paquetes:
+- https://registry.npmjs.org/protomaps-leaflet/-/protomaps-leaflet-5.1.0.tgz
 - https://registry.npmjs.org/leaflet/-/leaflet-1.9.4.tgz
 - https://registry.npmjs.org/@supabase/supabase-js/-/supabase-js-2.118.0.tgz
 
@@ -21,6 +22,13 @@ Las URLs por archivo identifican el mismo contenido publicado en npm; el sitio n
 | `leaflet-1.9.4/leaflet.js.map` | 1.9.4 | BSD-2-Clause | [origen](https://unpkg.com/leaflet@1.9.4/dist/leaflet.js.map) | `600a10dc5cd110de0699510d322afcbe01c7ca90b4c5f48adc20314c70aac753` |
 | `supabase-2.118.0/LICENSE` | 2.118.0 | MIT | [origen](https://unpkg.com/@supabase/supabase-js@2.118.0/LICENSE) | `334dd6820e2eaeab2064e7c59001b810566728a28a41a7c1dbf69bbee17d0936` |
 | `supabase-2.118.0/supabase.js` | 2.118.0 | MIT | [origen](https://unpkg.com/@supabase/supabase-js@2.118.0/dist/umd/supabase.js) | `ee3be8de192b97cb1d73d1e95d6b82bb1f6b658c0f97c4ef757fc331996ed3d3` |
+
+| `protomaps-leaflet-5.1.0/LICENSE` | 5.1.0 | BSD-3-Clause / avisos permisivos | [npm 5.1.0](https://registry.npmjs.org/protomaps-leaflet/5.1.0) | `a2ada548aa25012e833b71364a402d6924f2afcf5f8f146e2989a377290ab3ad` |
+| `protomaps-leaflet-5.1.0/README.md` | 5.1.0 | BSD-3-Clause / avisos permisivos | Documentación local y avisos de redistribución | `5281447081a0efe8f3ea84540cfb4f8b9866fba7bd8d2ece253a00598eca681e` |
+| `protomaps-leaflet-5.1.0/SHA256SUMS` | 5.1.0 | BSD-3-Clause / avisos permisivos | Documentación local y avisos de redistribución | `c46dd6c99a5162847121b69de032f8037c51a9b12cc386e5393c2520bded5d45` |
+| `protomaps-leaflet-5.1.0/THIRD_PARTY_NOTICES.txt` | 5.1.0 | BSD-3-Clause / avisos permisivos | Documentación local y avisos de redistribución | `3a9a8f40254579a5eb635da39789f0fae8aadd20c2ef7ff883f5fa022d18f56b` |
+| `protomaps-leaflet-5.1.0/protomaps-leaflet.js` | 5.1.0 | BSD-3-Clause / avisos permisivos | [npm 5.1.0](https://registry.npmjs.org/protomaps-leaflet/5.1.0) | `26af014f7b1af308ec120b791cff76657bb9c3383633b52033e6edf9e5e4cdb5` |
+| `protomaps-leaflet-5.1.0/protomaps-leaflet.js.map` | 5.1.0 | BSD-3-Clause / avisos permisivos | [npm 5.1.0](https://registry.npmjs.org/protomaps-leaflet/5.1.0) | `e935835304b66a82eed27132f3a7eca433349cb3f327963d14e5580442936f80` |
 
 ## Actualización
 
