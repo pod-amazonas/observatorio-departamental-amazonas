@@ -4,6 +4,9 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 def main():
+ if json.loads((ROOT/'catalogo_determinantes_para_geovisor.json').read_text()).get('rondasUnificadas'):
+  from unificar_rondas46 import check
+  check();print('Auditoría histórica nativa/MVT del #45 conservada en datos/rondas_43; auditoría actual exacta en datos/rondas_46.');return
  a=argparse.ArgumentParser(description=__doc__);a.add_argument('--gdal-library',required=True);a.add_argument('--geos-library',required=True);args=a.parse_args()
  from preparar_piloto_29 import GIS
  from preparar_rondas43 import load,write,header,manifiesto

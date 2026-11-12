@@ -1,5 +1,6 @@
 # Rondas hídricas — determinantes 20–31
 
+> **Documento histórico del #45.** Los doce interruptores y archivos individuales fueron sustituidos por una capa única en #46. Ver [entrega actual](../rondas_46/LEEME.md). Estas cifras y capturas describen la entrega anterior.
 Publicación autorizada por Alejandro en #43. Fuente: **Rondas_Hidricas, Corpoamazonia 2022**. Se publica la copia derivada por teselas de doce registros completos, sin recortar al departamento ni aplicar una simplificación previa a los niveles de zoom. El original permanece intacto. Solo visualización; no representa certificación oficial de ubicación, área ni acotamiento normativo.
 
 ## Alcance y correspondencia

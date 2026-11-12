@@ -11,7 +11,7 @@ npm run test:local
 
 La primera ejecución requiere red para descargar dependencias y navegador. En Linux puede ser necesario `npx playwright install --with-deps chromium` para las bibliotecas del sistema. Con todo instalado, `npm test` repite la suite.
 
-Playwright levanta un servidor HTTP exclusivo en `127.0.0.1:8765` y lo cierra al terminar. Comprueba las diez vistas, errores JavaScript, creación del mapa Leaflet, las 33 entradas y la activación/desactivación real de la capa 1. Valida los 20 archivos GeoJSON y las doce rondas 20–31 en PMTiles. La determinante 19 sigue pendiente de verificar su ubicación (#44); no se publica su geometría. Las pruebas comprueban interruptores y dibujo real por rangos en escritorio y celular.
+Playwright levanta un servidor HTTP exclusivo en `127.0.0.1:8765` y lo cierra al terminar. Comprueba las diez vistas, errores JavaScript, creación del mapa Leaflet, las 33 entradas y la activación/desactivación real de la capa 1. Valida los 20 archivos GeoJSON y las doce rondas 20–31 reunidas en una capa PMTiles. La determinante 19 sigue pendiente de verificar su ubicación (#44); no se publica su geometría. Las pruebas comprueban interruptores y dibujo real por rangos en escritorio y celular.
 
 El servidor de pruebas (`tests/serve.py`) conserva el manejo HTTP de Python y usa una cola explícita de 128 conexiones pendientes. Evita que las ráfagas de recursos de Chromium saturen la cola predeterminada de 5 en Python 3.9 y causen `ERR_CONNECTION_RESET`. Las pruebas siguen fallando ante cualquier solicitud local fallida; el diagnóstico incluye el motivo y el tipo de recurso.
 
@@ -44,6 +44,9 @@ Las determinantes 20–31 proceden de Rondas_Hidricas (Corpoamazonia 2022), cote
 
 El lector local del drenaje (#41) se comparte sin duplicar solicitudes por rango ni librería. No se descargan los archivos completos al entrar: cada interruptor activa solo sus rangos. Fuente, año, leyenda, norma, transparencia, zoom, estado y errores están en el menú. Los fragmentos de teselas no se usan para conteos ni superficies; su validez tras cuantización es distinta de la validez de la referencia nativa.
 
-- [Método, trazabilidad, campos y reproducción](datos/rondas_43/LEEME.md).
-- [Mediciones de conexión lenta y capturas de escritorio/celular](docs/rondas_43/LEEME.md).
+- [Capa única, trazabilidad SHA-256, campos y reproducción](datos/rondas_46/LEEME.md).
+- [Estado de verificación de escritorio/celular y conexión lenta](docs/rondas_46/LEEME.md).
+
+Las doce determinantes comparten un solo interruptor y una plaza de las ocho capas. Tocar un polígono permite consultar su número; con teclado puede consultarse el centro del mapa. La unión conserva literalmente los comandos MVT publicados por el #45, sin volver a teselar. La ayuda distingue 32 registros disponibles, reunidos en 21 capas de determinantes, y una pendiente.
+
 - Comprobación sin QGIS en CI: `python3 scripts/preparar_rondas43.py --comprobar`.

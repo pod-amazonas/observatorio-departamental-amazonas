@@ -1,0 +1,1619 @@
+{
+  "revision_pr45": "f5e8ef010a6c3da744295f242003ebfb27f6eda1",
+  "metodo": "Copia exacta de ID, tipo, comandos MVT y valores de atributos; solo índices de diccionario y compresión cambian. Sin reproyección, recorte, simplificación, reparación o disolución.",
+  "fuentes": [
+    {
+      "determinante": 20,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_20.pmtiles",
+      "sha256_pmtiles_pr45": "5904cb6780185faf475df57c4c1342819d0b9650aaa4792a5bd3e63dbde07bcf",
+      "sha256_geometria_nativa_pr45": "710519f9a275ce46100e8817d11449b250e31d8ae1a7c14da87ac6455f6e4ea3"
+    },
+    {
+      "determinante": 21,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_21.pmtiles",
+      "sha256_pmtiles_pr45": "6d4ea469a887caff9c231881e7b518a3b55ffc833a576e582ebc8e24cba9051c",
+      "sha256_geometria_nativa_pr45": "8645cbba9f084513c33180e7e770d8be3903ee639d673f3e6846a93992a5daff"
+    },
+    {
+      "determinante": 22,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_22.pmtiles",
+      "sha256_pmtiles_pr45": "76f49e9f2c73d13ea9aaea82644fd65b11f968549283a3b6edea28c73c7a855a",
+      "sha256_geometria_nativa_pr45": "6264b06cbad67ac558353c73b0964db995f05fd1754a9530660d6d837e5dfeb8"
+    },
+    {
+      "determinante": 23,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_23.pmtiles",
+      "sha256_pmtiles_pr45": "68f04470f9f649c3a44690a97b39ef823995508c162c2f1176a57116d1d9e091",
+      "sha256_geometria_nativa_pr45": "7a09e7aaff2a340ac1ca17e0958b1febc547e9e7b24b05bcb473ac5bfa58f289"
+    },
+    {
+      "determinante": 24,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_24.pmtiles",
+      "sha256_pmtiles_pr45": "50d4e399fd3af854cfbb804907daec27f85c1f8da64569967ba6b0499bd90af8",
+      "sha256_geometria_nativa_pr45": "f45cafce016416edb86eaceff034a164afdedc446d94ddbaf8b61023205744fc"
+    },
+    {
+      "determinante": 25,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_25.pmtiles",
+      "sha256_pmtiles_pr45": "7166a9494f8ac7fab81d299e17dc69c6e05cf62baf41013ef532411dc1627e7b",
+      "sha256_geometria_nativa_pr45": "0addf8efe7aa34c1badf880792a8abd079878664a9f87e7d67727703cfcf34c3"
+    },
+    {
+      "determinante": 26,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_26.pmtiles",
+      "sha256_pmtiles_pr45": "24c528203a9c804c0bc6771eab1f06d188347ba983432d4110044dbfa4c538f5",
+      "sha256_geometria_nativa_pr45": "f2198becb3dcdd0114ff0cc509b88b1779bafef1eb7e851e3f95d5fc17d4b7c3"
+    },
+    {
+      "determinante": 27,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_27.pmtiles",
+      "sha256_pmtiles_pr45": "4b828a5ccbea11e7471a95e09d06be559e40dd792ef29eb538b8ba14eae1967f",
+      "sha256_geometria_nativa_pr45": "68575abd9accb3cb83d9a754b2f911de145da7581f3276b693eb964cda060bbf"
+    },
+    {
+      "determinante": 28,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_28.pmtiles",
+      "sha256_pmtiles_pr45": "55c491427a761d309ca9ad57be737e1aede2a3b2de01ed46222e2a7ee95fbc11",
+      "sha256_geometria_nativa_pr45": "6d5a7321d2010730ea3cad0c2dc24e7973f12a28f95756edaae543f029d0420f"
+    },
+    {
+      "determinante": 29,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_29.pmtiles",
+      "sha256_pmtiles_pr45": "048a9ee399222d354b5da4014c3c1b6183efa7d49a3c51bd8a71cad7fc8b7974",
+      "sha256_geometria_nativa_pr45": "9afaeea2f8b259aae22c5cc7509282f32790fa0154487eb7d17e22d6667b9079"
+    },
+    {
+      "determinante": 30,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_30.pmtiles",
+      "sha256_pmtiles_pr45": "027901f2fe65cdfe6e247162632d87c3a1d90961e5a39466264abc0c64c97d0a",
+      "sha256_geometria_nativa_pr45": "b75acdac110e5a5bc018289109f30820289bdb5f7be11963332b87f2d1e96887"
+    },
+    {
+      "determinante": 31,
+      "archivo_en_pr45": "datos/rondas_43/teselas/determinante_31.pmtiles",
+      "sha256_pmtiles_pr45": "96e0495f1c7c5238634715f8bacb19f0b709304dd9bcc63ab7223a47b34198be",
+      "sha256_geometria_nativa_pr45": "aa3d39f8efe370bdbf55d04ab2075ff4d985960297353690a95a16deb588d76b"
+    }
+  ],
+  "antes": [
+    {
+      "determinante": 20,
+      "zoom": 5,
+      "sha256_geometria_mvt": "d7172c211991f05a2d2590a5e72eee4b3e42d9adc8521d9583b3787a1b857a89",
+      "sha256_geometria_y_atributos": "d4f0d5238101a59cc697405485b6db0626101a3a7eae7d547941b88cd1fcf282",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 6,
+      "sha256_geometria_mvt": "14950ff701bb9200a3862f6523d23052a6baa1718fc8d812a65f6f9a2294140d",
+      "sha256_geometria_y_atributos": "f5d6fab92f74e02c395c4aacc472a46fbdb4e1ef037a2224b15da5845884d40d",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 7,
+      "sha256_geometria_mvt": "99a5cb30b43853c02308ad0d8ab297de800e22d6bf4a89b8a47f9210c421bd0f",
+      "sha256_geometria_y_atributos": "fc4ff31391d0e9415e476a66375ecfbaaaa9a3e86abc4fa7e0e30db83797832e",
+      "poligonos_fragmentados": 5,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 8,
+      "sha256_geometria_mvt": "eacbcc26feadd00d934f32abcaa9e7187709e8b5ba1331fe1d67955924c4a0ce",
+      "sha256_geometria_y_atributos": "33a9dc9c02af20c0976fd2f73223dd415d2c7acef6d4576a396c4080249ee249",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 9,
+      "sha256_geometria_mvt": "280a025bec5a2bc0444bd017acbc2ff6d46971d775f3247e795665a6fd62b4de",
+      "sha256_geometria_y_atributos": "21da021ad7c44c6a53cf8c0f1a7a62b91fc9f19ebfe8c8a5932a08563f9cfe92",
+      "poligonos_fragmentados": 14,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 10,
+      "sha256_geometria_mvt": "f1da1acea3ad5e0306ef3adae26956eb251347a8eca939e606994c0634a0cd30",
+      "sha256_geometria_y_atributos": "287f592928741bd6de74cf50d81414c1e150b3bfc2fa7ae204b4832cfd0b3725",
+      "poligonos_fragmentados": 32,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 11,
+      "sha256_geometria_mvt": "a2d7f3da3abd0747803299e750766bad7dab35d9d24a7ae316e0ab8ba6f1cd37",
+      "sha256_geometria_y_atributos": "e3958baa771d45e87cf4fb21a3d9b5b23d6b0f5fd49e67f96754e47875a7adc8",
+      "poligonos_fragmentados": 90,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 12,
+      "sha256_geometria_mvt": "568d5752ca5d7b169c2ff919037f40f57c7e878ba7b15f07dd575e344c2a4f59",
+      "sha256_geometria_y_atributos": "89ea3b0bb999f9ec5600479e92f89f2e9499d9c10cdf6891769c0c26ae7f1a88",
+      "poligonos_fragmentados": 285,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e40b7d7f20f913e6cb093f5bd91c438d2019d18dc3e0c4a044f8a38bda411a6f",
+      "sha256_geometria_y_atributos": "8be8afe63ab20d379e4af9bf56cb4f5de8354e3edaba3022ac9aa9a25bbe525f",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 6,
+      "sha256_geometria_mvt": "daddd1b5effb8b041712f425ea87b5888ef2201a7491b2303970a77fbbc1bff4",
+      "sha256_geometria_y_atributos": "349addf69c56d3bcb23b617dd27115c6a9677f918f53a39245d3ce6290270a50",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 7,
+      "sha256_geometria_mvt": "5b02c544c0decf87820e084846c656b2ddf79fe07a19370fbda5ade0b7213326",
+      "sha256_geometria_y_atributos": "2cc491a6356eb07062c3b8af1e75a81deb657072e0967c2ff4362fdaae4252a2",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 8,
+      "sha256_geometria_mvt": "c9fd646cf32f029728f5e8b79f6d71d213c77376eb63713a2533527a6db1fc07",
+      "sha256_geometria_y_atributos": "83ca5c2e4b646f76ddcffc0dd7136656c137affb180f331ef93795f8270c5ae5",
+      "poligonos_fragmentados": 6,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 9,
+      "sha256_geometria_mvt": "84ce7580b080d731c85168e9be00d5ec8d5dd2622bfbe08ee242db968c87f43c",
+      "sha256_geometria_y_atributos": "fe59361a488906acb0764267735cb8a571a41d7c8fd85b4d02dae10c936d6020",
+      "poligonos_fragmentados": 18,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 10,
+      "sha256_geometria_mvt": "b4023df9136505b9cfa75090a80754f0a249f69d1400b148963b2653c51c3782",
+      "sha256_geometria_y_atributos": "4b161965c39b7d8a753ca1737867fe72e2f75d4d8b1b31d7df54bf14aec58d23",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 11,
+      "sha256_geometria_mvt": "f157c5e968e0af082d0433d05232174417bf6452ebe599ce5ae0d48e95d5421a",
+      "sha256_geometria_y_atributos": "45a4e21335cf49eb08cff3a9574213aec421103636d48fc8ec153f4e970410b4",
+      "poligonos_fragmentados": 86,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 12,
+      "sha256_geometria_mvt": "24779a17b2619a982e9f7cdc3d4b93a45aef59b91dced472caf0b4995322b4ae",
+      "sha256_geometria_y_atributos": "ddef9392fe16aca971ec557fa83ca3dd94f37c9e0b121a4784a56f589a162f72",
+      "poligonos_fragmentados": 221,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 5,
+      "sha256_geometria_mvt": "71647b78e7edc3323fa895d72d9b99a426ec691710555b4f435c2f064846d748",
+      "sha256_geometria_y_atributos": "b46f98b203eb486a6978343a5fc002d837b6e3c6b06678ec81326dae1e408b1d",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 6,
+      "sha256_geometria_mvt": "3297f2c04fdc55088e5ab83ed9b899f3e112b6e2f51ab24eb87943498160d8b5",
+      "sha256_geometria_y_atributos": "30af676a05fe6b7a1985a6eb3435d585a7bc9ff860465b09da85f263b6422f6a",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 7,
+      "sha256_geometria_mvt": "a4101d27e808d4f1b687e529fbb74ffdc1d2505500ebab07651373188f58858c",
+      "sha256_geometria_y_atributos": "ad15c2bcaff7511fe8de443944a0ac8ff5f7b4b8f6e9692a4517f0b86e32d999",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 8,
+      "sha256_geometria_mvt": "303119ad8904451ca41a73c984e3d36b5776356baf41e153b9e27e579170b29d",
+      "sha256_geometria_y_atributos": "56455e85f5bb7c6e11be37e537e54aa7cc7cb1da2fee97746101513110d3db7e",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 9,
+      "sha256_geometria_mvt": "71b28906fe23d5767c4eef1641ec7dcf682bab26d3b6e5f626b85e90134fd60b",
+      "sha256_geometria_y_atributos": "62585e3eb7518a46b6b4895f1159c0b2adf23e3696100c3e36535a15e0b76012",
+      "poligonos_fragmentados": 10,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 10,
+      "sha256_geometria_mvt": "5536ac223bdd39d2a2de4a0664cd476b8f2cb0568cc355f79980ed0532ccb72a",
+      "sha256_geometria_y_atributos": "c9706ad85337e8e719216d1a01eec90808a33eb6dd37be651924df4aa7da1d83",
+      "poligonos_fragmentados": 15,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 11,
+      "sha256_geometria_mvt": "baf16e51d5be92e6863ebfcb6eeeb5326f7388ebe63efcac29d14dc2834f92f4",
+      "sha256_geometria_y_atributos": "5c1b648c0abd9b1e85e2d36df3547a74e26f0a0a3c715bda03ed829d97341ef2",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 12,
+      "sha256_geometria_mvt": "dcc986f4816521ed159b7f04148497259d4a328b4661e4a34f0386d126b6924f",
+      "sha256_geometria_y_atributos": "e7bc93c02aa94174ebd9cb44c7efd2effa91ca745dc7669d26b29e467f3da631",
+      "poligonos_fragmentados": 96,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 5,
+      "sha256_geometria_mvt": "535f745be2431bc7531841d1fe0a11004ddb7dab92a3351d339ccc5b51284f19",
+      "sha256_geometria_y_atributos": "4c860aba9c0a70d08cb59556ee98da572b9ccb313905ce661e602565a45fb1b0",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 6,
+      "sha256_geometria_mvt": "b53edb9b108217bc24828021d4fb96c496f626166f3349e0fbc05b54bd619558",
+      "sha256_geometria_y_atributos": "a9b1402b95e8e9354044c3e8e72fbaeed869844ca37a534d3d4bda75fa0d36c0",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 7,
+      "sha256_geometria_mvt": "cd4d639137c2af8683f2fc0be224e95338d656b0e277c7f12d183faa4b90b3a3",
+      "sha256_geometria_y_atributos": "623ddb0fdd8002885af6cc8a3b33f24036025b45bc4ccec9929571f6fcede326",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 8,
+      "sha256_geometria_mvt": "2f0c43afd5989706adf600e385d4d593dd3e599cfbdb83ed59235a097625a640",
+      "sha256_geometria_y_atributos": "90f267c88e80dd7e824bae032ea400dba8097fbe7df5330c9342064c74299120",
+      "poligonos_fragmentados": 5,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 9,
+      "sha256_geometria_mvt": "6e4a5f9202c04c1094abc5a3bfab9bf9b8d6d80751593c5da621f2a1b372c65a",
+      "sha256_geometria_y_atributos": "6c0fbcd4f6c6f08ec209a0604a746086213dbc2fceef2a0361304346d074b9e6",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 10,
+      "sha256_geometria_mvt": "56d7f0d4e4663b56d16e1cbdad1622fa145a8195256a6ff555c89804ef146c4c",
+      "sha256_geometria_y_atributos": "df63e43b52ffdf584eb4823955ea5e0294b50408fa6fa8c29d811b5ffdfee198",
+      "poligonos_fragmentados": 16,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 11,
+      "sha256_geometria_mvt": "aaf51697a9e67980b3712f66431810f973f0c1440474c5c6ce9e58f95a415df5",
+      "sha256_geometria_y_atributos": "f614e74ae172123eb06f0b2a9c9b2667364f9d8323c08d3aa959195b10c2c595",
+      "poligonos_fragmentados": 42,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 12,
+      "sha256_geometria_mvt": "c9f2d734f7699895f340512c4ccf0fe27dbc719622c957f22af5ee81b2b43c83",
+      "sha256_geometria_y_atributos": "25922be6cc1c031c7df4e5f4c1f5736b8f497eb6a5e1ed653409350c707d9e30",
+      "poligonos_fragmentados": 143,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 5,
+      "sha256_geometria_mvt": "722e3d3c9b7b4197cb4eccf0be23bb59c5b45858991fbe69a504a60f3c785f44",
+      "sha256_geometria_y_atributos": "554c13381d7f93c5baac9aaee19f64eb069e70efdd8830f26771e6655fc92c43",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 6,
+      "sha256_geometria_mvt": "281535982961afd2c1415205295eef83e86203604cb7f4c78c4bf123e11230a9",
+      "sha256_geometria_y_atributos": "f7ca88e719612d61ebed49022daba23531c99bf40b88ff5ca9153ee0449f6763",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 7,
+      "sha256_geometria_mvt": "e31c62907c3d2d7bb76de64e018b42232f49b03eb114c0fc5a115f9bc1c08d5b",
+      "sha256_geometria_y_atributos": "11cd12c7d636f3d490759e2ac9a7a8ccad9b58681ecbacad187063ba2f000d14",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 8,
+      "sha256_geometria_mvt": "fb40650f3bba1a6226dfe57fd41e8ac6a9a67d74ad1cc566e9ea45053eab2f13",
+      "sha256_geometria_y_atributos": "ee8ae5d96be558c83263ee109ec4de1ef040c2112a4a39359ffc0c5af0ec873e",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 9,
+      "sha256_geometria_mvt": "5acabfbdaf7bb2c3acf400d4e5cc54f0534fc373246e1b48c8f60bd16d6f51d0",
+      "sha256_geometria_y_atributos": "628e33e184052c9375dc5b860ba62088bdf154bd8a49b184ea4f1385501a5d7c",
+      "poligonos_fragmentados": 18,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 10,
+      "sha256_geometria_mvt": "d9260f31503ea5acf51a4075d6d6ecd2504e620bb1423ad8cd7b8c4013243404",
+      "sha256_geometria_y_atributos": "13e3f6dd997ae02826834c7284487025e17d818b1c48918d634d94b74a1356e4",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 11,
+      "sha256_geometria_mvt": "0a72ff463b395777d4919b8a1e4c79777c3b1d129e7fd5c6111b495a3cc7b7f4",
+      "sha256_geometria_y_atributos": "a1717af967eef467c6079366cb57c78ea41ff145ca82113f7c94dd2799bec367",
+      "poligonos_fragmentados": 104,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 12,
+      "sha256_geometria_mvt": "11b1d536f243ffe04ee9a05bf8f28b83f8ac0c3f37e5d45954a934769e27e833",
+      "sha256_geometria_y_atributos": "a01d990742076341ef0f0b785a4d1916a55e1e242bc34fdd9310b268ffd35724",
+      "poligonos_fragmentados": 302,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 25,
+      "zoom": 5,
+      "sha256_geometria_mvt": "233a90e806baa55e7fedf5d895b7529a4095a60e95ce9032029d077f13d624b7",
+      "sha256_geometria_y_atributos": "7ae668969bcf030e59ad235bfe2d045a7830813360a6109b563d46fc019f3f35",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 25,
+      "zoom": 6,
+      "sha256_geometria_mvt": "cff03e8b632da64d30d81b4b88edbecfe6c6150f939378e0f63126d8368573c2",
+      "sha256_geometria_y_atributos": "f445123e9ea68c09388c35921c339bf57cbf09873476611ec4d95f6796edec83",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 25,
+      "zoom": 7,
+      "sha256_geometria_mvt": "2d879111aef68a6bb887ac6cb51899faa73700d4e108106c371212f9ed3d88b9",
+      "sha256_geometria_y_atributos": "9b418d51461f7015f523e0fb17a39df78933e6fb1c9c97a39437d1032f81768c",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 25,
+      "zoom": 8,
+      "sha256_geometria_mvt": "ed4469a8202318a1007edbaaa9f1a6afc2f161a685226f676f3670984dff6ae7",
+      "sha256_geometria_y_atributos": "f01f2aa543fbd28ffbb05c2dd8aee32f22c4fb1c0615c6bcbf25d618ecd69ff5",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 25,
+      "zoom": 9,
+      "sha256_geometria_mvt": "8cd03d4265785b938fcdae4a00b749e9e51041bd5376dfbf3d0df294658f1648",
+      "sha256_geometria_y_atributos": "c2339826788fbedafd4adfa4d72a70e41d69dea4bd44ef6d0d5b246a8536ac22",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 25,
+      "zoom": 10,
+      "sha256_geometria_mvt": "61bfe797272a275bcaa595db1a299bedebf43116f3371ad8ba2c3a248fa63a51",
+      "sha256_geometria_y_atributos": "d15b4b7000bc9f000ee1930f1bbc011ded31ed753781c516eb7648e44bb4c1b2",
+      "poligonos_fragmentados": 12,
+      "lineas_fragmentadas": 4
+    },
+    {
+      "determinante": 25,
+      "zoom": 11,
+      "sha256_geometria_mvt": "df5df4c47759f0ebaa1ba580f7700963e37cb57b4736a34293a365d08a8d6148",
+      "sha256_geometria_y_atributos": "8f233f2d18b1bec1a0a0d2a5a40f59f7a5d4c366aa68092562a91ebe545f6635",
+      "poligonos_fragmentados": 29,
+      "lineas_fragmentadas": 5
+    },
+    {
+      "determinante": 25,
+      "zoom": 12,
+      "sha256_geometria_mvt": "0bd63a2b4b4ce4ae4b16ff2f95244426557453dba0616a594f261714d3a77341",
+      "sha256_geometria_y_atributos": "3b127813d7a3fe5a4f82197e6af084b4aace30a0ade3290ea60b0bc36e55c394",
+      "poligonos_fragmentados": 64,
+      "lineas_fragmentadas": 6
+    },
+    {
+      "determinante": 26,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e89ce9c3c70ebbfa3c4ef4111e081227db8aa8f26844da387146d18a26f163d8",
+      "sha256_geometria_y_atributos": "efd3f3cd59e0a73fc917f96f353ae677e829bfd496e84ddff349513a821fe8da",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 26,
+      "zoom": 6,
+      "sha256_geometria_mvt": "2f57eafa23fb72e310d950d62e5bfd8389356be8377dab77078fe9cef839eb92",
+      "sha256_geometria_y_atributos": "51f79479454b8d55938b6be2e01fbe37123996abe3b300c9857a0698eeec80de",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 7,
+      "sha256_geometria_mvt": "baf3f87af09b8d97913196a56b779ae0b196984cc1bf0be5ffaa7d219d5867a9",
+      "sha256_geometria_y_atributos": "ab04a4412bfc484848808d4e10a193070fc2eafa9273c5dd7b2911eb221c697e",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 8,
+      "sha256_geometria_mvt": "75b40b5f938ea3e293683d3cb33d2187922ae51d5152f8458ba2fbe2089915af",
+      "sha256_geometria_y_atributos": "56cc8a03e6618d310436b06dbe8197107b1b03a4acc370f5f3cbc7f0af29f41b",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 9,
+      "sha256_geometria_mvt": "520d1fbae204fa360aa74d8224faf2a850dcf52ede96585102bd053e6e6e0d24",
+      "sha256_geometria_y_atributos": "88af8d3ae965ca6f19443b1cdfe220431c135c21be61e540be0931c0299ca5c7",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 10,
+      "sha256_geometria_mvt": "7df0a5bfec6612039cb006aee385193cb5ec21872a18804a984716e3a59e0329",
+      "sha256_geometria_y_atributos": "782d726e06f2e9455291d11bf715864498602138ccfe196a0c07a20f58f438d4",
+      "poligonos_fragmentados": 8,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 26,
+      "zoom": 11,
+      "sha256_geometria_mvt": "77b012ed1d098e287789409d36fc6e8ea69c8b901b4646e3196e4e0571d88eb9",
+      "sha256_geometria_y_atributos": "79a588ea3dc908ade45a208af7c15b8b722c6a925b2d1828eb01becac8f9360e",
+      "poligonos_fragmentados": 17,
+      "lineas_fragmentadas": 3
+    },
+    {
+      "determinante": 26,
+      "zoom": 12,
+      "sha256_geometria_mvt": "50c4c988ee1740f01dba7b3d7e84cf408e5d493b60644c433989dc6b9382c22e",
+      "sha256_geometria_y_atributos": "392cb9dfefd22c164452f574de3c1f346a1a0d51e47c5647905195c75d854e5a",
+      "poligonos_fragmentados": 44,
+      "lineas_fragmentadas": 3
+    },
+    {
+      "determinante": 27,
+      "zoom": 5,
+      "sha256_geometria_mvt": "65047b407fa01db8ef74d7c609383eec2051e8716bd2ed24a4b29798e26c5cd1",
+      "sha256_geometria_y_atributos": "0ef570dd5a4a1534242dd82650f40eb790b405dbfb0035e1d59e5d5d81a90385",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 6,
+      "sha256_geometria_mvt": "1ed9ba408e3d7683fb09c3579edfcc80d41d69bb3debc8ffbeeb25c48fbfdd22",
+      "sha256_geometria_y_atributos": "b0efa9099fc4ed826044d6e0e1873f2b5ad0b06eee53641691b9a69c87b92c6b",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 7,
+      "sha256_geometria_mvt": "be59f3074e255aaa50edda2286ce0960766af6f180b02ab4724c3cabecd817b6",
+      "sha256_geometria_y_atributos": "8d29d4e1d5027ff9cbc23bdfde5fd2d41994da05e60dd239c83c4764e1492f1d",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 8,
+      "sha256_geometria_mvt": "ae46f4eb4f434d44d75aa8964756af4871fb73f14698971b2d3aab305fb6c236",
+      "sha256_geometria_y_atributos": "20f5cbf810a32953aa8b5f44cb7c12881d3e4299326ba5601c9266ecde7a9035",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 9,
+      "sha256_geometria_mvt": "99b550f3e22a964455996cfbb2631f396db1c1021ec5bb6ccdcb9b85b881706e",
+      "sha256_geometria_y_atributos": "2fece88812328f7a65f02cfc8cb3b9c53ae29bca7109ac57df1edd9cbe90d270",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 10,
+      "sha256_geometria_mvt": "fa15a8529b0a336c57be6b3343312222625ac0ce100b6b3451aba8aac04ee3cd",
+      "sha256_geometria_y_atributos": "9e16b1bdfe8e552817453052527c1d42439d477e9f6cdcbc1a52787240c1548c",
+      "poligonos_fragmentados": 15,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 11,
+      "sha256_geometria_mvt": "c37154c39f5b9a3c08eec112998e24834a71cd8b27e2846501d2a0f1ef1f9239",
+      "sha256_geometria_y_atributos": "6893849f50c9ce7be2f0ab262ab27b4fe11ef1be0dd6241c5196f5f2f0cda919",
+      "poligonos_fragmentados": 35,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 27,
+      "zoom": 12,
+      "sha256_geometria_mvt": "66d0a5036338133e5423667291cc521b5e8537b0c5ace15d396858e19c05cc30",
+      "sha256_geometria_y_atributos": "599ed8d2a752884cf704f78b858f6c0b9d1f850f331deca5584c915b4f412982",
+      "poligonos_fragmentados": 93,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 28,
+      "zoom": 5,
+      "sha256_geometria_mvt": "6889dd75f3aca8d7484eaad48d473cc8b34de98160685e56e6e7cd4b3b1f8334",
+      "sha256_geometria_y_atributos": "7bb0e4a783a0d8d17efd2eb2f0e2ae90cbd04403902a070ae950a29d446defed",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 6,
+      "sha256_geometria_mvt": "a5e147c134a9e8a288978c6272828c9756517a838160151f2a9185762422ee67",
+      "sha256_geometria_y_atributos": "d027c2ee17c64bbce1d3ae4feb4b06ae0d24673f9490a5fbc4947efa89960c98",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 7,
+      "sha256_geometria_mvt": "7ede03a75f6fb35174e9abf2fa9c4dedb9fad28c0c3668b7813f153e715e38b9",
+      "sha256_geometria_y_atributos": "a82d3da7550472eeb77db10517b8d1239d3c9bda0fdbeaafc40fc42c19863492",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 8,
+      "sha256_geometria_mvt": "2b2c3cebf09e7b19ffa15e07a548e92fee61b1da0019f7ca8b75056499bbf2b8",
+      "sha256_geometria_y_atributos": "015ca0fd87f1e4ee5eba3203daac94bcb3404dc129ac4651bdd4442ee3056e13",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 9,
+      "sha256_geometria_mvt": "3c73988921c6abcc4f4a09e93137578927491396a932e0466cdbcb273c043306",
+      "sha256_geometria_y_atributos": "2a8282cd14eca9c8c02bd0e8edfec5d151eabb8a6473cf946f6566e0bfd43e19",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 10,
+      "sha256_geometria_mvt": "430441f9d29df31462ac1a2788c113f772217d37cec27b3f3d18a003f06ab5c1",
+      "sha256_geometria_y_atributos": "21d36711f4683104004b9c3b2d64b1d9b30d5ddb674c6c83457aacb42107018c",
+      "poligonos_fragmentados": 15,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 11,
+      "sha256_geometria_mvt": "bde8324589996d41b37e0f95cf5144a4e30b36889ff8c546907a61fcbc829055",
+      "sha256_geometria_y_atributos": "51292ec57faa7962c8037fa90a027003a868628f36d8a7570f439e571054e2a0",
+      "poligonos_fragmentados": 30,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 12,
+      "sha256_geometria_mvt": "48262b194da6bc5cca98014ae68313629e78c7dc95826e4daff3e62946722ab6",
+      "sha256_geometria_y_atributos": "7132e624d6a526486430abe52702c71f918239d151b4edff00365d1e36464584",
+      "poligonos_fragmentados": 81,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e8464b4120c6c91e8f41af78fcffb5d865cedead57233c26d571d9ea555e20e1",
+      "sha256_geometria_y_atributos": "399f865ae46cb3aee5981fe3138bf7223081a6f420e438f6a6a0f010e4344707",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 6,
+      "sha256_geometria_mvt": "3194c6e0662c2988c91c5b953f5e92199e529d31b8ef876b27a2fd83a8435c35",
+      "sha256_geometria_y_atributos": "a651be68cb4887ff24aeef85079fc36e35b2aecfc642c11125d8734f51b12651",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 7,
+      "sha256_geometria_mvt": "f51cf9993e4c768ace7a035f12b4f8ae93325fabc3670caf1fb9bb7e0dbd9d0a",
+      "sha256_geometria_y_atributos": "f73d5e5f0dca0eddfc1a910a6305c04f313b3c389f0b6637d76c52ddecd0e34f",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 8,
+      "sha256_geometria_mvt": "babe46b23804c74bcb906523ef4f861cd3d1ed15f9014185612392f56d02f85c",
+      "sha256_geometria_y_atributos": "46d2bb623072c878ae38fc208ba7de7531b9ae0a776e52bd2116538267f1c6d1",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 9,
+      "sha256_geometria_mvt": "d0e4aaead1485793d9301321e41c1e1c613c827c041a486036e586a7855af003",
+      "sha256_geometria_y_atributos": "d4b5cc4ea2dfc72489c38c576adc412d7aefbc9f05710ab6c842ea1ede8a2196",
+      "poligonos_fragmentados": 6,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 10,
+      "sha256_geometria_mvt": "ddb5ce68a0427bb1e219b4116006474afd154317bc2ebda46392a3d69af0de58",
+      "sha256_geometria_y_atributos": "87b1f4a8690340d7cb1c07ec583f3637183a5100a8e70dc63c848c9b50cd02a0",
+      "poligonos_fragmentados": 16,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 11,
+      "sha256_geometria_mvt": "f38d170f1d33621b2606898c51cf922fa97a017516cb029b865deacf26a62ff6",
+      "sha256_geometria_y_atributos": "b23050c63cceb7bd9c374aa91db127ae324c9d34a5c575025aaf2039fb8eb90a",
+      "poligonos_fragmentados": 43,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 12,
+      "sha256_geometria_mvt": "53e686abcce0e345ab1fbdebae13f8590fef413ba0d83fc0e8b4b451dc8efa29",
+      "sha256_geometria_y_atributos": "6e254a32c4f6373d012586d2e2dcb35c7aa27be7c84cdc0006575bc7379f47bb",
+      "poligonos_fragmentados": 125,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e4390ceac1ad976a4054698babd990458d7ed95dc472236ff24508d25d07a182",
+      "sha256_geometria_y_atributos": "0a7cc49e6679f96d112d6ddd97418a12ebacf270e87166c9ab43d2db4b28115e",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 6,
+      "sha256_geometria_mvt": "d8b87fa5f275db0a98ef4ff1b8c0666d995d6b0c955e3521fdb5ecdf36c48468",
+      "sha256_geometria_y_atributos": "878889300fc295ed7262493fe6dacd033133f1ea0ad027c4d5e3a5638485ff12",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 7,
+      "sha256_geometria_mvt": "7619740035738f0ac5d7adb6ddd3a9b273ff899f75f83894b3469941efea7389",
+      "sha256_geometria_y_atributos": "ae09ccf203e1d9ddd7d945c1af320be415c40a0871051584567644f36791e7bb",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 8,
+      "sha256_geometria_mvt": "66acf54b179d59e65c5fdf77a9a34ccd0cfb692f9f544ef4805b104f5eecaff2",
+      "sha256_geometria_y_atributos": "fb79e1ccf4a8a0bcc04a28331bdefabb0a2c71764c5745cfa04ef2fffac15bda",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 9,
+      "sha256_geometria_mvt": "cc46a90685eddad8229756c625b399ddd955efcf6f91872b36d8f0aaab506c7a",
+      "sha256_geometria_y_atributos": "76c6d2891d116f2eb161bd916575ae29659e53504ae0545b8079b47283d7a40f",
+      "poligonos_fragmentados": 13,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 10,
+      "sha256_geometria_mvt": "24b8df997202c0148bcaa801668a79a673074c7365465ddbb4c44b8f206c26d9",
+      "sha256_geometria_y_atributos": "213eec0fd1785b0fba5f7b317c7d1680567a29190f4e2e70ab7d562efa1b78d1",
+      "poligonos_fragmentados": 29,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 11,
+      "sha256_geometria_mvt": "124ad091f228a60908300008213b6eadc4277d73fd61a3e3c905ba67c8dd377d",
+      "sha256_geometria_y_atributos": "2b56b2d089bd66d6a1f32e1cf67a7b8c6c415403ffbdfa7f62152947a17b4740",
+      "poligonos_fragmentados": 65,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 12,
+      "sha256_geometria_mvt": "4b30ba642711c2099217f5d1caa856b90b0bf10bae1200e3b47bef55e4b2e5af",
+      "sha256_geometria_y_atributos": "a30d8dfd4639606e4618a5861442584da2b1141196ad03aafe7c1907ac4c69ba",
+      "poligonos_fragmentados": 189,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 5,
+      "sha256_geometria_mvt": "6edce17d1c3e2efee0a0929be59c489c59d73726e0db2a66506c2d37ed2edf64",
+      "sha256_geometria_y_atributos": "7243f0d0761156e526a54c25eeef0372321c1ba016f895e6e1a39215dd905574",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 6,
+      "sha256_geometria_mvt": "b74919bf5015d4d8b51ae7e0709c3c4624eb88bddc880b24b0207eeffc2c04f5",
+      "sha256_geometria_y_atributos": "1319b2ba5be14dceb8a77d7b967e11411f2918d5d44946933424f839d220cef5",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 7,
+      "sha256_geometria_mvt": "c6991f46d34b99be746d879aff38e353a229e8c99b4fb4e1a457e1aaed9c0977",
+      "sha256_geometria_y_atributos": "33c19fcc5daacb0dbffd5e913f2a97f844154e0f146256276094036a185ba8bc",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 8,
+      "sha256_geometria_mvt": "cc0c0853e58181685fcb31470ff59800fbc83320dbc6c7a65998834c63db2563",
+      "sha256_geometria_y_atributos": "d496aab475337da185d648a968fc5a3df1a5b66fa09d4df85fc9a9c320601deb",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 9,
+      "sha256_geometria_mvt": "45aed338e8e64a6201931d792d5f04d4c4f80c752b9a523c96ab59c67415a4c9",
+      "sha256_geometria_y_atributos": "5480b87c3158cf8f7b09779ffdd16bc3f5f29634ce81a94abafab41d281f54c9",
+      "poligonos_fragmentados": 8,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 10,
+      "sha256_geometria_mvt": "9b865c65c98079e08729deab55ecbb4f91154f2f536ae9d067fa7e06c15b4a4e",
+      "sha256_geometria_y_atributos": "97ba3f1f2a5f3891a85ceb719027f2d3b2cfc08bba61eff04ded5dc54f974af0",
+      "poligonos_fragmentados": 24,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 11,
+      "sha256_geometria_mvt": "3052df3529994b1648ee79349784a564cef3a84b8905b736e159dcd1e433613b",
+      "sha256_geometria_y_atributos": "25d63d58b9137c8ffe693cf15ea3c7815512725a6c7c589da47b398c6002a8ca",
+      "poligonos_fragmentados": 64,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 12,
+      "sha256_geometria_mvt": "9e7bb1c2172b0ce421444b7de6e8da8ec7fb740e8e518a6dcf22bc766e80ffb8",
+      "sha256_geometria_y_atributos": "a9e9e8c1d910d4fda3bdaba4c7d0ab7303b9eb0a4b20846a5a3a3fb326afa563",
+      "poligonos_fragmentados": 189,
+      "lineas_fragmentadas": 0
+    }
+  ],
+  "despues": [
+    {
+      "determinante": 20,
+      "zoom": 5,
+      "sha256_geometria_mvt": "d7172c211991f05a2d2590a5e72eee4b3e42d9adc8521d9583b3787a1b857a89",
+      "sha256_geometria_y_atributos": "d4f0d5238101a59cc697405485b6db0626101a3a7eae7d547941b88cd1fcf282",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 6,
+      "sha256_geometria_mvt": "14950ff701bb9200a3862f6523d23052a6baa1718fc8d812a65f6f9a2294140d",
+      "sha256_geometria_y_atributos": "f5d6fab92f74e02c395c4aacc472a46fbdb4e1ef037a2224b15da5845884d40d",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 7,
+      "sha256_geometria_mvt": "99a5cb30b43853c02308ad0d8ab297de800e22d6bf4a89b8a47f9210c421bd0f",
+      "sha256_geometria_y_atributos": "fc4ff31391d0e9415e476a66375ecfbaaaa9a3e86abc4fa7e0e30db83797832e",
+      "poligonos_fragmentados": 5,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 8,
+      "sha256_geometria_mvt": "eacbcc26feadd00d934f32abcaa9e7187709e8b5ba1331fe1d67955924c4a0ce",
+      "sha256_geometria_y_atributos": "33a9dc9c02af20c0976fd2f73223dd415d2c7acef6d4576a396c4080249ee249",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 9,
+      "sha256_geometria_mvt": "280a025bec5a2bc0444bd017acbc2ff6d46971d775f3247e795665a6fd62b4de",
+      "sha256_geometria_y_atributos": "21da021ad7c44c6a53cf8c0f1a7a62b91fc9f19ebfe8c8a5932a08563f9cfe92",
+      "poligonos_fragmentados": 14,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 10,
+      "sha256_geometria_mvt": "f1da1acea3ad5e0306ef3adae26956eb251347a8eca939e606994c0634a0cd30",
+      "sha256_geometria_y_atributos": "287f592928741bd6de74cf50d81414c1e150b3bfc2fa7ae204b4832cfd0b3725",
+      "poligonos_fragmentados": 32,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 11,
+      "sha256_geometria_mvt": "a2d7f3da3abd0747803299e750766bad7dab35d9d24a7ae316e0ab8ba6f1cd37",
+      "sha256_geometria_y_atributos": "e3958baa771d45e87cf4fb21a3d9b5b23d6b0f5fd49e67f96754e47875a7adc8",
+      "poligonos_fragmentados": 90,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 20,
+      "zoom": 12,
+      "sha256_geometria_mvt": "568d5752ca5d7b169c2ff919037f40f57c7e878ba7b15f07dd575e344c2a4f59",
+      "sha256_geometria_y_atributos": "89ea3b0bb999f9ec5600479e92f89f2e9499d9c10cdf6891769c0c26ae7f1a88",
+      "poligonos_fragmentados": 285,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e40b7d7f20f913e6cb093f5bd91c438d2019d18dc3e0c4a044f8a38bda411a6f",
+      "sha256_geometria_y_atributos": "8be8afe63ab20d379e4af9bf56cb4f5de8354e3edaba3022ac9aa9a25bbe525f",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 6,
+      "sha256_geometria_mvt": "daddd1b5effb8b041712f425ea87b5888ef2201a7491b2303970a77fbbc1bff4",
+      "sha256_geometria_y_atributos": "349addf69c56d3bcb23b617dd27115c6a9677f918f53a39245d3ce6290270a50",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 7,
+      "sha256_geometria_mvt": "5b02c544c0decf87820e084846c656b2ddf79fe07a19370fbda5ade0b7213326",
+      "sha256_geometria_y_atributos": "2cc491a6356eb07062c3b8af1e75a81deb657072e0967c2ff4362fdaae4252a2",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 8,
+      "sha256_geometria_mvt": "c9fd646cf32f029728f5e8b79f6d71d213c77376eb63713a2533527a6db1fc07",
+      "sha256_geometria_y_atributos": "83ca5c2e4b646f76ddcffc0dd7136656c137affb180f331ef93795f8270c5ae5",
+      "poligonos_fragmentados": 6,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 9,
+      "sha256_geometria_mvt": "84ce7580b080d731c85168e9be00d5ec8d5dd2622bfbe08ee242db968c87f43c",
+      "sha256_geometria_y_atributos": "fe59361a488906acb0764267735cb8a571a41d7c8fd85b4d02dae10c936d6020",
+      "poligonos_fragmentados": 18,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 10,
+      "sha256_geometria_mvt": "b4023df9136505b9cfa75090a80754f0a249f69d1400b148963b2653c51c3782",
+      "sha256_geometria_y_atributos": "4b161965c39b7d8a753ca1737867fe72e2f75d4d8b1b31d7df54bf14aec58d23",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 11,
+      "sha256_geometria_mvt": "f157c5e968e0af082d0433d05232174417bf6452ebe599ce5ae0d48e95d5421a",
+      "sha256_geometria_y_atributos": "45a4e21335cf49eb08cff3a9574213aec421103636d48fc8ec153f4e970410b4",
+      "poligonos_fragmentados": 86,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 21,
+      "zoom": 12,
+      "sha256_geometria_mvt": "24779a17b2619a982e9f7cdc3d4b93a45aef59b91dced472caf0b4995322b4ae",
+      "sha256_geometria_y_atributos": "ddef9392fe16aca971ec557fa83ca3dd94f37c9e0b121a4784a56f589a162f72",
+      "poligonos_fragmentados": 221,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 5,
+      "sha256_geometria_mvt": "71647b78e7edc3323fa895d72d9b99a426ec691710555b4f435c2f064846d748",
+      "sha256_geometria_y_atributos": "b46f98b203eb486a6978343a5fc002d837b6e3c6b06678ec81326dae1e408b1d",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 6,
+      "sha256_geometria_mvt": "3297f2c04fdc55088e5ab83ed9b899f3e112b6e2f51ab24eb87943498160d8b5",
+      "sha256_geometria_y_atributos": "30af676a05fe6b7a1985a6eb3435d585a7bc9ff860465b09da85f263b6422f6a",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 7,
+      "sha256_geometria_mvt": "a4101d27e808d4f1b687e529fbb74ffdc1d2505500ebab07651373188f58858c",
+      "sha256_geometria_y_atributos": "ad15c2bcaff7511fe8de443944a0ac8ff5f7b4b8f6e9692a4517f0b86e32d999",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 8,
+      "sha256_geometria_mvt": "303119ad8904451ca41a73c984e3d36b5776356baf41e153b9e27e579170b29d",
+      "sha256_geometria_y_atributos": "56455e85f5bb7c6e11be37e537e54aa7cc7cb1da2fee97746101513110d3db7e",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 9,
+      "sha256_geometria_mvt": "71b28906fe23d5767c4eef1641ec7dcf682bab26d3b6e5f626b85e90134fd60b",
+      "sha256_geometria_y_atributos": "62585e3eb7518a46b6b4895f1159c0b2adf23e3696100c3e36535a15e0b76012",
+      "poligonos_fragmentados": 10,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 10,
+      "sha256_geometria_mvt": "5536ac223bdd39d2a2de4a0664cd476b8f2cb0568cc355f79980ed0532ccb72a",
+      "sha256_geometria_y_atributos": "c9706ad85337e8e719216d1a01eec90808a33eb6dd37be651924df4aa7da1d83",
+      "poligonos_fragmentados": 15,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 11,
+      "sha256_geometria_mvt": "baf16e51d5be92e6863ebfcb6eeeb5326f7388ebe63efcac29d14dc2834f92f4",
+      "sha256_geometria_y_atributos": "5c1b648c0abd9b1e85e2d36df3547a74e26f0a0a3c715bda03ed829d97341ef2",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 22,
+      "zoom": 12,
+      "sha256_geometria_mvt": "dcc986f4816521ed159b7f04148497259d4a328b4661e4a34f0386d126b6924f",
+      "sha256_geometria_y_atributos": "e7bc93c02aa94174ebd9cb44c7efd2effa91ca745dc7669d26b29e467f3da631",
+      "poligonos_fragmentados": 96,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 5,
+      "sha256_geometria_mvt": "535f745be2431bc7531841d1fe0a11004ddb7dab92a3351d339ccc5b51284f19",
+      "sha256_geometria_y_atributos": "4c860aba9c0a70d08cb59556ee98da572b9ccb313905ce661e602565a45fb1b0",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 6,
+      "sha256_geometria_mvt": "b53edb9b108217bc24828021d4fb96c496f626166f3349e0fbc05b54bd619558",
+      "sha256_geometria_y_atributos": "a9b1402b95e8e9354044c3e8e72fbaeed869844ca37a534d3d4bda75fa0d36c0",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 7,
+      "sha256_geometria_mvt": "cd4d639137c2af8683f2fc0be224e95338d656b0e277c7f12d183faa4b90b3a3",
+      "sha256_geometria_y_atributos": "623ddb0fdd8002885af6cc8a3b33f24036025b45bc4ccec9929571f6fcede326",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 8,
+      "sha256_geometria_mvt": "2f0c43afd5989706adf600e385d4d593dd3e599cfbdb83ed59235a097625a640",
+      "sha256_geometria_y_atributos": "90f267c88e80dd7e824bae032ea400dba8097fbe7df5330c9342064c74299120",
+      "poligonos_fragmentados": 5,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 9,
+      "sha256_geometria_mvt": "6e4a5f9202c04c1094abc5a3bfab9bf9b8d6d80751593c5da621f2a1b372c65a",
+      "sha256_geometria_y_atributos": "6c0fbcd4f6c6f08ec209a0604a746086213dbc2fceef2a0361304346d074b9e6",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 10,
+      "sha256_geometria_mvt": "56d7f0d4e4663b56d16e1cbdad1622fa145a8195256a6ff555c89804ef146c4c",
+      "sha256_geometria_y_atributos": "df63e43b52ffdf584eb4823955ea5e0294b50408fa6fa8c29d811b5ffdfee198",
+      "poligonos_fragmentados": 16,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 11,
+      "sha256_geometria_mvt": "aaf51697a9e67980b3712f66431810f973f0c1440474c5c6ce9e58f95a415df5",
+      "sha256_geometria_y_atributos": "f614e74ae172123eb06f0b2a9c9b2667364f9d8323c08d3aa959195b10c2c595",
+      "poligonos_fragmentados": 42,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 23,
+      "zoom": 12,
+      "sha256_geometria_mvt": "c9f2d734f7699895f340512c4ccf0fe27dbc719622c957f22af5ee81b2b43c83",
+      "sha256_geometria_y_atributos": "25922be6cc1c031c7df4e5f4c1f5736b8f497eb6a5e1ed653409350c707d9e30",
+      "poligonos_fragmentados": 143,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 5,
+      "sha256_geometria_mvt": "722e3d3c9b7b4197cb4eccf0be23bb59c5b45858991fbe69a504a60f3c785f44",
+      "sha256_geometria_y_atributos": "554c13381d7f93c5baac9aaee19f64eb069e70efdd8830f26771e6655fc92c43",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 6,
+      "sha256_geometria_mvt": "281535982961afd2c1415205295eef83e86203604cb7f4c78c4bf123e11230a9",
+      "sha256_geometria_y_atributos": "f7ca88e719612d61ebed49022daba23531c99bf40b88ff5ca9153ee0449f6763",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 7,
+      "sha256_geometria_mvt": "e31c62907c3d2d7bb76de64e018b42232f49b03eb114c0fc5a115f9bc1c08d5b",
+      "sha256_geometria_y_atributos": "11cd12c7d636f3d490759e2ac9a7a8ccad9b58681ecbacad187063ba2f000d14",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 8,
+      "sha256_geometria_mvt": "fb40650f3bba1a6226dfe57fd41e8ac6a9a67d74ad1cc566e9ea45053eab2f13",
+      "sha256_geometria_y_atributos": "ee8ae5d96be558c83263ee109ec4de1ef040c2112a4a39359ffc0c5af0ec873e",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 9,
+      "sha256_geometria_mvt": "5acabfbdaf7bb2c3acf400d4e5cc54f0534fc373246e1b48c8f60bd16d6f51d0",
+      "sha256_geometria_y_atributos": "628e33e184052c9375dc5b860ba62088bdf154bd8a49b184ea4f1385501a5d7c",
+      "poligonos_fragmentados": 18,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 10,
+      "sha256_geometria_mvt": "d9260f31503ea5acf51a4075d6d6ecd2504e620bb1423ad8cd7b8c4013243404",
+      "sha256_geometria_y_atributos": "13e3f6dd997ae02826834c7284487025e17d818b1c48918d634d94b74a1356e4",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 11,
+      "sha256_geometria_mvt": "0a72ff463b395777d4919b8a1e4c79777c3b1d129e7fd5c6111b495a3cc7b7f4",
+      "sha256_geometria_y_atributos": "a1717af967eef467c6079366cb57c78ea41ff145ca82113f7c94dd2799bec367",
+      "poligonos_fragmentados": 104,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 24,
+      "zoom": 12,
+      "sha256_geometria_mvt": "11b1d536f243ffe04ee9a05bf8f28b83f8ac0c3f37e5d45954a934769e27e833",
+      "sha256_geometria_y_atributos": "a01d990742076341ef0f0b785a4d1916a55e1e242bc34fdd9310b268ffd35724",
+      "poligonos_fragmentados": 302,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 25,
+      "zoom": 5,
+      "sha256_geometria_mvt": "233a90e806baa55e7fedf5d895b7529a4095a60e95ce9032029d077f13d624b7",
+      "sha256_geometria_y_atributos": "7ae668969bcf030e59ad235bfe2d045a7830813360a6109b563d46fc019f3f35",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 25,
+      "zoom": 6,
+      "sha256_geometria_mvt": "cff03e8b632da64d30d81b4b88edbecfe6c6150f939378e0f63126d8368573c2",
+      "sha256_geometria_y_atributos": "f445123e9ea68c09388c35921c339bf57cbf09873476611ec4d95f6796edec83",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 25,
+      "zoom": 7,
+      "sha256_geometria_mvt": "2d879111aef68a6bb887ac6cb51899faa73700d4e108106c371212f9ed3d88b9",
+      "sha256_geometria_y_atributos": "9b418d51461f7015f523e0fb17a39df78933e6fb1c9c97a39437d1032f81768c",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 25,
+      "zoom": 8,
+      "sha256_geometria_mvt": "ed4469a8202318a1007edbaaa9f1a6afc2f161a685226f676f3670984dff6ae7",
+      "sha256_geometria_y_atributos": "f01f2aa543fbd28ffbb05c2dd8aee32f22c4fb1c0615c6bcbf25d618ecd69ff5",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 25,
+      "zoom": 9,
+      "sha256_geometria_mvt": "8cd03d4265785b938fcdae4a00b749e9e51041bd5376dfbf3d0df294658f1648",
+      "sha256_geometria_y_atributos": "c2339826788fbedafd4adfa4d72a70e41d69dea4bd44ef6d0d5b246a8536ac22",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 25,
+      "zoom": 10,
+      "sha256_geometria_mvt": "61bfe797272a275bcaa595db1a299bedebf43116f3371ad8ba2c3a248fa63a51",
+      "sha256_geometria_y_atributos": "d15b4b7000bc9f000ee1930f1bbc011ded31ed753781c516eb7648e44bb4c1b2",
+      "poligonos_fragmentados": 12,
+      "lineas_fragmentadas": 4
+    },
+    {
+      "determinante": 25,
+      "zoom": 11,
+      "sha256_geometria_mvt": "df5df4c47759f0ebaa1ba580f7700963e37cb57b4736a34293a365d08a8d6148",
+      "sha256_geometria_y_atributos": "8f233f2d18b1bec1a0a0d2a5a40f59f7a5d4c366aa68092562a91ebe545f6635",
+      "poligonos_fragmentados": 29,
+      "lineas_fragmentadas": 5
+    },
+    {
+      "determinante": 25,
+      "zoom": 12,
+      "sha256_geometria_mvt": "0bd63a2b4b4ce4ae4b16ff2f95244426557453dba0616a594f261714d3a77341",
+      "sha256_geometria_y_atributos": "3b127813d7a3fe5a4f82197e6af084b4aace30a0ade3290ea60b0bc36e55c394",
+      "poligonos_fragmentados": 64,
+      "lineas_fragmentadas": 6
+    },
+    {
+      "determinante": 26,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e89ce9c3c70ebbfa3c4ef4111e081227db8aa8f26844da387146d18a26f163d8",
+      "sha256_geometria_y_atributos": "efd3f3cd59e0a73fc917f96f353ae677e829bfd496e84ddff349513a821fe8da",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 26,
+      "zoom": 6,
+      "sha256_geometria_mvt": "2f57eafa23fb72e310d950d62e5bfd8389356be8377dab77078fe9cef839eb92",
+      "sha256_geometria_y_atributos": "51f79479454b8d55938b6be2e01fbe37123996abe3b300c9857a0698eeec80de",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 7,
+      "sha256_geometria_mvt": "baf3f87af09b8d97913196a56b779ae0b196984cc1bf0be5ffaa7d219d5867a9",
+      "sha256_geometria_y_atributos": "ab04a4412bfc484848808d4e10a193070fc2eafa9273c5dd7b2911eb221c697e",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 8,
+      "sha256_geometria_mvt": "75b40b5f938ea3e293683d3cb33d2187922ae51d5152f8458ba2fbe2089915af",
+      "sha256_geometria_y_atributos": "56cc8a03e6618d310436b06dbe8197107b1b03a4acc370f5f3cbc7f0af29f41b",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 9,
+      "sha256_geometria_mvt": "520d1fbae204fa360aa74d8224faf2a850dcf52ede96585102bd053e6e6e0d24",
+      "sha256_geometria_y_atributos": "88af8d3ae965ca6f19443b1cdfe220431c135c21be61e540be0931c0299ca5c7",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 26,
+      "zoom": 10,
+      "sha256_geometria_mvt": "7df0a5bfec6612039cb006aee385193cb5ec21872a18804a984716e3a59e0329",
+      "sha256_geometria_y_atributos": "782d726e06f2e9455291d11bf715864498602138ccfe196a0c07a20f58f438d4",
+      "poligonos_fragmentados": 8,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 26,
+      "zoom": 11,
+      "sha256_geometria_mvt": "77b012ed1d098e287789409d36fc6e8ea69c8b901b4646e3196e4e0571d88eb9",
+      "sha256_geometria_y_atributos": "79a588ea3dc908ade45a208af7c15b8b722c6a925b2d1828eb01becac8f9360e",
+      "poligonos_fragmentados": 17,
+      "lineas_fragmentadas": 3
+    },
+    {
+      "determinante": 26,
+      "zoom": 12,
+      "sha256_geometria_mvt": "50c4c988ee1740f01dba7b3d7e84cf408e5d493b60644c433989dc6b9382c22e",
+      "sha256_geometria_y_atributos": "392cb9dfefd22c164452f574de3c1f346a1a0d51e47c5647905195c75d854e5a",
+      "poligonos_fragmentados": 44,
+      "lineas_fragmentadas": 3
+    },
+    {
+      "determinante": 27,
+      "zoom": 5,
+      "sha256_geometria_mvt": "65047b407fa01db8ef74d7c609383eec2051e8716bd2ed24a4b29798e26c5cd1",
+      "sha256_geometria_y_atributos": "0ef570dd5a4a1534242dd82650f40eb790b405dbfb0035e1d59e5d5d81a90385",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 6,
+      "sha256_geometria_mvt": "1ed9ba408e3d7683fb09c3579edfcc80d41d69bb3debc8ffbeeb25c48fbfdd22",
+      "sha256_geometria_y_atributos": "b0efa9099fc4ed826044d6e0e1873f2b5ad0b06eee53641691b9a69c87b92c6b",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 7,
+      "sha256_geometria_mvt": "be59f3074e255aaa50edda2286ce0960766af6f180b02ab4724c3cabecd817b6",
+      "sha256_geometria_y_atributos": "8d29d4e1d5027ff9cbc23bdfde5fd2d41994da05e60dd239c83c4764e1492f1d",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 8,
+      "sha256_geometria_mvt": "ae46f4eb4f434d44d75aa8964756af4871fb73f14698971b2d3aab305fb6c236",
+      "sha256_geometria_y_atributos": "20f5cbf810a32953aa8b5f44cb7c12881d3e4299326ba5601c9266ecde7a9035",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 9,
+      "sha256_geometria_mvt": "99b550f3e22a964455996cfbb2631f396db1c1021ec5bb6ccdcb9b85b881706e",
+      "sha256_geometria_y_atributos": "2fece88812328f7a65f02cfc8cb3b9c53ae29bca7109ac57df1edd9cbe90d270",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 10,
+      "sha256_geometria_mvt": "fa15a8529b0a336c57be6b3343312222625ac0ce100b6b3451aba8aac04ee3cd",
+      "sha256_geometria_y_atributos": "9e16b1bdfe8e552817453052527c1d42439d477e9f6cdcbc1a52787240c1548c",
+      "poligonos_fragmentados": 15,
+      "lineas_fragmentadas": 1
+    },
+    {
+      "determinante": 27,
+      "zoom": 11,
+      "sha256_geometria_mvt": "c37154c39f5b9a3c08eec112998e24834a71cd8b27e2846501d2a0f1ef1f9239",
+      "sha256_geometria_y_atributos": "6893849f50c9ce7be2f0ab262ab27b4fe11ef1be0dd6241c5196f5f2f0cda919",
+      "poligonos_fragmentados": 35,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 27,
+      "zoom": 12,
+      "sha256_geometria_mvt": "66d0a5036338133e5423667291cc521b5e8537b0c5ace15d396858e19c05cc30",
+      "sha256_geometria_y_atributos": "599ed8d2a752884cf704f78b858f6c0b9d1f850f331deca5584c915b4f412982",
+      "poligonos_fragmentados": 93,
+      "lineas_fragmentadas": 2
+    },
+    {
+      "determinante": 28,
+      "zoom": 5,
+      "sha256_geometria_mvt": "6889dd75f3aca8d7484eaad48d473cc8b34de98160685e56e6e7cd4b3b1f8334",
+      "sha256_geometria_y_atributos": "7bb0e4a783a0d8d17efd2eb2f0e2ae90cbd04403902a070ae950a29d446defed",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 6,
+      "sha256_geometria_mvt": "a5e147c134a9e8a288978c6272828c9756517a838160151f2a9185762422ee67",
+      "sha256_geometria_y_atributos": "d027c2ee17c64bbce1d3ae4feb4b06ae0d24673f9490a5fbc4947efa89960c98",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 7,
+      "sha256_geometria_mvt": "7ede03a75f6fb35174e9abf2fa9c4dedb9fad28c0c3668b7813f153e715e38b9",
+      "sha256_geometria_y_atributos": "a82d3da7550472eeb77db10517b8d1239d3c9bda0fdbeaafc40fc42c19863492",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 8,
+      "sha256_geometria_mvt": "2b2c3cebf09e7b19ffa15e07a548e92fee61b1da0019f7ca8b75056499bbf2b8",
+      "sha256_geometria_y_atributos": "015ca0fd87f1e4ee5eba3203daac94bcb3404dc129ac4651bdd4442ee3056e13",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 9,
+      "sha256_geometria_mvt": "3c73988921c6abcc4f4a09e93137578927491396a932e0466cdbcb273c043306",
+      "sha256_geometria_y_atributos": "2a8282cd14eca9c8c02bd0e8edfec5d151eabb8a6473cf946f6566e0bfd43e19",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 10,
+      "sha256_geometria_mvt": "430441f9d29df31462ac1a2788c113f772217d37cec27b3f3d18a003f06ab5c1",
+      "sha256_geometria_y_atributos": "21d36711f4683104004b9c3b2d64b1d9b30d5ddb674c6c83457aacb42107018c",
+      "poligonos_fragmentados": 15,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 11,
+      "sha256_geometria_mvt": "bde8324589996d41b37e0f95cf5144a4e30b36889ff8c546907a61fcbc829055",
+      "sha256_geometria_y_atributos": "51292ec57faa7962c8037fa90a027003a868628f36d8a7570f439e571054e2a0",
+      "poligonos_fragmentados": 30,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 28,
+      "zoom": 12,
+      "sha256_geometria_mvt": "48262b194da6bc5cca98014ae68313629e78c7dc95826e4daff3e62946722ab6",
+      "sha256_geometria_y_atributos": "7132e624d6a526486430abe52702c71f918239d151b4edff00365d1e36464584",
+      "poligonos_fragmentados": 81,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e8464b4120c6c91e8f41af78fcffb5d865cedead57233c26d571d9ea555e20e1",
+      "sha256_geometria_y_atributos": "399f865ae46cb3aee5981fe3138bf7223081a6f420e438f6a6a0f010e4344707",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 6,
+      "sha256_geometria_mvt": "3194c6e0662c2988c91c5b953f5e92199e529d31b8ef876b27a2fd83a8435c35",
+      "sha256_geometria_y_atributos": "a651be68cb4887ff24aeef85079fc36e35b2aecfc642c11125d8734f51b12651",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 7,
+      "sha256_geometria_mvt": "f51cf9993e4c768ace7a035f12b4f8ae93325fabc3670caf1fb9bb7e0dbd9d0a",
+      "sha256_geometria_y_atributos": "f73d5e5f0dca0eddfc1a910a6305c04f313b3c389f0b6637d76c52ddecd0e34f",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 8,
+      "sha256_geometria_mvt": "babe46b23804c74bcb906523ef4f861cd3d1ed15f9014185612392f56d02f85c",
+      "sha256_geometria_y_atributos": "46d2bb623072c878ae38fc208ba7de7531b9ae0a776e52bd2116538267f1c6d1",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 9,
+      "sha256_geometria_mvt": "d0e4aaead1485793d9301321e41c1e1c613c827c041a486036e586a7855af003",
+      "sha256_geometria_y_atributos": "d4b5cc4ea2dfc72489c38c576adc412d7aefbc9f05710ab6c842ea1ede8a2196",
+      "poligonos_fragmentados": 6,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 10,
+      "sha256_geometria_mvt": "ddb5ce68a0427bb1e219b4116006474afd154317bc2ebda46392a3d69af0de58",
+      "sha256_geometria_y_atributos": "87b1f4a8690340d7cb1c07ec583f3637183a5100a8e70dc63c848c9b50cd02a0",
+      "poligonos_fragmentados": 16,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 11,
+      "sha256_geometria_mvt": "f38d170f1d33621b2606898c51cf922fa97a017516cb029b865deacf26a62ff6",
+      "sha256_geometria_y_atributos": "b23050c63cceb7bd9c374aa91db127ae324c9d34a5c575025aaf2039fb8eb90a",
+      "poligonos_fragmentados": 43,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 29,
+      "zoom": 12,
+      "sha256_geometria_mvt": "53e686abcce0e345ab1fbdebae13f8590fef413ba0d83fc0e8b4b451dc8efa29",
+      "sha256_geometria_y_atributos": "6e254a32c4f6373d012586d2e2dcb35c7aa27be7c84cdc0006575bc7379f47bb",
+      "poligonos_fragmentados": 125,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 5,
+      "sha256_geometria_mvt": "e4390ceac1ad976a4054698babd990458d7ed95dc472236ff24508d25d07a182",
+      "sha256_geometria_y_atributos": "0a7cc49e6679f96d112d6ddd97418a12ebacf270e87166c9ab43d2db4b28115e",
+      "poligonos_fragmentados": 1,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 6,
+      "sha256_geometria_mvt": "d8b87fa5f275db0a98ef4ff1b8c0666d995d6b0c955e3521fdb5ecdf36c48468",
+      "sha256_geometria_y_atributos": "878889300fc295ed7262493fe6dacd033133f1ea0ad027c4d5e3a5638485ff12",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 7,
+      "sha256_geometria_mvt": "7619740035738f0ac5d7adb6ddd3a9b273ff899f75f83894b3469941efea7389",
+      "sha256_geometria_y_atributos": "ae09ccf203e1d9ddd7d945c1af320be415c40a0871051584567644f36791e7bb",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 8,
+      "sha256_geometria_mvt": "66acf54b179d59e65c5fdf77a9a34ccd0cfb692f9f544ef4805b104f5eecaff2",
+      "sha256_geometria_y_atributos": "fb79e1ccf4a8a0bcc04a28331bdefabb0a2c71764c5745cfa04ef2fffac15bda",
+      "poligonos_fragmentados": 7,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 9,
+      "sha256_geometria_mvt": "cc46a90685eddad8229756c625b399ddd955efcf6f91872b36d8f0aaab506c7a",
+      "sha256_geometria_y_atributos": "76c6d2891d116f2eb161bd916575ae29659e53504ae0545b8079b47283d7a40f",
+      "poligonos_fragmentados": 13,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 10,
+      "sha256_geometria_mvt": "24b8df997202c0148bcaa801668a79a673074c7365465ddbb4c44b8f206c26d9",
+      "sha256_geometria_y_atributos": "213eec0fd1785b0fba5f7b317c7d1680567a29190f4e2e70ab7d562efa1b78d1",
+      "poligonos_fragmentados": 29,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 11,
+      "sha256_geometria_mvt": "124ad091f228a60908300008213b6eadc4277d73fd61a3e3c905ba67c8dd377d",
+      "sha256_geometria_y_atributos": "2b56b2d089bd66d6a1f32e1cf67a7b8c6c415403ffbdfa7f62152947a17b4740",
+      "poligonos_fragmentados": 65,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 30,
+      "zoom": 12,
+      "sha256_geometria_mvt": "4b30ba642711c2099217f5d1caa856b90b0bf10bae1200e3b47bef55e4b2e5af",
+      "sha256_geometria_y_atributos": "a30d8dfd4639606e4618a5861442584da2b1141196ad03aafe7c1907ac4c69ba",
+      "poligonos_fragmentados": 189,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 5,
+      "sha256_geometria_mvt": "6edce17d1c3e2efee0a0929be59c489c59d73726e0db2a66506c2d37ed2edf64",
+      "sha256_geometria_y_atributos": "7243f0d0761156e526a54c25eeef0372321c1ba016f895e6e1a39215dd905574",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 6,
+      "sha256_geometria_mvt": "b74919bf5015d4d8b51ae7e0709c3c4624eb88bddc880b24b0207eeffc2c04f5",
+      "sha256_geometria_y_atributos": "1319b2ba5be14dceb8a77d7b967e11411f2918d5d44946933424f839d220cef5",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 7,
+      "sha256_geometria_mvt": "c6991f46d34b99be746d879aff38e353a229e8c99b4fb4e1a457e1aaed9c0977",
+      "sha256_geometria_y_atributos": "33c19fcc5daacb0dbffd5e913f2a97f844154e0f146256276094036a185ba8bc",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 8,
+      "sha256_geometria_mvt": "cc0c0853e58181685fcb31470ff59800fbc83320dbc6c7a65998834c63db2563",
+      "sha256_geometria_y_atributos": "d496aab475337da185d648a968fc5a3df1a5b66fa09d4df85fc9a9c320601deb",
+      "poligonos_fragmentados": 4,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 9,
+      "sha256_geometria_mvt": "45aed338e8e64a6201931d792d5f04d4c4f80c752b9a523c96ab59c67415a4c9",
+      "sha256_geometria_y_atributos": "5480b87c3158cf8f7b09779ffdd16bc3f5f29634ce81a94abafab41d281f54c9",
+      "poligonos_fragmentados": 8,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 10,
+      "sha256_geometria_mvt": "9b865c65c98079e08729deab55ecbb4f91154f2f536ae9d067fa7e06c15b4a4e",
+      "sha256_geometria_y_atributos": "97ba3f1f2a5f3891a85ceb719027f2d3b2cfc08bba61eff04ded5dc54f974af0",
+      "poligonos_fragmentados": 24,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 11,
+      "sha256_geometria_mvt": "3052df3529994b1648ee79349784a564cef3a84b8905b736e159dcd1e433613b",
+      "sha256_geometria_y_atributos": "25d63d58b9137c8ffe693cf15ea3c7815512725a6c7c589da47b398c6002a8ca",
+      "poligonos_fragmentados": 64,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 31,
+      "zoom": 12,
+      "sha256_geometria_mvt": "9e7bb1c2172b0ce421444b7de6e8da8ec7fb740e8e518a6dcf22bc766e80ffb8",
+      "sha256_geometria_y_atributos": "a9e9e8c1d910d4fda3bdaba4c7d0ab7303b9eb0a4b20846a5a3a3fb326afa563",
+      "poligonos_fragmentados": 189,
+      "lineas_fragmentadas": 0
+    }
+  ],
+  "identicos": true
+}
