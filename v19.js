@@ -202,11 +202,11 @@ function bindRondasQuery(layer,map,signal){
    const hits=await layer.consultarPoligonos(event.latlng);
    if(signal.aborted||serial!==sequence||!map.hasLayer(layer)||zoom!==map.getZoom())return;
    const byId=new Map();hits.forEach(p=>{const id=Number(p.objectid);if(Number.isInteger(id)&&id>=20&&id<=31&&p.Nombre==='Rondas hídricas'&&p.Norma_Asociada==='Resolución 957 de 2018')byId.set(id,p)});
-   if(popup){map.closePopup(popup);popup=null}if(!byId.size)return;
+   if(!byId.size){if(popup)map.closePopup(popup);return}
    const box=element('div');box.dataset.rondasConsulta='';box.tabIndex=-1;box.setAttribute('aria-label','Resultado de consulta de rondas');box.append(element('h4','','Rondas hídricas'));
    [...byId].sort((a,b)=>a[0]-b[0]).forEach(([id,p])=>box.append(element('p','','Determinante '+id+' · '+p.Nombre+' · '+p.Norma_Asociada)));
    box.append(element('p','','Corpoamazonia · 2022. Ronda 19 pendiente (#44). Consulta de la representación por zoom; no acredita límites oficiales.'));
-   const size=map.getSize();popup=L.popup({maxWidth:Math.min(320,Math.max(140,size.x-60)),maxHeight:Math.min(280,Math.max(100,size.y-90)),autoPanPadding:[25,25]}).setLatLng(event.latlng).setContent(box).openOn(map);if(!event.originalEvent)box.focus({preventScroll:true});
+   const size=map.getSize();if(!popup)popup=L.popup({maxWidth:Math.min(320,Math.max(140,size.x-60)),maxHeight:Math.min(280,Math.max(100,size.y-90)),autoPanPadding:[25,25]});popup.setLatLng(event.latlng).setContent(box).openOn(map);if(!event.originalEvent)box.focus({preventScroll:true});
   }catch(err){if(!signal.aborted){const status=document.querySelector('[data-rondas-layer] [role="status"]');if(status)status.textContent='No se pudo consultar la ronda. Vuelve a tocar el mapa.'}}
  };
  const invalidate=()=>{sequence++};map.on('movestart',invalidate);map.on('click',click);layer.once('remove',()=>{sequence++;map.off('click',click);map.off('movestart',invalidate);if(popup)map.closePopup(popup)});
