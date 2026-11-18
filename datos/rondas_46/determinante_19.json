@@ -1,0 +1,189 @@
+{
+  "objectid": 19,
+  "fuente_geometria": "Determinantes_Ambientales_CAR",
+  "campo_id": "OBJECTID",
+  "sha256_original": "2c60f8a2a4c1ab72abe471654ae75169a301d422574bd662be6f733757d6436f",
+  "sha256_copia_nativa_releida": "2c60f8a2a4c1ab72abe471654ae75169a301d422574bd662be6f733757d6436f",
+  "valida_geos": true,
+  "reparada": false,
+  "sin_curvas": true,
+  "poligonos": 554,
+  "anillos": 731,
+  "posiciones": 470634,
+  "fuente_sin_cambios_metadata": true,
+  "bbox": [
+    -74.3871731247287,
+    -4.225770620536622,
+    -69.39328691102615,
+    0.09725685586113005
+  ],
+  "atributos": {
+    "objectid": 19,
+    "Nombre": "Rondas hídricas",
+    "Norma_Asociada": "Resolución 957 de 2018",
+    "Fuente": "Corpoamazonia",
+    "Anio": 2022
+  },
+  "campos_ausentes": [
+    "fid_ronda",
+    "Fuente_hidrica",
+    "Longitud_buffer"
+  ],
+  "gdal": "3.13.3",
+  "geos": "3.14.1-CAPI-1.20.5",
+  "sha256_teselas_19": "af56219c6bba03d301c2140e2a712df4e099da3e6581216274473a07143c85a2",
+  "punto_prueba": {
+    "determinante": 19,
+    "lng": -71.73747328664972,
+    "lat": -0.9693860337854537
+  },
+  "observacion": "Determinante 19 publicada desde Determinantes_Ambientales_CAR (OBJECTID 19), sin ajustes. Difiere aproximadamente 53 m de Rondas_Hidricas FID 1; observación técnica documentada, sin corregir ninguna de las dos fuentes (decisión POD, 18 de noviembre, #44).",
+  "distancias_homologas_m": {
+    "min": 53.14623516100448,
+    "mediana": 53.220688876410144,
+    "max": 53.3147647850908,
+    "metodo": "Control previo #44: posiciones homólogas en SRC métrico, no Hausdorff; no se usa para ajustar coordenadas."
+  },
+  "parametros": {
+    "minzoom": 5,
+    "maxzoom": 12,
+    "extent": 4096,
+    "buffer": 80,
+    "simplification": 0,
+    "simplification_max_zoom": 0
+  },
+  "antes_mvt": [
+    {
+      "determinante": 19,
+      "zoom": 5,
+      "sha256_geometria_mvt": "c02f686d13fe573f1ea9f16d1bc9a7013cf154f59459fd66368a725fb9005838",
+      "sha256_geometria_y_atributos": "2315c2ecea5278059638d4fa6a31e559a279f190baeb4ce45957a91813304c95",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 6,
+      "sha256_geometria_mvt": "d25ecac02642580c2817f4b765ce51f68da1d97a6418d3bb257504e22547ebc6",
+      "sha256_geometria_y_atributos": "e8682503d8c7f353561a067ca0dec297f607839f3615ff5ac786e06e5ba20909",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 7,
+      "sha256_geometria_mvt": "9a98da569581e295bc28ad6ecc127ae79c64f5795ab68a1added47afe7415d72",
+      "sha256_geometria_y_atributos": "ee24eab60a9d67fe86e1645c445290157e26279ec3694d31cf2484df4760620f",
+      "poligonos_fragmentados": 6,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 8,
+      "sha256_geometria_mvt": "18d10a22003cf6efc0f2cc780ee0b3c3c22275b415e72426c1f9c51f5cb32673",
+      "sha256_geometria_y_atributos": "77e07f6c57c75acd863d550565c48e3086f91c8cf25512fe16d7498c483874c2",
+      "poligonos_fragmentados": 12,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 9,
+      "sha256_geometria_mvt": "75a71e8ac4f5654e5c66e64e3dc604e75c16f55da8f6789dc3987171a8855a4c",
+      "sha256_geometria_y_atributos": "8800a679a722dea344121e8b4068cd4fe574b96513a8ce35de2a7602f9a4709b",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 10,
+      "sha256_geometria_mvt": "ee028ba073c48cf12b91a38e3d1acccd7796cc4c38d23a76444b52016e6c0c43",
+      "sha256_geometria_y_atributos": "b583680485cfe111241ed7a66b752bed35578be12d941e8eec08a24722032d2d",
+      "poligonos_fragmentados": 81,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 11,
+      "sha256_geometria_mvt": "d8ed45b57eaeea55b789552236f4abb41a9d2c191016d9ccee9635a026fe3476",
+      "sha256_geometria_y_atributos": "0a12c1cfd0908d5d3782a09273951ada9c4e6fdf97d5b86d6b14d9ea55dfac90",
+      "poligonos_fragmentados": 168,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 12,
+      "sha256_geometria_mvt": "197c24ff3bd74cffad270616a1f911ea42cfb9304cfc54d1697304b4bdd955ba",
+      "sha256_geometria_y_atributos": "216b468bde8e71e59c70e2eff681953dbdaffd1722aa3649769f7e1ea55159b6",
+      "poligonos_fragmentados": 388,
+      "lineas_fragmentadas": 0
+    }
+  ],
+  "despues_mvt": [
+    {
+      "determinante": 19,
+      "zoom": 5,
+      "sha256_geometria_mvt": "c02f686d13fe573f1ea9f16d1bc9a7013cf154f59459fd66368a725fb9005838",
+      "sha256_geometria_y_atributos": "2315c2ecea5278059638d4fa6a31e559a279f190baeb4ce45957a91813304c95",
+      "poligonos_fragmentados": 2,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 6,
+      "sha256_geometria_mvt": "d25ecac02642580c2817f4b765ce51f68da1d97a6418d3bb257504e22547ebc6",
+      "sha256_geometria_y_atributos": "e8682503d8c7f353561a067ca0dec297f607839f3615ff5ac786e06e5ba20909",
+      "poligonos_fragmentados": 3,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 7,
+      "sha256_geometria_mvt": "9a98da569581e295bc28ad6ecc127ae79c64f5795ab68a1added47afe7415d72",
+      "sha256_geometria_y_atributos": "ee24eab60a9d67fe86e1645c445290157e26279ec3694d31cf2484df4760620f",
+      "poligonos_fragmentados": 6,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 8,
+      "sha256_geometria_mvt": "18d10a22003cf6efc0f2cc780ee0b3c3c22275b415e72426c1f9c51f5cb32673",
+      "sha256_geometria_y_atributos": "77e07f6c57c75acd863d550565c48e3086f91c8cf25512fe16d7498c483874c2",
+      "poligonos_fragmentados": 12,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 9,
+      "sha256_geometria_mvt": "75a71e8ac4f5654e5c66e64e3dc604e75c16f55da8f6789dc3987171a8855a4c",
+      "sha256_geometria_y_atributos": "8800a679a722dea344121e8b4068cd4fe574b96513a8ce35de2a7602f9a4709b",
+      "poligonos_fragmentados": 36,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 10,
+      "sha256_geometria_mvt": "ee028ba073c48cf12b91a38e3d1acccd7796cc4c38d23a76444b52016e6c0c43",
+      "sha256_geometria_y_atributos": "b583680485cfe111241ed7a66b752bed35578be12d941e8eec08a24722032d2d",
+      "poligonos_fragmentados": 81,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 11,
+      "sha256_geometria_mvt": "d8ed45b57eaeea55b789552236f4abb41a9d2c191016d9ccee9635a026fe3476",
+      "sha256_geometria_y_atributos": "0a12c1cfd0908d5d3782a09273951ada9c4e6fdf97d5b86d6b14d9ea55dfac90",
+      "poligonos_fragmentados": 168,
+      "lineas_fragmentadas": 0
+    },
+    {
+      "determinante": 19,
+      "zoom": 12,
+      "sha256_geometria_mvt": "197c24ff3bd74cffad270616a1f911ea42cfb9304cfc54d1697304b4bdd955ba",
+      "sha256_geometria_y_atributos": "216b468bde8e71e59c70e2eff681953dbdaffd1722aa3649769f7e1ea55159b6",
+      "poligonos_fragmentados": 388,
+      "lineas_fragmentadas": 0
+    }
+  ],
+  "sha256_base_12": "af47e9b7efcf33713b2474038abff57a2011d13ec2522988a4494a9814b5ae9e",
+  "revision_base": "df1a50bd25327f751d4422aad34ef9d92a4ec2fd"
+}

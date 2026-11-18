@@ -7,7 +7,8 @@ from preparar_pmtiles40 import header
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'datos/rondas_46'
 BASE = 'f5e8ef010a6c3da744295f242003ebfb27f6eda1'  # main tras fusionar #45; se fija completo en la entrega.
-IDS = set(range(20, 32))
+IDS = set(range(19, 32))
+CONTROL_MVT_19 = 'f7f4f2cdd97151ac8a38c9d606e196ec13aa2fcd66fb321ae48723990567555a'
 CONTROL_MVT_PR45 = '2ffd9ba6e47591833e16746675332766a6200a514d14fb8bb51300f8b8db354d'
 
 
@@ -149,8 +150,8 @@ class Audit:
     def __init__(self): self.rows = {}
     def add(self, tileid, raw, keys, values):
         _, _, p, d, attrs = feature(raw, keys, values); oid = p.get('objectid')
-        if oid not in IDS or p.get('fid_ronda') != oid-18 or p.get('Nombre') != 'Rondas hídricas' or p.get('Norma_Asociada') != 'Resolución 957 de 2018': raise ValueError('Identidad no autorizada')
-        if set(p) != set(load(ROOT/'datos/rondas_43/diccionario_campos.json')): raise ValueError('Campos públicos diferentes')
+        if oid not in IDS or (p.get('fid_ronda') is not None if oid==19 else p.get('fid_ronda') != oid-18) or p.get('Nombre') != 'Rondas hídricas' or p.get('Norma_Asociada') != 'Resolución 957 de 2018': raise ValueError('Identidad no autorizada')
+        if set(p) != (set(load(ROOT/'datos/rondas_43/diccionario_campos.json'))-{'fid_ronda','Fuente_hidrica','Longitud_buffer'} if oid==19 else set(load(ROOT/'datos/rondas_43/diccionario_campos.json'))): raise ValueError('Campos públicos diferentes')
         key = (oid, zoom(tileid)); row = self.rows.setdefault(key, [hashlib.sha256(), hashlib.sha256(), collections.Counter()])
         identity = struct.pack('<QQB', tileid, d.get(1, 0), d[3])+varint(len(d[4]))+d[4]
         row[0].update(identity)
@@ -245,31 +246,41 @@ def check():
         count += 1; feats, keys, values = layer(raw)
         for f in feats: audit.add(tid, f, keys, values)
     if sha(json.dumps(proof['antes'], sort_keys=True, separators=(',', ':')).encode()) != CONTROL_MVT_PR45: raise ValueError('Control #45 alterado')
-    if proof['antes'] != audit.result() or proof['despues'] != audit.result(): raise ValueError('Geometrías/atributos cambiaron')
-    if len(audit.rows) != 96 or count != d['teselas'] or d['determinantes'] != sorted(IDS) or d['pendientes'] != [19]: raise ValueError('Cobertura o pendientes incorrectos')
-    expected = {p.name for p in OUT.iterdir() if p.is_file() and p.name != 'SHA256SUMS'}
+    previous=[r for r in audit.result() if r['determinante']!=19]
+    if proof['antes'] != previous or proof['despues'] != previous: raise ValueError('Geometrías/atributos cambiaron')
+    from agregar_ronda19_44 import ORIGINAL
+    added=load(OUT/'determinante_19.json')
+    if added['sha256_original']!=ORIGINAL or added['sha256_copia_nativa_releida']!=ORIGINAL or not added['valida_geos'] or added['reparada']: raise ValueError('Geometría fuente 19 alterada')
+    if sha(json.dumps(added['antes_mvt'],sort_keys=True,separators=(',',':')).encode())!=CONTROL_MVT_19: raise ValueError('Control de fuente 19 alterado')
+    current=[r for r in audit.result() if r['determinante']==19]
+    if len(current)!=8 or current!=added['antes_mvt'] or current!=added['despues_mvt']: raise ValueError('Ronda 19 cambió al unir teselas')
+    if len(audit.rows) != 104 or count != d['teselas'] or d['determinantes'] != sorted(IDS) or d['pendientes'] != []: raise ValueError('Cobertura o pendientes incorrectos')
+    expected = {'LEEME.md','diccionario_campos.json','integridad.json','entrega.json','determinante_19.json','rondas.pmtiles'}
+    if {p.name for p in OUT.iterdir() if p.is_file() and p.name != 'SHA256SUMS'}!=expected: raise ValueError('Archivos faltantes o no autorizados')
+    if set(load(OUT/'diccionario_campos.json'))!=set(load(ROOT/'datos/rondas_43/diccionario_campos.json')): raise ValueError('Diccionario público incompleto')
     lines = (OUT/'SHA256SUMS').read_text().splitlines()
     if {s.split('  ')[1] for s in lines} != expected or len(lines) != len(expected): raise ValueError('Manifiesto incompleto')
     for line in lines:
         digest, name = line.split('  ', 1)
         if name not in expected or sha((OUT/name).read_bytes()) != digest: raise ValueError('SHA-256 diferente')
-    print(f'Unión verificada: 12 determinantes × 8 niveles; geometrías y atributos idénticos. {len(b)} bytes.', flush=True)
+    print(f'Unión verificada: 13 determinantes × 8 niveles; 20–31 intactas y 19 de fuente catálogo sin reparar. {len(b)} bytes.', flush=True)
 
 
 def integrate():
     d = load(OUT/'entrega.json'); catalog = load(ROOT/'catalogo_determinantes_para_geovisor.json')
     spec = {k: d[k] for k in ('bytes', 'sha256', 'bbox', 'minzoom', 'maxzoom', 'dataLayer')}
-    catalog['rondasUnificadas'] = {**d, 'teselas': spec, 'leyenda': 'Rondas hídricas y partes lineales conservadas', 'advertencia': 'Ronda 19 pendiente de verificación de ubicación (#44). Incluye determinantes 20–31. Las copias corregidas del #45 conservan vértices y área algebraica; no acredita acotamiento normativo. Consulta sobre la representación por zoom, no sobre límites certificados.'}
+    catalog['rondasUnificadas'] = {**d, 'teselas': spec, 'leyenda': 'Rondas hídricas y partes lineales conservadas', 'advertencia': 'Incluye determinantes 19–31. La 19 conserva la geometría de Determinantes_Ambientales_CAR: diferencia de unos 53 m frente a Rondas_Hidricas FID 1, documentada sin corrección (#44). Las copias corregidas del #45 conservan vértices y área algebraica. Consulta por zoom; no acredita acotamiento ni límites certificados.'}
     for g in catalog['grupos']:
         for r in g['capas']:
             if r['objectid'] in IDS:
                 r.update(archivoTeselas=d['archivo'], teselas=spec, grupoVisualizacion='rondas46')
-    catalog.update(estado='publicacion_autorizada_20_geojson_1_pmtiles_rondas', cantidadTeselas=1, cantidadRegistrosEnTeselas=12,
-                   nota='33 registros: 32 disponibles (20 GeoJSON y 12 determinantes reunidas en una capa PMTiles), 1 pendiente (19, #44). Las cifras del navegador no son oficiales.')
+                if r['objectid']==19:r.update(estado='aprobada_disponible_teselas',etiqueta='Rondas hídricas — entidad 19',norma=load(OUT/'determinante_19.json')['atributos']['Norma_Asociada'],fuenteDeclarada='Corpoamazonia',anioFuente=2022,advertencia=load(OUT/'determinante_19.json')['observacion'])
+    catalog.update(estado='publicacion_autorizada_20_geojson_1_pmtiles_rondas', cantidadTeselas=1, cantidadRegistrosEnTeselas=13, cantidadGeoJSONDisponibles=sum(bool(r.get('archivo')) for g in catalog['grupos'] for r in g['capas']), pendientes=0,
+                   nota='33 de 33 registros disponibles: 20 GeoJSON y 13 determinantes reunidas en una capa PMTiles; 0 pendientes. Las cifras del navegador no son oficiales.')
     dump(ROOT/'catalogo_determinantes_para_geovisor.json', catalog)
     # Las referencias operativas se migran al archivo único; el historial #45
     # conserva las fuentes verificadas para regeneración y auditoría independiente.
-    for oid in sorted(IDS):
+    for oid in range(20,32):
         p = ROOT/f'datos/rondas_43/teselas/determinante_{oid}.pmtiles'
         if p.exists():
             expected = next(r for r in load(OUT/'integridad.json')['fuentes'] if r['determinante'] == oid)['sha256_pmtiles_pr45']
@@ -283,6 +294,7 @@ def integrate():
 if __name__ == '__main__':
     p = argparse.ArgumentParser(description=__doc__); p.add_argument('--generar', action='store_true'); p.add_argument('--integrar', action='store_true'); args = p.parse_args()
     try:
-        build() if args.generar else check()
+        if args.generar: raise ValueError('Use agregar_ronda19_44.py --integrar CARPETA_ANALISIS para regenerar; unión histórica de doce fuentes en #47.')
+        check()
         if args.integrar: integrate()
     except (ValueError, KeyError, OSError, IndexError, subprocess.CalledProcessError) as e: raise SystemExit('Unión detenida: '+str(e))

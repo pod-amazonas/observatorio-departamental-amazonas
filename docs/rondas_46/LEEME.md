@@ -1,6 +1,8 @@
+> Registro histórico del #47 (doce rondas). La entrega actual incluye la 19: [comprobaciones actualizadas](../ronda19_44/LEEME.md).
+
 # Verificación de la capa única de rondas
 
-Comprobación del 17 de noviembre de 2026, Chromium / Leaflet 1.9.4. Se reúnen las determinantes 20–31 en una capa; la 19 sigue pendiente (#44). [Método y trazabilidad](../../datos/rondas_46/LEEME.md).
+Comprobación del 17 de noviembre de 2026, Chromium / Leaflet 1.9.4. Se reúnen las determinantes 20–31 en una capa; la 19 estaba pendiente entonces (#44). [Método y trazabilidad](../../datos/rondas_46/LEEME.md).
 
 ## Integridad y comportamiento
 
