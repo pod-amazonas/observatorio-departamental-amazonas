@@ -58,3 +58,13 @@ Reservas forestales nacionales y Humedales se consultan por teselas con el lecto
 - [Entrega, fuentes, diccionario, huellas y reparación](datos/tanda_4_29/LEEME.md).
 - [Comprobaciones de escritorio, celular y red lenta](docs/tanda_4_29/LEEME.md).
 - Comprobación sin QGIS: `python3 scripts/preparar_tanda4_29.py`; pruebas específicas: `npx playwright test tests/tanda4.spec.js`.
+
+## Tanda 5: amenazas históricas y zonas estudiadas
+
+Se incorporan Amenaza_Incendios_Forestales (IDEAM 2010, sin información de incendios activos) y Amenaza_Remocion_Masa (fecha 2022 declarada en ficha POD 085, solo zonas estudiadas). Se entregan en PMTiles bajo demanda, con colores por categoría y el lector local existente. Las 140 geometrías originales son válidas y no se repararon.
+
+El índice municipal de riesgo, las dos clasificaciones de suelo y Determinantes_OT quedan pendientes en #29 por metadatos/instrumentos sin acreditar. Territorios Colectivos queda fuera hasta revisión institucional de sensibilidad; no se preparan ubicaciones.
+
+- [Entrega, fuentes, SHA-256, diccionario y pendientes](datos/tanda_5_29/LEEME.md).
+- [Vistas y mediciones de escritorio/celular y red lenta](docs/tanda_5_29/LEEME.md).
+- Comprobación sin GIS: `python3 scripts/preparar_tanda5_29.py`.

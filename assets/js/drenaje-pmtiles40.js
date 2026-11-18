@@ -64,7 +64,12 @@ async function createTileLayer(spec,signal,onError){
  const h=await reader.getHeader();if(h.minZoom!==spec.minzoom||h.maxZoom!==spec.maxzoom||h.tileType!==1)throw Error('Cabecera de teselas no compatible');
  if(signal.aborted)throw new DOMException('Cancelado','AbortError');
  const bounds=L.latLngBounds([[spec.bbox[1],spec.bbox[0]],[spec.bbox[3],spec.bbox[2]]]),color=spec.color;
- const paintRules=[{dataLayer:spec.dataLayer,filter:(z,f)=>f.geomType===3,symbolizer:new protomapsL.PolygonSymbolizer({fill:color,stroke:color,width:.7,opacity:.52})}];
+ const classification=spec.clasificacion;
+ if(classification&&(!/^[A-Za-z][A-Za-z0-9_]*$/.test(classification.campo)||!Array.isArray(classification.clases)||!classification.clases.length||classification.clases.length>12||classification.clases.some(c=>typeof c.valor!=='string'||!/^#[0-9a-f]{6}$/i.test(c.color))))throw Error('Leyenda de teselas incorrecta');
+ const classes=classification?.clases||[],paintRules=[];
+ const polygon=c=>new protomapsL.PolygonSymbolizer({fill:c,stroke:c,width:.7,opacity:.52});
+ paintRules.push({dataLayer:spec.dataLayer,filter:(z,f)=>f.geomType===3&&(!classification||!classes.some(c=>c.valor===f.props[classification.campo])),symbolizer:polygon(color)});
+ for(const c of classes)paintRules.push({dataLayer:spec.dataLayer,filter:(z,f)=>f.geomType===3&&f.props[classification.campo]===c.valor,symbolizer:polygon(c.color)});
  if(spec.lineas)paintRules.push({dataLayer:spec.dataLayer,filter:(z,f)=>f.geomType===2,symbolizer:new protomapsL.LineSymbolizer({color,width:1,opacity:.8})});
  const layer=protomapsL.leafletLayer({url:reader,levelDiff:0,maxDataZoom:spec.maxzoom,minZoom:spec.minzoom,maxNativeZoom:spec.maxzoom,maxZoom:18,noWrap:true,bounds,opacity:spec.opacity,attribution:'',paintRules,labelRules:[],tileDelay:1});
  for(const view of layer.views.values()){
