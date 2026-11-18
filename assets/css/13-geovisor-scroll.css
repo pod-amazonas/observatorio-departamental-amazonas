@@ -87,3 +87,6 @@
 .obs32-layer-card .obs20-range-label { min-width: 0; flex-basis: 100%; flex-wrap: wrap; }
 /* El mismo foco de #25, separado del relleno verde por el fondo blanco. */
 .obs32-layer-switch:focus-visible { outline: 3px solid #a34a06; outline-offset: 3px; }
+
+/* Cada crédito tiene caja y separación propias para el anillo de #25. */
+.obs32-source-links a { display: inline-block; margin: 6px; max-width: calc(100% - 12px); }

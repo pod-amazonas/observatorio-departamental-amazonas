@@ -68,3 +68,14 @@ El índice municipal de riesgo, las dos clasificaciones de suelo y Determinantes
 - [Entrega, fuentes, SHA-256, diccionario y pendientes](datos/tanda_5_29/LEEME.md).
 - [Vistas y mediciones de escritorio/celular y red lenta](docs/tanda_5_29/LEEME.md).
 - Comprobación sin GIS: `python3 scripts/preparar_tanda5_29.py`.
+
+## Tanda 6: drenajes lineales y vías
+
+Drenaje sencillo (IGAC 2022, CC BY 4.0) y vías/caminos (© colaboradores de OpenStreetMap, ODbL 1.0, compilación POD 2022) se consultan en teselas con el mismo lector local del #41. No acreditan navegabilidad, acceso público ni transitabilidad. Se conservan las referencias completas, sin nuevos recortes ni reparación; seis drenajes curvos requieren la conversión lineal documentada del #41 para el formato MVT. La cuantización por zoom impide distinguir algunos segmentos diminutos; se enumeran sin ocultarlo en la auditoría.
+
+CLC queda fuera hasta confirmar la licencia del producto SINCHI 2021 suministrado. Bienes culturales requieren confirmar licencia y publicabilidad; población requiere totales autorizados por unidades amplias y año/unidad/licencia inequívocos. No se publican sus geometrías ni controles nuevos. Pendientes registrados en #29.
+
+- [Fuentes, licencias, diccionario y trazabilidad SHA-256](datos/tanda_6_29/LEEME.md).
+- [Vistas comparadas y medición en celular/conexión lenta](docs/tanda_6_29/LEEME.md).
+- [Aviso ODbL y copia fiel abierta de las vías](datos/tanda_6_29/NOTICE-ODbL.md).
+- Comprobación sin GIS: `python3 scripts/preparar_tanda6_29.py --comprobar`.

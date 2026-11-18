@@ -10,7 +10,7 @@ class TestHandler(SimpleHTTPRequestHandler):
         # Rangos reales para las familias PMTiles autorizadas; el resto no cambia.
         import re
         archive = self.path.split('?', 1)[0]
-        if not re.fullmatch(r'/datos/(?:teselas_40/drenaje_doble|rondas_46/rondas|tanda_4_29/teselas/(?:reserva_forestal_ley_2da|humedales)|tanda_5_29/teselas/(?:amenaza_incendios_forestales|amenaza_remocion_masa))\.pmtiles', archive) or not self.headers.get('Range'):
+        if not re.fullmatch(r'/datos/(?:teselas_40/drenaje_doble|rondas_46/rondas|tanda_4_29/teselas/(?:reserva_forestal_ley_2da|humedales)|tanda_6_29/teselas/(?:drenaje_sencillo|vias_y_caminos)|tanda_5_29/teselas/(?:amenaza_incendios_forestales|amenaza_remocion_masa))\.pmtiles', archive) or not self.headers.get('Range'):
             return super().do_GET()
         path = Path(self.directory) / archive.lstrip('/')
         if not path.is_file():
