@@ -1,0 +1,120 @@
+{
+  "puntos": [
+    {
+      "determinante": 20,
+      "lat": -2.2258238818175333,
+      "lng": -73.12581065233358,
+      "zoom": 12,
+      "esperadas": [
+        20
+      ]
+    },
+    {
+      "determinante": 21,
+      "lat": -0.6195836072232781,
+      "lng": -74.3577855624503,
+      "zoom": 12,
+      "esperadas": [
+        21
+      ]
+    },
+    {
+      "determinante": 22,
+      "lat": -0.534803253938925,
+      "lng": -73.82941246032715,
+      "zoom": 12,
+      "esperadas": [
+        22
+      ]
+    },
+    {
+      "determinante": 23,
+      "lat": -1.5947421363357477,
+      "lng": -70.65790569337099,
+      "zoom": 12,
+      "esperadas": [
+        23
+      ]
+    },
+    {
+      "determinante": 24,
+      "lat": 0.009692445184425654,
+      "lng": -71.19052376452817,
+      "zoom": 12,
+      "esperadas": [
+        24
+      ]
+    },
+    {
+      "determinante": 25,
+      "lat": -2.0850537070579,
+      "lng": -70.33072829246521,
+      "zoom": 12,
+      "esperadas": [
+        25
+      ]
+    },
+    {
+      "determinante": 26,
+      "lat": -2.0855254632259057,
+      "lng": -70.556720495224,
+      "zoom": 12,
+      "esperadas": [
+        26
+      ]
+    },
+    {
+      "determinante": 27,
+      "lat": -1.476517704897138,
+      "lng": -73.23850695019654,
+      "zoom": 12,
+      "esperadas": [
+        27
+      ]
+    },
+    {
+      "determinante": 28,
+      "lat": -0.789957284323567,
+      "lng": -73.32098103698107,
+      "zoom": 12,
+      "esperadas": [
+        28
+      ]
+    },
+    {
+      "determinante": 29,
+      "lat": -0.5400195810538205,
+      "lng": -74.268319762138,
+      "zoom": 12,
+      "esperadas": [
+        29
+      ]
+    },
+    {
+      "determinante": 30,
+      "lat": -1.8466046013081845,
+      "lng": -70.63554341297642,
+      "zoom": 12,
+      "esperadas": [
+        30
+      ]
+    },
+    {
+      "determinante": 31,
+      "lat": 0.0010464630299118437,
+      "lng": -71.27672032251661,
+      "zoom": 12,
+      "esperadas": [
+        31
+      ]
+    }
+  ],
+  "hueco": {
+    "lat": -0.637714694072063,
+    "lng": -74.1891075841867,
+    "zoom": 12,
+    "esperadas": []
+  },
+  "solape": null,
+  "nota": "Puntos de prueba extraídos de los comandos MVT públicos; no de fuentes privadas."
+}

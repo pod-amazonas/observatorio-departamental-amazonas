@@ -18,6 +18,18 @@ function determinant(meta){
   description:meta.group+' · ID '+meta.objectid+' · '+(meta.archivo||tiles?'Disponible':'Pendiente de preparación web')+(tiles?' · '+source:''),
   source,restriction:meta.advertencia||'',opacity:Math.round((meta.opacidadSugerida??.35)*100),color:tiles?'#176c8b':undefined,metadata:meta};
 }
+function rondasDef(){
+ const m=catalog?.rondasUnificadas;if(!m)return null;
+ const d=determinant({...m,objectid:46,etiqueta:m.nombre,nombre:m.nombre,archivoTeselas:m.archivo,fuenteDeclarada:m.fuente,anioFuente:m.anio,opacidadSugerida:.65,group:'Rondas hídricas'});
+ return {...d,kind:'rondas',key:'rondas46',name:m.nombre,description:'Corpoamazonia · 2022 · 12 determinantes (20–31) en una sola capa',restriction:m.advertencia};
+}
+function updateGeoHelp(){
+ const tip=document.querySelector('#view-geoportal .obs19-geo-tip');if(!tip)return;
+ if(!catalog){tip.textContent='Cargando el estado del catálogo de determinantes…';return}
+ const all=layersMeta(),ready=all.filter(c=>c.archivo||c.archivoTeselas),pending=all.filter(c=>!c.archivo&&!c.archivoTeselas);
+ const count=new Set(ready.map(c=>c.archivo||c.archivoTeselas)).size;
+ tip.textContent='Componente biofísico → Determinantes ambientales: '+ready.length+' de '+all.length+' registros disponibles en '+count+' capas de consulta (las doce rondas comparten una capa). '+pending.length+' pendiente: ronda 19 (#44). Se descargan solo al encenderlas. Las cifras no son oficiales.';
+}
 function citizen(meta){
  const tanda=meta.lote===3?3:meta.lote===2?2:meta.categoria?1:0;
  const directorio=tanda?'datos/tanda_'+tanda+'_29/':'datos/piloto_29/';
@@ -28,7 +40,7 @@ function citizen(meta){
 function activeLayer(def){return getLayers().find(e=>def.kind==='citizen'?e.idCitizen===def.id:e.idPilot===def.id&&e.origin==='Determinantes ambientales · publicación autorizada')}
 function layerCard(def){
  const card=element('div','obs20-pilot-card obs32-layer-card');card.dataset.layerKey=def.key;
- if(def.tanda===3)card.dataset.tanda3Layer=def.id;else if(def.tanda===2)card.dataset.tanda2Layer=def.id;else if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
+ if(def.kind==='rondas')card.dataset.rondasLayer='rondas46';else if(def.tanda===3)card.dataset.tanda3Layer=def.id;else if(def.tanda===2)card.dataset.tanda2Layer=def.id;else if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
  const title=element('h4','obs32-layer-title',def.label);card.append(title,element('p','obs32-layer-description',def.description));
  const control=element('button','obs32-layer-switch');control.type='button';control.setAttribute('role','switch');control.setAttribute('aria-checked','false');
  control.setAttribute('aria-label','Mostrar u ocultar '+def.label);control.disabled=!def.available;
@@ -48,6 +60,7 @@ function layerCard(def){
   const legend=element('p','obs32-layer-description'),symbol=element('span','','■ ');symbol.style.color=def.color;symbol.setAttribute('aria-hidden','true');
   legend.append(symbol,document.createTextNode('Leyenda: '+def.metadata.leyenda+' · Norma: '+def.metadata.norma));card.append(legend);
  }
+ if(def.kind==='rondas'){const list=element('ul','obs19-footnote');list.setAttribute('aria-label','Determinantes incluidas en las rondas');layersMeta().filter(c=>c.grupoVisualizacion==='rondas46').forEach(c=>{const row=element('li','','Determinante '+c.objectid+' · '+c.nombre+' · '+c.norma);row.dataset.determinantLayer=String(c.objectid);list.append(row)});card.append(list);const query=element('button','','Consultar centro del mapa');query.type='button';query.dataset.rondasQuery='';query.disabled=true;query.addEventListener('click',()=>{const map=window.obs19Api?.getMap?.();if(map)map.fire('click',{latlng:map.getCenter()})});card.append(query,element('p','obs19-footnote','Toca un polígono para consultar su determinante; acerca el mapa para las franjas estrechas. Con teclado, mueve el mapa con las flechas y usa Consultar centro del mapa.'))}
  const status=element('p','obs19-footnote');status.id='estado-'+def.key;status.dataset.layerStatus=def.key;status.setAttribute('role','status');
  if(def.kind==='citizen')status.dataset.citizenStatus=def.id;
  control.setAttribute('aria-describedby',status.id);card.append(status);
@@ -59,11 +72,11 @@ function layerCard(def){
  slider.addEventListener('input',()=>{const entry=activeLayer(def);if(!entry)return;entry.opacity=100-Number(slider.value);entry.layer.setStyle({fillOpacity:entry.opacity/100*(entry.geomType==='Puntos'?1:.52)});output.textContent=slider.value+'%';window.obs19Api.redraw()});
  opacity.append(slider,output);tools.append(opacity);card.append(tools);return card;
 }
-function renderTree(){const tree=$('obs19-thematic-tree');if(!tree)return;clear(tree);
+function renderTree(){updateGeoHelp();const tree=$('obs19-thematic-tree');if(!tree)return;clear(tree);
  CATEGORIES.forEach((cat,i)=>{const outer=element('details');outer.open=i===1;outer.append(element('summary','',cat));
-  if(i===1){const mid=element('details');mid.open=true;mid.append(element('summary','','Determinantes ambientales · 33 capas previstas'));
-   (catalog?.grupos||[]).forEach(g=>{const details=element('details');details.append(element('summary','',g.titulo+' · '+g.capas.filter(c=>!!(c.archivo||c.archivoTeselas)).length+' disponibles de '+g.capas.length));
-    g.capas.forEach(c=>details.append(layerCard(determinant({...c,group:g.titulo}))));mid.append(details)});
+  if(i===1){const mid=element('details');mid.open=true;mid.append(element('summary','','Determinantes ambientales · 33 registros'));
+   (catalog?.grupos||[]).forEach(g=>{const details=element('details');details.append(element('summary','',g.titulo+' · '+g.capas.filter(c=>!!(c.archivo||c.archivoTeselas)).length+(g.capas.some(c=>c.grupoVisualizacion)?' registros disponibles de ':' disponibles de ')+g.capas.length));
+    let rondas=false;g.capas.forEach(c=>{if(c.grupoVisualizacion==='rondas46'){if(!rondas){details.append(layerCard(rondasDef()));rondas=true}}else details.append(layerCard(determinant({...c,group:g.titulo})))});mid.append(details)});
    if(!catalog?.grupos?.length)mid.append(element('p','obs19-empty','El catálogo de determinantes no está disponible. Comprueba la conexión y actualiza la página.'));
    const pending=layersMeta().filter(c=>!c.archivo&&!c.archivoTeselas).length;
    mid.append(element('p','obs19-footnote',pending+' determinantes pendientes de preparación web.'));outer.append(mid);
@@ -159,10 +172,11 @@ async function openMunicipalIndicators(){
  finally{indicatorLoading=false;button.disabled=false}
 }
 function syncLayerControls(){
- const defs=[...layersMeta().map(determinant),...[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog].map(citizen)];
+ const defs=[...layersMeta().filter(c=>!c.grupoVisualizacion).map(determinant),...(rondasDef()?[rondasDef()]:[]),...[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog].map(citizen)];
  defs.forEach(def=>{
   const card=document.querySelector('[data-layer-key="'+def.key+'"]');if(!card)return;
   const entry=activeLayer(def),state=layerState.get(def.key),loading=!!state?.loading,on=!!entry?.visible;
+  const query=card.querySelector('[data-rondas-query]');if(query)query.disabled=!on||loading;
   const control=card.querySelector('[role="switch"]');control.setAttribute('aria-checked',String(on));control.setAttribute('aria-busy',String(loading));
   card.querySelector('.obs32-switch-state').textContent=on?'Encendida':'Apagada';
   card.querySelector('[data-layer-status]').textContent=!def.available?'Pendiente de preparación web.':state?.error||(loading?'Cargando capa… Pulsa el interruptor para cancelar.':on?'Capa visible · '+def.source:'Se descarga solo al activarla.');
@@ -179,8 +193,32 @@ async function waitForMap(signal){
  }
  if(signal.aborted)throw new DOMException('Carga cancelada','AbortError');
 }
+function bindRondasQuery(layer,map,signal){
+ let sequence=0,popup=null;
+ const click=async event=>{
+  const serial=++sequence,zoom=map.getZoom();
+  if(document.getElementById('measure-mode')?.classList.contains('active'))return;
+  try{
+   const hits=await layer.consultarPoligonos(event.latlng);
+   if(signal.aborted||serial!==sequence||!map.hasLayer(layer)||zoom!==map.getZoom())return;
+   const byId=new Map();hits.forEach(p=>{const id=Number(p.objectid);if(Number.isInteger(id)&&id>=20&&id<=31&&p.Nombre==='Rondas hídricas'&&p.Norma_Asociada==='Resolución 957 de 2018')byId.set(id,p)});
+   if(!byId.size){if(popup)map.closePopup(popup);return}
+   const box=element('div');box.dataset.rondasConsulta='';box.tabIndex=-1;box.setAttribute('aria-label','Resultado de consulta de rondas');box.append(element('h4','','Rondas hídricas'));
+   [...byId].sort((a,b)=>a[0]-b[0]).forEach(([id,p])=>box.append(element('p','','Determinante '+id+' · '+p.Nombre+' · '+p.Norma_Asociada)));
+   box.append(element('p','','Corpoamazonia · 2022. Ronda 19 pendiente (#44). Consulta de la representación por zoom; no acredita límites oficiales.'));
+   const size=map.getSize(),options={maxWidth:Math.min(320,Math.max(120,size.x-100)),maxHeight:Math.min(240,Math.max(80,size.y-120)),autoPan:false};if(!popup)popup=L.popup(options);else Object.assign(popup.options,options);popup.setLatLng(event.latlng).setContent(box).openOn(map);
+   // Ajustar una sola vez y sin animación evita panes solapados al reutilizar
+   // la ventana entre consultas rápidas, especialmente en pantallas pequeñas.
+   const r=popup.getElement().getBoundingClientRect(),m=map.getContainer().getBoundingClientRect();
+   const dx=r.right>m.right-25?r.right-m.right+25:r.left<m.left+25?r.left-m.left-25:0;
+   const dy=r.bottom>m.bottom-25?r.bottom-m.bottom+25:r.top<m.top+25?r.top-m.top-25:0;
+   if(dx||dy)map.panBy([dx,dy],{animate:false});if(!event.originalEvent)box.focus({preventScroll:true});
+  }catch(err){if(!signal.aborted){const status=document.querySelector('[data-rondas-layer] [role="status"]');if(status)status.textContent='No se pudo consultar la ronda. Vuelve a tocar el mapa.'}}
+ };
+ const invalidate=()=>{sequence++};map.on('movestart',invalidate);map.on('click',click);layer.once('remove',()=>{sequence++;map.off('click',click);map.off('movestart',invalidate);if(popup)map.closePopup(popup)});
+}
 async function addTileDeterminant(def,state,controller){
- if(!/^datos\/rondas_43\/teselas\/determinante_(19|2[0-9]|3[01])\.pmtiles$/.test(def.url))throw Error('Ruta de teselas no autorizada');
+ if(def.kind!=='rondas'||def.url!=='datos/rondas_46/rondas.pmtiles')throw Error('Ruta de teselas no autorizada');
  if(!await tileReaderReady||!window.obs40Tiles)throw Error('Lector de teselas no disponible; actualiza la página');
  const spec=def.metadata.teselas;
  if(!spec||!Number.isSafeInteger(spec.bytes)||spec.bytes<127||spec.minzoom!==5||spec.maxzoom!==12||spec.dataLayer!=='rondas'||!Array.isArray(spec.bbox)||spec.bbox.length!==4)throw Error('Ficha de teselas incorrecta');
@@ -198,7 +236,7 @@ async function addTileDeterminant(def,state,controller){
   map.fitBounds(layer.getBounds(),{padding:[16,16],maxZoom:12,animate:false});
   const ready=window.obs40Tiles.ready(layer,map,signal);
   getLayers().push(entry);layer.on('remove',()=>{controller.abort();if(state.controller===controller){state.want=false;state.loading=false;syncLayerControls()}});
-  layer.addTo(map);window.obs19Api.redraw();await ready;
+  layer.addTo(map);if(def.kind==='rondas')bindRondasQuery(layer,map,signal);window.obs19Api.redraw();await ready;
   if(signal.aborted||state.controller!==controller)return;
   selectedLayer=entry.id;window.obs19Api.redraw();
  }catch(error){fail(error);if(error.name==='AbortError')return;throw error}
@@ -327,6 +365,7 @@ function renderCalls(){const publicEl=$('obs19-opportunities'), admin=$('obs19-a
 function initCalls(){const form=$('obs19-call-form'),button=$('obs19-calls-export');form?.addEventListener('submit',e=>{e.preventDefault();const fd=new FormData(form);const row=Object.fromEntries(fd.entries());if(!legalUrl(row.url)){alert('Utiliza una URL HTTPS válida.');return}row.tipo=row.tipo==='curso'?'curso':'convocatoria';callDraft.push(row);form.reset();renderCalls()});button?.addEventListener('click',()=>{const content=JSON.stringify(callDraft,null,2);const a=document.createElement('a'),obj=URL.createObjectURL(new Blob([content],{type:'application/json'}));a.href=obj;a.download='convocatorias_para_revision.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(obj),1500)});
  fetch('convocatorias_publicadas.json').then(r=>{if(!r.ok)throw Error();return r.json()}).then(data=>{if(Array.isArray(data))publicCalls=data.filter(x=>x&&['curso','convocatoria'].includes(x.tipo)&&typeof x.titulo==='string'&&legalUrl(x.url)).slice(0,100);renderCalls()}).catch(()=>renderCalls());renderCalls()}
 function init(){
+ updateGeoHelp();
  tileReaderReady=new Promise(resolve=>{const tilesScript=document.createElement('script');tilesScript.src='assets/js/drenaje-pmtiles40.js';tilesScript.onload=()=>resolve(true);tilesScript.onerror=()=>resolve(false);document.head.append(tilesScript)});
  $('geojson-reset')?.addEventListener('click',()=>{for(const state of layerState.values()){state.want=false;state.controller?.abort();state.loading=false}syncLayerControls()});
  // Reajusta Leaflet cuando el contenedor cambia de altura/anchura.

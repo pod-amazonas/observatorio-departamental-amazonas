@@ -1,5 +1,6 @@
 # Verificación visual y red — doce rondas
 
+> **Documento histórico del #45.** Los doce interruptores y archivos individuales fueron sustituidos por una capa única en #46. Ver [entrega actual](../../datos/rondas_46/LEEME.md). Estas cifras y capturas describen la entrega anterior.
 Se incluyen determinantes **20–31**; la **19 sigue pendiente** por decisión de Alejandro (#44). Las cuatro reparaciones nativas cumplen 0 m y 0 m², con partes lineales conservadas. [Método, trazabilidad y límites](../../datos/rondas_43/LEEME.md).
 
 ## Red lenta simulada

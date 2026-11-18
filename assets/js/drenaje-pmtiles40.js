@@ -72,6 +72,18 @@ async function createTileLayer(spec,signal,onError){
   source.get=async(...args)=>{try{return await get(...args)}catch(err){onError(err);throw err}};
  }
  layer.getBounds=()=>bounds;layer.setStyle=style=>layer.setOpacity(Math.min(1,Math.max(0,(style.fillOpacity??.338)/.52)));
+ // Consulta solo polígonos del archivo activo. Se solicita la tesela del punto
+ // si salió del caché; no se reconstruyen entidades ni se consulta otra fuente.
+ layer.consultarPoligonos=async latlng=>{
+  const map=layer._map;if(!map||map.getZoom()<spec.minzoom||signal.aborted)return [];
+  const z=Math.min(spec.maxzoom,Math.round(map.getZoom())),point=map.project(latlng,z),tile={z,x:Math.floor(point.x/256),y:Math.floor(point.y/256)};
+  const result=[];
+  for(const view of layer.views.values()){
+   await view.getDisplayTile(tile);if(signal.aborted)return [];
+   result.push(...view.queryFeatures(latlng.lng,latlng.lat,z,0).filter(hit=>hit.layerName===spec.dataLayer&&hit.feature.geomType===3).map(hit=>hit.feature.props));
+  }
+  return result;
+ };
  return layer;
 }
 function waitForTiles(layer,map,signal){

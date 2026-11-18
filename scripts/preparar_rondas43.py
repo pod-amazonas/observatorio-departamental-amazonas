@@ -243,6 +243,7 @@ def manifiesto():
  (PUBLIC/'SHA256SUMS').write_text(''.join(digest(p)+'  '+p.relative_to(PUBLIC).as_posix()+'\n' for p in files))
 
 def integrar(args):
+ if load(ROOT/'catalogo_determinantes_para_geovisor.json').get('rondasUnificadas'):raise ValueError('Entrega #43 histórica; integrar la capa única con unificar_rondas46.py --integrar')
  rows=load(args.privado/'paquete/catalogo_borrador.json');assert {r['objectid'] for r in rows}==set(range(20,32))
  controls=load(PUBLIC/'control_origen.json');expected={r['objectid']:r for r in controls['correspondencias']};repairs={r['fid']:r for r in controls['reparaciones']}
  catalog=load(ROOT/'catalogo_determinantes_para_geovisor.json');byid={c['objectid']:c for gr in catalog['grupos'] for c in gr['capas']};delivered=[]
@@ -277,6 +278,21 @@ def comprobar():
   assert r['vertices_originales_ausentes']==0 and r['coordenadas_nuevas']==0 and r['vertices_unicos_antes']==r['vertices_unicos_despues']
  catalog=load(ROOT/'catalogo_determinantes_para_geovisor.json');cards={c['objectid']:c for g in catalog['grupos'] for c in g['capas']}
  assert not cards[19].get('archivoTeselas') and not cards[19]['archivo']
+ unified=catalog.get('rondasUnificadas')
+ if unified:
+  from unificar_rondas46 import check
+  check()
+  proof=load(ROOT/'datos/rondas_46/integridad.json')['fuentes']
+  assert {r['determinante'] for r in proof}==set(range(20,32))
+  for row in rows:
+   source=next(r for r in proof if r['determinante']==row['objectid'])
+   assert source['sha256_pmtiles_pr45']==row['sha256'] and source['sha256_geometria_nativa_pr45']==row['sha256_geometria_usada']
+   card=cards[row['objectid']];assert card['archivoTeselas']==unified['archivo'] and card['grupoVisualizacion']=='rondas46'
+  expected={p.relative_to(PUBLIC).as_posix() for p in PUBLIC.rglob('*') if p.is_file() and p.name!='SHA256SUMS'}
+  lines=(PUBLIC/'SHA256SUMS').read_text().splitlines();assert {l.split('  ',1)[1] for l in lines}==expected and len(lines)==len(expected)
+  for line in lines:
+   sha,name=line.split('  ',1);p=(PUBLIC/name).resolve();assert p.is_relative_to(PUBLIC) and digest(p)==sha
+  print('Trazabilidad nativa #43/#45 y capa unificada verificadas.');return
  assert {p.name for p in (PUBLIC/'teselas').glob('*.pmtiles')}=={f'determinante_{i}.pmtiles' for i in range(20,32)},'Archivos de teselas no autorizados'
  for row in rows:
   oid=row['objectid'];p=PUBLIC/'teselas'/f'determinante_{oid}.pmtiles';b=p.read_bytes();h=header(b)
