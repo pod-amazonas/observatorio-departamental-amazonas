@@ -1,0 +1,38 @@
+[
+  {
+    "id_capa": "amenaza_incendios_forestales",
+    "fid": 1,
+    "valor": "Baja",
+    "lat": -1.437565082821722,
+    "lng": -72.13059434591813,
+    "color": "#a66b13",
+    "margen_nativo_m": 57280.130564346386
+  },
+  {
+    "id_capa": "amenaza_incendios_forestales",
+    "fid": 2,
+    "valor": "Muy Baja",
+    "lat": -0.8252283024223006,
+    "lng": -72.2358162455947,
+    "color": "#55732b",
+    "margen_nativo_m": 8012.967434724612
+  },
+  {
+    "id_capa": "amenaza_remocion_masa",
+    "fid": 1,
+    "valor": "Media",
+    "lat": -0.9249284270379582,
+    "lng": -72.46720107618765,
+    "color": "#a34a06",
+    "margen_nativo_m": 2395.0570581730476
+  },
+  {
+    "id_capa": "amenaza_remocion_masa",
+    "fid": 128,
+    "valor": "Muy Baja",
+    "lat": -2.0222809764690113,
+    "lng": -71.51415361140285,
+    "color": "#316f55",
+    "margen_nativo_m": 5551.004514237592
+  }
+]

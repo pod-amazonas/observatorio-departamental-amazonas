@@ -7,6 +7,7 @@ const tanda=require('../datos/tanda_1_29/catalogo_entrega.json');
 const tanda2=require('../datos/tanda_2_29/catalogo_entrega.json');
 const tanda3=require('../datos/tanda_3_29/catalogo_entrega.json');
 const tanda4=require('../datos/tanda_4_29/catalogo_entrega.json');
+const tanda5=require('../datos/tanda_5_29/catalogo_entrega.json');
 const available=[...determinants.filter(c=>c.archivo).map(c=>({selector:'[data-determinant-layer="'+c.objectid+'"]',id:c.objectid,kind:'idPilot',count:JSON.parse(fs.readFileSync(path.join(__dirname,'..',c.archivo),'utf8')).features.length})),
  ...pilot.map(c=>({selector:'[data-citizen-layer="'+c.id_capa+'"]',id:c.id_capa,kind:'idCitizen',count:c.entidades})),
  ...tanda.map(c=>({selector:'[data-tanda-layer="'+c.id_capa+'"]',id:c.id_capa,kind:'idCitizen',count:c.entidades,metadata:c})),
@@ -25,7 +26,7 @@ for(const width of [1280,390])test(`menú único: todas las capas con interrupto
  test.setTimeout(120000);await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});
  const requests=[];page.on('request',r=>{if(r.url().endsWith('.geojson'))requests.push(r.url())});
  await page.goto('/#geovisor');const tree=page.locator('#obs19-thematic-tree');
- await expect(tree.locator('[role="switch"]')).toHaveCount(36+tanda.length+tanda2.length+tanda3.length+1-11+tanda4.length);
+ await expect(tree.locator('[role="switch"]')).toHaveCount(36+tanda.length+tanda2.length+tanda3.length+1-11+tanda4.length+tanda5.length);
  await expect(page.locator('#obs19-pilot-list')).toHaveCount(0);
  await expect(page.getByRole('heading',{name:'Determinantes ambientales · Capas individuales'})).toHaveCount(0);
  await expect(tree.locator('input[type="checkbox"]')).toHaveCount(0);
