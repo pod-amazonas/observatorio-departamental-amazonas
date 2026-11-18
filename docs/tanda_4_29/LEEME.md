@@ -48,4 +48,4 @@ Las capturas `*_menu_*` muestran fuente, año, leyenda, interruptor y avisos. No
 
 Las regresiones existentes conservan sus aserciones: el recorrido de foco espera los nuevos controles antes de contarlos y las pruebas de interruptores incorporan las nuevas capas. El resultado final de `npm test`, Actions y Gitleaks se registra en el PR.
 
-El recorrido de capas y foco se repitió diez veces por tamaño: 20 ejecuciones aprobadas en 55,1 s. Incluye cambiar desde las dos capas de teselas antes de consultar Aeropuerto; el foco espera visibilidad real de Leaflet y no se traslada si la persona ya cambió de control.
+El recorrido de capas y foco se repitió diez veces por tamaño: 20 ejecuciones aprobadas en 46,5 s tras el ajuste de encuadre sin animación y zoom mínimo 5. Incluye cambiar desde las dos capas de teselas antes de consultar Aeropuerto; el foco espera visibilidad real de Leaflet y no se traslada si la persona ya cambió de control.

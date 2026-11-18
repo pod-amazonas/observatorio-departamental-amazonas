@@ -61,6 +61,7 @@ function layerCard(def){
   const legend=element('p','obs32-layer-description'),symbol=element('span','','■ ');symbol.style.color=def.color;symbol.setAttribute('aria-hidden','true');
   legend.append(symbol,document.createTextNode('Leyenda: '+def.metadata.leyenda+' · Norma: '+def.metadata.norma));card.append(legend);
  }
+ if(def.tanda===4&&def.vectorTiles)card.append(element('p','obs19-footnote','Visible desde zoom 5. El encuadre mantiene ese mínimo; desplaza el mapa para explorar las zonas que queden fuera de la ventana.'));
  if(def.kind==='rondas'){const list=element('ul','obs19-footnote');list.setAttribute('aria-label','Determinantes incluidas en las rondas');layersMeta().filter(c=>c.grupoVisualizacion==='rondas46').forEach(c=>{const row=element('li','','Determinante '+c.objectid+' · '+c.nombre+' · '+c.norma);row.dataset.determinantLayer=String(c.objectid);list.append(row)});card.append(list);const query=element('button','','Consultar centro del mapa');query.type='button';query.dataset.rondasQuery='';query.disabled=true;query.addEventListener('click',()=>{const map=window.obs19Api?.getMap?.();if(map)map.fire('click',{latlng:map.getCenter()})});card.append(query,element('p','obs19-footnote','Toca un polígono para consultar su determinante; acerca el mapa para las franjas estrechas. Con teclado, mueve el mapa con las flechas y usa Consultar centro del mapa.'))}
  const status=element('p','obs19-footnote');status.id='estado-'+def.key;status.dataset.layerStatus=def.key;status.setAttribute('role','status');
  if(def.kind==='citizen')status.dataset.citizenStatus=def.id;
@@ -251,7 +252,16 @@ async function toggleLayer(def,want){
  let state=layerState.get(def.key);if(!state){state={want:false};layerState.set(def.key,state)}
  state.want=want;state.error='';const current=activeLayer(def);
  if(!want){state.controller?.abort();state.loading=false;if(current)window.obs19Api.remove(current.id);syncLayerControls();return}
- if(current){window.obs19Api.zoom(current.id);syncLayerControls();return}
+ if(current){
+  if(def.tanda===4&&def.vectorTiles){
+   const map=window.obs19Api.getMap(),bounds=current.layer.getBounds();
+   // El encuadre nacional puede bajar de 5 en móvil y ocultar las teselas.
+   // Evitar también que un zoom animado previo termine sobre la capa siguiente.
+   map.fitBounds(bounds,{padding:[16,16],maxZoom:12,animate:false});
+   if(map.getZoom()<5)map.setView(bounds.getCenter(),5,{animate:false});
+  }else window.obs19Api.zoom(current.id);
+  syncLayerControls();return;
+ }
  if(state.loading)return;
  const controller=new AbortController();state.controller=controller;state.loading=true;syncLayerControls();
  try{
