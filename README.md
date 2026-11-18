@@ -68,3 +68,7 @@ El índice municipal de riesgo, las dos clasificaciones de suelo y Determinantes
 - [Entrega, fuentes, SHA-256, diccionario y pendientes](datos/tanda_5_29/LEEME.md).
 - [Vistas y mediciones de escritorio/celular y red lenta](docs/tanda_5_29/LEEME.md).
 - Comprobación sin GIS: `python3 scripts/preparar_tanda5_29.py`.
+
+### Lectura ciudadana del Geovisor
+
+Cada capa presenta una descripción breve, fuente, año y advertencias. La **Ficha técnica** plegable conserva los metadatos originales, identificadores, rutas públicas, observaciones y métodos de preparación. Las capas que se consultan por zonas muestran **—** en el conteo: no se interpretan las figuras de cada nivel de zoom como registros. Estas mejoras de presentación no alteran datos ni geometrías.

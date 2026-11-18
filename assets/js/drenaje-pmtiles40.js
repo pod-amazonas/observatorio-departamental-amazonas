@@ -14,24 +14,27 @@ function vendor(){
 function sync(){
  const card=document.querySelector('[data-pmtiles-layer]');if(!card)return;
  const entry=active(),on=!!entry?.visible,sw=card.querySelector('[role="switch"]');sw.disabled=!meta;sw.setAttribute('aria-checked',String(on));sw.setAttribute('aria-busy',String(loading));sw.querySelector('.obs32-switch-state').textContent=on?'Encendida':'Apagada';
- card.querySelector('[role="status"]').textContent=error||(loading?'Cargando teselas… Pulsa para cancelar.':on?'Drenaje visible. Sin conteos de entidades ni cálculos de superficies.':'Se descarga solo al activarla.');
+ card.querySelector('[role="status"]').textContent=error?'No se pudo cargar la capa. Abre la ficha técnica para ver el detalle y vuelve a encenderla para reintentar.':loading?'Cargando capa… Pulsa para cancelar.':on?'Capa visible.':'Se descarga solo al activarla.';
+ card.querySelector('[data-technical-error]').textContent=error;
+ const metadata=card.querySelector('[data-drenaje-metadata]');if(meta&&!metadata.textContent)metadata.textContent=JSON.stringify(meta,null,2);
  const slider=card.querySelector('input');slider.disabled=!on;slider.value=String(100-(entry?.opacity??65));slider.nextElementSibling.textContent=slider.value+'%';card.querySelector('[data-zoom]').disabled=!meta;
 }
 function mount(){
  const parent=document.querySelector('[data-citizen-category="0"]');if(!parent)return;
  if(!parent.querySelector('[data-pmtiles-layer]')){
   const card=el('div');card.dataset.pmtilesLayer=key;card.className='obs20-pilot-card obs32-layer-card';
-  const title=el('h4','Drenaje doble · teselas');title.className='obs32-layer-title';card.append(title);
-  card.append(el('p','IGAC 2022 · según ficha POD 013 · 92 entidades; originales conservados.'));
-  card.append(el('p','Río Caquetá (484) y Río Putumayo (2165): corrección topológica MakeValid en copias autorizada. No acredita navegabilidad ni límites.'));
-  const sw=el('button');sw.type='button';sw.className='obs32-layer-switch';sw.setAttribute('role','switch');sw.setAttribute('aria-checked','false');sw.setAttribute('aria-label','Mostrar u ocultar drenaje doble en teselas');
+  const view=window.obs53.view({id:key}),technical=window.obs53.sheet(view.title);
+  const title=el('h4',view.title);title.className='obs32-layer-title';card.append(title,el('p',window.obs53.intro(view)));technical.append(el('p','Drenaje doble · teselas'));
+  technical.append(el('p','IGAC 2022 · según ficha POD 013 · 92 entidades; originales conservados.'));
+  technical.append(el('p','Río Caquetá (484) y Río Putumayo (2165): corrección topológica MakeValid en copias autorizada. No acredita navegabilidad ni límites.'));
+  const sw=el('button');sw.type='button';sw.className='obs32-layer-switch';sw.setAttribute('role','switch');sw.setAttribute('aria-checked','false');sw.setAttribute('aria-label','Mostrar u ocultar ríos y cuerpos de agua');
   const track=el('span');track.className='obs32-switch-track';track.setAttribute('aria-hidden','true');const text=el('span','Apagada');text.className='obs32-switch-state';sw.append(track,text);sw.onclick=()=>toggle(loading?false:!active());card.append(sw);
   const legend=el('p');const symbol=el('span','■ ');symbol.style.color='#156f99';symbol.setAttribute('aria-hidden','true');legend.append(symbol,document.createTextNode('Leyenda: superficies de drenaje doble.'));card.append(legend);
-  card.append(el('p','Detalle por zoom 5–12. Al acercar más no aumenta la precisión. Visualización sin consulta individual.'));
+  technical.append(el('p','Detalle por zoom 5–12. Al acercar más no aumenta la precisión. Visualización sin consulta individual.'));
   const status=el('p');status.id='estado-pmtiles40';status.setAttribute('role','status');sw.setAttribute('aria-describedby',status.id);card.append(status);
   const tools=el('div');tools.className='obs20-pilot-tools';const zoom=el('button','Centrar Amazonas ↗');zoom.type='button';zoom.dataset.zoom='';zoom.onclick=()=>toggle(true,true);tools.append(zoom);
-  const label=el('label','Transparencia');label.className='obs20-range-label';const input=el('input');input.type='range';input.min='0';input.max='100';input.step='5';input.setAttribute('aria-label','Transparencia del drenaje en teselas');const output=el('output');
-  input.oninput=()=>{const entry=active();if(entry){entry.opacity=100-Number(input.value);entry.layer.setOpacity(entry.opacity/100);output.textContent=input.value+'%'}};label.append(input,output);tools.append(label);card.append(tools);parent.append(card);
+  const label=el('label','Transparencia');label.className='obs20-range-label';const input=el('input');input.type='range';input.min='0';input.max='100';input.step='5';input.setAttribute('aria-label','Transparencia de ríos y cuerpos de agua');const output=el('output');
+  input.oninput=()=>{const entry=active();if(entry){entry.opacity=100-Number(input.value);entry.layer.setOpacity(entry.opacity/100);output.textContent=input.value+'%'}};label.append(input,output);tools.append(label);card.append(tools);const metadata=el('pre');metadata.className='obs53-metadata';metadata.dataset.drenajeMetadata='';const errors=el('p');errors.dataset.technicalError='';technical.append(metadata,errors);card.append(technical);parent.append(card);
  }
  sync();
 }
@@ -111,7 +114,7 @@ async function toggle(want,zoom=false){
   layer=await createTileLayer({...meta,url,color:'#156f99',dataLayer:'drenaje',opacity:.65},signal,fail);
   if(signal.aborted||serial!==sequence)return;
   if(entries().length>=8)throw Error('Ya se alcanzó el máximo de 8 capas');
-  const entry={id:ID,idCitizen:key,name:meta.nombre+' · IGAC 2022',origin:meta.fuente,visible:true,opacity:65,layer,data:null,count:0,geomType:'Teselas vectoriales',color:'#156f99',vectorTiles:true,metadata:{fuenteDeclarada:meta.fuente,advertencia:meta.advertencia}};
+  const entry={id:ID,idCitizen:key,name:meta.nombre+' · IGAC 2022',origin:meta.fuente,visible:true,opacity:65,layer,data:null,count:0,geomType:'Teselas vectoriales',color:'#156f99',vectorTiles:true,metadata:{...meta,fuenteDeclarada:meta.fuente,advertencia:meta.advertencia}};
   const ready=waitForTiles(layer,map,signal);
   entries().push(entry);layer.on('remove',()=>{if(active()===entry){controller?.abort();loading=false}sync()});
   layer.addTo(map);window.obs19Api.redraw();await ready;

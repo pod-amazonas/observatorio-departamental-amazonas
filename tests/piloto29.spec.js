@@ -63,17 +63,18 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])for(const row
   const card=page.locator('[data-citizen-layer="'+row.id_capa+'"]');
   await card.evaluate(el=>el.closest('details').open=true);
   await expect(card).toContainText(row.fuente_declarada_encargo+' · '+row.anio_declarado_encargo);
+  const publicName=await card.locator('h4').innerText();await expect(card.locator(':scope > [data-ficha-tecnica]')).toContainText(row.nombre_publico);
   const cb=card.getByRole('switch');await cb.focus();await cb.press('Space');
   await expect.poll(()=>page.evaluate(id=>window.obs19Api.getLayers().filter(e=>e.idCitizen===id).length,row.id_capa)).toBe(1);
   const result=await page.evaluate(id=>{const entry=window.obs19Api.getLayers().find(e=>e.idCitizen===id);return {count:entry.count,features:entry.layer.getLayers().length,visible:window.obs19Api.getMap().hasLayer(entry.layer),bounds:entry.layer.getBounds().isValid()}},row.id_capa);
   expect(result).toEqual({count:row.entidades,features:row.entidades,visible:true,bounds:true});
   await expect.poll(()=>page.evaluate(id=>{const e=window.obs19Api.getLayers().find(x=>x.idCitizen===id);return window.obs19Api.getMap().getBounds().contains(e.layer.getBounds())},row.id_capa)).toBe(true);
-  await expect(page.locator('#v7-dynamic-legend')).toContainText(row.nombre_publico);
+  await expect(page.locator('#v7-dynamic-legend')).toContainText(publicName);
   await expect(page.locator('#obs19-stat-detail')).toContainText(row.fuente_declarada_encargo+' · '+row.anio_declarado_encargo);
   const slider=card.locator('input[type="range"]');await slider.fill('80');await slider.dispatchEvent('input');
   expect(await page.evaluate(id=>window.obs19Api.getLayers().find(e=>e.idCitizen===id).layer.getLayers()[0].options.fillOpacity,row.id_capa)).toBeCloseTo(.2*.52);
-  await cb.click();await expect(page.locator('#v7-dynamic-legend')).not.toContainText(row.nombre_publico);
-  await cb.click();await expect(page.locator('#v7-dynamic-legend')).toContainText(row.nombre_publico);
+  await cb.click();await expect(page.locator('#v7-dynamic-legend')).not.toContainText(publicName);
+  await cb.click();await expect(page.locator('#v7-dynamic-legend')).toContainText(publicName);
   await card.locator('[data-layer-zoom]').click();
   expect(await page.evaluate(id=>window.obs19Api.getLayers().filter(e=>e.idCitizen===id).length,row.id_capa)).toBe(1);
 

@@ -5,6 +5,7 @@ Formato basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.1.0/). V
 ## [Sin publicar]
 
 ### Cambiado
+- Geovisor: textos ciudadanos con fuente, año y advertencias; metadatos originales conservados en fichas técnicas plegables. Las capas por zonas muestran «—» y una explicación en lugar de «Sin conteo». Se unifica el rótulo «Capas del Observatorio» (#53).
 - Las 20 capas GeoJSON se publican con 6 decimales y JSON compacto: la descarga comprimida baja de 11,9 MB a 6,2 MB (Humedales: de 7,1 MB a 4,1 MB). Corrimiento máximo 8 cm. Los 62 polígonos cuya topología cambiaría al redondear conservan sus coordenadas originales (lista en `datos/determinantes_ambientales/procesado.json`); atributos, CRS, polígonos y anillos sin cambios.
 - El indicador de foco de la portada pasa a `#a34a06` y alcanza al menos 5:1 sobre sus fondos (#17).
 
