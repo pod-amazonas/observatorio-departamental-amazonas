@@ -1,3 +1,4 @@
+const {abrirFicha,errorDeCapa,sinConteo}=require('./helpers/fichas.cjs');
 const {test,expect}=require('@playwright/test');
 const fs=require('node:fs'),path=require('node:path'),{createHash}=require('node:crypto'),{spawnSync}=require('node:child_process');
 const {abrirCapa}=require('./helpers/geovisor.cjs');
@@ -5,7 +6,7 @@ const meta=require('../datos/teselas_40/catalogo.json');
 const root=path.resolve(__dirname,'..'),file=path.join(root,'datos/teselas_40/drenaje_doble.pmtiles');
 const cardOf=p=>p.locator('[data-pmtiles-layer]');
 async function ready(page){await page.goto('/#geovisor');const card=cardOf(page);await abrirCapa(card);await expect(card.getByRole('switch')).toBeEnabled();return card}
-async function on(page,card){await card.getByRole('switch').click();await expect(card.getByRole('switch')).toHaveAttribute('aria-busy','false');await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','true');await expect(card.locator('#estado-pmtiles40')).toContainText('Drenaje visible')}
+async function on(page,card){await card.getByRole('switch').click();await expect(card.getByRole('switch')).toHaveAttribute('aria-busy','false');await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','true');await expect(card.locator('#estado-pmtiles40')).toContainText('Capa visible')}
 test('PMTiles: archivo íntegro, zooms, reparaciones y campos públicos',()=>{
  const b=fs.readFileSync(file);expect(b.subarray(0,8)).toEqual(Buffer.from('PMTiles\x03'));expect(b.length).toBe(meta.bytes);expect(createHash('sha256').update(b).digest('hex')).toBe(meta.sha256);
  expect(meta.entidades).toBe(92);expect(meta.excluidos_invalidos).toEqual([]);expect(meta.reparados_autorizados).toEqual([484,2165]);expect(new Set(meta.ids_seleccionados).size).toBe(92);expect([484,2165].every(x=>meta.ids_seleccionados.includes(x))).toBe(true);
@@ -29,7 +30,7 @@ for(const width of [1280,390])test(`PMTiles: rango real, dibujo, teclado, transp
  const card=await ready(page);expect(req).toHaveLength(0);await expect(card).toContainText('IGAC 2022');await expect(card).toContainText('Río Caquetá');await expect(card).toContainText('Río Putumayo');await expect(card).not.toContainText('prueba incompleta');await expect(card).toContainText('MakeValid');await expect(card).toContainText('92 entidades');await expect(card).toContainText('Leyenda');
  const sw=card.getByRole('switch');await sw.focus();await sw.press('Space');await expect(sw).toHaveAttribute('aria-busy','false');await expect(sw).toHaveAttribute('aria-checked','true');
  await expect.poll(()=>page.evaluate(()=>{const e=window.obs19Api.getLayers().find(e=>e.vectorTiles);if(!e)return 0;let n=0;for(const c of e.layer.getContainer().querySelectorAll('canvas')){const a=c.getContext('2d').getImageData(0,0,c.width,c.height).data;for(let i=0;i<a.length;i+=4)if(Math.abs(a[i]-21)<4&&Math.abs(a[i+1]-111)<4&&Math.abs(a[i+2]-153)<4&&a[i+3]>15)n++}return n})).toBeGreaterThan(50);
- await expect(page.locator('#obs19-stat-overview')).toContainText('Sin conteo');await expect(page.locator('#v7-dynamic-legend')).toContainText('Drenaje doble');
+ await sinConteo(page);await expect(page.locator('#v7-dynamic-legend')).toContainText('Ríos y cuerpos de agua');
  let bytes=0;for(const response of responses){expect(response.status()).toBe(206);expect(response.request().headers().range).toMatch(/^bytes=\d+-\d+$/);bytes+=(await response.body()).length}expect(bytes).toBeGreaterThan(0);expect(bytes).toBeLessThan(meta.bytes/2);
  await card.getByRole('slider').fill('50');expect(await page.evaluate(()=>window.obs19Api.getLayers().find(e=>e.vectorTiles).layer.options.opacity)).toBe(.5);
  await card.getByRole('button',{name:'Centrar Amazonas',exact:false}).click();await sw.click();await expect(sw).toHaveAttribute('aria-checked','false');expect(await page.evaluate(()=>window.obs19Api.getLayers().length)).toBe(0);
@@ -37,7 +38,7 @@ for(const width of [1280,390])test(`PMTiles: rango real, dibujo, teclado, transp
 });
 test('PMTiles: rechaza HTTP 200 sin continuar la descarga ni encender la capa',async({page})=>{
  let hits=0;await page.route('**/drenaje_doble.pmtiles',route=>{hits++;return route.fulfill({status:200,contentType:'application/octet-stream',body:Buffer.alloc(127)})});
- const card=await ready(page);await card.getByRole('switch').click();await expect(card.locator('#estado-pmtiles40')).toContainText('no sirve rangos HTTP 206');await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','false');expect(hits).toBe(1);expect(await page.evaluate(()=>window.obs19Api.getLayers().length)).toBe(0);
+ const card=await ready(page);await card.getByRole('switch').click();await errorDeCapa(card,'no sirve rangos HTTP 206');await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','false');expect(hits).toBe(1);expect(await page.evaluate(()=>window.obs19Api.getLayers().length)).toBe(0);
 });
 test('PMTiles: error en una tesela no se presenta como carga vacía exitosa y permite reintento',async({page})=>{
  let hits=0,fail=true;await page.route('**/drenaje_doble.pmtiles',route=>{hits++;return fail&&hits>1?route.fulfill({status:503,body:'No disponible'}):route.continue()});
@@ -56,4 +57,4 @@ test('PMTiles: funciona con el prefijo del proyecto de Pages, sin CDN',async({pa
 
 test('PMTiles: detecta movimiento, pérdida de partes y reparación fuera de autorización sin GIS en CI',()=>{const r=spawnSync('python3',['-m','unittest','discover','-s','tests','-p','test_reparar_drenaje40.py'],{cwd:root,encoding:'utf8'});expect(r.status,r.stderr||r.stdout||r.error?.message).toBe(0)});
 
-test('PMTiles: no habilita la capa si falta alguno de los dos ríos corregidos en la ficha',async({page})=>{await page.route('**/datos/teselas_40/catalogo.json',route=>route.fulfill({json:{...meta,ids_seleccionados:meta.ids_seleccionados.filter(id=>id!==2165)}}));await page.goto('/#geovisor');const card=cardOf(page);await abrirCapa(card);await expect(card.getByRole('switch')).toBeDisabled();await expect(card.locator('#estado-pmtiles40')).toContainText('Ficha de drenaje incorrecta')});
+test('PMTiles: no habilita la capa si falta alguno de los dos ríos corregidos en la ficha',async({page})=>{await page.route('**/datos/teselas_40/catalogo.json',route=>route.fulfill({json:{...meta,ids_seleccionados:meta.ids_seleccionados.filter(id=>id!==2165)}}));await page.goto('/#geovisor');const card=cardOf(page);await abrirCapa(card);await expect(card.getByRole('switch')).toBeDisabled();await errorDeCapa(card,'Ficha de drenaje incorrecta')});

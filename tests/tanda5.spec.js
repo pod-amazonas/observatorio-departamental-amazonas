@@ -1,3 +1,4 @@
+const {abrirFicha,errorDeCapa,sinConteo}=require('./helpers/fichas.cjs');
 const {test, expect} = require('@playwright/test');
 const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
 const {spawnSync} = require('node:child_process');
@@ -91,11 +92,12 @@ for (const width of [1280, 390]) test('tanda 5: teclado, leyenda y color real de
     await expect(c).toContainText(row.fuente_declarada_encargo);
     await expect(c).toContainText(String(row.anio_declarado_encargo));
     await expect(c).toContainText(row.restricciones);
-    for (const l of row.leyenda) await expect(c.getByRole('list')).toContainText(l.valor + ' · ' + l.entidades);
+    for (const l of row.leyenda) await expect(c.getByRole('list')).toContainText(l.valor);
+    expect(JSON.parse(await c.locator('.obs53-metadata').textContent()).leyenda).toEqual(row.leyenda);
     const sw = c.getByRole('switch'); await sw.focus(); await sw.press('Space');
     await expect(sw).toHaveAttribute('aria-checked', 'true'); await expect(sw).toHaveAttribute('aria-busy', 'false');
     await expect(page.locator('#obs19-stat-detail')).toContainText(row.restricciones);
-    await expect(page.locator('#obs19-stat-overview')).toContainText('Sin conteo');
+    await sinConteo(page);
     for (const p of points.filter(p => p.id_capa === row.id_capa)) {
       await page.evaluate(p => window.obs19Api.getMap().setView([p.lat, p.lng], 10, {animate: false}), p);
       const wanted = p.color.match(/[a-f0-9]{2}/gi).map(v => parseInt(v, 16));
@@ -120,7 +122,7 @@ test('tanda 5: rangos inválidos producen error visible, reintento y limpieza', 
   let fail = true;
   await page.route('**/tanda_5_29/teselas/amenaza_incendios_forestales.pmtiles', r => fail ? r.fulfill({status: 200, body: Buffer.alloc(127)}) : r.continue());
   await page.goto('/#geovisor'); const c = card(page, catalog[0].id_capa); await abrirCapa(c);
-  await c.getByRole('switch').click(); await expect(c.locator('[role="status"]')).toContainText('no sirve rangos HTTP 206');
+  await c.getByRole('switch').click(); await errorDeCapa(c,'no sirve rangos HTTP 206');
   await expect(c.getByRole('switch')).toHaveAttribute('aria-checked', 'false');
   fail = false; await c.getByRole('switch').click(); await expect(c.getByRole('switch')).toHaveAttribute('aria-busy', 'false');
   await expect(c.getByRole('switch')).toHaveAttribute('aria-checked', 'true');
@@ -133,7 +135,7 @@ test('tanda 5: el lector rechaza colores no seguros de un catálogo alterado', a
   });
   const requests = []; page.on('request', r => requests.push(r.url()));
   await page.goto('/#geovisor'); const c = card(page, catalog[0].id_capa); await abrirCapa(c);
-  await c.getByRole('switch').click(); await expect(c.locator('[role="status"]')).toContainText('Leyenda de teselas incorrecta');
+  await c.getByRole('switch').click(); await errorDeCapa(c,'Leyenda de teselas incorrecta');
   await expect(c.getByRole('switch')).toHaveAttribute('aria-checked', 'false');
   expect(requests.some(u => u.includes('color.invalid'))).toBe(false);
 });

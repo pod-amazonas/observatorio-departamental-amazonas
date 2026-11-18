@@ -1,3 +1,4 @@
+const {abrirFicha}=require('./helpers/fichas.cjs');
 const {test,expect}=require('@playwright/test');
 const fs=require('node:fs'),path=require('node:path'),{createHash}=require('node:crypto'),{gzipSync}=require('node:zlib'),{spawnSync}=require('node:child_process');
 const {hint}=require('@mapbox/geojsonhint');
@@ -52,7 +53,9 @@ for(const width of [1280,390])test(`tanda 3: carga diferida, leyendas reales, co
  for(const meta of available){
   const card=page.locator('[data-tanda3-layer="'+meta.id_capa+'"]');await abrirCapa(card);
   await expect(card).toContainText(meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo);
-  for(const item of meta.leyenda)await expect(card.getByRole('list',{name:'Leyenda de '+meta.nombre_publico})).toContainText(item.valor+' · '+item.entidades);
+  const publicName=await card.locator('h4').innerText();
+  for(const item of meta.leyenda)await expect(card.getByRole('list',{name:'Leyenda de '+publicName})).toContainText(item.valor);
+  const technical=await abrirFicha(card);expect(JSON.parse(await technical.locator('.obs53-metadata').textContent()).leyenda).toEqual(meta.leyenda);
   const sw=card.getByRole('switch');await sw.focus();await sw.press('Space');await expect(sw).toHaveAttribute('aria-checked','true');
   const info=await page.evaluate(id=>{const e=window.obs19Api.getLayers().find(e=>e.idCitizen===id);return {count:e.count,styles:e.layer.getLayers().map(l=>({value:l.feature.properties[e.metadata.campo_leyenda],color:l.options.fillColor})),name:e.layer.getLayers()[0].getElement().getAttribute('aria-label')}},meta.id_capa);
   expect(info.count).toBe(meta.entidades);for(const style of info.styles)expect(style.color).toBe(meta.leyenda.find(x=>x.valor===style.value).color);
@@ -69,7 +72,7 @@ for(const width of [1280,390])test(`tanda 3: carga diferida, leyendas reales, co
    await expect.poll(()=>page.evaluate(()=>{const r=document.activeElement.getBoundingClientRect(),m=window.obs19Api.getMap().getContainer().getBoundingClientRect(),h=document.querySelector('.site-header').getBoundingClientRect();return r.left>=m.left&&r.right<=m.right&&r.top>=m.top&&r.bottom<=m.bottom&&r.left>=0&&r.right<=innerWidth&&r.top>=Math.max(0,h.bottom)&&r.bottom<=innerHeight})).toBe(true);
   }
   await card.getByRole('slider').fill('50');await expect(card.locator('output')).toHaveText('50%');
-  await card.getByRole('button',{name:'Zoom a capa '+meta.nombre_publico,exact:true}).click();await sw.click();await expect(sw).toHaveText('Apagada');
+  await card.getByRole('button',{name:'Zoom a capa '+publicName,exact:true}).click();await sw.click();await expect(sw).toHaveText('Apagada');
  }
  expect(requests).toHaveLength(2);
  for(const meta of pending){

@@ -47,8 +47,9 @@ for(const width of [1280,390])test(`menú único: todas las capas con interrupto
    const meta=def.metadata;
    await expect(card.locator('xpath=ancestor::details[1]/summary')).toHaveText(meta.categoria);
    await expect(card).toContainText(meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo);
-   if(def.id==='puerto')await expect(card.getByText('No garantiza acceso público, operación actual ni seguridad de navegación.',{exact:false})).toBeVisible();
-   await expect(page.locator('#v7-dynamic-legend')).toContainText(meta.nombre_publico);
+   if(def.id==='puerto'){await expect(card.locator('.obs53-intro')).toBeVisible();await expect(card.locator('.obs53-intro')).toContainText('No garantiza acceso público, operación actual ni seguridad de navegación.');}
+   await expect(card.locator(':scope > [data-ficha-tecnica]')).toContainText(meta.nombre_publico);
+   await expect(page.locator('#v7-dynamic-legend')).toContainText(await card.locator('h4').innerText());
   }
   // Las temáticas no reaparecen con una casilla duplicada en archivos locales.
   await expect(page.locator('#local-layer-list input[type="checkbox"]')).toHaveCount(0);
