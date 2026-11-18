@@ -12,10 +12,8 @@ AIR_WARNING='Ubicación aproximada: diferencias de 0,9–5,7 km respecto a refer
 ENV={
  'reserva_forestal_ley_2da':{'origen':'Reserva_Forestal_Ley_2da','campos':['id','nom_ley2','area_ha','res_zoni','fecha_ingr','fecha_reco'],'nombre':'Reservas forestales de Ley 2ª · ámbito nacional','fuente':'MADS-SIAC','anio':'2022 (compilación POD; crédito SIAC 2021)','color':'#83591c','norma':'Ley 2ª de 1959; zonificación según res_zoni','leyenda':'Reservas forestales nacionales; no equivale a la zonificación A/B','nota':'Siete reservas nacionales completas, sin recorte. Incluye la reserva Amazonas, que se extiende por varios departamentos. No certifica vigencia normativa ni restricciones prediales.'},
  'humedales':{'origen':'Humedales','campos':['Categoria','AREA_TOT'],'nombre':'Humedales · fuente por confirmar','fuente':'IAvH según encargo; metadato cita MADS','anio':'por confirmar (metadato cita 2018; compilación 2022)','color':'#116d87','norma':'No acredita una delimitación normativa','leyenda':'Humedales de la compilación POD','nota':'Atribución por confirmar: el encargo indica IAvH y el metadato cita MADS 2018. Copia reparada con MakeValid autorizada: 0 m y 0 m² de diferencia algebraica exacta. Sin recorte ni simplificación previa; no certifica límites ni superficies.'}}
-AGRI={'agroin_tot':'Agroindustriales','cana_tot':'Caña','cacao_tot':'Cacao','cauch_tot':'Caucho','tabac_tot':'Tabaco','otroind_to':'Otros industriales','platub_tot':'Plátanos y tubérculos','plat_tot':'Plátano','yuca_tot':'Yuca','tuber_tot':'Tubérculos','tot_frut':'Frutales','bana_tot':'Banano','citri_tot':'Cítricos','pina_tot':'Piña','aguac_tot':'Aguacate','papay_tot':'Papaya','otfru_tot':'Otros frutales','cerea_tot':'Cereales','arroz_tot':'Arroz','maizam_tot':'Maíz amarillo','maizbl_tot':'Maíz blanco','otrcer_tot':'Otros cereales','florfoll_t':'Flores y follajes','hort_tot':'Hortalizas','arom_tot':'Aromáticas','forest_tot':'Forestales'}
-PEC={'Ganbov_tot':'Bovinos','Ganpor_tot':'Porcinos','Ganbuf_tot':'Búfalos','Ganequ_tot':'Equinos','Ganovi_tot':'Ovinos','Gancapr_to':'Caprinos','Avicul_tot':'Avicultura','Agricu_tot':'Agricultura (por confirmar)','pesca_tot':'Pesca','Acui_tot':'Acuicultura','upapesc_to':'UPA pesca (por confirmar)','upas_tot':'UPA totales (por confirmar)'}
 SERV={'SISTEMA_POTABILIZACION':'Sistema de potabilización','ALCANTARILLADO':'Alcantarillado','SISTEMA_TTO_AGUAS_RESIDUALES':'Tratamiento de aguas residuales','ASEO':'Aseo','ELECTRICIDAD':'Electricidad','ORGANIZACION_PRESTACION_DE_SP':'Organización de la prestación','ACUEDUCTO_CONSTRUIDO':'Acueducto construido'}
-TABLES={'estado_servicios_anm':{'origen':'Estado_ServPublicos_ANM','campos':SERV,'nombre':'Estado de servicios públicos en ANM','fuente':'Compilación POD Amazonas 2022; metadato cita Alcaldía de Leticia','categoria':'Estructura funcional y de servicios'},'produccion_agricola':{'origen':'Produccion_Agricola_Municipal_ANM','campos':AGRI,'nombre':'Producción agrícola por unidad territorial','fuente':'Ministerio de Agricultura / ENA, según metadato POD; año por confirmar','categoria':'Socioeconómico y cultural'},'produccion_pecuaria':{'origen':'Produccion_Pecuaria_Municipal_ANM','campos':PEC,'nombre':'Producción pecuaria por unidad territorial','fuente':'Ministerio de Agricultura / ENA, según metadato POD; año por confirmar','categoria':'Socioeconómico y cultural'}}
+TABLES={'estado_servicios_anm':{'origen':'Estado_ServPublicos_ANM','campos':SERV,'nombre':'Estado de servicios públicos en ANM','fuente':'Compilación POD Amazonas 2022; metadato cita Alcaldía de Leticia','categoria':'Estructura funcional y de servicios'}}
 
 def sha(b):return hashlib.sha256(b).hexdigest()
 def load(p):return json.loads(Path(p).read_text(encoding='utf8'))
@@ -141,6 +139,9 @@ def tables(private):
 
 
 def integrate(private):
+ # Opción B de Alejandro: eliminar entregas previas de las tablas aplazadas.
+ for key in ('produccion_agricola','produccion_pecuaria'):
+  (OUT/'tablas'/f'{key}.json').unlink(missing_ok=True)
  native=load(private/'entrega_geometrias.json');catalog=[];dictionary=tables(private)
  for i,row in enumerate(native['capas']):
   key=row['id_capa'];cfg=ENV[key];src=private/(key+'.pmtiles');b=src.read_bytes();assert sha(b)==row['sha256']
@@ -198,13 +199,15 @@ def check():
    d=json.loads(b);assert len(b)<1000000 and [f['id'] for f in d['features']]==AIR_IDS and 'crs' not in d
    assert all(set(f['properties'])==set(row['campos_publicos']) and f['geometry']['type']=='Point' for f in d['features'])
  audit=audit_tiles(catalog,control);assert audit==load(OUT/'auditoria_teselas.json'),'Auditoría de teselas distinta'
+ assert {p.stem for p in (OUT/'tablas').glob('*.json')}==set(TABLES),'Hay tablas fuera del alcance autorizado'
+ assert set(load(OUT/'diccionario_campos.json'))==set(TABLES)|set(ENV)|{'aeropuertos_referencia'},'Diccionario fuera del alcance autorizado'
  rep=load(OUT/'reparacion_humedales.json');assert rep['sha256_wkb_original']==HUM_ORIG and rep['sha256_wkb_evaluado']==HUM_FIX and rep['adoptada'] and rep['valida_despues'] and rep['diferencia_area_numerador']=='0' and rep['desplazamiento_max_vertices_m']==0 and rep['segmentos_identicos_con_multiplicidad']
  for key,cfg in TABLES.items():
   d=load(OUT/'tablas'/f'{key}.json');geometry=ROOT/d['geometria_base'];assert sha(geometry.read_bytes())==d['sha256_geometria_base']
   codes={f['properties']['MpCodigo'] for f in load(geometry)['features']};assert len(d['municipios'])==11 and {r['codigo'] for r in d['municipios']}==codes
   assert len(raw(d))<1000000 and {f['campo'] for f in d['indicadores']}==set(cfg['campos'])
   for row in d['municipios']:assert set(row)=={'codigo','nombre','valores'} and set(row['valores'])==set(cfg['campos'])
- print('Tanda 4: manifiesto, geometrías nativas, reparación 0/0, ocho puntos fieles y tres tablas por código verificados.')
+ print('Tanda 4: manifiesto, geometrías nativas, reparación 0/0, ocho puntos fieles y tabla categórica de servicios por código verificados.')
 
 if __name__=='__main__':
  p=argparse.ArgumentParser(description=__doc__);p.add_argument('--fase',choices=['preparar','integrar','comprobar'],default='comprobar');p.add_argument('--privado',type=Path);p.add_argument('--gdb',type=Path);p.add_argument('--gdal-library');p.add_argument('--geos-library');a=p.parse_args()

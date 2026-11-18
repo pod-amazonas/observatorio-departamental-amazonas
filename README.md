@@ -53,7 +53,7 @@ Las doce determinantes comparten un solo interruptor y una plaza de las ocho cap
 
 ## Tanda 4 de la ampliación #29
 
-Reservas forestales nacionales y Humedales se consultan por teselas con el lector del #41, sin recorte ni simplificación previa. La reparación autorizada de Humedales conserva 3.079 polígonos y da 0 m / 0 m² en el control exacto; la atribución IAvH/MADS queda por confirmar. Se agregan ocho aeropuertos como copia fiel, con aviso visible de ubicación aproximada (#48), y tres tablas por código territorial para servicios públicos y producción agrícola/pecuaria, sin nuevas geometrías. Años, unidades y definiciones no acreditados se muestran «por confirmar».
+Reservas forestales nacionales y Humedales se consultan por teselas con el lector del #41, sin recorte ni simplificación previa. La reparación autorizada de Humedales conserva 3.079 polígonos y da 0 m / 0 m² en el control exacto; la atribución IAvH/MADS queda por confirmar. Se agregan ocho aeropuertos como copia fiel, con aviso visible de ubicación aproximada (#48), y una tabla categórica de servicios públicos por código territorial, sin nuevas geometrías. Producción agrícola y pecuaria quedan pendientes en #29 hasta confirmar unidad y año con la fuente (opción B del PR #49). Los metadatos de servicios no acreditados se muestran «por confirmar».
 
 - [Entrega, fuentes, diccionario, huellas y reparación](datos/tanda_4_29/LEEME.md).
 - [Comprobaciones de escritorio, celular y red lenta](docs/tanda_4_29/LEEME.md).

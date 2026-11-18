@@ -6,7 +6,7 @@ let tileReaderReady=null;
 let catalog=null, citizenCatalog=[], tandaCatalog=[], tanda2Catalog=[], tanda3Catalog=[], tanda4Catalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
 const layerState=new Map();
 let indicatorData=null, indicatorLoading=false;const tableCache=new Map();
-const TABLE4=[{id:'estado_servicios_anm',categoria:3,nombre:'Estado de servicios públicos en ANM'},{id:'produccion_agricola',categoria:4,nombre:'Producción agrícola por unidad territorial'},{id:'produccion_pecuaria',categoria:4,nombre:'Producción pecuaria por unidad territorial'}];
+const TABLE4=[{id:'estado_servicios_anm',categoria:3,nombre:'Estado de servicios públicos en ANM'}];
 const getLayers=()=>window.obs19Api?.getLayers?.()||[];
 function element(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
 function legalUrl(v){try{const u=new URL(v);return (u.protocol==='https:'&&u.username===''&&u.password==='')?u.href:null;}catch{return null;}}

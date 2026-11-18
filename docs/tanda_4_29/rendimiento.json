@@ -159,36 +159,6 @@
     "capas": 1
   },
   {
-    "tipo": "tabla",
-    "id": "produccion_agricola",
-    "width": 1280,
-    "run": 1,
-    "red_mbit": 1.6,
-    "latencia_ms": 150,
-    "cache_http": false,
-    "osm_simulado": true,
-    "errores_js": [],
-    "ms": 10127,
-    "bytes_base": 1920848,
-    "bytes_tabla": 3256,
-    "capas": 1
-  },
-  {
-    "tipo": "tabla",
-    "id": "produccion_pecuaria",
-    "width": 1280,
-    "run": 1,
-    "red_mbit": 1.6,
-    "latencia_ms": 150,
-    "cache_http": false,
-    "osm_simulado": true,
-    "errores_js": [],
-    "ms": 10040.39999999851,
-    "bytes_base": 1920848,
-    "bytes_tabla": 1350,
-    "capas": 1
-  },
-  {
     "tipo": "capa",
     "id": "reserva_forestal_ley_2da",
     "width": 390,
@@ -345,36 +315,6 @@
     "ms": 10055.300000000745,
     "bytes_base": 1920848,
     "bytes_tabla": 1087,
-    "capas": 1
-  },
-  {
-    "tipo": "tabla",
-    "id": "produccion_agricola",
-    "width": 390,
-    "run": 1,
-    "red_mbit": 1.6,
-    "latencia_ms": 150,
-    "cache_http": false,
-    "osm_simulado": true,
-    "errores_js": [],
-    "ms": 10041.400000000373,
-    "bytes_base": 1920848,
-    "bytes_tabla": 3256,
-    "capas": 1
-  },
-  {
-    "tipo": "tabla",
-    "id": "produccion_pecuaria",
-    "width": 390,
-    "run": 1,
-    "red_mbit": 1.6,
-    "latencia_ms": 150,
-    "cache_http": false,
-    "osm_simulado": true,
-    "errores_js": [],
-    "ms": 10043.599999999627,
-    "bytes_base": 1920848,
-    "bytes_tabla": 1350,
     "capas": 1
   }
 ]
