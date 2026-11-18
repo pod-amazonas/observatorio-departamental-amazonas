@@ -3,9 +3,10 @@
 const $=id=>document.getElementById(id);
 const CATEGORIES=['Base cartográfica','Componente biofísico','Estructura institucional','Estructura funcional y de servicios','Socioeconómico y cultural','Gestión del riesgo','Ordenamiento territorial'];
 let tileReaderReady=null;
-let catalog=null, citizenCatalog=[], tandaCatalog=[], tanda2Catalog=[], tanda3Catalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
+let catalog=null, citizenCatalog=[], tandaCatalog=[], tanda2Catalog=[], tanda3Catalog=[], tanda4Catalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
 const layerState=new Map();
-let indicatorData=null, indicatorLoading=false;
+let indicatorData=null, indicatorLoading=false;const tableCache=new Map();
+const TABLE4=[{id:'estado_servicios_anm',categoria:3,nombre:'Estado de servicios públicos en ANM'},{id:'produccion_agricola',categoria:4,nombre:'Producción agrícola por unidad territorial'},{id:'produccion_pecuaria',categoria:4,nombre:'Producción pecuaria por unidad territorial'}];
 const getLayers=()=>window.obs19Api?.getLayers?.()||[];
 function element(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e;}
 function legalUrl(v){try{const u=new URL(v);return (u.protocol==='https:'&&u.username===''&&u.password==='')?u.href:null;}catch{return null;}}
@@ -31,16 +32,16 @@ function updateGeoHelp(){
  tip.textContent='Componente biofísico → Determinantes ambientales: '+ready.length+' de '+all.length+' registros disponibles en '+count+' capas de consulta (las doce rondas comparten una capa). '+pending.length+' pendiente: ronda 19 (#44). Se descargan solo al encenderlas. Las cifras no son oficiales.';
 }
 function citizen(meta){
- const tanda=meta.lote===3?3:meta.lote===2?2:meta.categoria?1:0;
+ const tanda=[2,3,4].includes(meta.lote)?meta.lote:meta.categoria?1:0;
  const directorio=tanda?'datos/tanda_'+tanda+'_29/':'datos/piloto_29/';
- return {key:'cit-'+meta.id_capa,kind:'citizen',id:meta.id_capa,label:meta.nombre_publico,name:meta.nombre_publico,available:meta.estado!=='pendiente',tanda,url:meta.ruta_relativa?directorio+meta.ruta_relativa:null,
+ return {key:'cit-'+meta.id_capa,kind:'citizen',id:meta.id_capa,label:meta.nombre_publico,name:meta.nombre_publico,available:meta.estado!=='pendiente',vectorTiles:!!meta.vector_tiles,vectorId:meta.id_vector,tanda,url:meta.ruta_relativa?directorio+meta.ruta_relativa:null,
  description:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo+' · '+meta.entidades+' entidades',source:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo,
  restriction:meta.restricciones,opacity:65,metadata:{...meta,fuenteDeclarada:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo},
  color:tanda&&/^#[0-9a-f]{6}$/i.test(meta.color)?meta.color:{division_politico_administrativa:'#a34a06',cuencas_hidrograficas:'#156f99',sistema_nacional_de_areas_protegidas:'#177749'}[meta.id_capa]};}
 function activeLayer(def){return getLayers().find(e=>def.kind==='citizen'?e.idCitizen===def.id:e.idPilot===def.id&&e.origin==='Determinantes ambientales · publicación autorizada')}
 function layerCard(def){
  const card=element('div','obs20-pilot-card obs32-layer-card');card.dataset.layerKey=def.key;
- if(def.kind==='rondas')card.dataset.rondasLayer='rondas46';else if(def.tanda===3)card.dataset.tanda3Layer=def.id;else if(def.tanda===2)card.dataset.tanda2Layer=def.id;else if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
+ if(def.kind==='rondas')card.dataset.rondasLayer='rondas46';else if(def.tanda===4)card.dataset.tanda4Layer=def.id;else if(def.tanda===3)card.dataset.tanda3Layer=def.id;else if(def.tanda===2)card.dataset.tanda2Layer=def.id;else if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
  const title=element('h4','obs32-layer-title',def.label);card.append(title,element('p','obs32-layer-description',def.description));
  const control=element('button','obs32-layer-switch');control.type='button';control.setAttribute('role','switch');control.setAttribute('aria-checked','false');
  control.setAttribute('aria-label','Mostrar u ocultar '+def.label);control.disabled=!def.available;
@@ -56,7 +57,7 @@ function layerCard(def){
    row.append(symbol,document.createTextNode(item.valor+' · '+item.entidades));legend.append(row);
   });card.append(legend);
  }
- if(def.vectorTiles){
+ if(def.vectorTiles&&!Array.isArray(def.metadata.leyenda)){
   const legend=element('p','obs32-layer-description'),symbol=element('span','','■ ');symbol.style.color=def.color;symbol.setAttribute('aria-hidden','true');
   legend.append(symbol,document.createTextNode('Leyenda: '+def.metadata.leyenda+' · Norma: '+def.metadata.norma));card.append(legend);
  }
@@ -86,7 +87,7 @@ function renderTree(){updateGeoHelp();const tree=$('obs19-thematic-tree');if(!tr
  });renderCitizenLayers();syncLayerControls();
 }
 function renderCitizenLayers(){
- [...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog].forEach(meta=>{
+ [...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog].forEach(meta=>{
   const category=meta.categoria?CATEGORIES.indexOf(meta.categoria):(meta.id_capa==='division_politico_administrativa'?0:1);
   const mount=document.querySelector('[data-citizen-category="'+category+'"]');
   const def=citizen(meta);
@@ -95,6 +96,7 @@ function renderCitizenLayers(){
  });renderIndicatorsAction();window.obs40Mount?.();syncLayerControls();
 }
 function renderIndicatorsAction(){
+ TABLE4.forEach(t=>{const target=document.querySelector('[data-citizen-category="'+t.categoria+'"]');if(!target)return;let c=$('tabla4-'+t.id);if(!c){c=element('div','obs20-pilot-card obs32-layer-card');c.id='tabla4-'+t.id;c.dataset.tabla4=t.id;c.append(element('h4','obs32-layer-title',t.nombre),element('p','obs19-footnote','Datos unidos por código a la División publicada, sin nuevas geometrías. Año, unidad y definiciones por confirmar.'));const b=element('button','','Consultar '+t.nombre);b.type='button';b.id='consultar4-'+t.id;b.onclick=()=>openMunicipalIndicators({id:t.id});const s=element('p','obs19-footnote');s.id='estado4-'+t.id;s.setAttribute('role','status');c.append(b,s);target.append(c)}c.querySelector('button').disabled=indicatorLoading||!citizenCatalog.some(m=>m.id_capa==='division_politico_administrativa')});
  const mount=document.querySelector('[data-citizen-category="4"]');
  if(!mount)return;
  let card=$('indicadores-municipales');
@@ -110,10 +112,11 @@ function renderIndicatorsAction(){
  }
  $('consultar-indicadores').disabled=indicatorLoading||!citizenCatalog.some(meta=>meta.id_capa==='division_politico_administrativa');
 }
-async function openMunicipalIndicators(){
+async function openMunicipalIndicators(selection){
+ const selected=TABLE4.find(t=>t.id===selection?.id),path=selected?'datos/tanda_4_29/tablas/'+selected.id+'.json':'datos/indicadores_29/municipios.json';
  if(indicatorLoading)return;
- indicatorLoading=true;
- const button=$('consultar-indicadores'),status=$('estado-indicadores');
+ indicatorLoading=true;renderIndicatorsAction();
+ const button=$(selected?'consultar4-'+selected.id:'consultar-indicadores'),status=$(selected?'estado4-'+selected.id:'estado-indicadores');
  button.disabled=true;status.textContent='Cargando indicadores…';
  try{
   const meta=citizenCatalog.find(row=>row.id_capa==='division_politico_administrativa');
@@ -122,13 +125,14 @@ async function openMunicipalIndicators(){
   await toggleLayer(def,true);
   const entry=activeLayer(def);
   if(!entry)throw Error('Activa División político-administrativa y vuelve a intentarlo');
-  let data=indicatorData;
+  let data=selected?tableCache.get(selected.id):indicatorData;
   if(!data){
-   const response=await fetch('datos/indicadores_29/municipios.json');
+   const response=await fetch(path);
    if(!response.ok)throw Error('Datos de indicadores no disponibles ('+response.status+')');
    data=await response.json();
   }
   if(!Array.isArray(data.municipios)||!Array.isArray(data.indicadores))throw Error('Tabla de indicadores incorrecta');
+  if(selected&&(data.geometria_base!=='datos/piloto_29/'+meta.ruta_relativa||data.sha256_geometria_base!==meta.sha256))throw Error('La tabla no corresponde a la División publicada');
   const byCode=new Map();
   for(const row of data.municipios){
    if(typeof row.codigo!=='string'||byCode.has(row.codigo)||!row.valores)throw Error('Código municipal incorrecto o duplicado');
@@ -152,6 +156,7 @@ async function openMunicipalIndicators(){
      const value=record.valores[field.campo];
      section.append(element('p','','Valor: '+(value===null||value===undefined?'Sin dato':String(value))));
      section.append(element('p','','Año: '+field.anio+' · Unidad: '+field.unidad));
+     if(field.producto)section.append(element('p','','Producto: '+field.producto));
      section.append(element('p','','Definición: '+field.definicion));
      section.append(element('p','','Fuente: '+field.fuente));box.append(section);
     }
@@ -166,13 +171,13 @@ async function openMunicipalIndicators(){
     };
    }
   });
-  indicatorData=data;
+  if(selected)tableCache.set(selected.id,data);else indicatorData=data;
   status.textContent='Selecciona una unidad del mapa para ver sus indicadores. Las definiciones pendientes están rotuladas «por confirmar».';
  }catch(error){status.textContent='No se pudieron consultar los indicadores: '+String(error.message||error)+'. Puedes reintentar.'}
- finally{indicatorLoading=false;button.disabled=false}
+ finally{indicatorLoading=false;button.disabled=false;renderIndicatorsAction()}
 }
 function syncLayerControls(){
- const defs=[...layersMeta().filter(c=>!c.grupoVisualizacion).map(determinant),...(rondasDef()?[rondasDef()]:[]),...[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog].map(citizen)];
+ const defs=[...layersMeta().filter(c=>!c.grupoVisualizacion).map(determinant),...(rondasDef()?[rondasDef()]:[]),...[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog].map(citizen)];
  defs.forEach(def=>{
   const card=document.querySelector('[data-layer-key="'+def.key+'"]');if(!card)return;
   const entry=activeLayer(def),state=layerState.get(def.key),loading=!!state?.loading,on=!!entry?.visible;
@@ -218,10 +223,10 @@ function bindRondasQuery(layer,map,signal){
  const invalidate=()=>{sequence++};map.on('movestart',invalidate);map.on('click',click);layer.once('remove',()=>{sequence++;map.off('click',click);map.off('movestart',invalidate);if(popup)map.closePopup(popup)});
 }
 async function addTileDeterminant(def,state,controller){
- if(def.kind!=='rondas'||def.url!=='datos/rondas_46/rondas.pmtiles')throw Error('Ruta de teselas no autorizada');
+ if(!(def.kind==='rondas'&&def.url==='datos/rondas_46/rondas.pmtiles'||def.tanda===4&&/^datos\/tanda_4_29\/teselas\/(reserva_forestal_ley_2da|humedales)\.pmtiles$/.test(def.url)))throw Error('Ruta de teselas no autorizada');
  if(!await tileReaderReady||!window.obs40Tiles)throw Error('Lector de teselas no disponible; actualiza la página');
  const spec=def.metadata.teselas;
- if(!spec||!Number.isSafeInteger(spec.bytes)||spec.bytes<127||spec.minzoom!==5||spec.maxzoom!==12||spec.dataLayer!=='rondas'||!Array.isArray(spec.bbox)||spec.bbox.length!==4)throw Error('Ficha de teselas incorrecta');
+ if(!spec||!Number.isSafeInteger(spec.bytes)||spec.bytes<127||spec.minzoom!==5||spec.maxzoom!==12||spec.dataLayer!==(def.tanda===4?def.id:'rondas')||!Array.isArray(spec.bbox)||spec.bbox.length!==4)throw Error('Ficha de teselas incorrecta');
  const signal=controller.signal,map=window.obs19Api.getMap();let layer;
  const fail=error=>{
   if(signal.aborted||state.controller!==controller||error.name==='AbortError')return;
@@ -232,8 +237,8 @@ async function addTileDeterminant(def,state,controller){
   layer=await window.obs40Tiles.create({...spec,url:def.url,color:def.color,opacity:def.opacity/100,lineas:true},signal,fail);
   if(signal.aborted||!state.want||state.controller!==controller)return;
   if(getLayers().length>=8)throw Error('Ya se alcanzó el máximo de 8 capas');
-  const entry={id:-4300-def.id,idPilot:def.id,name:def.name,origin:'Determinantes ambientales · publicación autorizada',visible:true,opacity:def.opacity,layer,data:null,count:0,geomType:'Teselas vectoriales',color:def.color,vectorTiles:true,metadata:{...def.metadata,fuenteDeclarada:def.source}};
-  map.fitBounds(layer.getBounds(),{padding:[16,16],maxZoom:12,animate:false});
+  const entry={id:def.tanda===4?def.vectorId:-4300-def.id,...(def.tanda===4?{idCitizen:def.id}:{idPilot:def.id}),name:def.name,origin:def.tanda===4?def.source+' · publicación autorizada':'Determinantes ambientales · publicación autorizada',visible:true,opacity:def.opacity,layer,data:null,count:0,geomType:'Teselas vectoriales',color:def.color,vectorTiles:true,metadata:{...def.metadata,fuenteDeclarada:def.source}};
+  if(def.kind==='rondas')map.fitBounds(layer.getBounds(),{padding:[16,16],maxZoom:12,animate:false});
   const ready=window.obs40Tiles.ready(layer,map,signal);
   getLayers().push(entry);layer.on('remove',()=>{controller.abort();if(state.controller===controller){state.want=false;state.loading=false;syncLayerControls()}});
   layer.addTo(map);if(def.kind==='rondas')bindRondasQuery(layer,map,signal);window.obs19Api.redraw();await ready;
@@ -253,7 +258,7 @@ async function toggleLayer(def,want){
   if(!window.obs19Api?.getMap?.())location.hash='#geovisor';
   await waitForMap(controller.signal);
   if(def.vectorTiles){await addTileDeterminant(def,state,controller);return}
-  const valid=def.tanda?/^datos\/tanda_[123]_29\/capas\/[a-z0-9_]+\.geojson$/:def.kind==='citizen'?/^datos\/piloto_29\/capas\/(01_base_cartografica|02_componente_biofisico)\/[a-z0-9_]+\.geojson$/:/^datos\/determinantes_ambientales\/[A-Z0-9_]+\/determinante_\d{2}\.geojson$/;
+  const valid=def.tanda?/^datos\/tanda_[1234]_29\/capas\/[a-z0-9_]+\.geojson$/:def.kind==='citizen'?/^datos\/piloto_29\/capas\/(01_base_cartografica|02_componente_biofisico)\/[a-z0-9_]+\.geojson$/:/^datos\/determinantes_ambientales\/[A-Z0-9_]+\/determinante_\d{2}\.geojson$/;
   if(!valid.test(def.url))throw Error('Ruta de capa no autorizada');
   let data=state.data;
   if(!data){const response=await fetch(def.url,{signal:controller.signal});if(!response.ok)throw Error('Archivo no disponible ('+response.status+')');data=await response.json()}
@@ -269,10 +274,10 @@ async function toggleLayer(def,want){
    const color=def.metadata.leyenda.find(item=>item.valor===value)?.color;
    if(/^#[0-9a-f]{6}$/i.test(color))layer.setStyle({color,fillColor:color});
   });
-  if(def.tanda===3){
+  if(def.tanda===3||def.id==='aeropuertos_referencia'){
    const map=window.obs19Api.getMap();map.invalidateSize({pan:false});const size=map.getSize();
    entry.layer.eachLayer(layer=>{
-    const props=layer.feature.properties,name=props.NOMBRE||props.NOM_CPOB;
+    const props=layer.feature.properties,name=props.NOMBRE||props.NOM_CPOB||props.NOMBRE_GEOGRAFICO;
     layer.bindPopup(()=>{
      const box=element('div');box.style.overflowWrap='anywhere';box.append(element('h4','',name));
      Object.entries(props).forEach(([field,value])=>box.append(element('p','',field.replaceAll('_',' ')+': '+String(value??'Sin dato'))));
@@ -280,7 +285,19 @@ async function toggleLayer(def,want){
     },{maxHeight:Math.min(320,Math.max(80,size.y-120)),maxWidth:Math.min(320,Math.max(100,size.x-120)),autoPanPaddingTopLeft:[45,10],autoPanPaddingBottomRight:[10,35]});
     const node=layer.getElement();if(node){node.setAttribute('tabindex','0');node.setAttribute('role','button');node.setAttribute('aria-label','Consultar '+name);
      node.addEventListener('focus',()=>{map.closePopup();map.panInside(layer.getLatLng(),{padding:[30,30],animate:false})});
-     node.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();layer.openPopup()}};
+     node.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();layer.openPopup();
+      if(def.id==='aeropuertos_referencia'){
+       // Leaflet oculta el contenido mientras mide y posiciona la ventana.
+       // Esperar su visibilidad evita perder el foco; no robarlo si ya se movió.
+       const until=performance.now()+2000,focusInfo=()=>{
+        const popup=layer.getPopup(),content=popup?.getElement()?.querySelector('.leaflet-popup-content');
+        if(!popup?.isOpen()||!content||document.activeElement!==node)return;
+        content.tabIndex=0;content.setAttribute('role','region');content.setAttribute('aria-label','Información y advertencias de '+name);
+        if(getComputedStyle(content).visibility==='visible'&&content.getClientRects().length)content.focus({preventScroll:true});
+        else if(performance.now()<until)requestAnimationFrame(focusInfo);
+       };requestAnimationFrame(focusInfo);
+      }
+     }};
     }
    });
   }
@@ -385,6 +402,7 @@ function init(){
  initLocation();initDocuments();initCalls();initPartnersMarquee();fetch('catalogo_determinantes_para_geovisor.json').then(r=>{if(!r.ok)throw Error('Catálogo no encontrado');return r.json()}).then(data=>{catalog=data;renderTree()}).catch(()=>{catalog={grupos:[]};renderTree()});
  fetch('datos/piloto_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo piloto no disponible');return r.json()}).then(data=>{citizenCatalog=data;renderCitizenLayers()}).catch(()=>{const tree=$('obs19-thematic-tree');tree?.append(element('p','obs19-empty','No se pudo cargar el catálogo del piloto. Comprueba la conexión y actualiza la página.'))});
  fetch('datos/tanda_1_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tandaCatalog=data;renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar el catálogo de la tanda 1.'))});
+ fetch('datos/tanda_4_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda4Catalog=data.map(row=>({...row,lote:4}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar el catálogo de la tanda 4.'))});
  fetch('datos/tanda_3_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda3Catalog=data.map(row=>({...row,lote:3}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar el catálogo de la tanda 3.'))});
  fetch('datos/tanda_2_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda2Catalog=data.map(row=>({...row,lote:2}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar el catálogo de la tanda 2.'))});
  // Categorías del geoportal llevan a sus capas dentro del visor.
