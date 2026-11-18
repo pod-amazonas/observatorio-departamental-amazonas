@@ -22,14 +22,14 @@ function determinant(meta){
 function rondasDef(){
  const m=catalog?.rondasUnificadas;if(!m)return null;
  const d=determinant({...m,objectid:46,etiqueta:m.nombre,nombre:m.nombre,archivoTeselas:m.archivo,fuenteDeclarada:m.fuente,anioFuente:m.anio,opacidadSugerida:.65,group:'Rondas hídricas'});
- return {...d,kind:'rondas',key:'rondas46',name:m.nombre,description:'Corpoamazonia · 2022 · 12 determinantes (20–31) en una sola capa',restriction:m.advertencia};
+ return {...d,kind:'rondas',key:'rondas46',name:m.nombre,description:'Corpoamazonia · 2022 · 13 determinantes (19–31) en una sola capa',restriction:m.advertencia};
 }
 function updateGeoHelp(){
  const tip=document.querySelector('#view-geoportal .obs19-geo-tip');if(!tip)return;
  if(!catalog){tip.textContent='Cargando el estado del catálogo de determinantes…';return}
  const all=layersMeta(),ready=all.filter(c=>c.archivo||c.archivoTeselas),pending=all.filter(c=>!c.archivo&&!c.archivoTeselas);
  const count=new Set(ready.map(c=>c.archivo||c.archivoTeselas)).size;
- tip.textContent='Componente biofísico → Determinantes ambientales: '+ready.length+' de '+all.length+' registros disponibles en '+count+' capas de consulta (las doce rondas comparten una capa). '+pending.length+' pendiente: ronda 19 (#44). Se descargan solo al encenderlas. Las cifras no son oficiales.';
+ tip.textContent='Componente biofísico → Determinantes ambientales: '+ready.length+' de '+all.length+' registros disponibles en '+count+' capas de consulta (las trece rondas comparten una capa). '+pending.length+' pendientes. Se descargan solo al encenderlas. Las cifras no son oficiales.';
 }
 function citizen(meta){
  const tanda=[2,3,4,5].includes(meta.lote)?meta.lote:meta.categoria?1:0;
@@ -207,11 +207,11 @@ function bindRondasQuery(layer,map,signal){
   try{
    const hits=await layer.consultarPoligonos(event.latlng);
    if(signal.aborted||serial!==sequence||!map.hasLayer(layer)||zoom!==map.getZoom())return;
-   const byId=new Map();hits.forEach(p=>{const id=Number(p.objectid);if(Number.isInteger(id)&&id>=20&&id<=31&&p.Nombre==='Rondas hídricas'&&p.Norma_Asociada==='Resolución 957 de 2018')byId.set(id,p)});
+   const byId=new Map();hits.forEach(p=>{const id=Number(p.objectid);if(Number.isInteger(id)&&id>=19&&id<=31&&p.Nombre==='Rondas hídricas'&&p.Norma_Asociada==='Resolución 957 de 2018')byId.set(id,p)});
    if(!byId.size){if(popup)map.closePopup(popup);return}
    const box=element('div');box.dataset.rondasConsulta='';box.tabIndex=-1;box.setAttribute('aria-label','Resultado de consulta de rondas');box.append(element('h4','','Rondas hídricas'));
    [...byId].sort((a,b)=>a[0]-b[0]).forEach(([id,p])=>box.append(element('p','','Determinante '+id+' · '+p.Nombre+' · '+p.Norma_Asociada)));
-   box.append(element('p','','Corpoamazonia · 2022. Ronda 19 pendiente (#44). Consulta de la representación por zoom; no acredita límites oficiales.'));
+   box.append(element('p','','Corpoamazonia · 2022. 13 rondas disponibles. Consulta de la representación por zoom; no acredita límites oficiales.'));
    const size=map.getSize(),options={maxWidth:Math.min(320,Math.max(120,size.x-100)),maxHeight:Math.min(240,Math.max(80,size.y-120)),autoPan:false};if(!popup)popup=L.popup(options);else Object.assign(popup.options,options);popup.setLatLng(event.latlng).setContent(box).openOn(map);
    // Ajustar una sola vez y sin animación evita panes solapados al reutilizar
    // la ventana entre consultas rápidas, especialmente en pantallas pequeñas.

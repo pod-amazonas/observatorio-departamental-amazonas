@@ -1,18 +1,19 @@
 {
   "nombre": "Rondas hídricas (Corpoamazonia, Res. 957 de 2018)",
   "archivo": "datos/rondas_46/rondas.pmtiles",
-  "bytes": 22093851,
-  "sha256": "af47e9b7efcf33713b2474038abff57a2011d13ec2522988a4494a9814b5ae9e",
+  "bytes": 23128497,
+  "sha256": "b74def079c32006754321b1b92252543ffe12e7ee428fb8688ec12e91e016572",
   "bbox": [
-    -74.38552,
+    -74.3871731,
     -4.2259384,
-    -69.4051505,
-    0.0572457
+    -69.3932869,
+    0.0972568
   ],
   "minzoom": 5,
   "maxzoom": 12,
   "dataLayer": "rondas",
   "determinantes": [
+    19,
     20,
     21,
     22,
@@ -26,12 +27,10 @@
     30,
     31
   ],
-  "pendientes": [
-    19
-  ],
+  "pendientes": [],
   "fuente": "Corpoamazonia",
   "anio": 2022,
   "norma": "Resolución 957 de 2018",
-  "teselas": 1781,
-  "tesela_comprimida_max_bytes": 365897
+  "teselas": 1823,
+  "tesela_comprimida_max_bytes": 390125
 }
