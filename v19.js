@@ -3,7 +3,7 @@
 const $=id=>document.getElementById(id);
 const CATEGORIES=['Base cartográfica','Componente biofísico','Estructura institucional','Estructura funcional y de servicios','Socioeconómico y cultural','Gestión del riesgo','Ordenamiento territorial'];
 let tileReaderReady=null;
-let catalog=null, citizenCatalog=[], tandaCatalog=[], tanda2Catalog=[], tanda3Catalog=[], tanda4Catalog=[], tanda5Catalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
+let catalog=null, citizenCatalog=[], tandaCatalog=[], tanda2Catalog=[], tanda3Catalog=[], tanda4Catalog=[], tanda5Catalog=[], tanda6Catalog=[], selectedLayer=null, callDraft=[], publicCalls=[];
 const layerState=new Map();
 let indicatorData=null, indicatorLoading=false;const tableCache=new Map();
 const TABLE4=[{id:'estado_servicios_anm',categoria:3,nombre:'Servicios públicos en áreas no municipalizadas'}];
@@ -55,7 +55,7 @@ function defFor53(e){
  if(e.idCitizen==='drenaje_doble_pmtiles')return {id:e.idCitizen,metadata:e.metadata||{},label:e.name,name:e.name,description:e.origin,restriction:e.metadata?.advertencia};
  if(e.idPilot===46&&e.vectorTiles)return rondasDef();
  if(e.idPilot!=null){const m=layersMeta().find(m=>m.objectid===e.idPilot);if(m)return determinant(m)}
- const m=[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog,...tanda5Catalog].find(m=>m.id_capa===e.idCitizen);return m?citizen(m):null;
+ const m=[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog,...tanda5Catalog,...tanda6Catalog].find(m=>m.id_capa===e.idCitizen);return m?citizen(m):null;
 }
 function entryView53(e){return view53(defFor53(e)||{id:e.idCitizen})}
 function sheetFor53(def){
@@ -133,7 +133,7 @@ function updateGeoHelp(){
  tip.textContent='Componente biofísico → Determinantes ambientales: '+ready.length+' de '+all.length+' registros disponibles en '+count+' capas de consulta (las trece rondas comparten una capa). '+pending.length+' pendientes. Se descargan solo al encenderlas. Las cifras no son oficiales.';
 }
 function citizen(meta){
- const tanda=[2,3,4,5].includes(meta.lote)?meta.lote:meta.categoria?1:0;
+ const tanda=[2,3,4,5,6].includes(meta.lote)?meta.lote:meta.categoria?1:0;
  const directorio=tanda?'datos/tanda_'+tanda+'_29/':'datos/piloto_29/';
  return {key:'cit-'+meta.id_capa,kind:'citizen',id:meta.id_capa,label:meta.nombre_publico,name:meta.nombre_publico,available:meta.estado!=='pendiente',vectorTiles:!!meta.vector_tiles,vectorId:meta.id_vector,tanda,url:meta.ruta_relativa?directorio+meta.ruta_relativa:null,
  description:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo+' · '+meta.entidades+' entidades',source:meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo,
@@ -142,7 +142,7 @@ function citizen(meta){
 function activeLayer(def){return getLayers().find(e=>def.kind==='citizen'?e.idCitizen===def.id:e.idPilot===def.id&&e.origin==='Determinantes ambientales · publicación autorizada')}
 function layerCard(def){
  const card=element('div','obs20-pilot-card obs32-layer-card');card.dataset.layerKey=def.key;
- if(def.kind==='rondas')card.dataset.rondasLayer='rondas46';else if(def.tanda===5)card.dataset.tanda5Layer=def.id;else if(def.tanda===4)card.dataset.tanda4Layer=def.id;else if(def.tanda===3)card.dataset.tanda3Layer=def.id;else if(def.tanda===2)card.dataset.tanda2Layer=def.id;else if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
+ if(def.kind==='rondas')card.dataset.rondasLayer='rondas46';else if(def.tanda===6)card.dataset.tanda6Layer=def.id;else if(def.tanda===5)card.dataset.tanda5Layer=def.id;else if(def.tanda===4)card.dataset.tanda4Layer=def.id;else if(def.tanda===3)card.dataset.tanda3Layer=def.id;else if(def.tanda===2)card.dataset.tanda2Layer=def.id;else if(def.tanda)card.dataset.tandaLayer=def.id;else if(def.kind==='citizen')card.dataset.citizenLayer=def.id;else card.dataset.determinantLayer=String(def.id);
  const view=view53(def),technical=sheetFor53(def);const title=element('h4','obs32-layer-title',view.title);card.append(title,element('p','obs32-layer-description obs53-intro',intro53(view)));
  const control=element('button','obs32-layer-switch');control.type='button';control.setAttribute('role','switch');control.setAttribute('aria-checked','false');
  // Conservar el nombre accesible existente de los parques, sin identificadores.
@@ -150,7 +150,15 @@ function layerCard(def){
  const track=element('span','obs32-switch-track');track.setAttribute('aria-hidden','true');control.append(track,element('span','obs32-switch-state','Apagada'));
  control.addEventListener('click',()=>{const state=layerState.get(def.key);toggleLayer(def,state?.loading?!state.want:!activeLayer(def)?.visible)});
  card.append(control);
-
+ if(def.tanda===6){
+  const notice=element('p','obs19-footnote obs32-source-links');
+  for(const [label,url] of [[def.metadata.atribucion,def.metadata.atribucion_url],[def.metadata.licencia,def.metadata.licencia_url]]){
+   const safe=legalUrl(url);if(safe){const link=element('a','',label);link.href=safe;notice.append(link,document.createTextNode(' · '))}
+  }
+  if(def.id==='vias_y_caminos'&&def.metadata.descarga_fiel?.ruta_relativa==='descargas/vias_y_caminos.geojson.gz'){
+   const download=element('a','','Descargar copia fiel (GeoJSON gzip · ODbL)');download.href='datos/tanda_6_29/descargas/vias_y_caminos.geojson.gz';download.setAttribute('download','vias_y_caminos.geojson.gz');const files=element('p','obs32-source-links');files.append(download);technical.append(files);
+  }card.append(notice);
+ }
  if(Array.isArray(def.metadata?.leyenda)){
   const legend=element('ul','obs19-footnote');legend.setAttribute('aria-label','Leyenda de '+view.title);
   def.metadata.leyenda.forEach(item=>{
@@ -163,7 +171,7 @@ function layerCard(def){
   const legend=element('p','obs32-layer-description'),symbol=element('span','','■ ');symbol.style.color=def.color;symbol.setAttribute('aria-hidden','true');
   legend.append(symbol,document.createTextNode('Leyenda: '+(def.kind==='rondas'?'Franjas de protección de ríos y quebradas':def.metadata.leyenda)));card.append(legend);
  }
- if([4,5].includes(def.tanda)&&def.vectorTiles)technical.append(element('p','obs19-footnote','Visible desde zoom 5. El encuadre mantiene ese mínimo; desplaza el mapa para explorar las zonas que queden fuera de la ventana.'));
+ if([4,5,6].includes(def.tanda)&&def.vectorTiles)technical.append(element('p','obs19-footnote','Visible desde zoom 5. El encuadre mantiene ese mínimo; desplaza el mapa para explorar las zonas que queden fuera de la ventana.'));
  if(def.kind==='rondas'){const list=element('ul','obs19-footnote');list.setAttribute('aria-label','Determinantes incluidas en las rondas');layersMeta().filter(c=>c.grupoVisualizacion==='rondas46').forEach(c=>{const row=element('li','','Determinante '+c.objectid+' · '+c.nombre+' · '+c.norma);row.dataset.determinantLayer=String(c.objectid);list.append(row)});technical.append(list);const query=element('button','','Consultar centro del mapa');query.type='button';query.dataset.rondasQuery='';query.disabled=true;query.addEventListener('click',()=>{const map=window.obs19Api?.getMap?.();if(map)map.fire('click',{latlng:map.getCenter()})});card.append(query,element('p','obs19-footnote','Toca un polígono para consultar su determinante; acerca el mapa para las franjas estrechas. Con teclado, mueve el mapa con las flechas y usa Consultar centro del mapa.'))}
  const status=element('p','obs19-footnote');status.id='estado-'+def.key;status.dataset.layerStatus=def.key;status.setAttribute('role','status');
  if(def.kind==='citizen')status.dataset.citizenStatus=def.id;
@@ -190,7 +198,7 @@ function renderTree(){updateGeoHelp();const tree=$('obs19-thematic-tree');if(!tr
  });renderCitizenLayers();syncLayerControls();
 }
 function renderCitizenLayers(){
- [...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog,...tanda5Catalog].forEach(meta=>{
+ [...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog,...tanda5Catalog,...tanda6Catalog].forEach(meta=>{
   const category=meta.categoria?CATEGORIES.indexOf(meta.categoria):(meta.id_capa==='division_politico_administrativa'?0:1);
   const mount=document.querySelector('[data-citizen-category="'+category+'"]');
   const def=citizen(meta);
@@ -281,7 +289,7 @@ async function openMunicipalIndicators(selection){
  finally{indicatorLoading=false;button.disabled=false;renderIndicatorsAction()}
 }
 function syncLayerControls(){
- const defs=[...layersMeta().filter(c=>!c.grupoVisualizacion).map(determinant),...(rondasDef()?[rondasDef()]:[]),...[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog,...tanda5Catalog].map(citizen)];
+ const defs=[...layersMeta().filter(c=>!c.grupoVisualizacion).map(determinant),...(rondasDef()?[rondasDef()]:[]),...[...citizenCatalog,...tandaCatalog,...tanda2Catalog,...tanda3Catalog,...tanda4Catalog,...tanda5Catalog,...tanda6Catalog].map(citizen)];
  defs.forEach(def=>{
   const card=document.querySelector('[data-layer-key="'+def.key+'"]');if(!card)return;
   const entry=activeLayer(def),state=layerState.get(def.key),loading=!!state?.loading,on=!!entry?.visible;
@@ -332,10 +340,10 @@ function bindRondasQuery(layer,map,signal){
  const invalidate=()=>{sequence++};map.on('movestart',invalidate);map.on('click',click);layer.once('remove',()=>{sequence++;map.off('click',click);map.off('movestart',invalidate);if(popup)map.closePopup(popup)});
 }
 async function addTileDeterminant(def,state,controller){
- if(!(def.kind==='rondas'&&def.url==='datos/rondas_46/rondas.pmtiles'||def.tanda===4&&/^datos\/tanda_4_29\/teselas\/(reserva_forestal_ley_2da|humedales)\.pmtiles$/.test(def.url)||def.tanda===5&&/^datos\/tanda_5_29\/teselas\/(amenaza_incendios_forestales|amenaza_remocion_masa)\.pmtiles$/.test(def.url)))throw Error('Ruta de teselas no autorizada');
+ if(!(def.kind==='rondas'&&def.url==='datos/rondas_46/rondas.pmtiles'||def.tanda===4&&/^datos\/tanda_4_29\/teselas\/(reserva_forestal_ley_2da|humedales)\.pmtiles$/.test(def.url)||def.tanda===5&&/^datos\/tanda_5_29\/teselas\/(amenaza_incendios_forestales|amenaza_remocion_masa)\.pmtiles$/.test(def.url)||def.tanda===6&&/^datos\/tanda_6_29\/teselas\/(drenaje_sencillo|vias_y_caminos)\.pmtiles$/.test(def.url)))throw Error('Ruta de teselas no autorizada');
  if(!await tileReaderReady||!window.obs40Tiles)throw Error('Lector de teselas no disponible; actualiza la página');
  const spec=def.metadata.teselas;
- if(!spec||!Number.isSafeInteger(spec.bytes)||spec.bytes<127||spec.minzoom!==5||spec.maxzoom!==12||spec.dataLayer!==([4,5].includes(def.tanda)?def.id:'rondas')||!Array.isArray(spec.bbox)||spec.bbox.length!==4)throw Error('Ficha de teselas incorrecta');
+ if(!spec||!Number.isSafeInteger(spec.bytes)||spec.bytes<127||spec.minzoom!==5||spec.maxzoom!==12||spec.dataLayer!==([4,5,6].includes(def.tanda)?def.id:'rondas')||!Array.isArray(spec.bbox)||spec.bbox.length!==4)throw Error('Ficha de teselas incorrecta');
  const signal=controller.signal,map=window.obs19Api.getMap();let layer;
  const fail=error=>{
   if(signal.aborted||state.controller!==controller||error.name==='AbortError')return;
@@ -343,10 +351,10 @@ async function addTileDeterminant(def,state,controller){
   const current=activeLayer(def);if(current&&current.layer===layer)window.obs19Api.remove(current.id);else layer?.remove();syncLayerControls();
  };
  try{
-  layer=await window.obs40Tiles.create({...spec,url:def.url,color:def.color,opacity:def.opacity/100,lineas:true},signal,fail);
+  layer=await window.obs40Tiles.create({...spec,url:def.url,color:def.color,opacity:def.opacity/100,lineas:true,atribucionOSM:def.tanda===6&&def.id==='vias_y_caminos'},signal,fail);
   if(signal.aborted||!state.want||state.controller!==controller)return;
   if(getLayers().length>=8)throw Error('Ya se alcanzó el máximo de 8 capas');
-  const entry={id:[4,5].includes(def.tanda)?def.vectorId:-4300-def.id,...([4,5].includes(def.tanda)?{idCitizen:def.id}:{idPilot:def.id}),name:def.name,origin:[4,5].includes(def.tanda)?def.source+' · publicación autorizada':'Determinantes ambientales · publicación autorizada',visible:true,opacity:def.opacity,layer,obs53Definition:def,data:null,count:0,geomType:'Teselas vectoriales',color:def.color,vectorTiles:true,metadata:{...def.metadata,fuenteDeclarada:def.source}};
+  const entry={id:[4,5,6].includes(def.tanda)?def.vectorId:-4300-def.id,...([4,5,6].includes(def.tanda)?{idCitizen:def.id}:{idPilot:def.id}),name:def.name,origin:[4,5,6].includes(def.tanda)?def.source+' · publicación autorizada':'Determinantes ambientales · publicación autorizada',visible:true,opacity:def.opacity,layer,obs53Definition:def,data:null,count:0,geomType:'Teselas vectoriales',color:def.color,vectorTiles:true,metadata:{...def.metadata,fuenteDeclarada:def.source}};
   if(def.kind==='rondas')map.fitBounds(layer.getBounds(),{padding:[16,16],maxZoom:12,animate:false});
   const ready=window.obs40Tiles.ready(layer,map,signal);
   getLayers().push(entry);layer.on('remove',()=>{controller.abort();if(state.controller===controller){state.want=false;state.loading=false;syncLayerControls()}});
@@ -361,7 +369,7 @@ async function toggleLayer(def,want){
  state.want=want;state.error='';const current=activeLayer(def);
  if(!want){state.controller?.abort();state.loading=false;if(current)window.obs19Api.remove(current.id);syncLayerControls();return}
  if(current){
-  if([4,5].includes(def.tanda)&&def.vectorTiles){
+  if([4,5,6].includes(def.tanda)&&def.vectorTiles){
    const map=window.obs19Api.getMap(),bounds=current.layer.getBounds();
    // El encuadre nacional puede bajar de 5 en móvil y ocultar las teselas.
    // Evitar también que un zoom animado previo termine sobre la capa siguiente.
@@ -528,6 +536,7 @@ function init(){
  fetch('datos/tanda_4_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda4Catalog=data.map(row=>({...row,lote:4}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
  fetch('datos/tanda_3_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda3Catalog=data.map(row=>({...row,lote:3}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
  fetch('datos/tanda_2_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda2Catalog=data.map(row=>({...row,lote:2}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
+ fetch('datos/tanda_6_29/catalogo_entrega.json').then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda6Catalog=data.map(row=>({...row,lote:6}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
  // Categorías del geoportal llevan a sus capas dentro del visor.
  document.querySelectorAll('#categories-grid').forEach(node=>node.addEventListener('click',e=>{if(e.target.closest('[data-open-theme]'))setTimeout(()=>{const t=$('obs19-thematic-tree');t?.querySelectorAll('details').forEach((d,i)=>d.open=i===1)},120)}));
 }

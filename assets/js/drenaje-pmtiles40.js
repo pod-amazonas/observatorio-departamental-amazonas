@@ -74,7 +74,7 @@ async function createTileLayer(spec,signal,onError){
  paintRules.push({dataLayer:spec.dataLayer,filter:(z,f)=>f.geomType===3&&(!classification||!classes.some(c=>c.valor===f.props[classification.campo])),symbolizer:polygon(color)});
  for(const c of classes)paintRules.push({dataLayer:spec.dataLayer,filter:(z,f)=>f.geomType===3&&f.props[classification.campo]===c.valor,symbolizer:polygon(c.color)});
  if(spec.lineas)paintRules.push({dataLayer:spec.dataLayer,filter:(z,f)=>f.geomType===2,symbolizer:new protomapsL.LineSymbolizer({color,width:1,opacity:.8})});
- const layer=protomapsL.leafletLayer({url:reader,levelDiff:0,maxDataZoom:spec.maxzoom,minZoom:spec.minzoom,maxNativeZoom:spec.maxzoom,maxZoom:18,noWrap:true,bounds,opacity:spec.opacity,attribution:'',paintRules,labelRules:[],tileDelay:1});
+ const layer=protomapsL.leafletLayer({url:reader,levelDiff:0,maxDataZoom:spec.maxzoom,minZoom:spec.minzoom,maxNativeZoom:spec.maxzoom,maxZoom:18,noWrap:true,bounds,opacity:spec.opacity,attribution:spec.atribucionOSM?'<a href="https://www.openstreetmap.org/copyright/es">© colaboradores de OpenStreetMap</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/">ODbL 1.0</a>':'',paintRules,labelRules:[],tileDelay:1});
  for(const view of layer.views.values()){
   const source=view.tileCache.source,get=source.get.bind(source);
   source.get=async(...args)=>{try{return await get(...args)}catch(err){onError(err);throw err}};

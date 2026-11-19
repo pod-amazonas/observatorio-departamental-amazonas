@@ -66,6 +66,7 @@ async function recorrerConTab(page,vista){
  await expect(page.locator('[data-tanda3-layer]')).toHaveCount(require('../datos/tanda_3_29/catalogo_entrega.json').length);
  await expect(page.locator('[data-tanda4-layer]')).toHaveCount(3);
  await expect(page.locator('[data-tanda5-layer]')).toHaveCount(2);
+ await expect(page.locator('[data-tanda6-layer]')).toHaveCount(2);
  await expect(page.locator('[data-tabla4]')).toHaveCount(1);
  await expect(page.locator('[data-pmtiles-layer]')).toHaveCount(1);
  await expect(page.locator('[data-pmtiles-layer] [role="switch"]')).toBeEnabled();
