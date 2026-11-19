@@ -108,7 +108,7 @@ function initText53(){
  const legend=$('local-layer-legend');if(legend){for(const child of [...legend.childNodes])if(child.nodeType===3)child.textContent=' Capas del Observatorio'}
  $('local-layer-list')?.setAttribute('aria-label','Archivos agregados al mapa');$('v7-dynamic-legend')?.setAttribute('aria-label','Leyenda de capas del Observatorio');
  const label=document.querySelector('label[for="geojson-upload"]');if(label){for(const node of label.childNodes)if(node.nodeType===3)node.textContent=' Agregar archivo al mapa'}
- const side=document.querySelector('#view-geovisor .side-info p');if(side){const d=sheet53('estado del visor');side.before(d);d.append(side.cloneNode(true));side.textContent='Prototipo en desarrollo. La información es orientativa y no constituye una certificación oficial.'}
+ const side=document.querySelector('#view-geovisor .side-info p');if(side){const d=sheet53('estado del visor');side.before(d);d.append(side.cloneNode(true));side.textContent='Prototipo en desarrollo: las capas provienen de fuentes oficiales, pero este visor aún no es un canal oficial de la Gobernación.'}
 }
 window.obs53={view:view53,intro:intro53,sheet:sheet53,record:record53};
 
