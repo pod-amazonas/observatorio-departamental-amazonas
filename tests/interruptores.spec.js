@@ -74,7 +74,7 @@ test('determinante: error de red, reintento y cancelación sin encendido tardío
 
 test('archivos locales conservan sus controles y Limpiar todas sincroniza los interruptores',async({page})=>{
  await page.goto('/#geovisor');const card=page.locator('[data-determinant-layer="1"]');await abrirCapa(card);await card.getByRole('switch').click();await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','true');
- await page.locator('#load-demo-layers').click();await expect(page.locator('#local-layer-list [data-toggle-layer]')).toHaveCount(3);
+ await page.locator('.geo-files58').evaluate(e=>e.open=true);await page.locator('#geojson-upload').setInputFiles([1,2,3].map(n=>({name:'referencia-ficticia-'+n+'.geojson',mimeType:'application/geo+json',buffer:Buffer.from(JSON.stringify({type:'FeatureCollection',features:[{type:'Feature',properties:{nombre:'Referencia ficticia '+n},geometry:{type:'Point',coordinates:[-70,-4]}}]}))})));await expect(page.locator('#local-layer-list [data-toggle-layer]')).toHaveCount(3);
  await page.locator('#local-layer-list [data-toggle-layer]').first().uncheck();await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','true');
  await page.locator('#geojson-reset').click();await expect(card.getByRole('switch')).toHaveAttribute('aria-checked','false');await expect(card.getByRole('switch')).toHaveText('Apagada');
  expect(await page.evaluate(()=>window.obs19Api.getLayers().length)).toBe(0);await expect(page.locator('#v7-dynamic-legend')).toBeEmpty();

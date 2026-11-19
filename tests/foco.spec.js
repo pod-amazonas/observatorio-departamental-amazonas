@@ -163,7 +163,7 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`GeoJSON
  await page.goto('/#geovisor');
  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
  await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
- const input=page.locator('#geojson-upload'),etiqueta=page.locator('label[for="geojson-upload"]');
+ await page.locator('.geo-files58').evaluate(e=>e.open=true);const input=page.locator('#geojson-upload'),etiqueta=page.locator('label[for="geojson-upload"]');
  await expect(etiqueta).toHaveCount(1);
  await expect(etiqueta).toBeVisible();
  expect(await input.evaluate(e=>!e.checkVisibility({opacityProperty:true})&&getComputedStyle(e).clipPath==='inset(50%)'&&e.getBoundingClientRect().width<=1)).toBe(true);

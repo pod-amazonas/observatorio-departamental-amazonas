@@ -11,7 +11,7 @@ Principal: equipos técnicos y entidades (Secretaría de Planeación y Desarroll
 Secundario: comunidades y ciudadanía que consultan avances y restricciones de su territorio.
 
 ## Product Purpose
-Prototipo del Observatorio Departamental del Amazonas (Colombia). Su tarea principal es **seguir el avance del Programa de Ordenamiento Departamental (POD)**: reportes publicados, evidencias y documentos. El geovisor de determinantes ambientales da el soporte territorial de ese seguimiento.
+Versión pública inicial del Observatorio Departamental del Amazonas (Colombia). Su tarea principal es **seguir el avance del Programa de Ordenamiento Departamental (POD)**: reportes publicados, evidencias y documentos. El geovisor de determinantes ambientales da el soporte territorial de ese seguimiento.
 Éxito: un técnico encuentra el estado de un componente del POD y su soporte cartográfico y normativo sin pedir ayuda, también desde el celular y con conexión lenta.
 
 ## Positioning
@@ -24,12 +24,12 @@ Reúne en un solo sitio el seguimiento del POD con las determinantes ambientales
 
 ## Capabilities and Constraints
 - Sitio estático en GitHub Pages: HTML, CSS, JavaScript, Leaflet 1.9.4 y Supabase alojados en `vendor/`.
-- Es un prototipo: no se presenta como portal oficial sin aprobación de la Gobernación.
-- Certificados, solicitudes y evaluaciones cartográficas son simulaciones. El dashboard histórico es demostrativo y debe distinguirse de los reportes publicados.
+- Publicación inicial autorizada por Alejandro y el equipo POD el 19 de noviembre de 2026. Aviso: «Versión inicial · en actualización permanente».
+- La radicación de solicitudes y la emisión de certificados aún no están habilitadas. Las acciones locales no son trámites institucionales y no se ofrecen como tales. Los reportes publicados se distinguen de los cálculos del navegador.
 - Las cifras calculadas en el navegador no son cifras oficiales.
 - No se cambian geometrías, áreas, normas ni fuentes sin soporte de la entidad responsable.
 - Nunca se publican ni se derivan ubicaciones de pueblos indígenas en aislamiento voluntario.
-- 20 GeoJSON publicados (33 entradas en el catálogo; 13 pendientes de preparación web).
+- 33 determinantes disponibles en 21 capas de consulta; las 13 rondas comparten un archivo.
 
 ## Brand Commitments
 - Obligatorios: logo del POD (`assets/img/logo-pod.webp`), escudo del Amazonas (`assets/img/escudo-amazonas.png`) y la paleta verde actual de la interfaz.
@@ -42,7 +42,7 @@ Reúne en un solo sitio el seguimiento del POD con las determinantes ambientales
 
 ## Product Principles
 1. Cada dato muestra su fuente, su norma y su entidad responsable.
-2. Lo simulado o demostrativo se ve como tal.
+2. Los servicios aún no habilitados muestran su disponibilidad real.
 3. Primero funciona con conexión lenta y en celular; después se adorna.
 4. Proteger a las comunidades antes que mostrar más información.
 

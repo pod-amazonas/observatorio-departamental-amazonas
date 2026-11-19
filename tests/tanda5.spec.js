@@ -84,7 +84,7 @@ for (const width of [1280, 390]) test('tanda 5: teclado, leyenda y color real de
   const requests = []; page.on('request', r => requests.push(r.url()));
   await page.goto('/#geovisor');
   await expect(page.locator('[data-tanda5-layer]')).toHaveCount(2);
-  expect(requests.filter(u => u.endsWith('.pmtiles') || u.endsWith('/protomaps-leaflet.js'))).toEqual([]);
+  expect(requests.filter(u => new URL(u).pathname.endsWith('.pmtiles') || u.endsWith('/protomaps-leaflet.js'))).toEqual([]);
   await page.waitForFunction(() => window.obs19Api?.getMap?.());
   for (const row of catalog) {
     await page.evaluate(() => window.obs19Api.getMap().setView([-1.5, -71.5], 6, {animate: false}));
@@ -115,12 +115,12 @@ for (const width of [1280, 390]) test('tanda 5: teclado, leyenda y color real de
     await sw.focus(); await sw.press('Enter'); await expect(sw).toHaveAttribute('aria-checked', 'false');
     expect(await page.evaluate(() => window.obs19Api.getLayers().length)).toBe(0);
   }
-  expect(new Set(requests.filter(u => u.includes('/tanda_5_29/') && u.endsWith('.pmtiles'))).size).toBe(2);
+  expect(new Set(requests.filter(u => u.includes('/tanda_5_29/') && new URL(u).pathname.endsWith('.pmtiles'))).size).toBe(2);
   expect(requests.filter(u => u.endsWith('.geojson'))).toEqual([]);
 });
 test('tanda 5: rangos inválidos producen error visible, reintento y limpieza', async ({page}) => {
   let fail = true;
-  await page.route('**/tanda_5_29/teselas/amenaza_incendios_forestales.pmtiles', r => fail ? r.fulfill({status: 200, body: Buffer.alloc(127)}) : r.continue());
+  await page.route('**/tanda_5_29/teselas/amenaza_incendios_forestales.pmtiles*', r => fail ? r.fulfill({status: 200, body: Buffer.alloc(127)}) : r.continue());
   await page.goto('/#geovisor'); const c = card(page, catalog[0].id_capa); await abrirCapa(c);
   await c.getByRole('switch').click(); await errorDeCapa(c,'no sirve rangos HTTP 206');
   await expect(c.getByRole('switch')).toHaveAttribute('aria-checked', 'false');

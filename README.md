@@ -1,5 +1,7 @@
 # observatorio-departamental-amazonas
-Prototipo web del Observatorio Departamental del Amazonas — Secretaría de Planeación y Desarrollo Territorial.
+Versión pública inicial del Observatorio Departamental del Amazonas — Secretaría de Planeación y Desarrollo Territorial.
+
+Versión inicial · en actualización permanente. Decisión de Alejandro y el equipo POD, 19 de noviembre de 2026. Las cifras calculadas en el navegador no son oficiales.
 
 ## Pruebas automáticas
 

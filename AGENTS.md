@@ -1,7 +1,7 @@
 # Observatorio Departamental del Amazonas
 
 Sitio estático publicado en GitHub Pages. Usa HTML, CSS, JavaScript, Leaflet y Supabase.
-Es un prototipo: no lo presentes como portal oficial sin aprobación de la Gobernación.
+Decisión de Alejandro y el equipo POD (19 de noviembre de 2026): versión pública inicial del sitio. Aviso: «Versión inicial · en actualización permanente». Las cifras calculadas en el navegador no son oficiales; la publicación del sitio no habilita por sí sola trámites ni certificaciones.
 
 ## Reglas de trabajo
 - Trabaja solo en tu rama y en el issue asignado. Nunca fusiones a main.
