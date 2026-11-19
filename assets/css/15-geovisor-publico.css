@@ -48,3 +48,13 @@
 #geo-stats58[open] > summary::before, .geo-tools58[open] > summary::before, .geo-legend58[open] > summary::before, .geo-files58[open] > summary::before { content: '▾ '; }
 .geo-files58 { padding: 8px; background: #fff; }
 .geo-files58 .local-import-control { display: flex; margin: 12px; }
+
+/* Los módulos históricos se conservan, sin ofrecerlos como servicios públicos. */
+#certificados-legacy[hidden], #admin-entry[hidden], #obs9-admin-panel { display: none !important; }
+.cert-info59 { max-width: 920px; padding-bottom: 40px; }
+.cert-info59 h2 { font-size: 1.2rem; line-height: 1.4; }
+.cert-info59 p, .cert-info59 li { font-size: .92rem; line-height: 1.65; overflow-wrap: anywhere; }
+.cert-info59 .notice { display: block; font-weight: 700; }
+.cert-normas59 li { margin: 14px 0; }
+.cert-normas59 a, .cert-contacto59 { display: inline-block; margin: 6px; }
+.cert-normas59 span { display: block; margin: 4px 6px; }

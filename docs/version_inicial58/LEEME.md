@@ -4,7 +4,7 @@ Decisión de Alejandro y el equipo POD del 19 de noviembre de 2026. Rama desde m
 
 ## Interfaz y disponibilidad
 
-El aviso es «Versión inicial · en actualización permanente». Se conserva que las cifras calculadas en el navegador no son oficiales. Los controles antiguos de gestión local no se ofrecen como trámites: la radicación figura «Disponible próximamente» y permanece deshabilitada. El panel autenticado V20 conserva su funcionamiento y acceso directo.
+El aviso es «Versión inicial · en actualización permanente». Se conserva que las cifras calculadas en el navegador no son oficiales. Certificados es una página informativa, con el aviso «La solicitud en línea estará disponible próximamente». El formulario anterior, V16 y los roles locales se conservan ocultos e inertes, fuera de la navegación pública. El panel autenticado V20 conserva su funcionamiento y acceso directo.
 
 El Geovisor prioriza el mapa, con capas plegables e instrucciones breves. Herramientas, leyenda, estadísticas y archivos locales se pueden desplegar. Se conservan consulta, medición, importación, transparencia, zoom, limpieza y fichas. Las coordenadas siguen visibles bajo el mapa.
 
@@ -48,4 +48,4 @@ Se usa un fondo neutro que sustituye el mapa externo; las geometrías de drenaje
 
 `tests/version58.spec.js` comprueba las diez vistas, los avisos, mapa de más de la mitad de la altura y más del 65 % de anchura, panel plegable, herramientas, pantalla completa nativa y sin API en ambos tamaños, teclado/escape/cambio de ruta, conservación del estado, cambio de URL al actualizar SHA-256 y rechazo de versiones ausentes. Las pruebas de foco mantienen sus aserciones de contraste y anillo pintado; las pruebas de rangos y errores reconocen el parámetro sin omitir fallos. La suite final y Actions/Gitleaks se registran en el PR.
 
-Resultado local: **186 pruebas aprobadas** con `npm test -- --workers=2` y **8 comprobaciones finales aprobadas** del módulo de versión inicial. Actions y Gitleaks del commit del PR se registran en su descripción.
+Tras la revisión de Claude y la incorporación de main con #51 (`be8d973`): **194 pruebas aprobadas** con `npm test -- --workers=2` (3,5 minutos). Actions y Gitleaks del commit del PR se registran en su descripción. [Correcciones de la revisión, capturas de Certificados y mediciones de las dos capas incorporadas](revision59.md).

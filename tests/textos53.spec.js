@@ -8,7 +8,7 @@ test.beforeEach(async({page})=>{
  await page.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname==='127.0.0.1')return u.pathname.endsWith('/config_supabase.js')?r.fulfill({contentType:'application/javascript',body:'window.POD_CONFIG={url:"https://test.invalid",publishableKey:"sb_publishable_test"}'}):r.continue();return r.fulfill({json:u.pathname.startsWith('/rest/v1/')?[]:{}})});
 });
 async function loaded(page){
- await page.goto('/#geovisor');await expect(page.locator('[data-tanda5-layer]')).toHaveCount(2);await expect(page.locator('[data-tanda4-layer]')).toHaveCount(3);await expect(page.locator('[data-tanda3-layer]')).toHaveCount(4);await expect(page.locator('[data-pmtiles-layer] [role="switch"]')).toBeEnabled();
+ await page.goto('/#geovisor');await expect(page.locator('[data-tanda6-layer]')).toHaveCount(2);await expect(page.locator('[data-tanda5-layer]')).toHaveCount(2);await expect(page.locator('[data-tanda4-layer]')).toHaveCount(3);await expect(page.locator('[data-tanda3-layer]')).toHaveCount(4);await expect(page.locator('[data-pmtiles-layer] [role="switch"]')).toBeEnabled();
  await page.locator('#obs19-thematic-tree details:not([data-ficha-tecnica])').evaluateAll(es=>es.forEach(e=>e.open=true));
 }
 for(const width of [1280,390])test('textos ciudadanos: fichas cerradas, sin referencias internas y sin descargas a '+width,async({page})=>{

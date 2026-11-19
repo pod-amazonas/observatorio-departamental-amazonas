@@ -5,7 +5,6 @@ function init(){
  const sidebar=root.querySelector('.geo-sidebar'),stage=root.querySelector('.map-stage'),stats=root.querySelector('.obs19-stat-panel');
  const make=(tag,text)=>{const e=document.createElement(tag);if(text)e.textContent=text;return e};
  root.classList.add('geo-public58');sidebar.id='geo-layers58';
- const legacySend=document.getElementById('cert16-summary-send');if(legacySend){legacySend.disabled=true;legacySend.textContent='Disponible próximamente'}
  const bar=make('div');bar.className='geo-controls58';
  const layers=make('button','Ocultar capas');layers.type='button';layers.id='geo-layers-toggle58';layers.setAttribute('aria-controls',sidebar.id);layers.setAttribute('aria-expanded','true');
  const full=make('button','Pantalla completa');full.type='button';full.id='geo-fullscreen58';full.setAttribute('aria-pressed','false');

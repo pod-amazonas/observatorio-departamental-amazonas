@@ -1,0 +1,102 @@
+[
+  {
+    "id": "drenaje_sencillo",
+    "width": 1280,
+    "red_mbit": 1.6,
+    "latencia_ms": 150,
+    "cache_http": false,
+    "mapa_base_simulado": true,
+    "errores_js": [],
+    "sha256": "dcefbfefe1ffbcb31cb337f493304577a8f4379d53795356358545cf1a99d6b7",
+    "ms": 7991.60000000149,
+    "bytes_capa": 1267267,
+    "bytes_lector": 37678,
+    "solicitudes": 5,
+    "pixeles_pintados": 43630,
+    "mapa": {
+      "x": 298,
+      "y": 312.515625,
+      "width": 962,
+      "height": 389.40625,
+      "top": 312.515625,
+      "right": 1260,
+      "bottom": 701.921875,
+      "left": 298
+    }
+  },
+  {
+    "id": "vias_y_caminos",
+    "width": 1280,
+    "red_mbit": 1.6,
+    "latencia_ms": 150,
+    "cache_http": false,
+    "mapa_base_simulado": true,
+    "errores_js": [],
+    "sha256": "be173eb90083e3195b0ba0c0cf4d4d61398eaeb6e0d7c45726748f2aa2a09a69",
+    "ms": 920.5,
+    "bytes_capa": 34123,
+    "bytes_lector": 37678,
+    "solicitudes": 3,
+    "pixeles_pintados": 361,
+    "mapa": {
+      "x": 298,
+      "y": 312.515625,
+      "width": 962,
+      "height": 389.40625,
+      "top": 312.515625,
+      "right": 1260,
+      "bottom": 701.921875,
+      "left": 298
+    }
+  },
+  {
+    "id": "drenaje_sencillo",
+    "width": 390,
+    "red_mbit": 1.6,
+    "latencia_ms": 150,
+    "cache_http": false,
+    "mapa_base_simulado": true,
+    "errores_js": [],
+    "sha256": "dcefbfefe1ffbcb31cb337f493304577a8f4379d53795356358545cf1a99d6b7",
+    "ms": 7976.29999999702,
+    "bytes_capa": 1267267,
+    "bytes_lector": 37678,
+    "solicitudes": 5,
+    "pixeles_pintados": 43630,
+    "mapa": {
+      "x": 14,
+      "y": -383.59375,
+      "width": 362,
+      "height": 490.765625,
+      "top": -383.59375,
+      "right": 376,
+      "bottom": 107.171875,
+      "left": 14
+    }
+  },
+  {
+    "id": "vias_y_caminos",
+    "width": 390,
+    "red_mbit": 1.6,
+    "latencia_ms": 150,
+    "cache_http": false,
+    "mapa_base_simulado": true,
+    "errores_js": [],
+    "sha256": "be173eb90083e3195b0ba0c0cf4d4d61398eaeb6e0d7c45726748f2aa2a09a69",
+    "ms": 1935.8999999985099,
+    "bytes_capa": 34123,
+    "bytes_lector": 37678,
+    "solicitudes": 3,
+    "pixeles_pintados": 361,
+    "mapa": {
+      "x": 14,
+      "y": -382.59375,
+      "width": 362,
+      "height": 490.765625,
+      "top": -382.59375,
+      "right": 376,
+      "bottom": 108.171875,
+      "left": 14
+    }
+  }
+]

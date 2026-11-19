@@ -66,6 +66,7 @@ async function recorrerConTab(page,vista){
  await expect(page.locator('[data-tanda3-layer]')).toHaveCount(require('../datos/tanda_3_29/catalogo_entrega.json').length);
  await expect(page.locator('[data-tanda4-layer]')).toHaveCount(3);
  await expect(page.locator('[data-tanda5-layer]')).toHaveCount(2);
+ await expect(page.locator('[data-tanda6-layer]')).toHaveCount(2);
  await expect(page.locator('[data-tabla4]')).toHaveCount(1);
  await expect(page.locator('[data-pmtiles-layer]')).toHaveCount(1);
  await expect(page.locator('[data-pmtiles-layer] [role="switch"]')).toBeEnabled();
@@ -114,11 +115,14 @@ for(const size of [{width:1280,height:720},{width:390,height:844}]){
 }
 
 for(const size of [{width:1280,height:720},{width:390,height:844}]){
- for(const etapa of [1,2])test(`foco en certificados, etapa ${etapa+1}, a ${size.width}px (#25)`,async({page})=>{
+ for(const etapa of [1,2])test(`foco del código archivado de certificados, etapa ${etapa+1}, a ${size.width}px (#25)`,async({page})=>{
   test.setTimeout(120000);
   await page.setViewportSize(size);
   await page.emulateMedia({reducedMotion:'reduce'});
   await page.goto('/#certificados');
+  // Fixture aislada: la interfaz pública nunca abre este contenedor.
+  // Mantener la regresión de foco del código conservado, sin ofrecerlo al público.
+  await page.locator('#certificados-legacy').evaluate(e=>{e.hidden=false;e.inert=false;e.removeAttribute('aria-hidden')});
   await page.evaluate(()=>{
    for(const [id,value] of Object.entries({'cert13-name':'Proyecto ficticio de prueba','cert13-desc':'Demostración de foco sin datos personales','cert13-sector':'Otro','obs19-location':'Área no Municipalizada'}))document.getElementById(id).value=value;
   });
