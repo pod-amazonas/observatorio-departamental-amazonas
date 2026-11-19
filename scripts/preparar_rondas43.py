@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Rondas #43: original en lectura, copias verificadas y teselas 20–31.
-La 19 permanece pendiente por decisión de Alejandro (#44). Sin instalaciones.
+Entrega histórica 20–31 del #45; la actual incluye 19 desde el catálogo (#44). Sin instalaciones.
 """
 import argparse,ctypes as C,sys,os,json,hashlib,unicodedata,gzip,shutil
 from pathlib import Path
@@ -277,11 +277,12 @@ def comprobar():
   assert r['valida_despues'] and r['desplazamiento_max_vertices_m']==0 and r['diferencia_area_numerador']=='0'
   assert r['vertices_originales_ausentes']==0 and r['coordenadas_nuevas']==0 and r['vertices_unicos_antes']==r['vertices_unicos_despues']
  catalog=load(ROOT/'catalogo_determinantes_para_geovisor.json');cards={c['objectid']:c for g in catalog['grupos'] for c in g['capas']}
- assert not cards[19].get('archivoTeselas') and not cards[19]['archivo']
+ assert cards[19]['archivo'] is None
  unified=catalog.get('rondasUnificadas')
  if unified:
   from unificar_rondas46 import check
   check()
+  assert cards[19]['archivoTeselas']==unified['archivo'] and cards[19]['grupoVisualizacion']=='rondas46' and cards[19]['estado']=='aprobada_disponible_teselas'
   proof=load(ROOT/'datos/rondas_46/integridad.json')['fuentes']
   assert {r['determinante'] for r in proof}==set(range(20,32))
   for row in rows:

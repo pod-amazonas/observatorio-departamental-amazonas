@@ -27,7 +27,7 @@ for(const width of [1280,390])test(`menú único: todas las capas con interrupto
  test.setTimeout(120000);await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});
  const requests=[];page.on('request',r=>{if(r.url().endsWith('.geojson'))requests.push(r.url())});
  await page.goto('/#geovisor');const tree=page.locator('#obs19-thematic-tree');
- await expect(tree.locator('[role="switch"]')).toHaveCount(36+tanda.length+tanda2.length+tanda3.length+1-11+tanda4.length+tanda5.length+tanda6.length);
+ await expect(tree.locator('[role="switch"]')).toHaveCount(36+tanda.length+tanda2.length+tanda3.length+1-12+tanda4.length+tanda5.length+tanda6.length);
  await expect(page.locator('#obs19-pilot-list')).toHaveCount(0);
  await expect(page.getByRole('heading',{name:'Determinantes ambientales · Capas individuales'})).toHaveCount(0);
  await expect(tree.locator('input[type="checkbox"]')).toHaveCount(0);
@@ -48,8 +48,9 @@ for(const width of [1280,390])test(`menú único: todas las capas con interrupto
    const meta=def.metadata;
    await expect(card.locator('xpath=ancestor::details[1]/summary')).toHaveText(meta.categoria);
    await expect(card).toContainText(meta.fuente_declarada_encargo+' · '+meta.anio_declarado_encargo);
-   if(def.id==='puerto')await expect(card.getByText('No garantiza acceso público, operación actual ni seguridad de navegación.',{exact:false})).toBeVisible();
-   await expect(page.locator('#v7-dynamic-legend')).toContainText(meta.nombre_publico);
+   if(def.id==='puerto'){await expect(card.locator('.obs53-intro')).toBeVisible();await expect(card.locator('.obs53-intro')).toContainText('No garantiza acceso público, operación actual ni seguridad de navegación.');}
+   await expect(card.locator(':scope > [data-ficha-tecnica]')).toContainText(meta.nombre_publico);
+   await expect(page.locator('#v7-dynamic-legend')).toContainText(await card.locator('h4').innerText());
   }
   // Las temáticas no reaparecen con una casilla duplicada en archivos locales.
   await expect(page.locator('#local-layer-list input[type="checkbox"]')).toHaveCount(0);

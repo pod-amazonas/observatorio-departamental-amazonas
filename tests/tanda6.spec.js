@@ -1,3 +1,4 @@
+const {abrirFicha,errorDeCapa,sinConteo}=require('./helpers/fichas.cjs');
 const {test,expect}=require('@playwright/test');
 const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto');
 const {spawnSync}=require('node:child_process');
@@ -58,7 +59,12 @@ for(const width of [1280,390])test('tanda 6: líneas dibujadas, teclado, avisos 
  expect(requests.filter(u=>u.endsWith('.pmtiles')||u.endsWith('/protomaps-leaflet.js'))).toEqual([]);
  for(const row of catalog){
   const c=card(page,row.id_capa);await abrirCapa(c);
-  await expect(c).toContainText(String(row.anio_declarado_encargo));await expect(c).toContainText(row.restricciones);
+  await expect(c.locator('.obs53-intro')).toContainText(row.id_capa==='vias_y_caminos'?'Año: Compilación 2022.':'Año: 2022.');
+  expect(await c.innerText()).not.toMatch(/(?:\b(?:FID|OBJECTID|teselas|PMTiles)\b|datos\/|#\d+)/i);
+  const technical=await abrirFicha(c);await expect(technical).toContainText(row.restricciones);
+  const saved=JSON.parse(await technical.locator('.obs53-metadata').textContent());for(const [k,v]of Object.entries(row))expect(saved[k]).toEqual(v);
+  if(row.id_capa==='vias_y_caminos')await expect(technical.getByRole('link',{name:'Descargar copia fiel',exact:false})).toHaveAttribute('href','datos/tanda_6_29/descargas/vias_y_caminos.geojson.gz');
+  await technical.locator(':scope > summary').press('Enter');
   await expect(c.getByRole('link',{name:row.licencia,exact:true})).toHaveAttribute('href',row.licencia_url);
   await expect(c.getByRole('list')).toContainText(row.leyenda[0].valor);
   // Las vías se concentran en los centros poblados; la vista general del
@@ -67,7 +73,7 @@ for(const width of [1280,390])test('tanda 6: líneas dibujadas, teclado, avisos 
   const sw=c.getByRole('switch');await sw.focus();await sw.press('Space');
   await expect(sw).toHaveAttribute('aria-checked','true');await expect(sw).toHaveAttribute('aria-busy','false');
   await expect.poll(()=>painted(page,row.id_capa),{message:'Las teselas deben pintar líneas, no solo dar HTTP 206'}).toBeGreaterThan(30);
-  await expect(page.locator('#obs19-stat-detail')).toContainText(row.restricciones);
+  await expect(page.locator('#obs19-stat-detail')).toContainText(row.restricciones);await sinConteo(page);
   await c.getByRole('slider').fill('50');
   expect(await page.evaluate(id=>window.obs19Api.getLayers().find(e=>e.idCitizen===id).opacity,row.id_capa)).toBe(50);
   if(row.id_capa==='vias_y_caminos'){
@@ -85,7 +91,7 @@ for(const width of [1280,390])test('tanda 6: líneas dibujadas, teclado, avisos 
 test('tanda 6: error de rangos, reintento y cancelar no dejan capas huérfanas',async({page})=>{
  let fail=true;await page.route('**/tanda_6_29/teselas/drenaje_sencillo.pmtiles',r=>fail?r.fulfill({status:200,body:Buffer.alloc(127)}):r.continue());
  await page.goto('/#geovisor');const c=card(page,'drenaje_sencillo');await abrirCapa(c);await c.getByRole('switch').click();
- await expect(c.locator('[role="status"]')).toContainText('no sirve rangos HTTP 206');await expect(c.getByRole('switch')).toHaveAttribute('aria-checked','false');
+ await errorDeCapa(c,'no sirve rangos HTTP 206');await expect(c.getByRole('switch')).toHaveAttribute('aria-checked','false');
  fail=false;await c.getByRole('switch').click();await expect(c.getByRole('switch')).toHaveAttribute('aria-busy','false');await expect(c.getByRole('switch')).toHaveAttribute('aria-checked','true');
  await page.locator('#geojson-reset').click();expect(await page.evaluate(()=>window.obs19Api.getLayers().length)).toBe(0);await expect(c.getByRole('switch')).toHaveAttribute('aria-checked','false');
 });

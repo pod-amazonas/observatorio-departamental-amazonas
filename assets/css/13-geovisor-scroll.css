@@ -90,3 +90,14 @@
 
 /* Cada crédito tiene caja y separación propias para el anillo de #25. */
 .obs32-source-links a { display: inline-block; margin: 6px; max-width: calc(100% - 12px); }
+
+/* #53: los metadatos se conservan en una ficha accesible, cerrada al cargar. */
+.obs53-technical { margin: 12px 0 4px; min-width: 0; border: 1px solid #b8cbbf; border-radius: 8px; background: #fff; color: #244c3b; }
+.obs53-technical > summary { padding: 10px; cursor: pointer; font-size: .78rem; font-weight: 700; overflow-wrap: anywhere; }
+.obs53-technical > :not(summary) { margin: 10px; overflow-wrap: anywhere; }
+.obs53-metadata { white-space: pre-wrap; overflow-wrap: anywhere; font: .75rem/1.5 monospace; }
+.obs53-fields { font-size: .76rem; }
+.obs53-fields dt { font-weight: 700; margin-top: 8px; overflow-wrap: anywhere; }
+.obs53-fields dd { margin-left: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.obs53-feature { overflow-wrap: anywhere; }
+.obs53-feature .obs53-technical { font-size: .78rem; }

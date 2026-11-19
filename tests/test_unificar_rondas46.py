@@ -6,10 +6,13 @@ from unificar_rondas46 import field, varint, merge, layer, feature, Audit, direc
 import gzip
 
 
-def tile(oid, reverse=False, geom=None):
+def tile(oid, reverse=False, geom=None, extra=None):
     props = {'objectid': oid, 'fid_ronda': oid-18, 'Nombre': 'Rondas hídricas',
              'Norma_Asociada': 'Resolución 957 de 2018', 'Fuente': 'Corpoamazonia',
              'Anio': 2022, 'Fuente_hidrica': 'Drenaje sencillo Amazonas', 'Longitud_buffer': 30}
+    if oid==19:
+        for key in ['fid_ronda','Fuente_hidrica','Longitud_buffer']:props.pop(key)
+    if extra:props.update(extra)
     items = list(props.items())
     if reverse: items.reverse()
     keys = [k.encode() for k, _ in items]
@@ -43,6 +46,13 @@ class UnionTest(unittest.TestCase):
     def test_protobuf_truncado_y_nombre_de_capa_ajeno_se_rechazan(self):
         with self.assertRaises(ValueError): list(layer(b'\x1a\xff'))
         with self.assertRaises(ValueError): merge([tile(20).replace(b'rondas', b'otraaa')])
+
+    def test_19_se_une_sin_inventar_identidad_de_rondas_hidricas(self):
+        first,second=tile(19),tile(20)
+        self.assertEqual(audit(merge([first,second])),audit(first)+audit(second))
+        with self.assertRaises(ValueError):audit(tile(19,extra={'fid_ronda':1}))
+        forged=first.replace(b'Corpoamazonia',b'CORPOAMAZONIA')
+        self.assertNotEqual(audit(first),audit(forged))
 
     def test_directorio_offsets_contiguos_y_punteros_a_hojas(self):
         rows = [(341, 1, 90, 0), (345, 2, 20, 90), (400, 0, 50, 321)]

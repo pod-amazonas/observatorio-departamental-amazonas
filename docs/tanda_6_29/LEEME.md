@@ -58,4 +58,22 @@ Cuatro pruebas nuevas comprueban integridad y exclusión aun recalculando manifi
 
 La primera suite detectó contraste 2,995:1 al lado de los enlaces nuevos de licencia por interferencia con texto contiguo. Se separaron sus cajas con márgenes, sin cambiar el color ni las aserciones de foco. Las dos pruebas de recorrido completo con Tab en el Geovisor pasaron después del ajuste (25,4 s); las capturas corresponden al ajuste final.
 
-Resultado local final: **`npm test`: 177 pruebas aprobadas en 4,2 min**, incluidas las cuatro nuevas y los recorridos completos de foco. Sin pruebas omitidas, relajaciones de contraste o nuevas dependencias.
+Validación inicial, anterior a la integración con main: **`npm test`: 177 pruebas aprobadas en 4,2 min**, incluidas las cuatro nuevas y los recorridos completos de foco. Sin pruebas omitidas, relajaciones de contraste o nuevas dependencias.
+
+
+## Actualización con main después de #56 (19 de noviembre de 2026)
+
+La rama incorpora main `5a8dfed`, incluidas las 33 determinantes, los textos ciudadanos, las fichas técnicas y el aviso de prototipo. Se resuelven los conflictos sin cambiar archivos de `datos/tanda_6_29`, su manifiesto, sus geometrías ni el preparador. Las atribuciones/licencias permanecen visibles; la descarga técnica de vías y los metadatos completos están en la Ficha técnica plegable. Las pruebas exigen conservar cada campo original, las advertencias, el conteo «—» y el detalle de los errores.
+
+Se repitió una observación por capa y tamaño, con el mismo servidor local que comprime JS/JSON, red simulada de 1,6 Mbit/s y 150 ms, caché deshabilitada y contexto nuevo. Mapa base y Supabase simulados; no son tiempos de un teléfono físico ni de Pages. Se comprobó dibujo efectivo y ausencia de errores JavaScript. Los bytes solicitados se mantienen respecto a la validación inicial.
+
+| Capa | Pantalla | Bytes de capa | Lector frío adicional | Tiempo |
+|---|---|---:|---:|---:|
+| Drenaje sencillo | Escritorio | 1.267.267 | 37.678 | 7,390 s |
+| Drenaje sencillo | Celular | 1.267.267 | 37.678 | 7,439 s |
+| Vías y caminos | Escritorio | 34.123 | 37.678 | 0,985 s |
+| Vías y caminos | Celular | 34.123 | 37.678 | 0,971 s |
+
+[Mediciones de integración](integracion_main.json) · Menús móviles con los textos ciudadanos: [drenaje](vistas/drenaje_sencillo_menu_integrado_390.png), [vías](vistas/vias_y_caminos_menu_integrado_390.png). Las comparaciones originales de trazado siguen siendo aplicables: los archivos cartográficos no se regeneraron.
+
+Validación de la integración: **`npm test -- --workers=2`: 182 pruebas aprobadas**, incluidas las comprobaciones de fidelidad, foco, atribución independiente, fichas, errores/reintentos y recorrido móvil. Los resultados de Actions/Gitleaks del commit actualizado se registran en el PR.
