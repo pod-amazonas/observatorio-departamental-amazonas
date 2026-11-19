@@ -57,8 +57,10 @@ async function mapReady(signal){
 // Un solo lector/rango/renderizador para drenaje y rondas. Cada capa conserva
 // su cancelación y estado propios; la librería vendor se comparte.
 async function createTileLayer(spec,signal,onError){
+ if(!/^[0-9a-f]{64}$/.test(spec.sha256||''))throw Error('Falta la versión SHA-256 de las teselas');
  await vendor();if(signal.aborted)throw new DOMException('Cancelado','AbortError');
  const archive=new URL(spec.url,base);if(archive.origin!==base.origin||!archive.href.startsWith(new URL('datos/',base).href))throw Error('Archivo de teselas no autorizado');
+ archive.searchParams.set('v',spec.sha256);
  const reader=new protomapsL.PmtilesSource(archive.href,false).p;
  reader.source={getKey:()=>archive.href,getBytes:async(offset,length,incoming,etag)=>{
   const child=new AbortController(),abort=()=>child.abort();signal.addEventListener('abort',abort,{once:true});incoming?.addEventListener('abort',abort,{once:true});if(signal.aborted||incoming?.aborted)abort();
@@ -124,7 +126,7 @@ async function toggle(want,zoom=false){
 }
 window.obs40Mount=mount;window.obs40Sync=sync;
 window.obs40Cancel=()=>{if(loading||active())toggle(false)};
-fetch(new URL('datos/teselas_40/catalogo.json',base)).then(r=>{if(!r.ok)throw Error('Ficha de drenaje no disponible');return r.json()}).then(data=>{if(data.entidades!==92||![484,2165].every(id=>data.ids_seleccionados?.includes(id)&&data.reparados_autorizados?.includes(id))||data.minzoom!==5||data.maxzoom!==12||!Number.isSafeInteger(data.bytes)||data.bytes<127)throw Error('Ficha de drenaje incorrecta');meta=data;mount()}).catch(err=>{error=err.message;mount()});
+fetch(new URL('datos/teselas_40/catalogo.json',base),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Ficha de drenaje no disponible');return r.json()}).then(data=>{if(data.entidades!==92||![484,2165].every(id=>data.ids_seleccionados?.includes(id)&&data.reparados_autorizados?.includes(id))||data.minzoom!==5||data.maxzoom!==12||!Number.isSafeInteger(data.bytes)||data.bytes<127)throw Error('Ficha de drenaje incorrecta');meta=data;mount()}).catch(err=>{error=err.message;mount()});
 mount();
 document.getElementById('geojson-reset')?.addEventListener('click',()=>{sequence++;controller?.abort();loading=false;error='';sync()});
 })();

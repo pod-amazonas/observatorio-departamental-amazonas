@@ -21,7 +21,7 @@ for(const width of [1280,390])test('textos ciudadanos: fichas cerradas, sin refe
  }
  const view=page.locator('#view-geovisor');expect(await view.innerText()).not.toMatch(internal);
  await expect(view).toContainText('Capas del Observatorio');expect(await view.innerText()).not.toContain('Capas locales de prueba');
- expect(requests.filter(u=>u.endsWith('.geojson')||u.endsWith('.pmtiles')||u.endsWith('/protomaps-leaflet.js'))).toEqual([]);
+ expect(requests.filter(u=>u.endsWith('.geojson')||new URL(u).pathname.endsWith('.pmtiles')||u.endsWith('/protomaps-leaflet.js'))).toEqual([]);
  const c=page.locator('[data-tanda4-layer="humedales"]'),pre=c.locator('.obs53-metadata');await expect(pre).not.toBeVisible();
  const f=await abrirFicha(c);await expect(pre).toBeVisible();await expect(f).toContainText(catalog.find(c=>c.id_capa==='humedales').restricciones);
  const saved=JSON.parse(await pre.textContent()),original=catalog.find(c=>c.id_capa==='humedales');for(const [k,v]of Object.entries(original))expect(saved[k]).toEqual(v);

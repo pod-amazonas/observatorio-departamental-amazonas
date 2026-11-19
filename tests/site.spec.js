@@ -161,12 +161,12 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`transpa
  await expect.poll(()=>page.evaluate(()=>{const map=window.obs19Api.getMap(),e=window.obs19Api.getLayers().find(l=>l.idPilot===1);return map.getBounds().contains(e.layer.getBounds())&&map.getCenter().distanceTo(e.layer.getBounds().getCenter())<10000})).toBe(true);
  expect(await page.evaluate(()=>window.obs19Api.getLayers().filter(l=>l.idPilot===1).length)).toBe(1);
 });
-test('estado uniforme del prototipo y sin consulta al servidor retirado',async({page})=>{
+test('estado uniforme de la versión inicial y sin consulta al servidor retirado',async({page})=>{
  const requests=[];page.on('request',r=>{if(new URL(r.url()).pathname==='/api/public/dashboard')requests.push(r.url())});
  await page.goto('/');
- await expect(page).toHaveTitle('Observatorio Departamental del Amazonas · Prototipo en desarrollo');
- await expect(page.locator('.prototype-ribbon')).toHaveText('Prototipo en desarrollo');
- await expect(page.locator('.footer-bottom span').last()).toHaveText('Prototipo en desarrollo');
+ await expect(page).toHaveTitle('Observatorio Departamental del Amazonas · Versión inicial · en actualización permanente');
+ await expect(page.locator('.prototype-ribbon')).toHaveText('Versión inicial · en actualización permanente');
+ await expect(page.locator('.footer-bottom span').last()).toHaveText('Versión inicial · en actualización permanente');
  await expect(page.locator('#pod-live-status')).toHaveText('No hay reportes publicados para consulta ciudadana.');
  expect(requests).toEqual([]);
 });

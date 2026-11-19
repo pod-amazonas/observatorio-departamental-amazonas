@@ -4,7 +4,7 @@
 - Se conserva `index.html`, el visor, la biblioteca y los módulos originales.
 - La sección de avances POD consulta Supabase mediante `pod_reportes_publicos.js`: solo reportes con `estado = publicado`, sus evidencias y el catálogo.
 - Si no existen reportes publicados se muestra “No hay reportes publicados para consulta ciudadana”.
-- El dashboard histórico es demostrativo; sus porcentajes y simulaciones deben distinguirse de los reportes publicados.
+- Las cifras calculadas en el navegador no son oficiales y deben distinguirse de los reportes revisados y publicados. Los controles de gestión local anteriores no se ofrecen como trámites habilitados.
 
 ## Administración
 - El panel V20 está publicado temporalmente en GitHub Pages hasta la Fase 3. Se accede por la URL directa de `V20_FORMULARIO_BORRADORES/admin_borradores_v20.html`; el enlace administrativo ya no aparece en la página pública.

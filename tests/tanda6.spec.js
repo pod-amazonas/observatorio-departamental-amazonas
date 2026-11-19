@@ -56,7 +56,7 @@ for(const width of [1280,390])test('tanda 6: líneas dibujadas, teclado, avisos 
  test.setTimeout(120000);await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});
  const requests=[];page.on('request',r=>requests.push(r.url()));await page.goto('/#geovisor');
  await expect(page.locator('[data-tanda6-layer]')).toHaveCount(2);await page.waitForFunction(()=>window.obs19Api?.getMap?.());
- expect(requests.filter(u=>u.endsWith('.pmtiles')||u.endsWith('/protomaps-leaflet.js'))).toEqual([]);
+ expect(requests.filter(u=>new URL(u).pathname.endsWith('.pmtiles')||u.endsWith('/protomaps-leaflet.js'))).toEqual([]);
  for(const row of catalog){
   const c=card(page,row.id_capa);await abrirCapa(c);
   await expect(c.locator('.obs53-intro')).toContainText(row.id_capa==='vias_y_caminos'?'Año: Compilación 2022.':'Año: 2022.');
@@ -73,6 +73,8 @@ for(const width of [1280,390])test('tanda 6: líneas dibujadas, teclado, avisos 
   const sw=c.getByRole('switch');await sw.focus();await sw.press('Space');
   await expect(sw).toHaveAttribute('aria-checked','true');await expect(sw).toHaveAttribute('aria-busy','false');
   await expect.poll(()=>painted(page,row.id_capa),{message:'Las teselas deben pintar líneas, no solo dar HTTP 206'}).toBeGreaterThan(30);
+  const tileRequests=requests.filter(u=>new URL(u).pathname.endsWith('/'+row.id_capa+'.pmtiles'));
+  expect(tileRequests.length).toBeGreaterThan(0);for(const u of tileRequests)expect(new URL(u).searchParams.get('v')).toBe(row.sha256);
   await expect(page.locator('#obs19-stat-detail')).toContainText(row.restricciones);await sinConteo(page);
   await c.getByRole('slider').fill('50');
   expect(await page.evaluate(id=>window.obs19Api.getLayers().find(e=>e.idCitizen===id).opacity,row.id_capa)).toBe(50);
@@ -85,11 +87,11 @@ for(const width of [1280,390])test('tanda 6: líneas dibujadas, teclado, avisos 
   await sw.focus();await sw.press('Enter');await expect(sw).toHaveAttribute('aria-checked','false');
   expect(await page.evaluate(()=>window.obs19Api.getLayers().length)).toBe(0);
  }
- expect(new Set(requests.filter(u=>u.includes('/tanda_6_29/')&&u.endsWith('.pmtiles'))).size).toBe(2);
+ expect(new Set(requests.filter(u=>u.includes('/tanda_6_29/')&&new URL(u).pathname.endsWith('.pmtiles'))).size).toBe(2);
  expect(requests.filter(u=>u.endsWith('.geojson'))).toEqual([]);
 });
 test('tanda 6: error de rangos, reintento y cancelar no dejan capas huérfanas',async({page})=>{
- let fail=true;await page.route('**/tanda_6_29/teselas/drenaje_sencillo.pmtiles',r=>fail?r.fulfill({status:200,body:Buffer.alloc(127)}):r.continue());
+ let fail=true;await page.route('**/tanda_6_29/teselas/drenaje_sencillo.pmtiles*',r=>fail?r.fulfill({status:200,body:Buffer.alloc(127)}):r.continue());
  await page.goto('/#geovisor');const c=card(page,'drenaje_sencillo');await abrirCapa(c);await c.getByRole('switch').click();
  await errorDeCapa(c,'no sirve rangos HTTP 206');await expect(c.getByRole('switch')).toHaveAttribute('aria-checked','false');
  fail=false;await c.getByRole('switch').click();await expect(c.getByRole('switch')).toHaveAttribute('aria-busy','false');await expect(c.getByRole('switch')).toHaveAttribute('aria-checked','true');

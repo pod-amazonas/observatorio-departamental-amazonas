@@ -10,6 +10,7 @@ async function errorDeCapa(card,text){
  const f=await abrirFicha(card);await expect(f.locator('[data-technical-error]')).toContainText(text);
 }
 async function sinConteo(page){
+ const stats=page.locator('#geo-stats58');if(await stats.count())await stats.evaluate(e=>e.open=true);
  const overview=page.locator('#obs19-stat-overview');await expect(overview.locator('.obs19-metric').filter({hasText:'Registros cargados'}).locator('strong')).toHaveText('—');
  await expect(overview).toContainText('Esta capa se consulta por zonas y no permite contar registros');
 }

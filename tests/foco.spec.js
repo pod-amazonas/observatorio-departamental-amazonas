@@ -115,11 +115,14 @@ for(const size of [{width:1280,height:720},{width:390,height:844}]){
 }
 
 for(const size of [{width:1280,height:720},{width:390,height:844}]){
- for(const etapa of [1,2])test(`foco en certificados, etapa ${etapa+1}, a ${size.width}px (#25)`,async({page})=>{
+ for(const etapa of [1,2])test(`foco del código archivado de certificados, etapa ${etapa+1}, a ${size.width}px (#25)`,async({page})=>{
   test.setTimeout(120000);
   await page.setViewportSize(size);
   await page.emulateMedia({reducedMotion:'reduce'});
   await page.goto('/#certificados');
+  // Fixture aislada: la interfaz pública nunca abre este contenedor.
+  // Mantener la regresión de foco del código conservado, sin ofrecerlo al público.
+  await page.locator('#certificados-legacy').evaluate(e=>{e.hidden=false;e.inert=false;e.removeAttribute('aria-hidden')});
   await page.evaluate(()=>{
    for(const [id,value] of Object.entries({'cert13-name':'Proyecto ficticio de prueba','cert13-desc':'Demostración de foco sin datos personales','cert13-sector':'Otro','obs19-location':'Área no Municipalizada'}))document.getElementById(id).value=value;
   });
@@ -164,7 +167,7 @@ for(const size of [{width:1280,height:720},{width:390,height:844}])test(`GeoJSON
  await page.goto('/#geovisor');
  await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
  await expect(page.locator('#obs19-thematic-tree [data-determinant-layer]')).toHaveCount(33);
- const input=page.locator('#geojson-upload'),etiqueta=page.locator('label[for="geojson-upload"]');
+ await page.locator('.geo-files58').evaluate(e=>e.open=true);const input=page.locator('#geojson-upload'),etiqueta=page.locator('label[for="geojson-upload"]');
  await expect(etiqueta).toHaveCount(1);
  await expect(etiqueta).toBeVisible();
  expect(await input.evaluate(e=>!e.checkVisibility({opacityProperty:true})&&getComputedStyle(e).clipPath==='inset(50%)'&&e.getBoundingClientRect().width<=1)).toBe(true);
