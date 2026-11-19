@@ -8,7 +8,9 @@ for(const width of [1280,390])test('versión inicial: todas las vistas y mapa am
  await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});
  for(const route of ['inicio','geovisor','geoportal','avances-pod','certificados','biblioteca','documentos-pod','secretaria','contacto','admin']){
   await page.goto('/#'+route);await expect(page.locator('#view-'+route)).toBeVisible();
-  expect(await page.locator('#view-'+route).innerText()).not.toMatch(obsolete);
+  // La excepción autorizada es el formulario de demostración; la información
+  // de Certificados y el resto de vistas conservan los avisos de versión inicial.
+  expect(await page.locator(route==='certificados'?'#certificados-informacion':'#view-'+route).innerText()).not.toMatch(obsolete);
   expect(await page.title()).not.toMatch(obsolete);
  }
  await page.goto('/#geovisor');await expect(page.locator('#visor-map')).toHaveClass(/leaflet-container/);
@@ -19,7 +21,7 @@ for(const width of [1280,390])test('versión inicial: todas las vistas y mapa am
  await toggle.press('Enter');await expect(page.locator('.geo-sidebar')).toBeVisible();await expect(toggle).toHaveAttribute('aria-expanded','true');
  await expect.poll(()=>page.evaluate(()=>{const m=window.obs19Api.getMap(),c=m.getContainer();return Math.abs(m.getSize().x-c.clientWidth)+Math.abs(m.getSize().y-c.clientHeight)})).toBe(0);
  await page.locator('.geo-tools58 > summary').click();await page.locator('#measure-mode').click();await expect(page.locator('#measure-mode')).toHaveAttribute('aria-pressed','true');await page.locator('#map-inspect').click();await expect(page.locator('#map-inspect')).toHaveAttribute('aria-pressed','true');
- await page.goto('/#certificados');await expect(page.locator('#cert16-summary-send')).toBeHidden();await expect(page.locator('#certificados-legacy')).toHaveAttribute('inert','');
+ await page.goto('/#certificados');await expect(page.locator('#cert16-summary-send')).toBeHidden();await expect(page.locator('#obs16-flow')).toHaveAttribute('inert','');await expect(page.locator('#certificados-legacy')).toBeVisible();
 });
 for(const width of [1280,390])for(const fallback of [false,true])test('pantalla completa: teclado, salida y restauración '+(fallback?'sin API':'nativa')+' a '+width,async({page})=>{
  await page.setViewportSize({width,height:width===390?844:720});await page.goto('/#geovisor');const root=page.locator('.geo-public58'),button=page.locator('#geo-fullscreen58');
