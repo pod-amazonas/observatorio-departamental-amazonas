@@ -1,5 +1,5 @@
 
-/* V15 · Editor de geometrías en Certificados Ambientales */
+/* Editor de geometrías de la demostración de Certificados. */
 #view-certificados .cert14-mode{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 18px}
 #view-certificados .cert14-mode-btn{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:13px 12px;border-radius:11px;border:1px solid #d8e4d9;background:#fff;color:#3e6248;cursor:pointer;text-align:left;min-width:0}
 #view-certificados .cert14-mode-btn strong{font-size:13px;color:#28533a}
