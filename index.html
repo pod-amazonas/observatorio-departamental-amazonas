@@ -811,45 +811,7 @@
 })();
 
 </script>
-<script>/* Gestión local archivada: radicados de demostración sin autenticación. */
-(function(){'use strict';
- const $=id=>document.getElementById(id), STORAGE='OBS_AMAZONAS_DEMO_V16_SESSION';
- const STATES=['Recibida','Revisión documental','Información adicional solicitada','Evaluación espacial pendiente','Concepto en preparación','Cierre simulado'];
- const NEXT={
-  'Recibida':['Revisión documental'],
-  'Revisión documental':['Información adicional solicitada','Evaluación espacial pendiente'],
-  'Información adicional solicitada':['Revisión documental'],
-  'Evaluación espacial pendiente':['Información adicional solicitada','Concepto en preparación'],
-  'Concepto en preparación':['Información adicional solicitada','Cierre simulado'],
-  'Cierre simulado':[]
- };
- let entries=[],selectedId='',role='citizen';
- function load(){try{let j=JSON.parse(sessionStorage.getItem(STORAGE)||'[]');if(Array.isArray(j))entries=j.filter(x=>x&&typeof x.id==='string'&&STATES.includes(x.status)).slice(-50);}catch(e){entries=[]}}
- function save(){try{sessionStorage.setItem(STORAGE,JSON.stringify(entries));return true}catch(e){return false}}
- function fmt(d){try{return new Date(d).toLocaleString('es-CO',{dateStyle:'medium',timeStyle:'short'})}catch(e){return d}}
- function message(id,msg,bad=false){const el=$(id);el.textContent=msg;el.classList.toggle('error',bad)}
- function el(tag,text='',cls=''){const e=document.createElement(tag);if(text!==null)e.textContent=text;if(cls)e.className=cls;return e}
- function field(dl,label,text){dl.append(el('dt',label),el('dd',text))}
- function timeline(rec,parent){parent.append(el('h4','Historial de actuaciones (simulación)'));const list=el('ol','', 'obs16-audit');for(const e of rec.history){list.append(el('li',fmt(e.at)+' · '+e.status+(e.note?' — '+e.note:'')))}parent.append(list)}
- function detail(rec,admin=false){let d=el('div');d.append(el('h3',rec.project));const head=el('div','', 'obs16-meta');head.append(el('span',rec.id),el('span','Creada: '+fmt(rec.created)));head.append(el('span',rec.status,'obs16-tag'));d.append(head);
-  const dl=el('dl','', 'obs16-detail-list');field(dl,'Sector',rec.sector);field(dl,'Responsable revisor','Equipo del Programa de Ordenamiento Departamental');field(dl,'Geometría',rec.geometryType+' · '+rec.vertexCount+' vértice(s)');field(dl,'Soportes documentales',rec.docNames.length?rec.docNames.join('; ')+' (nombres de archivo, sin carga real)':'Sin archivos adjuntos');field(dl,'Tipos de soporte',rec.supportTypes.length?rec.supportTypes.join('; '):'Ninguno señalado');field(dl,'Cruce ambiental','Sin evaluar — cartografía oficial no conectada');d.append(dl);
-  if(admin){d.append(el('p','La ficha permite verificar qué soportes se SELECCIONARON, no su contenido. No constituye validación documental ni espacial.'))}
-  timeline(rec,d);return d;
- }
- function renderCitizen(rec){const box=$('obs16-citizen-result');box.replaceChildren();if(!rec){box.hidden=true;return}box.hidden=false;box.append(detail(rec));}
- function setRole(v){role=v;$('obs16-citizen').hidden=v!=='citizen';$('obs16-pod').hidden=v!=='pod';document.querySelectorAll('[data-obs16-role]').forEach(b=>{let active=b.dataset.obs16Role===v;b.classList.toggle('is-active',active);b.setAttribute('aria-pressed',String(active))});if(v==='pod')renderAdmin()}
- function code(){const dt=new Date(),stamp=[dt.getFullYear(),String(dt.getMonth()+1).padStart(2,'0'),String(dt.getDate()).padStart(2,'0')].join('');let rnd='';try{const arr=new Uint32Array(1);crypto.getRandomValues(arr);rnd=(arr[0]%1000000).toString().padStart(6,'0')}catch(e){rnd=(Math.floor(Math.random()*1000000)).toString().padStart(6,'0')}return 'DEMO-'+stamp+'-'+rnd}
- function submit(){if(!$('obs16-confirm').checked){message('obs16-submit-msg','Marca la confirmación de uso exclusivo de datos ficticios.',true);return}if(typeof window.obs16GetDraft!=='function'){message('obs16-submit-msg','No se pudo leer el formulario de prueba. Abre la versión 16 completa.',true);return}const data=window.obs16GetDraft();if(!data||data.error){message('obs16-submit-msg',(data&&data.error)||'Completa el formulario.',true);return}if(entries.length>=50){message('obs16-submit-msg','Límite de 50 solicitudes en esta sesión de demostración.',true);return}
-  const now=new Date().toISOString();let id=code();while(entries.some(x=>x.id===id))id=code();
-  const rec={id,created:now,project:data.project,sector:data.sector,geometryType:data.geometryType,vertexCount:data.vertexCount,docNames:data.docNames,supportTypes:data.supportTypes,status:'Recibida',history:[{at:now,status:'Recibida',note:'Registro generado únicamente en este navegador; sin radicación institucional.'}]};entries.push(rec);save();selectedId=id;$('obs16-code').value=id;renderCitizen(rec);message('obs16-submit-msg','Código de demostración generado: '+id+'. No es un radicado válido.');renderAdmin();}
- function lookup(){let code=$('obs16-code').value.trim().toUpperCase();if(!code){message('obs16-lookup-msg','Escribe el código DEMO.',true);renderCitizen(null);return}let rec=entries.find(e=>e.id===code);if(!rec){message('obs16-lookup-msg','No se encontró ese código en esta sesión del navegador.',true);renderCitizen(null);return}message('obs16-lookup-msg','Consulta local encontrada. Estado: '+rec.status);renderCitizen(rec)}
- function renderAdmin(){const q=$('obs16-queue');q.replaceChildren();const f=$('obs16-filter').value;const visible=entries.filter(x=>!f||x.status===f).slice().reverse();$('obs16-total').textContent=entries.length+' en sesión';if(!visible.length){q.append(el('p','No hay solicitudes para mostrar.','obs16-empty'))}for(const rec of visible){let b=el('button');b.type='button';b.className=rec.id===selectedId?'is-active':'';b.append(el('strong',rec.project),el('small',rec.id+' · '+rec.status));b.addEventListener('click',()=>{selectedId=rec.id;renderAdmin()});q.append(b)}
- const d=$('obs16-admin-detail');d.replaceChildren();const form=$('obs16-review-form');let rec=entries.find(x=>x.id===selectedId);if(!rec){d.append(el('p','Selecciona una solicitud de la lista.','obs16-muted'));form.hidden=true;return}d.append(detail(rec,true));let opts=$('obs16-nextstate');opts.replaceChildren();for(const st of NEXT[rec.status]||[]){let o=el('option',st);o.value=st;opts.append(o)}form.hidden=opts.options.length===0;message('obs16-admin-msg','');$('obs16-comment').value='';if(!opts.options.length)d.append(el('p','La solicitud terminó su recorrido simulado. No equivale a una decisión técnica ni jurídica.'))}
- function update(){let rec=entries.find(x=>x.id===selectedId);if(!rec){message('obs16-admin-msg','Selecciona una solicitud.',true);return}let status=$('obs16-nextstate').value,comment=$('obs16-comment').value.trim();if(!NEXT[rec.status].includes(status)){message('obs16-admin-msg','La transición de estado no está permitida.',true);return}if(comment.length<10){message('obs16-admin-msg','Describe la gestión de prueba en al menos 10 caracteres.',true);return}
-  rec.status=status;rec.history.push({at:new Date().toISOString(),status,note:comment.slice(0,800)});save();renderAdmin();if($('obs16-code').value.trim().toUpperCase()===rec.id){renderCitizen(rec);message('obs16-lookup-msg','Estado actualizado en esta sesión: '+rec.status)}message('obs16-admin-msg','Actuación simulada guardada en esta sesión del navegador.');}
- function init(){if(!$('obs16-flow'))return;load();window.addEventListener('obs17-record-changed',()=>{load();renderAdmin();const c=$('obs16-code').value.trim().toUpperCase();if(c){const r=entries.find(x=>x.id===c);if(r)renderCitizen(r);}});document.querySelectorAll('[data-obs16-role]').forEach(b=>b.addEventListener('click',()=>setRole(b.dataset.obs16Role)));$('obs16-submit').addEventListener('click',submit);$('obs16-search').addEventListener('click',lookup);$('obs16-code').addEventListener('keydown',e=>{if(e.key==='Enter')lookup()});$('obs16-filter').addEventListener('change',renderAdmin);$('obs16-update').addEventListener('click',update);setRole('citizen')}
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();
+<script src="assets/js/radicados-locales.js">
 </script>
 <script>
 /* Puente archivado entre el formulario y la gestión local; no es un servicio oficial. */
