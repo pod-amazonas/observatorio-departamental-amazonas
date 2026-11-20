@@ -40,6 +40,31 @@ for(const prefix of ['/','/observatorio-departamental-amazonas/']){
    });
   });
 
+  test('lector Excel: importa un polígono ficticio con JSZip sin enviar archivos',async({page})=>{
+   await page.setViewportSize({width:prefix==='/'?1280:390,height:prefix==='/'?720:844});await page.emulateMedia({reducedMotion:'reduce'});
+   const writes=[],errors=[];page.on('request',r=>{if(!['GET','HEAD'].includes(r.method()))writes.push(r.url())});page.on('pageerror',e=>errors.push(e.message));
+   await page.goto(prefix+'#certificados');
+   expect(await page.evaluate(()=>JSZip.version)).toBe('3.10.1');
+   expect(await page.evaluate(()=>{const s=document.scripts[1];return s.parentElement===document.head&&!s.async&&!s.defer&&(!s.type||s.type==='text/javascript')})).toBe(true);
+   // Libro mínimo y exclusivamente ficticio, con vértices fuera de orden.
+   const bytes=await page.evaluate(async()=>{
+    const z=new JSZip(),ns='http://schemas.openxmlformats.org/spreadsheetml/2006/main',rel='http://schemas.openxmlformats.org/package/2006/relationships';
+    z.file('[Content_Types].xml','<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>');
+    z.file('_rels/.rels',`<Relationships xmlns="${rel}"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`);
+    z.file('xl/workbook.xml',`<workbook xmlns="${ns}" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Coordenadas" sheetId="1" r:id="rId1"/></sheets></workbook>`);
+    z.file('xl/_rels/workbook.xml.rels',`<Relationships xmlns="${rel}"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>`);
+    const rows=[[3,-3.99,-70],[1,-4,-70],[2,-4,-69.99]];
+    z.file('xl/worksheets/sheet1.xml',`<worksheet xmlns="${ns}"><sheetData><row r="1">${['Orden','Latitud','Longitud'].map((v,i)=>`<c r="${'ABC'[i]}1" t="inlineStr"><is><t>${v}</t></is></c>`).join('')}</row>${rows.map((row,i)=>`<row r="${i+2}">${row.map((v,j)=>`<c r="${'ABC'[j]}${i+2}"><v>${v}</v></c>`).join('')}</row>`).join('')}</sheetData></worksheet>`);
+    return Array.from(await z.generateAsync({type:'uint8array',compression:'DEFLATE'}));
+   });
+   await page.locator('#obs19-location').selectOption('Área no Municipalizada');await page.locator('#cert13-name').fill('PROYECTO FICTICIO XLSX');await page.locator('#cert13-desc').fill('Demostración ficticia del lector de coordenadas.');await page.locator('#cert13-sector').selectOption('Otro');await page.locator('#cert13-next').click();
+   await page.locator('[name="obs19-doc-mode"][value="unificado"]').check();for(const tipo of ['unificado','registro','identidad'])await page.locator(`[data-obs19-doc="${tipo}"]`).setInputFiles({name:'soporte-ficticio.pdf',mimeType:'application/pdf',buffer:Buffer.from('FICTICIO')});
+   await page.locator('#cert13-next').click();await page.locator('[data-cert14-mode="Polygon"]').click();await page.locator('#cert15-xlsx-file').setInputFiles({name:'triángulo-ficticio.xlsx',mimeType:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',buffer:Buffer.from(bytes)});
+   await expect(page.locator('#cert15-xlsx-status')).toContainText('Importación completada: 3 vértices');await expect(page.getByRole('spinbutton',{name:'Latitud de vértice 1',exact:true})).toHaveValue('-4');await expect(page.getByRole('spinbutton',{name:'Longitud de vértice 2',exact:true})).toHaveValue('-69.99');
+   const wait=page.waitForEvent('download');await page.locator('#cert14-export-geojson').click();const download=await wait;const data=JSON.parse(fs.readFileSync(await download.path(),'utf8'));
+   expect(data.features[0].geometry).toEqual({type:'Polygon',coordinates:[[[-70,-4],[-69.99,-4],[-70,-3.99],[-70,-4]]]});expect(writes).toEqual([]);expect(errors).toEqual([]);
+  });
+
   test('CSS, imágenes y favicon locales cargan y se decodifican',async({page})=>{
    const failures=[];
    page.on('response',r=>{if(new URL(r.url()).hostname==='127.0.0.1'&&r.status()>=400)failures.push(`${r.status()} ${r.url()}`)});
