@@ -8,10 +8,10 @@ from preparar_pmtiles40 import header
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'datos/tanda_6_29'
 CONFIG={
- 'drenaje_sencillo':dict(origen='Drenaje_Sencillo',campos=['ESTADO_DRENAJE'],nombre='Drenaje sencillo · IGAC 2022',categoria='Base cartográfica',fuente='IGAC',anio=2022,ficha='019',licencia='CC BY 4.0',licencia_url='https://creativecommons.org/licenses/by/4.0/',respaldo='https://www.igac.gov.co/transparencia-y-acceso-a-la-informacion-publica/normograma/resolucion-616-de-2020',color='#156f99',entidades=65165,nota='Cartografía de drenajes de 2022. No es una ruta navegable certificada ni informa caudales, accesos o seguridad de navegación.'),
+ 'drenaje_sencillo':dict(origen='Drenaje_Sencillo',campos=['ESTADO_DRENAJE'],nombre='Drenaje sencillo · IGAC 2022',categoria='Base cartográfica',fuente='IGAC',anio=2022,ficha='019',licencia='CC BY 4.0',licencia_url='https://creativecommons.org/licenses/by/4.0/',respaldo='https://www.igac.gov.co/transparencia-y-acceso-a-la-informacion-publica/normograma/resolucion-616-de-2020',color='#156f99',entidades=27341,entidades_fuente=65165,nota='Cartografía de drenajes de 2022. Entidades completas que intersectan Amazonas, sin recortar al límite departamental. No es una ruta navegable certificada ni informa caudales, accesos o seguridad de navegación.'),
  'vias_y_caminos':dict(origen='Vias_y_Caminos',campos=['highway'],nombre='Vías y caminos · OpenStreetMap · compilación 2022',categoria='Estructura funcional y de servicios',fuente='OpenStreetMap',anio='2022 (compilación según ficha POD 127)',ficha='127',licencia='ODbL 1.0',licencia_url='https://opendatacommons.org/licenses/odbl/1-0/',respaldo='https://www.openstreetmap.org/copyright/es',color='#9a4d12',entidades=1811,nota='© colaboradores de OpenStreetMap. Compilación de 2022; no garantiza transitabilidad, acceso público, estado actual ni seguridad del recorrido.')
 }
-OMISIONES_Z12={'drenaje_sencillo':[136905,141693,162830,162960,163042,163111,163119,163286,403372,405720],'vias_y_caminos':[772]}
+OMISIONES_Z12={'drenaje_sencillo':[162830,162960,163042,163111,163119,163286],'vias_y_caminos':[772]}
 PENDIENTES=[
  {'origen':'Cobertura_Uso_Tierra_CLC','motivo':'SINCHI 2021 acreditado en ficha 041, pero licencia del producto suministrado a escala 1:100.000 sin confirmar. No se aplica por analogía la licencia del mapa 2024 ni de los productos 2021 a 1:25.000. No se generan ni publican teselas; al habilitarla deberá mostrar año, leyenda CLC y cobertura observada no equivale a uso permitido.','referencia':'https://siatac.co/coberturas-100k/'},
  {'origen':'BIC_Declarados','motivo':'La declaratoria del único bien coincide con el registro nacional (Res. 238 de 2008), pero falta confirmar licencia del punto suministrado y publicabilidad sin reserva/sensibilidad. No se exportan geometrías, direcciones ni localizaciones.'},
@@ -103,7 +103,7 @@ def prepare(a):
       g.OGR_F_Destroy(f)
     stream.write(b']}\n')
    finally:stream.close();g.OCTDestroyCoordinateTransformation(forward);g.OCTDestroyCoordinateTransformation(back);g.OSRDestroySpatialReference(target)
-   assert len(recs)==c['entidades'] and residual<.000001
+   assert len(recs)==c.get('entidades_fuente',c['entidades']) and residual<.000001
    row={'id_capa':key,'registros':recs,'entidades':len(recs),'bbox':bbox,'vertices_lineales':vertices,'partes_lineales':parts,'curvas':curves,'contenedores_curvos':containers,'residuo_inversa_m':residual,'geojson_bytes':faithful.stat().st_size,'geojson_gzip6':len(gzip.compress(faithful.read_bytes(),compresslevel=6,mtime=0)),'minzoom':5,'maxzoom':12}
    result['capas'].append(row);print('Copia nativa válida',key,len(recs),'curvas',len(curves),'GeoJSON bytes',row['geojson_bytes'],flush=True)
  finally:g.GDALClose(ds);g.GDALClose(src)
@@ -149,6 +149,9 @@ def audit(catalog,control):
 def integrate(private):
  control=load(private/'entrega_geometrias.json');catalog=[];dictionary={}
  for row in control['capas']:
+  assert row['entidades']==CONFIG[row['id_capa']]['entidades'],'Primero adoptar la selección departamental de Drenaje Sencillo'
+  if row['id_capa']=='drenaje_sencillo':assert row.get('seleccion',{}).get('wkb_seleccion_identico') is True
+ for row in control['capas']:
   key=row['id_capa'];c=CONFIG[key];target=OUT/'teselas'/(key+'.pmtiles');target.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(private/(key+'.pmtiles'),target)
   item={'id_capa':key,'nombre_origen':c['origen'],'nombre_publico':c['nombre'],'categoria':c['categoria'],'estado':'publicable','lote':6,'fuente_declarada_encargo':c['fuente'],'anio_declarado_encargo':c['anio'],'color':c['color'],'restricciones':c['nota'],'advertencia':c['nota'],'ruta_relativa':target.relative_to(OUT).as_posix(),'entidades':row['entidades'],'bytes':row['bytes'],'sha256':row['sha256'],'campos_publicos':['fid_origen']+c['campos'],'leyenda':[{'valor':'Drenajes lineales' if key=='drenaje_sencillo' else 'Vías y caminos de la fuente OSM (sin verificación actual)','color':c['color'],'entidades':row['entidades']}],'vector_tiles':True,'id_vector':-29601-len(catalog),'licencia':c['licencia'],'licencia_url':c['licencia_url'],'atribucion':'© colaboradores de OpenStreetMap' if key=='vias_y_caminos' else 'IGAC · cartografía básica 2022','atribucion_url':c['respaldo'],'teselas':{'bytes':row['bytes'],'sha256':row['sha256'],'bbox':row['bbox'],'minzoom':5,'maxzoom':12,'dataLayer':key}}
   if key=='vias_y_caminos':
@@ -182,6 +185,8 @@ def check():
  for f in fc['features']:
   assert set(f['properties'])=={'fid_origen','highway'} and sha(raw(f['properties']))==records[f['id']]['atributos']
   assert sha(raw(f['geometry']))==records[f['id']]['crs84'];lines(f['geometry'])
+ from seleccionar_drenaje62 import comprobar_seleccion
+ comprobar_seleccion(next(r for r in control['capas'] if r['id_capa']=='drenaje_sencillo'))
  assert audit(cat,control)==load(OUT/'auditoria_teselas.json'),'Auditoría MVT alterada'
  assert load(OUT/'pendientes.json')==PENDIENTES
  print('Tanda 6: SHA-256, copia nativa, campos públicos, licencias y teselas comprobados.')
