@@ -45,7 +45,7 @@ for(const prefix of ['/','/observatorio-departamental-amazonas/']){
    const writes=[],errors=[];page.on('request',r=>{if(!['GET','HEAD'].includes(r.method()))writes.push(r.url())});page.on('pageerror',e=>errors.push(e.message));
    await page.goto(prefix+'#certificados');
    expect(await page.evaluate(()=>JSZip.version)).toBe('3.10.1');
-   expect(await page.evaluate(()=>{const s=document.scripts[1];return s.parentElement===document.head&&!s.async&&!s.defer&&(!s.type||s.type==='text/javascript')})).toBe(true);
+   expect(await page.evaluate(()=>{const s=document.querySelector('script[src="assets/js/jszip-3.10.1.js"]');return !!s&&s.parentElement===document.head&&!s.async&&!s.defer&&(!s.type||s.type==='text/javascript')})).toBe(true);
    // Libro mínimo y exclusivamente ficticio, con vértices fuera de orden.
    const bytes=await page.evaluate(async()=>{
     const z=new JSZip(),ns='http://schemas.openxmlformats.org/spreadsheetml/2006/main',rel='http://schemas.openxmlformats.org/package/2006/relationships';
