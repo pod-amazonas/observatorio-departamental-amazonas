@@ -1,6 +1,8 @@
 const {test,expect}=require('@playwright/test');
 const fs=require('node:fs'),path=require('node:path');
-const root=path.resolve(__dirname,'..'),source=fs.readFileSync(path.join(root,'index.html'),'utf8');
+const root=path.resolve(__dirname,'..');
+// Las claves y la matriz siguen en los scripts cargados por el HTML, ahora separados.
+const source=fs.readFileSync(path.join(root,'index.html'),'utf8')+'\n'+fs.readFileSync(path.join(root,'assets/js/seguimiento-pod.js'),'utf8');
 const publication='Versión inicial · en actualización permanente';
 const files=['index.html','v19.js',...fs.readdirSync(path.join(root,'assets/js')).filter(n=>n.endsWith('.js')).map(n=>'assets/js/'+n),...fs.readdirSync(path.join(root,'assets/css')).filter(n=>n.endsWith('.css')).map(n=>'assets/css/'+n)];
 const routes=['inicio','geovisor','geoportal','avances-pod','certificados','biblioteca','documentos-pod','secretaria','contacto','admin'];
