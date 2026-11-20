@@ -13,7 +13,7 @@ test('arranque: bytes originales y posición entre publicación y vistas',()=>{
  const matches=scripts.filter(s=>/\bsrc="assets\/js\/observatorio\.js"/.test(s[1]));expect(matches).toHaveLength(1);
  const at=scripts.indexOf(matches[0]);expect(at).toBeGreaterThan(0);
  expect(scripts[at-1][1]).toContain('src="assets/js/version-publica.js"');
- expect(matches[0][1]).not.toMatch(/\b(?:async|defer|type)\b/);expect(matches[0][2]).toBe('');
+ expect(matches[0][1]).not.toMatch(/\b(?:async|defer|type)\b/);expect(matches[0][2]).toBe('\n');
  const next=scripts[at+1],src=next[1].match(/\bsrc="([^"]+)"/);
  let bytes=Buffer.from(next[2]);
  if(src){const file=path.resolve(root,src[1]);expect(file.startsWith(root+path.sep)).toBe(true);bytes=fs.readFileSync(file)}
