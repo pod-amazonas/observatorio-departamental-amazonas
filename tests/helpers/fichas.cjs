@@ -6,7 +6,9 @@ async function abrirFicha(card){
   const summary=ficha.locator(':scope > summary');
   // focus() no espera un encuadre estable ni garantiza que cambie activeElement.
   // Enter solo puede enviarse después de verificar el destino real del teclado.
-  await summary.scrollIntoViewIfNeeded();await summary.focus();
+  await summary.scrollIntoViewIfNeeded();
+  // Leaflet puede mostrar el contenedor exterior antes de su contenido.
+  await expect(summary).toBeVisible();await summary.focus();
   await expect(summary).toBeFocused();await summary.press('Enter');
  }
  await expect(ficha).toHaveAttribute('open','');return ficha;
