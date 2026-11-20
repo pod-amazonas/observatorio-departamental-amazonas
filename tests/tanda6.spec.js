@@ -32,7 +32,7 @@ with tempfile.TemporaryDirectory() as tmp:
  expect(negative.status,negative.stderr||negative.error?.message).toBe(0);
  const control=require('../datos/tanda_6_29/control_geometrias.json');
  expect(control.fuente_sin_cambios).toBe(true);expect(control.reparaciones).toEqual([]);
- expect(catalog.map(c=>c.entidades)).toEqual([65165,1811]);
+ expect(catalog.map(c=>c.entidades)).toEqual([27341,1811]);
  for(const c of catalog){
   const row=control.capas.find(r=>r.id_capa===c.id_capa);
   expect(row.gpkg_wkb_identicas).toBe(true);expect(row.residuo_inversa_m).toBeLessThan(.000001);
@@ -41,9 +41,26 @@ with tempfile.TemporaryDirectory() as tmp:
   expect(row.registros.every(r=>r.original===r.lineal||row.contenedores_curvos.includes(r.fid))).toBe(true);
  }
  expect(control.capas[0].curvas).toEqual([153715,154134,155345,155639,155701,392170]);
+ expect(control.capas[0].seleccion).toMatchObject({entidades_antes:65165,entidades_despues:27341,entidades_excluidas:37824,wkb_seleccion_identico:true,desplazamiento_m:0,reparaciones:[]});
  expect(catalog[0].restricciones).toContain('No es una ruta navegable certificada');
  expect(catalog[1].licencia).toBe('ODbL 1.0');expect(catalog[1].restricciones).toContain('no garantiza transitabilidad');
  expect(require('../datos/tanda_6_29/pendientes.json').map(r=>r.origen)).toEqual(['Cobertura_Uso_Tierra_CLC','BIC_Declarados','Distribucion_de_Poblacion']);
+});
+test('drenaje: rechaza entidades o geometrías ajenas a la selección aunque se regenere el manifiesto',()=>{
+ const r=spawnSync('python3',['-c',`
+import sys,copy
+sys.path.insert(0,'scripts')
+import preparar_tanda6_29 as m
+from seleccionar_drenaje62 import comprobar_seleccion
+row=m.load(m.OUT/'control_geometrias.json')['capas'][0]
+comprobar_seleccion(row)
+for field,value in [('fid',-1),('lineal','0'*64),('atributos','0'*64)]:
+ bad=copy.deepcopy(row);bad['registros'][0][field]=value
+ try:comprobar_seleccion(bad)
+ except AssertionError:pass
+ else:raise SystemExit('Se admitió un cambio de '+field)
+`],{cwd:root,encoding:'utf8',timeout:30000});
+ expect(r.status,r.stderr||r.stdout||r.error?.message).toBe(0);
 });
 async function painted(page,id){return page.evaluate(id=>{
  const e=window.obs19Api.getLayers().find(e=>e.idCitizen===id);if(!e)return 0;
