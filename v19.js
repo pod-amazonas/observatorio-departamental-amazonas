@@ -108,7 +108,7 @@ function initText53(){
  const legend=$('local-layer-legend');if(legend){for(const child of [...legend.childNodes])if(child.nodeType===3)child.textContent=' Capas del Observatorio'}
  $('local-layer-list')?.setAttribute('aria-label','Archivos agregados al mapa');$('v7-dynamic-legend')?.setAttribute('aria-label','Leyenda de capas del Observatorio');
  const label=document.querySelector('label[for="geojson-upload"]');if(label){for(const node of label.childNodes)if(node.nodeType===3)node.textContent=' Agregar archivo al mapa'}
- const side=document.querySelector('#view-geovisor .side-info p');if(side){const d=sheet53('estado del visor');side.before(d);d.append(side.cloneNode(true));side.textContent='Versión inicial · en actualización permanente. Las cifras calculadas en el navegador no son oficiales.'}
+ const side=document.querySelector('#view-geovisor .side-info p');if(side){const d=sheet53('estado del visor');side.before(d);d.append(side.cloneNode(true));side.textContent=window.POD_PUBLICACION.etiqueta+'. Las cifras calculadas en el navegador no son oficiales.'}
 }
 window.obs53={view:view53,intro:intro53,sheet:sheet53,record:record53};
 
@@ -389,9 +389,9 @@ async function toggleLayer(def,want){
   let data=state.data;
   if(!data){const response=await fetch(def.url,{signal:controller.signal});if(!response.ok)throw Error('Archivo no disponible ('+response.status+')');data=await response.json()}
   if(controller.signal.aborted||!state.want)return;
-  // Conserva el caché del piloto; las determinantes se liberan al quitarlas.
+  // Conserva la caché de las capas generales; las determinantes se liberan al quitarlas.
   if(def.kind==='citizen')state.data=data;
-  const entry=window.obs19Api.add(def.name,data,def.kind==='citizen'?def.source+(def.tanda?' · publicación autorizada':' · piloto autorizado'):'Determinantes ambientales · publicación autorizada',true);
+  const entry=window.obs19Api.add(def.name,data,def.kind==='citizen'?def.source+' · publicación autorizada':'Determinantes ambientales · publicación autorizada',true);
   if(def.kind==='citizen')entry.idCitizen=def.id;else entry.idPilot=def.id;
   entry.metadata=def.metadata;entry.obs53Definition=def;entry.opacity=def.opacity;if(def.color)entry.color=def.color;
   entry.layer.setStyle({color:entry.color,fillColor:entry.color,fillOpacity:entry.opacity/100*(entry.geomType==='Puntos'?1:.52)});
@@ -530,7 +530,7 @@ function init(){
   observer.observe(geovisorMap);
  }
  initLocation();initDocuments();initCalls();initPartnersMarquee();fetch('catalogo_determinantes_para_geovisor.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catálogo no encontrado');return r.json()}).then(data=>{catalog=data;renderTree()}).catch(()=>{catalog={grupos:[]};renderTree()});
- fetch('datos/piloto_29/catalogo_entrega.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catálogo piloto no disponible');return r.json()}).then(data=>{citizenCatalog=data;renderCitizenLayers()}).catch(()=>{const tree=$('obs19-thematic-tree');tree?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
+ fetch('datos/piloto_29/catalogo_entrega.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catálogo de capas no disponible');return r.json()}).then(data=>{citizenCatalog=data;renderCitizenLayers()}).catch(()=>{const tree=$('obs19-thematic-tree');tree?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
  fetch('datos/tanda_1_29/catalogo_entrega.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tandaCatalog=data;renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
  fetch('datos/tanda_5_29/catalogo_entrega.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda5Catalog=data.map(row=>({...row,lote:5}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});
  fetch('datos/tanda_4_29/catalogo_entrega.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Catálogo no disponible');return r.json()}).then(data=>{tanda4Catalog=data.map(row=>({...row,lote:4}));renderCitizenLayers()}).catch(()=>{$('obs19-thematic-tree')?.append(element('p','obs19-empty','No se pudo cargar parte del catálogo. Comprueba la conexión y actualiza la página.'))});

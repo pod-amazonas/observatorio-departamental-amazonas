@@ -1,5 +1,5 @@
 
-/* V15 · Carga de coordenadas XLSX en polígonos */
+/* Carga local de coordenadas XLSX para polígonos. */
 #view-certificados .cert15-upload{margin-top:16px;border:1px solid #cfe1cf;background:#f3f9f1;border-radius:14px;padding:18px;}
 #view-certificados .cert15-upload[hidden]{display:none!important}
 #view-certificados .cert15-upload-head{display:flex;gap:12px;align-items:center;margin-bottom:14px}

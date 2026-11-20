@@ -1,5 +1,5 @@
 
-/* Ajustes de revisión V19-A01 (22 oct. 2026). */
+/* Ajustes de presentación y distribución de las secciones. */
 .hero-visual > .map-floating{
   position:relative;left:auto;bottom:auto;z-index:3;transform:none;
   margin:17px auto 0;max-width:min(98%,445px);width:fit-content;
