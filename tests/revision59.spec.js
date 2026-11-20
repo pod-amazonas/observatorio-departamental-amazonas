@@ -1,7 +1,7 @@
 const {test,expect}=require('@playwright/test');
 const fs=require('node:fs'),path=require('node:path');
-const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
-const matrix=JSON.parse(html.match(/const DATA=(\[.*?\]);/)[1]);
+const seguimiento=fs.readFileSync(path.join(__dirname,'../assets/js/seguimiento-pod.js'),'utf8');
+const matrix=JSON.parse(seguimiento.match(/const DATA=(\[.*?\]);/)[1]);
 test.beforeEach(async({page})=>{await page.route('**/*',r=>{const u=new URL(r.request().url());if(u.hostname==='127.0.0.1')return u.pathname.endsWith('/config_supabase.js')?r.fulfill({contentType:'application/javascript',body:'window.POD_CONFIG={url:"https://test.invalid",publishableKey:"sb_publishable_test"}'}):r.continue();return r.fulfill({json:[]})})});
 for(const width of [1280,390])test('Certificados informa y ofrece solo el formulario de demostración, sin roles, a '+width,async({page})=>{
  await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});
