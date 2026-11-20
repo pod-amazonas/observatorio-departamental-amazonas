@@ -1,5 +1,5 @@
 
-/* V15 — Certificados de Compatibilidad (prototipo público). Restringido al módulo */
+/* Demostración de Certificados de Compatibilidad; estilos del módulo. */
 #view-certificados .cert13-wrap{padding-bottom:66px}
 #view-certificados .cert13-hero{background:linear-gradient(108deg,#0e5334,#217348);color:#fff;padding:30px 34px;border-radius:16px;display:grid;grid-template-columns:minmax(0,1fr) 130px;gap:30px;align-items:center}
 #view-certificados .cert13-hero h2{color:#fff;font-size:clamp(22px,2.2vw,31px);line-height:1.17;max-width:650px;margin:12px 0}

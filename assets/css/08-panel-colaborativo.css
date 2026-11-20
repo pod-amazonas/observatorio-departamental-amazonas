@@ -1,5 +1,5 @@
 
-/* V17 panel colaborativo: aislado del resto del tema */
+/* Panel local archivado: estilos aislados del resto del tema. */
 #view-admin .obs17-wrap{padding-bottom:72px;color:#264c38}
 #view-admin .obs17-warning{background:#f1f6ec;border:1px solid #cee1d0;border-left:4px solid #2b7847;border-radius:13px;padding:16px 18px;margin:4px 0 22px;font-size:14px;line-height:1.65}
 #view-admin .obs17-profilebar{background:linear-gradient(110deg,#164f35,#24704c);color:white;border-radius:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,375px);gap:24px;padding:26px 30px;align-items:center}
