@@ -1,5 +1,7 @@
 # Tanda 6 — comprobación visual y red lenta
 
+**Registro histórico de la entrega original.** Drenaje Sencillo se seleccionó posteriormente a 27.341 entidades completas que intersectan Amazonas; los pesos y mediciones de este documento corresponden a la entrega anterior. Consulte la [selección actual](../drenaje62/LEEME.md). Vías y Caminos no cambia.
+
 Rama propia desde main `df1a50b` (#50 fusionado). Se entregan drenajes y vías. CLC, bienes culturales y población permanecen fuera por los motivos registrados en #29 y `datos/tanda_6_29/pendientes.json`. No se cambia ninguna fuente ni se instala software.
 
 ## Pesos de la entrega
