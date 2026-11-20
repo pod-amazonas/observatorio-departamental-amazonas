@@ -33,9 +33,11 @@ for(const width of [1280,390])test('textos ciudadanos: consulta, estadísticas y
  test.setTimeout(90000);await page.setViewportSize({width,height:width===390?844:720});await page.emulateMedia({reducedMotion:'reduce'});await loaded(page);
  const c=page.locator('[data-rondas-layer]');await c.getByRole('switch').click();await expect(c.getByRole('switch')).toHaveAttribute('aria-busy','false');await sinConteo(page);
  const detail=page.locator('#obs19-stat-detail');expect(await detail.innerText()).not.toMatch(internal);
+ // La consulta se realiza con el mapa a la vista, no desde el menú fuera de pantalla.
+ await page.locator('#visor-map').scrollIntoViewIfNeeded();
  await page.evaluate(p=>{const m=window.obs19Api.getMap();m.setView([p.lat,p.lng],16,{animate:false});m.fire('click',{latlng:L.latLng(p.lat,p.lng)})},r19.punto_prueba);
  const pop=page.locator('[data-rondas-consulta]');await expect(pop).toBeVisible();expect(await pop.innerText()).not.toMatch(internal);
- const f=await abrirFicha(pop);await expect(f).toContainText('Determinante 19');await expect(f).toContainText('Resolución 957 de 2018');await expect(f).toContainText('#44');
+ const f=await abrirFicha(pop);await expect(c.getByRole('switch')).toHaveAttribute('aria-checked','true');await expect(pop).toBeVisible();await expect(f).toContainText('Determinante 19');await expect(f).toContainText('Resolución 957 de 2018');await expect(f).toContainText('#44');
  await expect.poll(()=>pop.evaluate(el=>{const p=el.closest('.leaflet-popup').getBoundingClientRect(),m=document.querySelector('#visor-map').getBoundingClientRect();return p.left>=m.left-1&&p.right<=m.right+1&&p.top>=m.top-1&&p.bottom<=m.bottom+1})).toBe(true);
 });
 test('textos ciudadanos: las fichas muestran contenido no confiable como texto',async({page})=>{

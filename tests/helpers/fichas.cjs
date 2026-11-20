@@ -2,7 +2,13 @@ const {expect}=require('@playwright/test');
 async function abrirFicha(card){
  const ficha=card.locator(':scope > details[data-ficha-tecnica]');
  await expect(ficha).toHaveCount(1);
- if(await ficha.getAttribute('open')===null){const summary=ficha.locator(':scope > summary');await summary.focus();await summary.press('Enter')}
+ if(await ficha.getAttribute('open')===null){
+  const summary=ficha.locator(':scope > summary');
+  // focus() no espera un encuadre estable ni garantiza que cambie activeElement.
+  // Enter solo puede enviarse después de verificar el destino real del teclado.
+  await summary.scrollIntoViewIfNeeded();await summary.focus();
+  await expect(summary).toBeFocused();await summary.press('Enter');
+ }
  await expect(ficha).toHaveAttribute('open','');return ficha;
 }
 async function errorDeCapa(card,text){
